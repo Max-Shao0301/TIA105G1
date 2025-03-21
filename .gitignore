@@ -1,6 +1,7 @@
 HELP.md
 target/
 mvnw
+.mvn/
 mvnw.cmd
 .gitattributes
 !.mvn/wrapper/maven-wrapper.jar
@@ -37,6 +38,5 @@ build/
 .vscode/
 .settings/
 bin/
-.mvn/
 .DS_Store
 *.idea
