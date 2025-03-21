@@ -1,8 +1,12 @@
 HELP.md
 target/
+mvnw
+mvnw.cmd
+.gitattributes
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+
 
 ### STS ###
 .apt_generated
@@ -36,4 +40,3 @@ bin/
 .mvn/
 .DS_Store
 *.idea
-HELP.md
