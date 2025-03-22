@@ -1,0 +1,167 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+}
+header.header div.title_content_box {
+  /* border: 1px solid red; */
+  background-color: pink;
+  height: 80px;
+  width: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+header.header div.title_content_box h2.h_title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: aliceblue;
+  flex-grow: 1; /* 讓 h2 佔據可用空間 */
+  text-align: center; /* 讓文字在 h2 內部置中 */
+  margin: 0; /*移除預設margin*/
+  font-size: 36px;
+}
+header.header div.title_content_box .user_admin {
+  color: black; /* 讓 user_admin 文字可見 */
+  display: flex;
+  align-items: center; /* 讓 user_admin 的內容也垂直置中 */
+  cursor: pointer;
+}
+header.header div.title_content_box span.aside_bar {
+  cursor: pointer;
+}
+header.header div.title_content_box h2.h_title img {
+  height: 50px;
+  width: 50px;
+  margin-right: 10px;
+}
+nav.nav {
+  background: linear-gradient(90deg, #a85695, #5f1190);
+  padding: 0 10px;
+  /* border: 1px solid orange; */
+  text-align: center;
+  font-size: 0;
+}
+nav.nav a {
+  /* border: 1px solid red; */
+  font-size: 20px;
+  color: white;
+  text-decoration: none;
+  padding: 0 15px;
+  display: inline-block;
+  cursor: pointer;
+}
+nav.nav a:hover {
+  background: rgba(255, 255, 255, 0.3); /* 滑鼠移上時變亮 */
+}
+.content {
+  display: none; /* 預設隱藏所有內容 */
+  padding: 10px;
+}
+.active {
+  display: block; /* 只有被選中的內容區塊顯示 */
+}
+div.content > h2 {
+  margin: 0;
+}
+table.display span {
+  cursor: pointer;
+}
+div#homepage_img {
+  /* border: 1px solid red; */
+}
+div#homepage_img img {
+  display: inline-block;
+  width: 100vw;
+  height: 100vh;
+}
+/* 彈窗樣式 */
+.modal-content {
+  background-color: #fefefe;
+  padding: 20px;
+  border-radius: 10px;
+  width: 800px; /* 可以根據需要調整寬度 */
+  height: 500px;
+  display: flex;
+  justify-content: space-between; /* 使左右部分分開 */
+  align-items: flex-start; /* 左右部分垂直對齊 */
+  position: relative;
+  margin: 120px auto;
+}
+
+.modal-content .left-section {
+  flex: 1; /* 左邊部分占據剩餘空間 */
+  padding-right: 20px; /* 增加右邊的間距 */
+}
+
+.modal-content .right-section {
+  flex: 0 0 200px; /* 右邊部分的固定寬度 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-content .right-section img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.modal-content .buttons {
+  margin-top: 20px; /* 按鈕與圖片之間的間距 */
+  display: flex;
+  gap: 50px; /* 按鈕間距 */
+}
+
+.modal-content .buttons button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+  margin-top: 120px;
+}
+
+.modal-content .buttons .approve {
+  background-color: #4caf50;
+  color: white;
+}
+
+.modal-content .buttons .reject {
+  background-color: #f44336;
+  color: white;
+}
+
+.modal-content .buttons button:hover {
+  opacity: 0.8; /* 按鈕 hover 效果 */
+}
+
+.modal {
+  display: none; /* 預設隱藏 */
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+#resumeModal {
+  display: none; /* 這樣確保彈窗一開始隱藏 */
+}
+
+
