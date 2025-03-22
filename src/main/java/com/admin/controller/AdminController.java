@@ -2,13 +2,18 @@ package com.admin.controller;
 
 import com.admin.model.AdminService;
 import com.admin.model.AdminVO;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 public class AdminController {
@@ -28,16 +33,21 @@ public class AdminController {
 
 
     @PostMapping("/admin/login")
-    public ResponseEntity<String> login2(@RequestParam("account") String account, @RequestParam("password") String password) {
-        // 假設這裡做的是帳號和密碼的比對
-        AdminVO admin = adminService.findByAccount("admin");
+    public ResponseEntity<Map<String, Object>> login(@RequestParam("account") String account, @RequestParam("password") String password, HttpSession session) {
+        AdminVO admin = adminService.findByAccount(account);
         if (admin != null && admin.getAccount().equals(account) && admin.getPassword().equals(password)) {
-            // 登入成功，回傳 "success"
-            return ResponseEntity.ok("success");
-
+            session.setAttribute("admin", admin);
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "success");
+            response.put("message", "登入成功");
+            return ResponseEntity.ok(response);
         } else {
-            // 登入失敗，回傳 "failure"
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("failure");
+            // 登入失敗，回傳 JSON 格式的錯誤資訊
+            Map<String, Object> response = new HashMap<>();
+            response.put("status", "failure");
+            response.put("message", "帳號或密碼錯誤");
+
+            return ResponseEntity.status(401).body(response);
         }
     }
 }
