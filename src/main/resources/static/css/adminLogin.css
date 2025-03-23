@@ -53,3 +53,11 @@ body {
 .login-btn:hover {
     background-color: #0056b3;
 }
+
+#logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    margin-bottom: 20px;
+}
