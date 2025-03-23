@@ -7,8 +7,6 @@ mvnw.cmd
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
-
 ### STS ###
 .apt_generated
 .classpath
@@ -20,6 +18,7 @@ mvnw.cmd
 
 ### IntelliJ IDEA ###
 .idea
+*.idea
 *.iws
 *.iml
 *.ipr
@@ -38,5 +37,5 @@ build/
 .vscode/
 .settings/
 bin/
+### MAC ###
 .DS_Store
-*.idea
