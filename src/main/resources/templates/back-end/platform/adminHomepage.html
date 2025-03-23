@@ -17,23 +17,20 @@
             <!-- <span class="aside_bar"><i class="fa-solid fa-bars fa-lg"></i></span> -->
 
             <h2 class="h_title">
-              <img th:src="@{/images/logo.png}"
-                   alt="" />寵愛牠平台管理系統
+              <img th:src="@{/images/logo.png}" alt="" />寵愛牠平台管理系統
             </h2>
             <span class="user_admin"><i class="fa-solid fa-user"></i> admin</span>
           </div>
         </header>
         <nav class="nav">
-          <a onclick="showContent('order')">訂單管理</a> <a
-                onclick="showContent('resume')">履歷審核</a> <a
-                onclick="showContent('member')">會員管理</a> <a
-                onclick="showContent('worker')">服務人員管理</a>
+          <a onclick="showContent('order')">訂單管理</a>
+          <a onclick="showContent('resume')">履歷審核</a>
+          <a onclick="showContent('member')">會員管理</a>
+          <a onclick="showContent('worker')">服務人員管理</a>
         </nav>
 
         <div id="homepage_img">
-          <img
-                  th:src="@{/images/homepageCat.png}"
-                  alt="" />
+          <img th:src="@{/images/homepageCat.png}"  alt="" />
         </div>
         <div id="order" class="content">
           <h2>訂單管理</h2>
@@ -90,26 +87,37 @@
             </tr>
             </thead>
             <tbody>
-
+            <th:block th:each="applyVO : ${applyList}">
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-
-                <td></td>
-                <td></td>
-                <td><span class="view-resume" data-name=""
-                          data-gender="" data-phone=""
-                          data-email="" data-plate="$"
-                          data-introduction=""
-                          data-license="">
-								<i class="fa-solid fa-eye"></i>
-						</span></td>
+                <td th:text="${applyVO.applyID}"></td>
+                <td th:text="${applyVO.applyName}"></td>
+                <td th:text="${applyVO.applyPhone}"></td>
+                <td th:text="${applyVO.applyEmail}"></td>
+                <td th:text="${#temporals.format(applyVO.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:switch="${applyVO.results}">
+                    <span th:case="0">未通過</span>
+                    <span th:case="1">通過</span>
+                    <span th:case="2">待審核</span>
+                </td>
+                <td th:text="${#temporals.format(applyVO.reviewTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td>
+                  <th:block th:with="licenseUrl=@{/DBGifReader(applyID=${applyVO.applyID})}">
+                    <span class="view-resume"
+                            th:attr="
+                            data-name=${applyVO.applyName},
+                            data-gender=${applyVO.applyGender},
+                            data-phone=${applyVO.applyPhone},
+                            data-email=${applyVO.applyEmail},
+                            data-plate=${applyVO.carNumber},
+                            data-introduction=${applyVO.introduction},
+                            data-license=${licenseUrl} ">
+                                  <i class="fa-solid fa-eye"></i>
+                          </span>
+                  </th:block>
+                </td>
               </tr>
 
-
+            </th:block>
             </tbody>
           </table>
         </div>

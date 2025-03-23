@@ -18,8 +18,8 @@ public class ApplyVO implements java.io.Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer applyID;
 
-    @Column(name="email")
-    private String email;
+    @Column(name="apply_email")
+    private String applyEmail;
 
     @Column(name="apply_name")
     private String applyName;
@@ -56,12 +56,12 @@ public class ApplyVO implements java.io.Serializable {
         this.applyID = applyID;
     }
 
-    public String getEmail() {
-        return email;
+    public String getApplyEmail() {
+        return applyEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setApplyEmail(String applyEmail) {
+        this.applyEmail = applyEmail;
     }
 
     public String getApplyName() {
