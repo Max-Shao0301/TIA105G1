@@ -12,6 +12,7 @@ public class ApplyService {
     @Autowired
     private ApplyRepository applyRepository;
 
+    //新增
     public void addApply(ApplyVO applyVO) {
         applyRepository.save(applyVO);
     }
