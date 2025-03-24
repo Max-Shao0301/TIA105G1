@@ -19,7 +19,7 @@
             <h2 class="h_title">
               <img th:src="@{/images/logo.png}" alt="" />寵愛牠平台管理系統
             </h2>
-            <span class="user_admin"><i class="fa-solid fa-user"></i> admin</span>
+            <span class="user_admin"><i class="fa-solid fa-user"></i>  <strong>admin</strong></span>
           </div>
         </header>
         <nav class="nav">
@@ -96,7 +96,7 @@
                 <td th:text="${#temporals.format(applyVO.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:switch="${applyVO.results}">
                     <span th:case="0">未通過</span>
-                    <span th:case="1">通過</span>
+                    <span th:case="1">已通過</span>
                     <span th:case="2">待審核</span>
                 </td>
                 <td th:text="${#temporals.format(applyVO.reviewTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
@@ -283,6 +283,21 @@
             // 顯示被點擊的內容
             document.getElementById(sectionId).classList.add("active");
           }
+          // 顯示指定的內容區塊
+          function showContent(sectionId) {
+            const sections = document.querySelectorAll(".content");
+            const homepage_el = document.querySelector("#homepage_img");
+            // 隱藏所有內容區塊
+            sections.forEach((section) => section.classList.remove("active"));
+            homepage_el.style.display = "none";  // 預設隱藏首頁圖像
+
+            // 顯示對應區塊
+            if (sectionId === "homepage_img") {
+              homepage_el.style.display = "block";  // 顯示首頁圖像
+            } else {
+              document.getElementById(sectionId).classList.add("active");
+            }
+          }
 
           $(document).ready(function () {
             //彈窗
@@ -316,8 +331,21 @@
                 modal.fadeOut(); // 使用 fadeOut() 平滑隱藏
               }
             });
+            let currentTab = sessionStorage.getItem("currentTab"); // 讀取儲存的頁籤
+
+            if (currentTab) {
+              // 如果有儲存的頁籤，顯示對應區塊
+              showContent(currentTab);
+            } else {
+              // 預設顯示第一個頁籤（這裡是訂單管理）
+              showContent("homepage_img");
+            }
+
             //聘用婉拒按鈕
             $(document).on("click", "#approve-btn, #reject-btn", function (event) {
+
+              sessionStorage.setItem("currentTab", "resume"); // 記錄為履歷審核
+
               let selectedRow = $(".selected-row"); // 取得被選中的履歷行
               let applyId = selectedRow.find("td:nth-child(1)").text();
               $("input[name='applyID']").val(applyId); // 設置 apply_id 隱藏欄位的值
@@ -336,6 +364,7 @@
               modal.fadeOut();
             });
 
+
             //停權 監聽所有表格內的停權按鈕（使用事件委派）
             $(document).on("click", ".fa-ban", function () {
               let row = $(this).closest("tr"); // 取得當前行
@@ -349,6 +378,8 @@
                 // $.post("/updateStatus", { userId: userId, status: "已停權" });
               }
             });
+
+
           });
         </script>
         </body>
