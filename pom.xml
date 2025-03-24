@@ -152,12 +152,12 @@
             <version>1.1.4</version>
         </dependency>
 
-        <!-- com.sun.mail -->                        <!-- spring-boot 未內建依賴 -->
-        <dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>javax.mail</artifactId>
-            <version>1.6.2</version>
-        </dependency>
+        <!-- com.sun.mail 使用下方Spring Boot mail-->                        <!-- spring-boot 未內建依賴 -->
+<!--        <dependency>-->
+<!--            <groupId>com.sun.mail</groupId>-->
+<!--            <artifactId>javax.mail</artifactId>-->
+<!--            <version>1.6.2</version>-->
+<!--        </dependency>-->
 
 
 
@@ -267,7 +267,15 @@
             <artifactId>jakarta.el</artifactId>
             <version>4.0.2</version>
         </dependency>
+
+        <!-- Spring Boot Mail -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+        </dependency>
+
     </dependencies>
+
 
     <build>
         <plugins>
