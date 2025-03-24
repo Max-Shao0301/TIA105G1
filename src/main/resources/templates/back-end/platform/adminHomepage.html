@@ -33,7 +33,7 @@
           <img th:src="@{/images/homepageCat.png}"  alt="" />
         </div>
         <div id="order" class="content">
-          <h2>訂單管理</h2>
+          <h2 class="content_title">訂單管理</h2>
           <table id="myTable" class="display">
             <thead>
             <tr>
@@ -72,7 +72,7 @@
           </table>
         </div>
         <div id="resume" class="content">
-          <h2>履歷審核</h2>
+          <h2 class="content_title">履歷審核</h2>
           <table id="myTable3" class="display">
             <thead>
             <tr>
@@ -89,7 +89,7 @@
             <tbody>
             <th:block th:each="applyVO : ${applyList}">
               <tr>
-                <td th:text="${applyVO.applyID}"></td>
+                <td th:text="${applyVO.applyId}"></td>
                 <td th:text="${applyVO.applyName}"></td>
                 <td th:text="${applyVO.applyPhone}"></td>
                 <td th:text="${applyVO.applyEmail}"></td>
@@ -101,7 +101,7 @@
                 </td>
                 <td th:text="${#temporals.format(applyVO.reviewTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td>
-                  <th:block th:with="licenseUrl=@{/DBGifReader(applyID=${applyVO.applyID})}">
+                  <th:block th:with="licenseUrl=@{/BlobReader(applyId=${applyVO.applyId})}">
                     <span class="view-resume"
                             th:attr="
                             data-name=${applyVO.applyName},
@@ -155,7 +155,7 @@
                     th:action="@{/updateResult}">
                 <div class="buttons">
                   <input type="hidden" name="action" value="update">
-                  <input type="hidden" name="applyID" value="">
+                  <input type="hidden" name="applyId" value="">
                   <input type="hidden" name="results" id="rs">
                   <button type="submit" class="approve" id="approve-btn">聘用</button>
                   <button type="submit" class="reject" id="reject-btn">婉拒</button>
@@ -166,7 +166,7 @@
         </div>
 
         <div id="member" class="content">
-          <h2>會員管理</h2>
+          <h2 class="content_title">會員管理</h2>
           <table id="myTable1" class="display">
             <thead>
             <tr>
@@ -212,7 +212,7 @@
           </table>
         </div>
         <div id="worker" class="content">
-          <h2>服務人員管理</h2>
+          <h2 class="content_title">服務人員管理</h2>
           <table id="myTable2" class="display">
             <thead>
             <tr>
@@ -348,7 +348,7 @@
 
               let selectedRow = $(".selected-row"); // 取得被選中的履歷行
               let applyId = selectedRow.find("td:nth-child(1)").text();
-              $("input[name='applyID']").val(applyId); // 設置 apply_id 隱藏欄位的值
+              $("input[name='applyId']").val(applyId); // 設置 apply_id 隱藏欄位的值
               let statusCell = selectedRow.find("td:nth-child(6)"); // 取得審核結果欄位
 
               if ($(event.target).is("#approve-btn")) {

@@ -8,11 +8,9 @@ import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +34,6 @@ public class AdminController {
     public String homePage(Model model) {
         /*顯示履歷列表*/
         List<ApplyVO> list = applyService.getAll();
-        System.out.println(list);
         model.addAttribute("applyList", list);
 
         return "/back-end/platform/adminHomepage";
@@ -67,14 +64,14 @@ public class AdminController {
         }
     }
 
-    @GetMapping("/DBGifReader")
-    public void dbGifReader(@RequestParam("applyID") Integer applyID, HttpServletResponse res) {
+    @GetMapping("/BlobReader")
+    public void dbGifReader(@RequestParam("applyId") Integer applyId, HttpServletResponse res) {
         res.setContentType("image/gif");
         ServletOutputStream out = null;
         try{
             out = res.getOutputStream();
             //透過Service查找單筆資料取得id在查詢該id的駕照圖片
-            byte[] image = applyService.getOne(applyID).getLicense();
+            byte[] image = applyService.getOne(applyId).getLicense();
             if (image != null && image.length > 0) {
                 out.write(image);//將圖片的二進位資料輸出到 HttpServletResponse
             } else {
@@ -90,8 +87,8 @@ public class AdminController {
             if (out != null) {
                 try {
                     out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
                 }
             }
         }
