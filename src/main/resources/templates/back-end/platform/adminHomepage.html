@@ -151,11 +151,11 @@
               </p>
               <img id="modal-license" src="" alt="駕照照片" />
               <!-- 按鈕區域 -->
-              <form method="#"
-                    action="#">
+              <form th:method="post"
+                    th:action="@{/updateResult}">
                 <div class="buttons">
-                  <input type="hidden" name="apply_id" value="">
                   <input type="hidden" name="action" value="update">
+                  <input type="hidden" name="applyID" value="">
                   <input type="hidden" name="results" id="rs">
                   <button type="submit" class="approve" id="approve-btn">聘用</button>
                   <button type="submit" class="reject" id="reject-btn">婉拒</button>
@@ -320,7 +320,7 @@
             $(document).on("click", "#approve-btn, #reject-btn", function (event) {
               let selectedRow = $(".selected-row"); // 取得被選中的履歷行
               let applyId = selectedRow.find("td:nth-child(1)").text();
-              $("input[name='apply_id']").val(applyId); // 設置 apply_id 隱藏欄位的值
+              $("input[name='applyID']").val(applyId); // 設置 apply_id 隱藏欄位的值
               let statusCell = selectedRow.find("td:nth-child(6)"); // 取得審核結果欄位
 
               if ($(event.target).is("#approve-btn")) {
