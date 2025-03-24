@@ -9,6 +9,6 @@ public interface ApplyRepository  extends JpaRepository<ApplyVO, Integer> {
 
     @Transactional
     @Modifying
-    @Query(value="UPDATE apply SET results = ?1, review_date = NOW() WHERE apply_id = ?2 AND review_date IS NULL", nativeQuery = true)
+    @Query(value="UPDATE apply SET results = ?1, review_time = NOW() WHERE apply_id = ?2 AND review_time IS NULL", nativeQuery = true)
     void updateResults(Integer results, Integer applyID);
 }
