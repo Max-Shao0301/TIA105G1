@@ -18,7 +18,7 @@ header.header div.title_content_box h2.h_title {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: aliceblue;
+  color: #000000;
   flex-grow: 1; /* 讓 h2 佔據可用空間 */
   text-align: center; /* 讓文字在 h2 內部置中 */
   margin: 0; /*移除預設margin*/
@@ -29,6 +29,7 @@ header.header div.title_content_box .user_admin {
   display: flex;
   align-items: center; /* 讓 user_admin 的內容也垂直置中 */
   cursor: pointer;
+  padding-right: 10px;
 }
 header.header div.title_content_box span.aside_bar {
   cursor: pointer;
@@ -39,7 +40,7 @@ header.header div.title_content_box h2.h_title img {
   margin-right: 10px;
 }
 nav.nav {
-  background: linear-gradient(90deg, #a85695, #5f1190);
+  background: linear-gradient(90deg, #a85695, #855a9f);
   padding: 0 10px;
   /* border: 1px solid orange; */
   text-align: center;
@@ -55,7 +56,8 @@ nav.nav a {
   cursor: pointer;
 }
 nav.nav a:hover {
-  background: rgba(255, 255, 255, 0.3); /* 滑鼠移上時變亮 */
+  background: rgba(231, 54, 54, 0.3); /* 滑鼠移上時變亮 */
+  color: #0c0c0c;
 }
 .content {
   display: none; /* 預設隱藏所有內容 */
@@ -163,5 +165,11 @@ div#homepage_img img {
 #resumeModal {
   display: none; /* 這樣確保彈窗一開始隱藏 */
 }
+.content_title {
+  font-size: 30px;
+  text-align: center;
+
+}
+
 
 

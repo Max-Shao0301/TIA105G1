@@ -19,11 +19,11 @@ public class ApplyService {
 
     //自訂方法，履歷審核
     public void updateApply(ApplyVO applyVO) {
-        applyRepository.updateResults(applyVO.getResults(), applyVO.getApplyID());
+        applyRepository.updateResults(applyVO.getResults(), applyVO.getApplyId());
     }
 
-    public ApplyVO getOne(Integer applyID){
-        Optional<ApplyVO> optional = applyRepository.findById(applyID);
+    public ApplyVO getOne(Integer applyId){
+        Optional<ApplyVO> optional = applyRepository.findById(applyId);
         return optional.orElse(null);
     }
 

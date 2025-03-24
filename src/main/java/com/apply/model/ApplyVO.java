@@ -16,7 +16,7 @@ public class ApplyVO implements java.io.Serializable {
     @Id
     @Column(name="apply_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer applyID;
+    private Integer applyId;
 
     @Column(name="apply_email")
     private String applyEmail;
@@ -48,12 +48,12 @@ public class ApplyVO implements java.io.Serializable {
     @Column(name="review_time")
     private LocalDateTime reviewTime;
 
-    public Integer getApplyID() {
-        return applyID;
+    public Integer getApplyId() {
+        return applyId;
     }
 
-    public void setApplyID(Integer applyID) {
-        this.applyID = applyID;
+    public void setApplyId(Integer applyId) {
+        this.applyId = applyId;
     }
 
     public String getApplyEmail() {
