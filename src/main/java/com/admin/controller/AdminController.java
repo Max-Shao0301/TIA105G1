@@ -4,6 +4,8 @@ import com.admin.model.AdminService;
 import com.admin.model.AdminVO;
 import com.apply.model.ApplyService;
 import com.apply.model.ApplyVO;
+import com.staff.model.StaffService;
+import com.staff.model.StaffVO;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -30,11 +32,18 @@ public class AdminController {
     @Autowired
     private ApplyService applyService;
 
+    @Autowired
+    private StaffService staffService;
+
     @GetMapping("/admin/home/page")
     public String homePage(Model model) {
         /*顯示履歷列表*/
-        List<ApplyVO> list = applyService.getAll();
-        model.addAttribute("applyList", list);
+        List<ApplyVO> applyList = applyService.getAll();
+        model.addAttribute("applyList", applyList);
+
+        /*顯示服務人員列表*/
+        List<StaffVO> staffList = staffService.getAll();
+        model.addAttribute("staffList", staffList);
 
         return "/back-end/platform/adminHomepage";
     }

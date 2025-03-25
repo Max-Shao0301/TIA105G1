@@ -229,17 +229,23 @@
             </tr>
             </thead>
             <tbody>
-
+            <th:block th:each="staffVO : ${staffList}">
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td th:text="${staffVO.staffId}"></td>
+                <td th:text="${staffVO.staffName}"></td>
+                <td th:switch="${staffVO.staffGender}">
+                  <span th:case="1">男性</span>
+                  <span th:case="2">女性</span>
+                </td>
+                <td th:text="${staffVO.staffPhone}"></td>
+                <td th:text="${staffVO.staffEmail}"></td>
+                <td th:text="${staffVO.carNumber}"></td>
+                <td th:switch="${staffVO.status}">
+                  <span th:case="0">已停權</span>
+                  <span th:case="1">啟用中</span>
+                </td>
+                <td th:text="${#temporals.format(staffVO.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+                <td th:text="${#temporals.format(staffVO.updateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td>
                   <form action="#" method="#">
                     <input type="hidden" name="staff_id" value="${staffVO.staff_id}">
@@ -254,7 +260,7 @@
                   </form>
                 </td>
               </tr>
-            </c:forEach>
+            </th:block>>
             </tbody>
           </table>
         </div>
