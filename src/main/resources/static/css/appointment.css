@@ -11,6 +11,7 @@ div.body_text{
     box-shadow: 0 0 1000px rgba(0, 0, 0, 0.1);
     border: 2px solid Gainsboro;
     border-radius: 10px ;
+    font-weight:400px;
 }
 .title {
     font-size: 24px;
