@@ -280,8 +280,8 @@ async function getCan_Work_Staff(){
 			for(let i = 1; i <data.length ; i++){
 				let staff_name = data[i].name;
 				let staff_introduction = data[i].introduction;
-				let man_img = "/imgages/staff_man.jpg";
-				let woman_img = "/imgages/staff_woman.jpg"
+				let man_img = "/images/staff_man.jpg";
+				let woman_img = "/images/staff_woman.jpg"
 				card_options += `<div class='service_card'>
 										<img class = "staff_img" src = "${data[i].gender == 1 ? man_img : woman_img}" alt="">
 									<div class ='staff_info'>
