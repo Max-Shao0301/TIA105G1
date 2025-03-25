@@ -247,7 +247,7 @@
                 <td th:text="${#temporals.format(staffVO.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${#temporals.format(staffVO.updateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td>
-                  <form action="#" method="#">
+                  <form action="#" th:method="post">
                     <input type="hidden" name="staff_id" value="${staffVO.staff_id}">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="status" id="st2">
