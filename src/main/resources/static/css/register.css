@@ -1,0 +1,85 @@
+body {
+    background: linear-gradient(135deg, #f9f9f9, #e0e0e0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+body::before {
+    content: "";
+    position: fixed; /* 讓背景不隨滾動 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/cutedog.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15; /* 設定透明度 */
+    z-index: -1; /* 讓背景圖片不影響內容 */
+}
+img{
+    width: 400px;
+    margin-left: 15% ;
+    margin-bottom: 50px;
+}
+.register-container {
+    max-width: 600px; /* 調整為 600px，讓左右欄更寬 */
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+.register-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+    font-size: 1.75rem;
+    font-weight: bold;
+}
+.form-label {
+    font-weight: 600;
+    color: #555;
+}
+.form-control {
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 0.9rem;
+}
+.btn-primary {
+    width: 100%;
+    border-radius: 50px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    background-color: #335288;
+    border: none;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+.btn-primary:hover {
+    background-color: #294471;
+}
+.pet-icon {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.input-group .form-control {
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius:10px !important;
+    border-top-left-radius: 10px !important;
+    border-bottom-left-radius: 10px !important;
+}
+
+.input-group .btn-primary {
+    border-top-right-radius: 10px !important;
+    border-bottom-right-radius: 10px !important;
+    border-top-left-radius: 10px !important; /* 讓按鈕左側也有圓角 */
+    border-bottom-left-radius: 10px !important;
+}

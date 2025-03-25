@@ -1,0 +1,289 @@
+
+body {
+    position: relative;
+    margin: 0;
+    height: 100vh;
+}
+
+
+
+.container1{
+    margin: 50px 12px  50px 12px;
+    border-radius: 10px;
+    background-color: #eae8df;
+    padding: 20px 40px 20px 40px;
+    width: 98%;
+    text-align: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  
+}
+
+
+.titlename {
+    
+    text-align: center;
+    padding: 30px;
+    font-size: 40px;
+    width: 400px;
+    margin: 20px auto;
+    border-radius: 10px;
+    background-color:#839974;
+    color: white;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    background-color:white;
+}
+
+thead{
+    background-color:#ad9a8e;
+    color: white;
+}
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+th {
+    cursor: pointer;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.pagination button {
+    padding: 8px 16px;
+    background-color: #335288;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.pagination button:disabled {
+    background-color: #ccc;
+}
+
+
+
+.pageSize {
+
+    text-align: center;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 10px;
+}
+
+.pageSize label {
+    margin: 0;
+    font-size: 16px;
+}
+
+.pageSize select {
+    padding: 5px;
+    font-size: 16px;
+}
+.nice-select {
+    margin: 0 0 0 0px;
+}
+.nice-select{
+    height: 30px;
+}
+
+
+.container2 {
+    display: flex;
+    justify-content: space-between; /* 讓兩個div之間有空隙 */
+    align-items: center; /* 垂直居中 */
+}
+
+.box {
+    width: 45%; /* 設定每個 div 的寬度 */
+    padding: 10px;
+
+    text-align: center;
+}
+
+label {
+    display: inline-block;
+    margin-bottom: 0; 
+}
+.search{
+    text-align:right;
+}
+
+.details-btn {
+    background-color: #335288;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.details-btn:hover {
+    background-color: #335288;
+}
+
+.clo{
+    background-color: #ad9a8e;
+    color: white;
+    width: 200px;
+}
+
+table{
+    border: 1 ;
+    border-collapse: collapse;
+    width: 100%;
+    border-radius: 5px;
+    border-radius: 10px;
+    overflow: hidden; /* 重要：確保內容不會超出圓角範圍 */
+    border-collapse: separate; /* 重要：需要改為 separate 才能實現圓角 */
+    border-spacing: 0; /* 消除 cell 之間的間距 */
+    opacity: 1;
+}
+
+.gobackbtn{
+    background-color: #335288;
+    color: white;
+    border: none;
+    padding: 15px 50px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+.gobackbtn:hover{
+  background-color: #23395f;
+}
+
+.review-container {
+    opacity: 1;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #eae8df;
+  }
+
+  .rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+
+  .rating input {
+    display: none;
+  }
+
+  .rating label {
+    cursor: pointer;
+    font-size: 30px;
+    color: #ddd;
+    padding: 0 2px;
+  }
+
+  .rating label:before {
+    content: '★';
+  }
+
+  .rating input:checked ~ label {
+    color: #fdde76;
+  }
+
+  .rating label:hover,
+  .rating label:hover ~ label {
+    color: #fdde76;
+  }
+
+  .review-input {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    resize: vertical;
+    font-family: inherit;
+  }
+
+  .char-count {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 10px;
+    text-align: right;
+  }
+
+  .submit-btn {
+    background-color: #839974;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  .submit-btn:hover {
+    background-color: #839974;
+  }
+
+  .submit-btn:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+
+
+
+  .cancelbtn{
+    position: absolute;
+    border: #335288;
+    background-color: #8d96a5;
+    color: white;
+    border: none;
+    margin-left: 600px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s;
+  }
+  .cancelbtn:hover {
+    background-color: #df6840;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; /* 讓背景不隨滾動 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/grassdog.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.1; /* 設定透明度 */
+    z-index: -1; /* 讓背景圖片不影響內容 */
+  }
+
+  .breadcrumbs {
+    background-image: url('../img/grassdog.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    padding: 120px 0px;
+  }
+  

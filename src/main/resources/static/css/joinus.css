@@ -1,0 +1,182 @@
+body::before {
+  content: "";
+  position: fixed; /* 讓背景不隨滾動 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../img/jointaxi.jpg'); 
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.1; /* 設定透明度 */
+  z-index: -1; /* 讓背景圖片不影響內容 */
+}
+
+
+.breadcrumbs {
+	background-image: url('../img/jointaxi.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: relative;
+	padding: 120px 0px;
+}
+
+body{
+  font-family: 'Poppins', sans-serif;
+font-weight: 400;
+font-size:18px;
+color:#888;
+}
+.titlename {
+    
+  text-align: center;
+  padding: 30px;
+  font-size: 40px;
+  width: 400px;
+  margin: 20px auto;
+  border-radius: 10px;
+  background-color:#839974;
+  color: white;
+}
+
+article.info{
+    background-color: white;
+    width: 800px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  }
+  article.info div.content_block div.left_block{
+    padding: 5px 10px 10px 5px;
+
+  }
+  
+
+  article.info #lng, article.info #lat{
+    width: 140px;
+  }
+  
+  article.info footer.footer{
+    /* border: 2px solid red; */
+    margin-top: 5px;
+  }
+  article.info footer.footer p{
+    margin: 0;
+    font-size: 14px;
+    display: inline-block;
+  }
+  article.info footer.footer p:last-child{
+    margin-left: 20px;
+  }
+  article.info footer.footer p > span{
+    background-color: lightblue;
+    display: inline-block;
+    width: 20px;
+    text-align: center;
+    border-radius: 2px;
+  }
+
+  article.info footer.footer div.action_block button{
+    cursor: pointer;
+  }
+
+  
+  article.info div.content_block{
+    /* border: 1px solid red; */
+    display: flex;
+  }
+  article.info div.content_block div.left_block{
+    /* border: 1px solid green; */
+    flex-basis: 150px;
+    flex-shrink: 0;
+  }
+  
+  article.info div.content_block div.right_block{
+    /* border: 1px solid red; */
+    flex-grow: 1;
+  }
+  article.info div.content_block div.block{
+    margin-bottom: 8px;
+  }
+
+  article.info div.content_block div.block:last-child{
+    margin-bottom: 0;
+  }
+  
+  article.info #licence_photo{
+    display: none;
+  }
+  
+  #preview{
+    background-color: #eae8df;
+    display: inline-block;
+    width: 300px;
+    height: 200px;
+    position: relative;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 10px;
+    
+  }
+  #preview span.text{
+    position: absolute;
+    display: inline-block;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: rgb(126, 126, 122);
+    font-size: 30px;
+  }
+  .text i {
+    margin-left: 8px; /* 調整這裡的數值以增加距離，例如 8px、10px 等 */
+}
+
+  #preview img.preview_img{
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+
+  }
+
+  #the_form{
+    width: 100%;
+  }
+
+  .block{
+    margin-bottom: 5px;
+    margin-top: 5px;
+  }
+
+  label{
+    width: 80px;
+    margin-right: 15px;
+  }
+
+  #applybtn {
+    background-color:#335288;
+    color: #ffffff;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 720px;
+    text-align: center;
+    display: block;
+  }
+
+  #applybtn:hover {
+    background-color:#22385e;
+    color: #ffffff;
+    border: none;
+  }
+
+  input[type="email"],
+  input[type="tel"],
+  input[type="text"]{
+    width: 300px;
+  }
