@@ -8,6 +8,10 @@ import jakarta.persistence.*;
 public class AdminVO implements java.io.Serializable {
     private static final long serialVersionUID = 1L;
 
+    public AdminVO(){
+
+    }
+
     @Id
     @Column(name = "admin_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
