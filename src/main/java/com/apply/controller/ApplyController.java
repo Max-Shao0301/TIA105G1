@@ -1,7 +1,7 @@
 package com.apply.controller;
 
 
-import com.mail.MailService;
+import com.springbootmail.MailService;
 import com.apply.model.ApplyService;
 import com.apply.model.ApplyVO;
 import org.springframework.beans.factory.annotation.Autowired;
