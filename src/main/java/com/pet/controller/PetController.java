@@ -16,7 +16,7 @@ public class PetController {
 	@Autowired
 	private PetService petService;
 
-	//測試功能用 
+	//測試功能用 測試push
 	
 	@GetMapping("/petget/memId")
 	public String getPetBymemId() {
