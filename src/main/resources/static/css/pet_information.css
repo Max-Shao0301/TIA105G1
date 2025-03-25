@@ -1,0 +1,152 @@
+.body_text{
+    font-family: Arial, sans-serif;
+    margin: auto    ;
+    padding: 20px;
+    /* max-width: 400px; */
+    height: 100%;
+    background: #ffff;
+    justify-content: center;
+    align-items: center;
+    width: 600px;
+    box-shadow: 0 0 1000px rgba(0, 0, 0, 0.1);
+    border: 2px solid Gainsboro;
+    border-radius: 10px ;
+    font-size: 16px;
+}
+
+.q_div{
+    margin: 15px 0px 15px 0px;
+}
+
+label{
+    margin: 0px;
+}
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.question_title {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+} 
+
+/* 選擇框 */
+.question_input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* 文字輸入框 */
+.input-text, .textarea {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+
+/* 單選按鈕群組 */
+#q2,#q3 {
+    width: 100%;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+}
+/* 文字區域 */
+.textarea {
+    height: 60px;
+    resize: none;
+}
+
+/* 上下頁按鈕 */
+.page_break_div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
+.page_break {
+    background-color: #839974;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.page_break:hover  {
+    background-color: #768968;
+}
+.none{
+    display: none;
+}
+#lightbox{
+    /* border: 2px solid blue; */
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background-color: hsla(0, 0%, 0%, .5);
+    color: white;
+    cursor: default;
+    z-index: 100;
+}
+#petInfo_Art{
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width:35%;
+    max-width: 500px;
+    border-radius: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: default;
+    text-align: center;
+    height: 150px;
+}
+.close_card_btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: grey;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+.petInfo_btn{
+    background-color: #839974;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 20%;
+    margin-top: 20px;
+}
+#petInfo_Art > p{
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: bold ;
+    
+    
+}

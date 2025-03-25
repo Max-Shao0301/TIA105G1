@@ -1,0 +1,88 @@
+.body_text {
+    display: flex;
+    font-family: Arial, sans-serif;
+    margin: auto;
+    padding: 20px;
+    height: 100%;
+    background: #ffff;
+    justify-content: center;
+    align-items: center;
+    width: 650px;
+    box-shadow: 0 0 1000px rgba(0, 0, 0, 0.1);
+    border: 2px solid Gainsboro;
+    border-radius: 10px ;
+    font-size: 16px;
+    text-align: center;
+}
+.agreement_text {
+    width: 80%;
+    max-width: 600px;
+    align-items: center;
+    text-align: center;
+    margin: 10px;
+
+}
+.title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.agreement-content h4 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+}
+
+.agreement-content ol {
+    padding-left: 0;
+    display: inline-block;
+    text-align: left;
+    line-height: 1.6;
+    margin-bottom: 10px;    
+
+}
+.agreement-content li {
+    margin-bottom: 10px;
+}
+.agreement-footer {
+    text-align: center;
+    margin-top: 10px;
+}
+
+
+
+.agreement-footer label {
+    /* display: flex; */
+    align-items: center;
+    gap: 5px;
+}
+/* 上下頁按鈕 */
+.page_break_div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.page_break {
+    background-color: #839974;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 20px;
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.page_break:hover  {
+    background-color: #768968;
+}
+p#remark{
+    color: red;
+}
+label:has(.notCheck){
+    color: red;
+    font-weight: bold;
+}
