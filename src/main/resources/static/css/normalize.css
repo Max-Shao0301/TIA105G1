@@ -694,7 +694,7 @@ textarea {
 	border: 1px solid #ccc;
 	border-radius: 3px;
 	padding: 3px;
-	font-weight:800;
+	font-weight:400;
 }
 
 input[type="text"]:focus,
