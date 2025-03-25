@@ -1,0 +1,79 @@
+.Feautes img {
+    width: 100%; /* 讓圖片填滿寬度 */
+    height: 100vh; /* 高度佔滿整個視窗 */
+    object-fit: cover; /* 確保圖片填滿而不變形 */
+    display: block;
+    
+}
+/* .section {
+    padding: 0px 0;
+    height: 100%;
+} */
+.main-menu{
+    margin-left: 35%;
+}
+.get-quote{
+    margin-right: 90%;
+}
+
+
+#footer{
+    background-color: #839974;
+}
+
+.header-inner .col-12{
+    padding: 0;
+}
+.header {
+    position: relative;
+    z-index: 10;
+}
+
+/* 確保 Logo 容器不限制大小 */
+.logo {
+    width: auto; /* 自動適應圖片大小 */
+    max-width: none; /* 取消最大寬度限制 */
+}
+
+/* 初始時 Logo */
+.logo img {
+    position: absolute;
+    top: -20px; /* 讓它稍微往上，跨越 topbar */
+    left:-40px; /* 靠右 */
+    width: 150%; /* 你可以改成 1000px 看是否有變化 */
+    max-width: none; /* 取消最大寬度限制 */
+    height: auto; /* 維持比例 */
+    transition: all 0.3s ease-in-out;
+}
+
+/* 滾動後的狀態 */
+.header.scrolled .logo img {
+    position: fixed; /* 固定在 header-inner */
+    top: 10px; /* 貼近 header */
+    left: 30px; /* 滾動後仍然靠右 */
+    width: 25%; /* 滾動後放大 */
+}
+@media all and (max-width: 770px){
+    .logo img{width: 90%
+    }
+    .header .header-inner{
+        background-color: #eae8df;
+    }
+}
+
+.nice-select {
+    margin: 0 0 0 20px;
+}
+
+.toptitle {
+    height:50%;
+    background-color: #839974;
+    opacity: 0.8;
+    font-size: large;
+    color: white;
+    display: flex; /* 新增 */
+    justify-content: center; /* 水平置中 */
+    align-items: center; /* 垂直置中 */
+    font-size: 50px;
+}
+

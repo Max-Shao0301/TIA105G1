@@ -1,0 +1,117 @@
+body {
+    background-color: #f8f9fa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+body {
+    position: relative;
+    margin: 0;
+    height: 100vh;
+}
+
+body::before {
+    content: "";
+    position: fixed; /* 讓背景不隨滾動 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/dogpic.png'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15; /* 設定透明度 */
+    z-index: -1; /* 讓背景圖片不影響內容 */
+}
+img{
+    width: 300px;
+    margin-bottom: 30px;
+}
+.login-container {
+    max-width: 400px;
+    width: 100%;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+.login-container h2 {
+    margin-bottom: 20px;
+    color: #333;
+}
+.pet-icon {
+    font-size: 50px;
+    color: #ff6f61;
+    margin-bottom: 20px;
+}
+.form-control {
+    border-radius: 20px;
+}
+.btn-primary {
+    border-radius: 20px;
+    width: 100%;
+    background-color:#839974 ;
+    border: none;
+}
+.btn-primary:hover {
+    border-radius: 20px;
+    width: 100%;
+    background-color:#708065 ;
+    border: none;
+    
+}
+.btn-primary:active {
+    border-radius: 20px;
+    width: 100%;
+    background-color:#839974;
+    border: none;
+}
+.btn-primary:disabled {
+    border-radius: 20px;
+    width: 100%;
+    background-color:#df6840;
+    border: none;
+
+}
+.remember-me {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+.social-login {
+    text-align: center;
+    margin-top: 20px;
+}
+.social-login button {
+    margin: 5px;
+}
+.register-link {
+    text-align: center;
+    margin-top: 20px;
+}
+.btn-outline-primary{
+    color: #335288;
+    border-color:#335288;
+  }
+.btn-outline-primary:hover{
+    background: #335288;
+    border-color:#335288;
+}
+.btn-outline-danger{
+    color: #df6840;
+    border-color:#df6840;
+}
+
+.btn-outline-danger:hover{
+    background: #df6840;
+    border-color:#df6840;
+}
+a{
+    color: #335288;
+}
