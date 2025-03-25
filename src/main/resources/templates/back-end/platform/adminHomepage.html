@@ -154,7 +154,6 @@
               <form th:method="post"
                     th:action="@{/updateResult}">
                 <div class="buttons">
-                  <input type="hidden" name="action" value="update">
                   <input type="hidden" name="applyId" value="">
                   <input type="hidden" name="results" id="rs">
                   <button type="submit" class="approve" id="approve-btn">聘用</button>
@@ -167,7 +166,7 @@
 
         <div id="member" class="content">
           <h2 class="content_title">會員管理</h2>
-          <table id="myTable1" class="display">
+          <table id="myTable1" class="display" data-type="member">
             <thead>
             <tr>
               <th>顧客編號</th>
@@ -213,7 +212,7 @@
         </div>
         <div id="worker" class="content">
           <h2 class="content_title">服務人員管理</h2>
-          <table id="myTable2" class="display">
+          <table id="myTable2" class="display" data-type="worker">
             <thead>
             <tr>
               <th>服務人員編號</th>
@@ -247,9 +246,8 @@
                 <td th:text="${#temporals.format(staffVO.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${#temporals.format(staffVO.updateTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td>
-                  <form action="#" th:method="post">
-                    <input type="hidden" name="staff_id" value="${staffVO.staff_id}">
-                    <input type="hidden" name="action" value="delete">
+                  <form th:action="@{/updateStaffStatus}" th:method="post">
+                    <input type="hidden" name="staff_id" th:value="${staffVO.staffId}">
                     <input type="hidden" name="status" id="st2">
                     <button class="ban" type="submit" style="border: none; background: none; padding: 0; cursor: pointer;">
 									<span>
@@ -372,17 +370,17 @@
 
 
             //停權 監聽所有表格內的停權按鈕（使用事件委派）
-            $(document).on("click", ".fa-ban", function () {
+            $(document).on("click", ".fa-ban", function (event) {
               let row = $(this).closest("tr"); // 取得當前行
               let statusCell = row.find("td:nth-child(7)"); // 找到帳號狀態的欄位（第7個欄位）
+              let tableType = $(this).closest("table").data("type"); // 取得表格的 data-type 屬性
               let userId = row.find("td:first").text(); // 取得用戶編號
-
+              sessionStorage.setItem("currentTab", tableType); // 根據表格類型記錄當前頁面
               if (!confirm(`確定要停權用戶嗎？`)) {
-                return;
-
-                // 可以在這裡加入 AJAX 來同步更新後端
-                // $.post("/updateStatus", { userId: userId, status: "已停權" });
+                event.preventDefault();
               }
+
+
             });
 
 
