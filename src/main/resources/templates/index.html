@@ -11,35 +11,35 @@
 		
 		<!-- Title -->
         <title>寵愛牠 PawCares</title>
-    	<link rel="icon" href="img/logo.png">
+    	<link rel="icon" th:href="@{images/logo.png}">
 		
 		<!-- Google Fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" th:href="@{css/bootstrap.min.css}">
 		<!-- Nice Select CSS -->
-		<link rel="stylesheet" href="css/nice-select.css">
+		<link rel="stylesheet" th:href="@{css/nice-select.css}">
 		<!-- Font Awesome CSS -->
-        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" th:href="@{css/font-awesome.min.css}">
 		<!-- icofont CSS -->
-        <link rel="stylesheet" href="css/icofont.css">
+        <link rel="stylesheet" th:href="@{css/icofont.css}">
 		<!-- Slicknav -->
-		<link rel="stylesheet" href="css/slicknav.min.css">
+		<link rel="stylesheet" th:href="@{css/slicknav.min.css}">
 		<!-- Owl Carousel CSS -->
-        <link rel="stylesheet" href="css/owl-carousel.css">
+        <link rel="stylesheet" th:href="@{css/owl-carousel.css}">
 		<!-- Datepicker CSS -->
-		<link rel="stylesheet" href="css/datepicker.css">
+		<link rel="stylesheet" th:href="@{css/datepicker.css}">
 		<!-- Animate CSS -->
-        <link rel="stylesheet" href="css/animate.min.css">
+        <link rel="stylesheet" th:href="@{css/animate.min.css}">
 		<!-- Magnific Popup CSS -->
-        <link rel="stylesheet" href="css/magnific-popup.css">
+        <link rel="stylesheet" th:href="@{css/magnific-popup.css}">
 		
 		<!-- Medipro CSS -->
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/responsive.css">
-		<link rel="stylesheet" href="/css/add.css">
+        <link rel="stylesheet" th:href="@{css/normalize.css}">
+        <link rel="stylesheet" th:href="@{css/style.css}">
+        <link rel="stylesheet" th:href="@{css/responsive.css}">
+		<link rel="stylesheet" th:href="@{css/add.css}">
     </head>
     <body>
 	
@@ -74,10 +74,7 @@
             </div>
         </div>
         <!-- End Preloader -->
-		
-		<!-- Get Pro Button -->
-		
-	
+        
 		<!-- Header Area -->
 		<header class="header" >
 			<!-- Topbar -->
@@ -89,8 +86,10 @@
 						<div class="col-lg-6 col-md-7 col-12">
 							<!-- Top Contact -->
 							<ul class="top-contact">
-								<li><a href="./login.html"><i class="icofont-login"></i>會員登入</a></i></li>
-								<li></i><a href="member.html"><i class="icofont-ui-user"></i>會員資料</a></li>
+								<li th:if="${!isLoggedIn}"><a th:href="@{/front-end/login}"><i class="icofont-login"></i>會員登入</a></li>
+								<li th:if="${isLoggedIn}"><i class="icofont-paw"></i>Hi,<span th:text="${memName}"></span>!</li>
+								<li th:if="${!isLoggedIn}"><a th:href="@{/front-end/register}"><i class="icofont-ui-user"></i>會員註冊</a></li>
+								<li th:if="${isLoggedIn}"><a th:href="@{/front-end/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
 							</ul>
 							<!-- End Top Contact -->
 						</div>
@@ -106,7 +105,7 @@
 							<div class="col-lg-3 col-md-3 col-12">
 								<!-- Start Logo -->
 								<div class="logo">
-									<img src="img/title.png" alt="#"></a>
+									<img th:src="@{/images/title.png}" alt="#"></a>
 								</div>
 								<!-- End Logo -->
 								<!-- Mobile Nav -->
@@ -119,11 +118,11 @@
 									
 									<nav class="navigation">
 										<ul class="nav menu">											
-											<li><a href="">關於我們</a></li>
-											<li><a href="./joinus.html">加入我們 </a></li>
-											<li><a href="#">常見問題 </a></li>
-											<li><a href="./orderlist.html">訂單檢視 </a></li>
-											<li class="active"><a href="#">首頁</a>	
+											<li><a th:href="@{/front-end/joinus}">關於我們</a></li>
+											<li><a th:href="@{/front-end/joinus}">加入我們 </a></li>
+											<li><a th:href="@{/front-end/joinus}">常見問題 </a></li>
+											<li><a th:href="@{/front-end/orderlist}">訂單檢視 </a></li>
+											<li class="active"><a th:href="@{/}">首頁</a>	
 										</ul>
 									</nav>
 								</div>
@@ -131,7 +130,7 @@
 							</div>
 							<div class="col-lg-2 col-12">
 								<div class="get-quote">
-									<a href="appointment.html" class="btn">預約服務</a>
+									<a th:href="@{/front-end/appointment}" class="btn">預約服務</a>
 								</div>
 							</div>
 						</div>
@@ -144,7 +143,7 @@
 		<section class="slider">
 			<div class="hero-slider">
 				<!-- Start Single Slider -->
-				<div class="single-slider" style="background-image:url('images/sleepdog.jpg')">
+				<div class="single-slider" th:style="'background-image: url(' + @{/images/sleepdog.jpg} + ');'">
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-7">
@@ -152,8 +151,8 @@
 									<h1>We Provide <span>Pet Taxi</span> Services That You Can <span>Trust!</span></h1>
 									<p>寵愛牠致力於打造便利、安全的寵物計程車服務，讓毛孩隨時隨地享受充滿愛與關懷的出行體驗</p>
 									<div class="button">
-										<a href="#" class="btn">預約寵物計程車</a>
-										<a href="./orderlist.html" class="btn primary">訂單檢視</a>
+										<a th:href="@{/front-end/appointment}" class="btn">預約寵物計程車</a>
+										<a th:href="@{/front-end/orderlist}" class="btn primary">訂單檢視</a>
 									</div>
 								</div>
 							</div>
@@ -162,7 +161,7 @@
 				</div>
 				<!-- End Single Slider -->
 				<!-- Start Single Slider -->
-				<div class="single-slider" style="background-image:url('img/catpic.JPG')">
+				<div class="single-slider" th:style="'background-image: url(' + @{/images/catpic.jpg} + ');'">
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-7">
@@ -170,8 +169,8 @@
 									<h1>We Provide <span>Pet Taxi</span> Services That You Can <span>Trust!</span></h1>
 									<p>寵愛牠致力於打造便利、安全的寵物計程車服務，讓毛孩隨時隨地享受充滿愛與關懷的出行體驗</p>
 									<div class="button">
-										<a href="#" class="btn">預約寵物計程車</a>
-										<a href="./orderlist.html" class="btn primary">訂單檢視</a>
+										<a th:href="@{/front-end/appointment}" class="btn">預約寵物計程車</a>
+										<a th:href="@{/front-end/orderlist}" class="btn primary">訂單檢視</a>
 									</div>
 								</div>
 							</div>
@@ -180,7 +179,7 @@
 				</div>
 				<!-- Start End Slider -->
 				<!-- Start Single Slider -->
-				<div class="single-slider" style="background-image:url('img/dirvingdog.png')">
+				<div class="single-slider" th:style="'background-image: url(' + @{/images/dirvingdog.png} + ');'">
 					<div class="container">
 						<div class="row">
 							<div class="col-lg-7">
@@ -188,8 +187,8 @@
 									<h1>We Provide <span>Pet Taxi</span> Services That You Can <span>Trust!</span></h1>
 									<p>寵愛牠致力於打造便利、安全的寵物計程車服務，讓毛孩隨時隨地享受充滿愛與關懷的出行體驗</p>
 									<div class="button">
-										<a href="#" class="btn">預約寵物計程車</a>
-										<a href="./orderlist.html" class="btn primary">訂單檢視</a>
+										<a th:href="@{/front-end/appointment}" class="btn">預約寵物計程車</a>
+										<a th:href="@{/front-end/orderlist}" class="btn primary">訂單檢視</a>
 									</div>
 								</div>
 							</div>
