@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
@@ -18,6 +19,7 @@ public class MailService {
         this.javaMailSender = javaMailSender;
     }
 
+    @Transactional
     public void sendPlainText(Collection<String> receivers, String subject, String content) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(receivers.toArray(new String[0]));// 設定收件人
