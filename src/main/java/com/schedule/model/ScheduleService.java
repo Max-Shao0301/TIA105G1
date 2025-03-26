@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.enums.*;
 
 @Service("scheduleService")
 public class ScheduleService {
@@ -29,7 +30,7 @@ public class ScheduleService {
 	public void deleteSchedule(Integer schId) {
 	    ScheduleVO scheduleVO = getOneSchedule(schId);
 	    if (scheduleVO != null) {
-	        scheduleVO.setStatus(0);
+	        scheduleVO.setStatus(Status.close.getNumber());
 	        repository.save(scheduleVO);
 	    }
 	}
