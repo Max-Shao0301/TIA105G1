@@ -1,7 +1,9 @@
 package com.orders.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import com.orderpet.model.OrderPetVO;
 import com.schedule.model.ScheduleVO;
 import com.staff.model.StaffVO;
 import org.hibernate.annotations.DynamicInsert;
@@ -80,11 +82,19 @@ public class OrdersVO implements java.io.Serializable {
 	@Column(name = "update_time")
 	private LocalDateTime updateTime;
 
-//	@OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	private List<OrderPetVO> pet;
+	@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private List<OrderPetVO> pet;
 
 	public OrdersVO() {
 
+	}
+
+	public List<OrderPetVO> getPet() {
+		return pet;
+	}
+
+	public void setPet(List<OrderPetVO> pet) {
+		this.pet = pet;
 	}
 
 	public Integer getOrderId() {
@@ -199,4 +209,19 @@ public class OrdersVO implements java.io.Serializable {
 		this.updateTime = updateTime;
 	}
 
+	public ScheduleVO getSchedule() {
+		return schedule;
+	}
+
+	public void setSchedule(ScheduleVO schedule) {
+		this.schedule = schedule;
+	}
+
+	public StaffVO getStaff() {
+		return staff;
+	}
+
+	public void setStaff(StaffVO staff) {
+		this.staff = staff;
+	}
 }
