@@ -2,7 +2,9 @@ package com.admin.model;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicInsert;
 
+@DynamicInsert // 讓JAVA不會在SQL有預設值時 因為沒寫欄位而傳NULL過去
 @Entity
 @Table(name = "admin")
 public class AdminVO implements java.io.Serializable {

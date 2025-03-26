@@ -2,9 +2,11 @@ package com.apply.model;
 
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.time.LocalDateTime;
 
+@DynamicInsert // 讓JAVA不會在SQL有預設值時 因為沒寫欄位而傳NULL過去
 @Entity
 @Table(name = "apply")
 public class ApplyVO implements java.io.Serializable {
@@ -28,7 +30,7 @@ public class ApplyVO implements java.io.Serializable {
     private String applyPhone;
 
     @Column(name="apply_gender")
-    private String applyGender;
+    private Integer applyGender;
 
     @Column(name="license")
     private byte[] license;
@@ -80,11 +82,11 @@ public class ApplyVO implements java.io.Serializable {
         this.applyPhone = applyPhone;
     }
 
-    public String getApplyGender() {
+    public Integer getApplyGender() {
         return applyGender;
     }
 
-    public void setApplyGender(String applyGender) {
+    public void setApplyGender(Integer applyGender) {
         this.applyGender = applyGender;
     }
 
