@@ -13,7 +13,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.staff.model.StaffVO;
+import org.hibernate.annotations.DynamicInsert;
 
+@DynamicInsert // 讓JAVA不會在SQL有預設值時 因為沒寫欄位而傳NULL過去
 @Entity
 @Table(name = "schedule")
 public class ScheduleVO implements java.io.Serializable {
