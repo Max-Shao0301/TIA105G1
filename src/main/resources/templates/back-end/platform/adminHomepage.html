@@ -52,12 +52,12 @@
             </tr>
             </thead>
             <tbody>
-
+            <th:block th:each="ordersVO : ${ordersList}">
               <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td th:text="${ordersVO.orderId}"></td>
+                <td th:text="${ordersVO.createTime}"></td>
+                <td th:text="${ordersVO.member.memName}"></td>
+                <td th:text="${ordersVO.staff.staffName}"></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -68,6 +68,7 @@
                 <td></td>
               </tr>
 
+            </th:block>
             </tbody>
           </table>
         </div>

@@ -6,6 +6,8 @@ import com.apply.model.ApplyService;
 import com.apply.model.ApplyVO;
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
+import com.orders.model.OrdersService;
+import com.orders.model.OrdersVO;
 import com.staff.model.StaffService;
 import com.staff.model.StaffVO;
 import jakarta.servlet.ServletOutputStream;
@@ -40,6 +42,9 @@ public class AdminController {
     @Autowired
     private MemberService memberService;
 
+    @Autowired
+    private OrdersService ordersService;
+
     @GetMapping("/admin/home/page")
     public String homePage(Model model) {
         /*顯示履歷列表*/
@@ -53,6 +58,10 @@ public class AdminController {
         /*顯示會員列表*/
         List<MemberVO> memberList = memberService.getAll();
         model.addAttribute("memberList", memberList);
+
+        /*顯示訂單列表*/
+        List<OrdersVO> ordersList = ordersService.getAll();
+        model.addAttribute("ordersList", ordersList);
 
         return "/back-end/platform/adminHomepage";
     }
