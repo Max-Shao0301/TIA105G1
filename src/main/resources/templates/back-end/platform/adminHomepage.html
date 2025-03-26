@@ -39,8 +39,8 @@
             <tr>
               <th>訂單編號</th>
               <th>訂單建立時間</th>
-              <th>顧客編號</th>
-              <th>服務人員編號</th>
+              <th>顧客姓名</th>
+              <th>服務人員姓名</th>
               <th>上車地點</th>
               <th>下車地點</th>
               <th>支付方式</th>
@@ -48,6 +48,7 @@
               <th>訂單金額</th>
               <th>訂單備註</th>
               <th>訂單狀態</th>
+              <th>客戶評論</th>
               <th>訂單評價</th>
             </tr>
             </thead>
@@ -55,17 +56,32 @@
             <th:block th:each="ordersVO : ${ordersList}">
               <tr>
                 <td th:text="${ordersVO.orderId}"></td>
-                <td th:text="${ordersVO.createTime}"></td>
+                <td th:text="${#temporals.format(ordersVO.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
                 <td th:text="${ordersVO.member.memName}"></td>
                 <td th:text="${ordersVO.staff.staffName}"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td th:text="${ordersVO.onLocation}"></td>
+                <td th:text="${ordersVO.offLocation}"></td>
+                <td th:switch="${ordersVO.payMethod}">
+                  <span th:case="0">點數</span>
+                  <span th:case="1">刷卡</span>
+                  <span th:case="2">點數 + 刷卡</span>
+                </td>
+                <td th:text="${ordersVO.point}"></td>
+                <td th:text="${ordersVO.payment}"></td>
+                <td th:text="${ordersVO.notes}"></td>
+                <td th:switch="${ordersVO.status}">
+                  <span th:case="0" style="color: red">已取消</span>
+                  <span th:case="1" style="color: #0b0b0b">未完成</span>
+                  <span th:case="2" style="color: green">已完成</span>
+                </td>
+                <td th:text="${ordersVO.rating}"></td>
+                <td>
+                <!-- ordersVO.star 的值，產生對應數量的 HTML 元素  -->
+                <!-- #numbers.sequence(起始值, 結束值) 是 Thymeleaf 數列產生器-->
+                  <span th:each="i : ${#numbers.sequence(1, ordersVO.star)}">
+                    <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                  </span>
+                </td>
               </tr>
 
             </th:block>
