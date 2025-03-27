@@ -143,10 +143,17 @@ label{
     width: 20%;
     margin-top: 20px;
 }
-#petInfo_Art > p{
+#petInfo_Art > #updatePet_P{
     margin-top: 30px;
     font-size: 20px;
     font-weight: bold ;
-    
-    
+}
+#petInfo_Art > #newPet_P{
+    margin-top: 25px;
+    font-size: 20px;
+    font-weight: bold ;
+}
+.newPet{
+    width: 40%;
+    margin-top: 10px;
 }

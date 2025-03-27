@@ -1,4 +1,4 @@
-
+//@CrossOrigin(origins = "http://127.0.0.1:5500")
 //==========全域參數宣告==========//
 const steps = [
     "appointment",
@@ -10,7 +10,7 @@ const steps = [
 //抓視窗高用的
 const windowHeight = window.innerHeight;
 //使用者的會員ID
-var memberId;
+let memberId;
 // 當前畫面頁數
 let currenStep = 0;
 //訂單資料
@@ -107,8 +107,8 @@ let petInformation =`
 			</div>
 			<div class="q_div" id="q2">
 				<span class="question_title">毛小孩類別</span>
-				<label><input type="radio" id="typeCat" name="petType" value="貓"> 貓</label>
-				<label><input type="radio" id="typeDog" name="petType" value="狗"> 狗</label>
+				<label><input type="radio" id="typeCat" name="petType" value="cat"> 貓</label>
+				<label><input type="radio" id="typeDog" name="petType" value="dog"> 狗</label>
 			</div>
 	
 			<div class="q_div" id="q3">
@@ -226,16 +226,22 @@ function getMemberId(){
 }
 
 async function getMemInfo(){
-	let getMemInfo_URL = `http://localhost:8081/TIA105G1/memberServlet?action=getMember&memId=${memberId}`;
+	let getMemInfo_URL = `http://localhost:8080/appointment/getMemInfo`;
     try{
-		let res = await fetch(getMemInfo_URL);
+		let res = await fetch(getMemInfo_URL, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({memId:memberId})
+		});
 		let data =await res.json();
 		console.log(data);
 		console.log(data.memName);
 		
 		order.memName = data.memName;
 		order.memPhone = data.memPhone 
-		order.memPoints = data.memPoints 
+		order.memPoints = data.point
 		console.log(order);
 
 	} catch(error){
@@ -262,28 +268,28 @@ let card_options = '';
 let error_msg ;
 //取得可上班員工
 async function getCan_Work_Staff(){
-	let getSchedule_URL = 'http://localhost:8081/TIA105G1/staffServlet?action=getSchedule&';
+	let getSchedule_URL = 'http://localhost:8080/appointment/getbookableStaff?';
 
 	let date = $('#date_picker').val();
 	let apptTime = $("#time_menu Option:selected").val();
 	order.appDate = date;
 	order.apptTime = apptTime;
 
-	getSchedule_URL += `apptTime=${apptTime}&date=${date}`;
+	getSchedule_URL += `date=${date}&apptTime=${apptTime}`;
 	console.log(getSchedule_URL);
 	try{
 		let res = await fetch(getSchedule_URL);
 		let data =await res.json();
 		console.log(data);
 
-		if(data.result == null && data[0].result== 'success'){
-			for(let i = 1; i <data.length ; i++){
-				let staff_name = data[i].name;
+		if(data.length > 0 ){
+			for(let i = 0; i <data.length ; i++){
+				let staff_name = data[i].staffName;
 				let staff_introduction = data[i].introduction;
 				let man_img = "/images/staff_man.jpg";
 				let woman_img = "/images/staff_woman.jpg"
 				card_options += `<div class='service_card'>
-										<img class = "staff_img" src = "${data[i].gender == 1 ? man_img : woman_img}" alt="">
+										<img class = "staff_img" src = "${data[i].staffGender == 1 ? man_img : woman_img}" alt="">
 									<div class ='staff_info'>
 										<p class = "staff_name" >${staff_name}</p>
 										<p class = "staff_introduction">${staff_introduction}</p>
@@ -292,32 +298,42 @@ async function getCan_Work_Staff(){
 								</div>`
 			};
 			return true;
-		} 
-		if(!data.ok){
-			error_msg = data;
+		}
+		if(data.length == 0){
+			alert('沒人上班')
 			return false;
-		};
+		}
+		if(!res.ok){
+			if ( data.status == 400) {
+				console.log('-1');
+				alert(data.errors[0].defaultMessage);
+			}
+			console.log(data.errors[0].defaultMessage);
+			console.log('-2');
+			
+			return false;
+		}
 	} catch(error){
-		console.log(error);
+		return false;
 	}
 }
 
-function error_handling(error_msg){
-	const back_msg = {
-        noStaff: '沒人上班',
-        error: {
-            '-1': '你沒給日期',
-            '-2': '日期格式有錯，請用月曆選單輸入',
-			'-3': '請勿輸入今日以前的日期，請用月曆選單輸入'
-        }
-    };
-	if(error_msg.result == 'noStaff'){
-		alert(back_msg.noStaff);
-	} else if (error_msg.result == 'error'){
-		alert(back_msg.error[error_msg.date]);
-	}
+// function error_handling(error_msg){
+// 	const back_msg = {
+//         noStaff: '沒人上班',
+//         error: {
+//             '-1': '你沒給日期',
+//             '-2': '日期格式有錯，請用月曆選單輸入',
+// 			'-3': '請勿輸入今日以前的日期，請用月曆選單輸入'
+//         }
+//     };
+// 	if(error_msg.result == 'noStaff'){
+// 		alert(back_msg.noStaff);
+// 	} else if (error_msg.result == 'error'){
+// 		alert(back_msg.error[error_msg.date]);
+// 	}
 	
-}
+// }
 // 選擇服務人員的選項迴圈
 function s_card(){
 	$('.card_div').append(card_options);
@@ -326,18 +342,20 @@ function s_card(){
 //==========step3==========//
 //取得user的寵物
 let savedPets_Op ="";
-let petData;
+// let petData;
 async function getMember_Pet() {
 	
-	let getMember_Pet_URL = 'http://localhost:8081/TIA105G1/petServlet?action=getPet&';
-	getMember_Pet_URL +=`memberId=${memberId}` 
+	let getMember_Pet_URL = 'http://localhost:8080/appointment/getMemberPet';
+	// getMember_Pet_URL +=`memberId=${memberId}` 
 	console.log(getMember_Pet_URL)
 	try{
 		let res = await fetch(getMember_Pet_URL);
 		 data = await res.json();
-		// console.log(data);  
-		if(data != ""){
-			petData = data;
+		console.log(data);  
+		console.log(res.ok);
+		console.log(data.length);
+		if(res.ok && data.length > 0){
+			// petData = data;
 			
 			data.forEach(function(pet){
 				let id = pet.petId;
@@ -358,8 +376,8 @@ async function getMember_Pet() {
 			</div>
 			<div class="q_div" id="q2">
 				<span class="question_title">毛小孩類別</span>
-				<label><input type="radio" id="typeCat" name="petType" value="貓"> 貓</label>
-				<label><input type="radio" id="typeDog" name="petType" value="狗"> 狗</label>
+				<label><input type="radio" id="typeCat" name="petType" value="cat"> 貓</label>
+				<label><input type="radio" id="typeDog" name="petType" value="dog"> 狗</label>
 			</div>
 	
 			<div class="q_div" id="q3">
@@ -402,7 +420,9 @@ async function getMember_Pet() {
 //跳頁更新寵物
 let petInfo;
 
-let petServlet_URL = 'http://localhost:8081/TIA105G1/petServlet';
+// let petServlet_URL = 'http://localhost:8081/TIA105G1/petServlet';
+let addPet_URL ='http://localhost:8080/appointment/postPet';
+let updatePet_URL ='http://localhost:8080/appointment/putPet'
   function checkPetInfoChange(){
 	return new Promise((resolve, reject) => {
 		thisPetGender = $('input[name="petGender"]:checked').val() || null;
@@ -411,28 +431,30 @@ let petServlet_URL = 'http://localhost:8081/TIA105G1/petServlet';
 		thisPetWeight = $('#petWeight').val().match(/\d+(\.\d+)?/g) ;
 		thisPetWeight = thisPetWeight ? parseFloat(thisPetWeight[0]) : null;
 		thisPetNotes = $('#petNotes').val();
+		let petInfoBtn_No = $("#petInfo_Art").find("#no")
+		let petInfoBtn_Yes =$("#petInfo_Art").find("#yes")
 		if(thisPetGender == null || thisPetName == null || thisPetType == null || thisPetWeight == null){
 			alert('資料請物留空 請再檢查一次');
 			resolve(false);
 			return ;
 		}
 		if($('#savedPets').val() == 'noPet') {
-			petInfoLightBox(`<p>是否將此筆資料儲存 以利下次填寫</p>`);
-			$('#no').off('click').on('click',function(){
-				// changePageBoolean = true;
-				resolve(true);
-				return;
-			})
-			$('#yes').off('click').on('click',async function(){
+			// if(!($("#petInfo_Art").find("#no").hasClass('none'))){
+			petInfoBtn_No.addClass('none');
+			petInfoBtn_Yes.text('確定');
+			petInfoBtn_Yes.addClass('newPet');
+
+			petInfoLightBox(`<p id="newPet_P" >此毛小孩資料將存於會員資料中<br>以利下次填寫</p>`);
+			$(petInfoBtn_Yes).off('click').on('click',async function(){
 				let thisPetDate = {
 					memberId : memberId,
-					petType : thisPetType,
+					type : thisPetType,
 					petName : thisPetName,
-					petWeight : thisPetWeight, 
+					weight : thisPetWeight, 
 					petGender : thisPetGender
 				}
 				try {
-					let res = await fetch(petServlet_URL, {
+					let res = await fetch(addPet_URL, {
 						method: "POST",
 						headers: {
 							"Content-Type": "application/json"
@@ -440,20 +462,20 @@ let petServlet_URL = 'http://localhost:8081/TIA105G1/petServlet';
 						body: JSON.stringify(thisPetDate)
 					});
 					let data = await res.json();
-					if(data.result == "success" ){
+					if(data.result == "成功更新" ){
 						resolve(true);
 						return;
 					} else{
 						$("#lightbox").addClass("none");
 						$('article').children('p').remove();
 
-						if (Object.values(data).some(val => val == "-1")){
-							alert('資料請物留空 請再檢查一次');
-						} else if(Object.values(data).some(val => val == "-2")){
-							alert('網頁發生問體 請重新整理後再試一次');
-						} else{
-							alert('哭啊');
-						}
+						// if (Object.values(data).some(val => val == "-1")){
+						// 	alert('資料請物留空 請再檢查一次');
+						// } else if(Object.values(data).some(val => val == "-2")){
+						// 	alert('網頁發生問體 請重新整理後再試一次');
+						// } else{
+						// 	alert('哭啊');
+						// }
 						resolve(false);
 						return;
 					}
@@ -465,24 +487,28 @@ let petServlet_URL = 'http://localhost:8081/TIA105G1/petServlet';
 		}
 		if(petInfo != null){
 			order.petId = petInfo.petId;
-			if (thisPetGender != petInfo.petGender || thisPetName != petInfo.petName || thisPetType != petInfo.petType || thisPetWeight != petInfo.petWeight){
-				petInfoLightBox(`<p>是否將變更儲存至寵物資料</p>`);
-				$('#no').off('click').on('click',function(){
+			if (thisPetGender != petInfo.petGender || thisPetName != petInfo.petName || thisPetType != petInfo.type || thisPetWeight != petInfo.weight){
+				petInfoBtn_No.removeClass('none');
+				petInfoBtn_Yes.text('是');
+				petInfoBtn_Yes.removeClass('newPet');
+
+				petInfoLightBox(`<p id="updatePet_P" >是否將變更儲存至寵物資料</p>`);
+				$(petInfoBtn_No).off('click').on('click',function(){
 					// changePageBoolean = true;
 					resolve(true);
 					return;
 				})
-				$('#yes').off('click').on('click',async function(){
+				$(petInfoBtn_Yes).off('click').on('click',async function(){
 				let thisPetDate = {
 					petId : petInfo.petId,
-					memberId : memberId,
-					petType : thisPetType,
 					petName : thisPetName,
-					petWeight : thisPetWeight, 
-					petGender : thisPetGender
+					type : thisPetType,
+					petGender : thisPetGender, 
+					weight : thisPetWeight
 				}
+				console.log(thisPetDate);
 				try {
-					let res = await fetch(petServlet_URL, {
+					let res = await fetch(updatePet_URL, {
 						method: "PUT",
 						headers: {
 							"Content-Type": "application/json"
@@ -490,20 +516,21 @@ let petServlet_URL = 'http://localhost:8081/TIA105G1/petServlet';
 						body: JSON.stringify(thisPetDate)
 					});
 					let data = await res.json();
-					if(data.result == "success" ){
+					console.log(data);
+					if(data.result == "成功更新" ){
 						resolve(true);
 						return;
 					} else{
 						$("#lightbox").addClass("none");
 						$('article').children('p').remove();
 
-						if (Object.values(data).some(val => val == "-1")){
-							alert('資料請物留空 請再檢查一次');
-						} else if(Object.values(data).some(val => val == "-2")){
-							alert('網頁發生問體 請重新整理後再試一次');
-						} else{
-							alert('哭啊');
-						}
+						// if (Object.values(data).some(val => val == "-1")){
+						// 	alert('資料請物留空 請再檢查一次');
+						// } else if(Object.values(data).some(val => val == "-2")){
+						// 	alert('網頁發生問體 請重新整理後再試一次');
+						// } else{
+						// 	alert('哭啊');
+						// }
 						resolve(false);
 						return;
 					}
@@ -573,7 +600,7 @@ function setConfirmation(){
 				<p><span class="label">毛小孩類別：</span><span id="petType">${order.petType}</span></p>
 				<p><span class="label">毛小孩性別：</span><span id="petGender">${order.petGender}</span></p>
 				<p><span class="label">毛小孩大名：</span><span id="petName">${order.petName}</span></p>
-				<p><span class="label">毛小孩體重：</span><span id="petWeight">${order.petWeigh}</span></p>
+				<p><span class="label">毛小孩體重：</span><span id="petWeight">${order.petWeigh}kg</span></p>
 				<p><span class="label">其他注意事項：</span><span id="petNotes">${order.notes}</span></p>
 			</div>
 			<div class="pay_info">
@@ -646,7 +673,8 @@ function changePage (){
 					currenStep ++;
 					runStep();
 				} else{
-					error_handling(error_msg);
+					// error_handling(error_msg);
+					console.log('error');
 				};
 				break;
 			case 2: 
@@ -751,7 +779,7 @@ function step2_js(){
 	$('#nextPage').on('click',function(){
 		order.staffName = $(this).closest('article').find('.staff_name').text();
 		staffInfo = JSON.parse($(this).closest('article').find('.staff_info_json').val())
-		order.staffPhone = staffInfo.phone;
+		order.staffPhone = staffInfo.staffPhone;
 		console.log(staffInfo);
 	})
 }
@@ -768,11 +796,12 @@ function step3_js(){
 			petInfo = null;
 		}	else{
 			 petInfo = JSON.parse($(this).val());
-			switch (petInfo.petType){
-				case "狗":
+			 console.log(petInfo);
+			switch (petInfo.type){
+				case "dog":
 					$('#typeDog').prop('checked', true);
 					break;
-				case "貓":
+				case "cat":
 					$('#typeCat').prop('checked', true);
 					break;
 			}
@@ -785,9 +814,8 @@ function step3_js(){
 					$('#genderF').prop('checked', true);
 					break;
 			}
-			$('#petWeight').val(`${petInfo.petWeight}kg`);
+			$('#petWeight').val(`${petInfo.weight}kg`);
 			$('#petName').val(petInfo.petName);
-			console.log(petInfo);
 		}
 	})
 	
