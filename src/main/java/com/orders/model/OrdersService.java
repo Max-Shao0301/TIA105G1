@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.member.model.MemberVO;
+import com.orders.model.dto.CheckoutOrderDTO;
 
 @Service("orderService")
 public class OrdersService {
@@ -39,4 +39,9 @@ public class OrdersService {
 	}
 	
 	
+	
+//	public String ordersToECPay(CheckoutOrderDTO checkoutOrderDTO) {
+//		
+//		return null;
+//	}
 }

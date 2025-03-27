@@ -318,22 +318,22 @@ async function getCan_Work_Staff(){
 	}
 }
 
-// function error_handling(error_msg){
-// 	const back_msg = {
-//         noStaff: '沒人上班',
-//         error: {
-//             '-1': '你沒給日期',
-//             '-2': '日期格式有錯，請用月曆選單輸入',
-// 			'-3': '請勿輸入今日以前的日期，請用月曆選單輸入'
-//         }
-//     };
-// 	if(error_msg.result == 'noStaff'){
-// 		alert(back_msg.noStaff);
-// 	} else if (error_msg.result == 'error'){
-// 		alert(back_msg.error[error_msg.date]);
-// 	}
+function error_handling(error_msg){
+	const back_msg = {
+        noStaff: '沒人上班',
+        error: {
+            '-1': '你沒給日期',
+            '-2': '日期格式有錯，請用月曆選單輸入',
+			'-3': '請勿輸入今日以前的日期，請用月曆選單輸入'
+        }
+    };
+	if(error_msg.result == 'noStaff'){
+		alert(back_msg.noStaff);
+	} else if (error_msg.result == 'error'){
+		alert(back_msg.error[error_msg.date]);
+	}
 	
-// }
+}
 // 選擇服務人員的選項迴圈
 function s_card(){
 	$('.card_div').append(card_options);
