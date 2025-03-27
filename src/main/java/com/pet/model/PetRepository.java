@@ -16,6 +16,7 @@ public interface PetRepository  extends JpaRepository<PetVO, Integer> {
 	//這個是讓使用者可以自行選擇要搜尋的狀態  我不太確定哪個比較好
 	List<PetVO> findByMember_MemIdAndStatus(Integer memId, Integer status);
 	
+	//將寵物啟用狀態改為關閉(軟刪除)
 	@Transactional
 	@Modifying
 	@Query(value ="UPDATE pet SET status = 0 WHERE pet_id = ?1", nativeQuery = true)

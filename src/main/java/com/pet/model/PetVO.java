@@ -37,11 +37,11 @@ public class PetVO implements java.io.Serializable {
     @JoinColumn(name = "mem_id")
     private MemberVO member;
     
-    @Column(name = "type")
-    private String type;
-    
     @Column(name = "pet_name")
     private String petName;
+    
+    @Column(name = "type")
+    private String type;
     
     @Column(name = "pet_gender")
     private Integer petGender;
