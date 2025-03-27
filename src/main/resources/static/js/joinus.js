@@ -60,9 +60,10 @@ document.getElementById('applybtn').addEventListener('click', function(event) {
     const phone = document.querySelector('input[name="phone"]').value;
     const email = document.querySelector('input[type="email"]').value;
     const selfIntro = document.querySelector('textarea').value;
+    const license = document.querySelector('input[type="file"]').files[0];
 
     // 檢查必填欄位
-    if (!name || !plateNumber || !phone || !email || !gender || !selfIntro) {
+    if (!name || !plateNumber || !phone || !email || !gender || !selfIntro || !license) {
         alert('請完整填寫必填欄位!');
         return;
     }
