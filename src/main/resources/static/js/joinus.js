@@ -62,7 +62,7 @@ document.getElementById('applybtn').addEventListener('click', function(event) {
     const selfIntro = document.querySelector('textarea').value;
 
     // 檢查必填欄位
-    if (!name || !plateNumber || !phone || !email) {
+    if (!name || !plateNumber || !phone || !email || !gender || !selfIntro) {
         alert('請完整填寫必填欄位!');
         return;
     }
@@ -75,7 +75,7 @@ document.getElementById('applybtn').addEventListener('click', function(event) {
         性別: ${gender}
         聯絡電話: ${phone}
         電子信箱: ${email}
-        自我介紹: ${selfIntro || '未填寫'}
+        自我介紹: ${selfIntro}
         
         確定要送出嗎？
     `;
