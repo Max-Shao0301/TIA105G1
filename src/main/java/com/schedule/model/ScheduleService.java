@@ -50,6 +50,12 @@ public class ScheduleService {
 		return repository.findAll();
 	}
 	
+
+	public List<ScheduleVO> getScheduleByStaff(Integer staffId) {
+		return repository.findByStaffOn(staffId);
+  }
+ 
+  
 	public List<StaffScheduleDTO> findByBookableStaff(LocalDate date,Integer apptttime ){
 		
 		List<ScheduleVO> bookableSchedule = repository.findByBookableStaff(date, apptttime);
@@ -64,9 +70,7 @@ public class ScheduleService {
 				))
 				.collect(Collectors.toList());
 		return staffScheduleList;
+
 	}
 
-	public List<ScheduleVO> getScheduleByStaff(Integer staffId) {
-		return repository.findByStaffOn(staffId);
-	}
 }
