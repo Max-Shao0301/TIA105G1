@@ -52,7 +52,7 @@ h2 {
 }
 
 .button2 {
-  background-color: #6e6864;
+  background-color:#df6840;
   color: #ffffff;
   border: none;
   padding: 5px 20px;
@@ -62,12 +62,16 @@ h2 {
   transition: background-color 0.3s ease;
   margin: 10px;
   height: 36px;
+  margin-left: 428px;
 }
 
 .button:hover {
   background-color: #335288;
 }
 
+.button2:hover{
+  background-color: #c35d3a;
+}
 
 .section{
     padding: 0;
@@ -97,7 +101,7 @@ body {
 }
 
 .breadcrumbs {
-	background-image: url('../img/cutcat.jpg');
+	background-image: url('/images/cutcat.jpg');
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -118,11 +122,7 @@ body {
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* 添加陰影 */
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-bottom: 20px;
-}
+
 
 thead{
   background-color:#ac9a8e;
@@ -292,7 +292,7 @@ table{
   cursor: not-allowed;
 }
 
-ul{
+.table{
   font-size: large;
 }
 
@@ -383,10 +383,15 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../img/cutcat.jpg'); 
+  background-image: url('/images/cutcat.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   opacity: 0.1; /* 設定透明度 */
   z-index: -1; /* 讓背景圖片不影響內容 */
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin:20px 0 20px 0;
 }
