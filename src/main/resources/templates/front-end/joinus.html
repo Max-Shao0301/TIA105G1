@@ -156,7 +156,7 @@
 			</div>
 		</div>
         <article class="info">
-            <form action="" method="post" id="the_form">
+            <form id="the_form"  enctype="multipart/form-data" th:action="@{/insert/apply}" th:method="post" th:object="${ApplyVO}" >
               <div class="content_block">
           
                
@@ -165,28 +165,28 @@
           
                   <div class="block">
                     <label>姓名</label>
-					<input type="text" name="name">
+					<input type="text" name="name" th:field="*{applyName}">
                   </div>
                   <div class="block">
                     <label>車牌號碼</label>
-					<input type="text" id="plate_number">
+					<input type="text" id="plate_number" th:field="*{carNumber}">
                   </div>
                   <label class="nametype">性別</label>
-                  <label><input type="radio" name="gender" value="1"> 男</label>
-                  <label><input type="radio" name="gender" value="2"> 女</label>
+                  <label><input type="radio" name="gender" value="1" th:field="*{applyGender}"> 男</label>
+                  <label><input type="radio" name="gender" value="2" th:field="*{applyGender}"> 女</label>
                   <div class="form-group">
                     <label>聯絡電話</label>
-                    <input type="tel" name="phone">
+                    <input type="tel" name="phone" th:field="*{applyPhone}">
                 </div>
                 <div class="form-group">
                     <label>電子信箱</label>
-                    <input type="email" >
+                    <input type="email" th:field="*{applyEmail}" >
                 </div>
            
 
                 </div>
                 <div class="left_block">
-                    <input type="file" id="licence_photo">
+                    <input type="file" name="license" id="licence_photo" th:field="*{license}">
                     <div id="preview" class="drop_zone">
 						<span class="text">請上傳駕照<i class="icofont-upload-alt"></i></span>
                     </div>
@@ -196,7 +196,7 @@
               <footer class="footer">
                 <div class="form-group">
                     <label>自我介紹</label>
-                    <textarea rows="4"></textarea>
+                    <textarea rows="4" th:field="*{introduction}"></textarea>
                 </div>
               </footer>
              
