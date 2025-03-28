@@ -127,3 +127,23 @@ a{
 .form-check{
     margin-left: 10px;
 }
+
+.label-error-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* label 和錯誤訊息間距 */
+    margin-bottom: 0.25rem;
+}
+
+.label-error-row .form-label {
+    margin-bottom: 0;
+    font-weight: 600;
+}
+
+.error-message {
+    color: #df4040;
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem; /* icon 和文字間距 */
+}

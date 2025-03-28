@@ -7,11 +7,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
+import com.member.model.dto.MemberDTO;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.constraints.Email;
 
 @Controller
 public class IndexController_inSpringBoot {
@@ -23,26 +26,12 @@ public class IndexController_inSpringBoot {
 		boolean isLoggedIn;
 		if (session.getAttribute("isLoggedIn") != null) {
 			isLoggedIn = (boolean) session.getAttribute("isLoggedIn");
-			System.out.println(session.getAttribute("memName"));
 			model.addAttribute("memName", session.getAttribute("memName"));
 		} else {
 			isLoggedIn = false;
 		}
 		model.addAttribute("isLoggedIn", isLoggedIn);
 		return "index"; // 回傳 Thymeleaf 頁面
-	}
-
-	@GetMapping("/front-end/login")
-	public String loginPage() {
-		return "/front-end/login";
-	}
-
-	@PostMapping("/logincheck")
-	public String login(@RequestParam String email, @RequestParam String password, HttpSession session, Model model) {
-		Boolean isLoggedIn = memberService.findMember(email, password, session);
-		session.setAttribute("isLoggedIn", isLoggedIn);
-//		System.out.println(isLoggedIn);
-		return "redirect:/";
 	}
 
 	@GetMapping("/front-end/member")
