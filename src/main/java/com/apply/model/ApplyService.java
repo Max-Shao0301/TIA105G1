@@ -24,6 +24,7 @@ public class ApplyService {
     private StaffService staffService;
 
     //新增
+    @Transactional
     public void addApply(ApplyVO applyVO) {
         applyRepository.save(applyVO);
     }

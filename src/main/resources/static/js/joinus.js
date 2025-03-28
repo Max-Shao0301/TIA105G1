@@ -53,11 +53,11 @@ document.getElementById('applybtn').addEventListener('click', function(event) {
     event.preventDefault();  // 防止表單直接送出
 
     // 收集表單資料
-    const name = document.querySelector('input[name="name"]').value;
+    const name = document.querySelector('input[name="applyName"]').value;
     const plateNumber = document.getElementById('plate_number').value;
-    const gender = document.querySelector('input[name="gender"]:checked') ? 
-                   document.querySelector('input[name="gender"]:checked').nextSibling.textContent.trim() : '未選擇';
-    const phone = document.querySelector('input[name="phone"]').value;
+    const gender = document.querySelector('input[name="applyGender"]:checked') ?
+                   document.querySelector('input[name="applyGender"]:checked').nextSibling.textContent.trim() : '未選擇';
+    const phone = document.querySelector('input[name="applyPhone"]').value;
     const email = document.querySelector('input[type="email"]').value;
     const selfIntro = document.querySelector('textarea').value;
     const license = document.querySelector('input[type="file"]').files[0];
@@ -85,7 +85,7 @@ document.getElementById('applybtn').addEventListener('click', function(event) {
         alert('履歷已送出，感謝您的加入!');
         // 這裡可以進一步做資料傳送，例如用 AJAX 或 fetch API 發送到伺服器
         document.getElementById('the_form').submit();  // 真正送出表單\
-        window.location.href = '/';
+        // window.location.href = '/'; //暫時關閉測試履歷新增
 
     }
 });
