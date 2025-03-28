@@ -601,7 +601,7 @@ function setConfirmation(){
 				<p><span class="label">會員姓名：</span><span id="memName">${order.memName}</span></p>
 				<p><span class="label">會員電話：</span><span id="memPhone">${order.memPhone}</span></p>
 				<p><span class="label">毛小孩類別：</span><span id="petType">${order.petType}</span></p>
-				<p><span class="label">毛小孩性別：</span><span id="petGender">${order.petGender}</span></p>
+				<p><span class="label">毛小孩性別：</span><span id="petGender">${order.petGender = 1 ? "公": "母"}</span></p>
 				<p><span class="label">毛小孩大名：</span><span id="petName">${order.petName}</span></p>
 				<p><span class="label">毛小孩體重：</span><span id="petWeight">${order.petWeigh}kg</span></p>
 				<p><span class="label">其他注意事項：</span><span id="petNotes">${order.notes}</span></p>
