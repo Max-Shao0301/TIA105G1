@@ -11,8 +11,10 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.member.model.dto.MemberDTO;
 import com.orders.model.OrdersVO;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Service("memberService")
 public class MemberService {
@@ -25,9 +27,20 @@ public class MemberService {
 
 	// 新增會員
 	@Transactional
-	public void addMember(MemberVO memberVO) {
-		memberRepository.save(memberVO);
-	}
+	public MemberVO saveMember(MemberDTO memberDTO,HttpSession session) {
+		 MemberVO member = new MemberVO();
+		 String city = memberDTO.getCity().equals("Taipei") ? "台北市":"新北市";
+		 String memAddress = city + memberDTO.getDistrict() + memberDTO.getAddress();
+		 member.setMemEmail(memberDTO.getMemEmail());
+		 member.setMemName(memberDTO.getMemName());
+		 member.setMemPhone(memberDTO.getMemPhone());
+		 member.setMemPassword(memberDTO.getMemPassword());
+		 member.setAddress(memAddress);
+		 memberRepository.save(member);
+		 session.setAttribute("memId",member.getMemId());
+		 session.setAttribute("memName",member.getMemName());
+	     return member;
+	    }
 
 	// 更新會員
 	@Transactional
@@ -70,17 +83,17 @@ public class MemberService {
 	}
 
 	// 查詢某信箱是否為會員
-	public Boolean findMember(String memEmail, String memPassword, HttpSession session) {
+	public Integer findMember(String memEmail, String memPassword, HttpSession session) {
 		MemberVO member = memberRepository.findByMemEmail(memEmail);
-		System.out.println(memPassword);
-		System.out.println(member.getMemPassword());
+		if(member == null){
+			return 2;
+		}
 		if (memPassword.equals(member.getMemPassword()) ) {
 			session.setAttribute("memberId", member.getMemId());
 			session.setAttribute("memName", member.getMemName());
-			return true;
+			return 1;
 		} else {
-			return false;
+			return 3;
 		}
 	}
-
 }

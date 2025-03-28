@@ -87,7 +87,7 @@
 							<!-- Top Contact -->
 							<ul class="top-contact">
 								<li th:if="${!isLoggedIn}"><a th:href="@{/front-end/login}"><i class="icofont-login"></i>會員登入</a></li>
-								<li th:if="${isLoggedIn}"><i class="icofont-paw"></i>Hi,<span th:text="${memName}"></span>!</li>
+								<li th:if="${isLoggedIn}"><i class="icofont-paw"></i>Hi,<span th:text="${session.memName}"></span>!</li>
 								<li th:if="${!isLoggedIn}"><a th:href="@{/front-end/register}"><i class="icofont-ui-user"></i>會員註冊</a></li>
 								<li th:if="${isLoggedIn}"><a th:href="@{/front-end/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
 							</ul>

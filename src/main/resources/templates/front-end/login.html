@@ -10,23 +10,47 @@
     <!-- Font Awesome for icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/icofont.css}">
 </head>
 <body>
     <div class="login-container">
         <!-- 寵物圖標 -->
         <a th:href="@{/}"><img th:src="@{/images/title.png}"></a>
-        <form th:action="@{/logincheck}" method="POST">
+        
+        <form th:action="@{/front-end/login}" th:object="${loginDTO}" method="POST">
             <div class="mb-3">
-                <label for="email" class="form-label">帳號 :</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="請輸入e-mail">
+		         <div class="label-error-row">
+				    <label for="loginEmail" class="form-label">帳號</label>
+				   <!-- 錯誤訊息 -->
+				    <div th:if="${#fields.hasErrors('loginEmail')}" class="error-message">
+				        <i class="icofont-paw"></i>
+				        <span th:errors="*{loginEmail}"></span>
+				    </div>
+				    <div th:if="${errorMessage1}"  class="error-message">
+				     <i class="icofont-paw"></i>
+				     <span th:text="${errorMessage1}"></span>
+				    </div>
+				</div>
+				
+	            <input type="text" th:field="*{loginEmail}" class="form-control" placeholder="請輸入 e-mail">
             </div>
             <div class="mb-3">
-                <label for="password" class="form-label">密碼 :</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="請輸入密碼">
+            <div class="label-error-row">
+                <label for="password" class="form-label">密碼</label>
+                <!-- 錯誤訊息 -->
+               	<div th:if="${#fields.hasErrors('loginPassword')}" class="error-message">
+				<i class="icofont-paw"></i> <span th:errors="*{loginPassword}"></span>
+				</div>
+				<div th:if="${errorMessage2}"  class="error-message">
+				     <i class="icofont-paw"></i>
+				     <span th:text="${errorMessage2}"></span>
+				</div>
+			</div>
+                <input type="password" th:field="*{loginPassword}" class="form-control" placeholder="請輸入密碼">
             </div>
             <div class="remember-me">
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="rememberMe">
+                	<input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe" th:checked="${rememberMeChecked} ? 'checked' : null" />
                     <label class="form-check-label" for="rememberMe">記住我</label>
                 </div>
                 <div class="fg"><a th:href="@{/front-end/forgetpassword}">忘記密碼</a></div>
