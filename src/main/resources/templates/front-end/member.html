@@ -10,34 +10,36 @@
 		
 		<!-- Title -->
 		<title>寵愛牠 PawCares</title>
-		<link rel="icon" href="img/logo.png">
+    	<link rel="icon" th:href="@{/images/logo.png}">
+		
 		<!-- Google Fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 		<!-- Nice Select CSS -->
-		<link rel="stylesheet" href="css/nice-select.css">
+		<link rel="stylesheet" th:href="@{/css/nice-select.css}">
 		<!-- Font Awesome CSS -->
-        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
 		<!-- icofont CSS -->
-        <link rel="stylesheet" href="css/icofont.css">
+        <link rel="stylesheet" th:href="@{/css/icofont.css}">
 		<!-- Slicknav -->
-		<link rel="stylesheet" href="css/slicknav.min.css">
+		<link rel="stylesheet" th:href="@{/css/slicknav.min.css}">
 		<!-- Owl Carousel CSS -->
-        <link rel="stylesheet" href="css/owl-carousel.css">
+        <link rel="stylesheet" th:href="@{/css/owl-carousel.css}">
 		<!-- Datepicker CSS -->
-		<link rel="stylesheet" href="css/datepicker.css">
+		<link rel="stylesheet" th:href="@{/css/datepicker.css}">
 		<!-- Animate CSS -->
-        <link rel="stylesheet" href="css/animate.min.css">
+        <link rel="stylesheet" th:href="@{/css/animate.min.css}">
 		<!-- Magnific Popup CSS -->
-        <link rel="stylesheet" href="css/magnific-popup.css">
+        <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
 		
 		<!-- Medipro CSS -->
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/responsive.css">
-		<link rel="stylesheet" href="/css/add.css">
-        <link rel="stylesheet" href="/css/member.css">
+        <link rel="stylesheet" th:href="@{/css/normalize.css}">
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+        <link rel="stylesheet" th:href="@{/css/responsive.css}">
+		<link rel="stylesheet" th:href="@{/css/add.css}">
+        <link rel="stylesheet" th:href="@{/css/member.css}">
 		
     </head>
     <body>
@@ -73,10 +75,6 @@
             </div>
         </div>
         <!-- End Preloader -->
-		
-		<!-- Get Pro Button -->
-		
-	
 		<!-- Header Area -->
 		<header class="header" >
 			<!-- Topbar -->
@@ -88,8 +86,8 @@
 						<div class="col-lg-6 col-md-7 col-12">
 							<!-- Top Contact -->
 							<ul class="top-contact">
-								<li><a href="./login.html"><i class="icofont-login"></i>會員登入</a></i></li>
-								<li></i><a href="#"><i class="icofont-ui-user"></i>會員資料</a></li>
+								<li><i class="icofont-paw"></i>Hi,<span th:text="${session.memName}"></span>!</li>
+								<li><a th:href="@{/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
 							</ul>
 							<!-- End Top Contact -->
 						</div>
@@ -105,7 +103,7 @@
 							<div class="col-lg-3 col-md-3 col-12">
 								<!-- Start Logo -->
 								<div class="logo">
-									<a href="index.html"><img src="img/title.png" alt="#"></a>
+									<a href="index.html"><img th:src="@{/images/title.png}" alt="#"></a>
 								</div>
 								<!-- End Logo -->
 								<!-- Mobile Nav -->
@@ -118,11 +116,11 @@
 									
 									<nav class="navigation">
 										<ul class="nav menu">											
-											<li><a href="">關於我們</a></li>
-											<li><a href="./joinus.html">加入我們 </a></li>
-											<li><a href="#">常見問題 </a></li>
-											<li><a href="./orderlist.html">訂單檢視 </a></li>
-											<li><a href="./index.html">首頁</a>	
+											<li><a th:href="@{/joinus}">關於我們</a></li>
+											<li><a th:href="@{/joinus}">加入我們 </a></li>
+											<li><a th:href="@{/joinus}">常見問題 </a></li>
+											<li><a th:href="@{/orderlist}">訂單檢視 </a></li>
+											<li><a th:href="@{/}">首頁</a>	
 										</ul>
 									</nav>
 								</div>
@@ -130,7 +128,7 @@
 							</div>
 							<div class="col-lg-2 col-12">
 								<div class="get-quote">
-									<a href="appointment.html" class="btn">預約服務</a>
+									<a th:href="@{/appointment}" class="btn">預約服務</a>
 								</div>
 							</div>
 						</div>
@@ -160,21 +158,21 @@
 			<div class="container2">
 				<div class="container1">                  
 				<!-- 會員資料 -->           
-				<ul>
-					<li class="infront1"><strong>姓名</strong></li><li class="value1">張三</li>
-					<li class="infront1"><strong>手機</strong></li><li class="value1">0912-345-678</li>
-					<a href="./updatemember.html" class="button1">修改會員資料</a>
+				<ul class="table">
+					<li class="infront1"><strong>姓名</strong></li><li class="value1" th:text="${memberVO.memName}"></li>
+					<li class="infront1"><strong>手機</strong></li><li class="value1" th:text="${memberVO.memPhone}"></li>
+					<a th:href="@{/updateMember}" class="button1">修改會員資料</a>
 					<br>
-					<li class="infront1"><strong>信箱</strong></li><li class="value2">zhangsan@example.com</li>
-					<a href="./passwordupdate.html" class="button1">修改密碼</a>
+					<li class="infront1"><strong>信箱</strong></li><li class="value2" th:text="${memberVO.memEmail}"></li>
+					<a th:href="@{/passwordUpdate}" class="button1">修改密碼</a>
 					<br>
-					<li class="infront1"><strong>地址</strong></li><li class="value2">台北市信義區松仁路123號</li>
+					<li class="infront1"><strong>地址</strong></li><li class="value2" th:text="${memberVO.address}"></li>
 					<button class="button1">啟用兩步驟驗證</button>
 					<br>
-					<li class="infront1"><strong>點數</strong></li><li class="value1">500 點</li>
-					<!-- <a href="./pointslist.html" class="button2">查看點數紀錄</a> -->
-					<br>
-			
+					<form th:action="@{/logout}" method="get" >
+					<li class="infront1"><strong>點數</strong>
+					</li><li class="value1" th:text="${memberVO.point}+ 點"></li><button class="button2">登出</button>
+					</form>
 				</ul>
 				
 				</div>
@@ -296,46 +294,46 @@
 		<!--/ End Footer Area -->
 		
 		<!-- jquery Min JS -->
-		 <script src="js/add.js"></script>
-        <script src="js/jquery.min.js"></script>
+		 <script src="/js/add.js"></script>
+        <script src="/js/jquery.min.js"></script>
 		<!-- jquery Migrate JS -->
-		<script src="js/jquery-migrate-3.0.0.js"></script>
+		<script src="/js/jquery-migrate-3.0.0.js"></script>
 		<!-- jquery Ui JS -->
-		<script src="js/jquery-ui.min.js"></script>
+		<script src="/js/jquery-ui.min.js"></script>
 		<!-- Easing JS -->
-        <script src="js/easing.js"></script>
+        <script src="/js/easing.js"></script>
 		<!-- Color JS -->
-		<script src="js/colors.js"></script>
+		<script src="/js/colors.js"></script>
 		<!-- Popper JS -->
-		<script src="js/popper.min.js"></script>
+		<script src="/js/popper.min.js"></script>
 		<!-- Bootstrap Datepicker JS -->
 		<script src="js/bootstrap-datepicker.js"></script>
 		<!-- Jquery Nav JS -->
-        <script src="js/jquery.nav.js"></script>
+        <script src="/js/jquery.nav.js"></script>
 		<!-- Slicknav JS -->
-		<script src="js/slicknav.min.js"></script>
+		<script src="/js/slicknav.min.js"></script>
 		<!-- ScrollUp JS -->
-        <script src="js/jquery.scrollUp.min.js"></script>
+        <script src="/js/jquery.scrollUp.min.js"></script>
 		<!-- Niceselect JS -->
-		<script src="js/niceselect.js"></script>
+		<script src="/js/niceselect.js"></script>
 		<!-- Tilt Jquery JS -->
-		<script src="js/tilt.jquery.min.js"></script>
+		<script src="/js/tilt.jquery.min.js"></script>
 		<!-- Owl Carousel JS -->
-        <script src="js/owl-carousel.js"></script>
+        <script src="/js/owl-carousel.js"></script>
 		<!-- counterup JS -->
-		<script src="js/jquery.counterup.min.js"></script>
+		<script src="/js/jquery.counterup.min.js"></script>
 		<!-- Steller JS -->
-		<script src="js/steller.js"></script>
+		<script src="/js/steller.js"></script>
 		<!-- Wow JS -->
-		<script src="js/wow.min.js"></script>
+		<script src="/js/wow.min.js"></script>
 		<!-- Magnific Popup JS -->
-		<script src="js/jquery.magnific-popup.min.js"></script>
+		<script src="/js/jquery.magnific-popup.min.js"></script>
 		<!-- Counter Up CDN JS -->
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 		<!-- Bootstrap JS -->
-		<script src="js/bootstrap.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
 		<!-- Main JS -->
-		<script src="js/main.js"></script>
-		<script src="js/member.js"></script>
+		<script src="/js/main.js"></script>
+		<script src="/js/member.js"></script>
     </body>
 </html>

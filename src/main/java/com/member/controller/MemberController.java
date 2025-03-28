@@ -1,6 +1,7 @@
 package com.member.controller;
 
 import com.member.model.MemberService;
+import com.member.model.MemberVO;
 import com.member.model.dto.MemberDTO;
 
 import jakarta.servlet.http.HttpSession;
@@ -28,27 +29,58 @@ public class MemberController {
         return "redirect:/admin/home/page";
     }
     
-	@GetMapping("/front-end/forgetpassword")
+	@GetMapping("/forgetpassword")
 	public String forgetpassword() {
 		return "/front-end/forgetpassword";
 	}
+	
+	@GetMapping("/member")
+	public String member(HttpSession session, Model model) {
+		Integer memId = (Integer) session.getAttribute("memId");
+//		System.out.println(memId);
+		MemberVO memberVO = memberService.getOneMember(memId);
+		model.addAttribute("memberVO",memberVO);
+		return "/front-end/member";
+	}
     
-	@GetMapping("/front-end/register")
+	@GetMapping("/register")
 	public String register(Model model) {
 		model.addAttribute("memberDTO", new MemberDTO());
 		return "/front-end/register";
 	}
 	
-	@PostMapping("/front-end/register")
+	@PostMapping("/register")
 	public String register(@ModelAttribute @Valid MemberDTO memberDTO,BindingResult bindingResult, HttpSession session,Model model){
+		Integer error = 0;
+		if (memberDTO.getConfirmPassword().isEmpty()) {
+			model.addAttribute("wrongMessage", "請再次輸入密碼");
+			error++;
+		}else if (!memberDTO.getMemPassword().equals(memberDTO.getConfirmPassword())) {
+			model.addAttribute("wrongMessage", "與密碼不相同");
+			error++;
+		}
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("memberDTO", memberDTO);
-			return "/front-end/register";
+			error++;
 		}
-		memberService.saveMember(memberDTO, session);
-		session.setAttribute("isLoggedIn", true);
-		return "redirect:/";
+		
+		if(error == 0) {
+			memberService.saveMember(memberDTO, session);
+			session.setAttribute("isLoggedIn", true);
+			return "redirect:/";
+		}	
+		
+		return "/front-end/register";
 	}
 	
+	@GetMapping("/updateMember")
+	public String updateMember() {
+		return "/front-end/updateMember";
+	}
+	
+	@GetMapping("/passwordUpdate")
+	public String passwordUpdate() {
+		return "/front-end/passwordUpdate";
+	}
 
 }
