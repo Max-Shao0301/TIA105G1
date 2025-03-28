@@ -62,11 +62,53 @@ document.getElementById('applybtn').addEventListener('click', function(event) {
     const selfIntro = document.querySelector('textarea').value;
     const license = document.querySelector('input[type="file"]').files[0];
 
+    // 姓名驗證（僅允許 2-20 個中文字或英文名稱）
+    const namePattern = /^[\u4E00-\u9FA5A-Za-z\s]{2,20}$/;
+
+    // 車牌號碼驗證
+    const plateNumberPattern = /^[A-Z]{2,3}\d{3,4}|\d{3}[A-Z]{2,3}$/;
+
+    //手機驗證
+    const phonePattern = /^09\d{8}$/;
+
+    //Email驗證
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+
+
+
+
     // 檢查必填欄位
     if (!name || !plateNumber || !phone || !email || !gender || !selfIntro || !license) {
-        alert('請完整填寫必填欄位!');
+        alert('請完整填寫所有欄位!');
         return;
     }
+    // 檢查姓名格式
+    if (!namePattern.test(name)) {
+        alert('請輸入正確的姓名（2-20 個中文字或英文）!');
+        return;
+    }
+    // 檢查車牌格式
+    if (!plateNumberPattern.test(plateNumber)) {
+        alert('請輸入正確的車牌號碼（例如：ABC1234 或 123ABC）!');
+        return;
+    }
+    //檢查手機格式
+    if (!phonePattern.test(phone)) {
+        alert('請輸入有效的手機號碼（格式：09XXXXXXXX）!');
+        return;
+    }
+    //檢查email格式
+    if (!emailPattern.test(email)) {
+        alert('請輸入有效的電子郵件地址!');
+        return;
+    }
+    // 自我介紹驗證（至少 50 個字）
+    if (selfIntro.length < 50) {
+        alert('自我介紹需至少 50 個字!');
+        return;
+    }
+
 
     // 顯示彈窗確認資料
     const message = `

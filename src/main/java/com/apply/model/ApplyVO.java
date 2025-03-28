@@ -25,33 +25,25 @@ public class ApplyVO implements java.io.Serializable {
     private Integer applyId;
 
     @Column(name="apply_email")
-    @NotBlank(message = "請填寫電子郵件")
-    @Email(message = "請輸入有效的電子郵件地址")
     private String applyEmail;
 
     @Column(name="apply_name")
-    @NotBlank(message = "請填寫名字")
     private String applyName;
 
     @Column(name="apply_phone")
-    @NotBlank(message = "請填寫電話")
-    @Pattern(regexp = "^09\\d{8}$", message = "請輸入有效的手機號碼")
     private String applyPhone;
 
     @Column(name="apply_gender")
-    @NotNull(message = "請選擇性別")
     private Integer applyGender;
 
+    @Lob //JPA 會知道這是一個大物件欄位，並在適當的資料庫型態（如 BLOB）中儲存它
     @Column(name="license")
-    @NotNull(message = "請上傳駕照")
     private byte[] license;
 
     @Column(name="car_number")
-    @NotBlank(message = "請填寫車牌號碼")
     private String carNumber;
 
     @Column(name="introduction")
-    @NotBlank(message = "請填寫自我介紹")
     private String introduction;
 
     @Column(name="results")
