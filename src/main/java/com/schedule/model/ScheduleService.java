@@ -64,7 +64,6 @@ public class ScheduleService {
 				))
 				.collect(Collectors.toList());
 		return staffScheduleList;
-
 	}
 
 	public List<ScheduleVO> getScheduleByStaff(Integer staffId) {

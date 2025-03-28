@@ -12,10 +12,6 @@ public class StaffScheduleDTO {
 	private Integer staffGender;
 	private String introduction;
 	
-	public StaffScheduleDTO (){
-		
-	}
-	
 	public StaffScheduleDTO(Integer staffId, Integer schId, String staffName, String staffPhone,
 			Integer staffGender, String introduction) {
 		super();
@@ -25,6 +21,10 @@ public class StaffScheduleDTO {
 		this.staffPhone = staffPhone;
 		this.staffGender = staffGender;
 		this.introduction = introduction;
+	}
+
+	public StaffScheduleDTO (){
+		
 	}
 
 	public Integer getStaffId() {
