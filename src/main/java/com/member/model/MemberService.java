@@ -27,20 +27,20 @@ public class MemberService {
 
 	// 新增會員
 	@Transactional
-	public MemberVO saveMember(MemberDTO memberDTO,HttpSession session) {
-		 MemberVO member = new MemberVO();
-		 String city = memberDTO.getCity().equals("Taipei") ? "台北市":"新北市";
-		 String memAddress = city + memberDTO.getDistrict() + memberDTO.getAddress();
-		 member.setMemEmail(memberDTO.getMemEmail());
-		 member.setMemName(memberDTO.getMemName());
-		 member.setMemPhone(memberDTO.getMemPhone());
-		 member.setMemPassword(memberDTO.getMemPassword());
-		 member.setAddress(memAddress);
-		 memberRepository.save(member);
-		 session.setAttribute("memId",member.getMemId());
-		 session.setAttribute("memName",member.getMemName());
-	     return member;
-	    }
+	public MemberVO saveMember(MemberDTO memberDTO, HttpSession session) {
+		MemberVO member = new MemberVO();
+		String city = memberDTO.getCity().equals("Taipei") ? "台北市" : "新北市";
+		String memAddress = city + memberDTO.getDistrict() + memberDTO.getAddress();
+		member.setMemEmail(memberDTO.getMemEmail());
+		member.setMemName(memberDTO.getMemName());
+		member.setMemPhone(memberDTO.getMemPhone());
+		member.setMemPassword(memberDTO.getMemPassword());
+		member.setAddress(memAddress);
+		memberRepository.save(member);
+		session.setAttribute("memId", member.getMemId());
+		session.setAttribute("memName", member.getMemName());
+		return member;
+	}
 
 	// 更新會員
 	@Transactional
@@ -85,15 +85,28 @@ public class MemberService {
 	// 查詢某信箱是否為會員
 	public Integer findMember(String memEmail, String memPassword, HttpSession session) {
 		MemberVO member = memberRepository.findByMemEmail(memEmail);
-		if(member == null){
+		if (member == null) {
 			return 2;
+
 		}
-		if (memPassword.equals(member.getMemPassword()) ) {
+		if (memPassword.equals(member.getMemPassword())) {
 			session.setAttribute("memId", member.getMemId());
 			session.setAttribute("memName", member.getMemName());
 			return 1;
 		} else {
 			return 3;
 		}
+	}
+
+	public MemberDTO getMemberDTO(Integer memId) {
+		MemberVO memberVO = memberRepository.findById(memId).orElse(null);
+		MemberDTO memberDTO = new MemberDTO();
+
+		memberDTO.setMemId(memberVO.getMemId());
+		memberDTO.setMemName(memberVO.getMemName());
+		memberDTO.setMemPhone(memberVO.getMemPhone());
+		memberDTO.setPoint(memberVO.getPoint());
+
+		return memberDTO;
 	}
 }

@@ -17,8 +17,8 @@ let currenStep = 0;
 const order = {
 	apptTime:{},
 	appDate:{},
-	onLoc:'台北市', //暫時寫死
-	offLoc:'新北市', //暫時寫死
+	onLocation:'台北市', //暫時寫死
+	offLocation:'新北市', //暫時寫死
 	staffName:{},
 	staffPhone:{},
 	memName:{},
@@ -35,13 +35,14 @@ const order = {
 const orderToDb = {
 	memId : {},
 	staffId : {},
-	scheduleId : {},
-	onLoc : {},
-	offLoc : {},
+	schId : {},
+	onLocation : {},
+	offLocation : {},
 	point : {},
 	payment : {},
 	payMethod : {} ,
-	notes:{}
+	notes:{},
+	petId:{}
 };
 let staffInfo;
 //==========個別頁面的內容==========//
@@ -187,8 +188,8 @@ let confirmation =`
 			<div class="order_info">
 				<p><span class="label">預約項目：</span><span id="project">寵物接送</span></p>
 				<p><span class="label">預約時間：</span><span id="appTime">${order.appDate} ${order.apptTime}:00</span></p>
-				<p><span class="label">上車地址：</span><span id="onLoc">還沒串API</span></p>
-				<p><span class="label">目的地地址：</span><span id="offLoc">還沒串API</span></p>
+				<p><span class="label">上車地址：</span><span id="onLocation">還沒串API</span></p>
+				<p><span class="label">目的地地址：</span><span id="offLocation">還沒串API</span></p>
 				<p><span class="label">預約服務人員：</span><span id="staffName">${order.staffName}</span></p>
 				<p><span class="label">服務人員聯絡電話：</span><span id="staffPhone">${order.staffPhone}</span></p>
 				<p><span class="label">會員姓名：</span><span id="memName">${order.memName}</span></p>
@@ -318,22 +319,22 @@ async function getCan_Work_Staff(){
 	}
 }
 
-// function error_handling(error_msg){
-// 	const back_msg = {
-//         noStaff: '沒人上班',
-//         error: {
-//             '-1': '你沒給日期',
-//             '-2': '日期格式有錯，請用月曆選單輸入',
-// 			'-3': '請勿輸入今日以前的日期，請用月曆選單輸入'
-//         }
-//     };
-// 	if(error_msg.result == 'noStaff'){
-// 		alert(back_msg.noStaff);
-// 	} else if (error_msg.result == 'error'){
-// 		alert(back_msg.error[error_msg.date]);
-// 	}
+function error_handling(error_msg){
+	const back_msg = {
+        noStaff: '沒人上班',
+        error: {
+            '-1': '你沒給日期',
+            '-2': '日期格式有錯，請用月曆選單輸入',
+			'-3': '請勿輸入今日以前的日期，請用月曆選單輸入'
+        }
+    };
+	if(error_msg.result == 'noStaff'){
+		alert(back_msg.noStaff);
+	} else if (error_msg.result == 'error'){
+		alert(back_msg.error[error_msg.date]);
+	}
 	
-// }
+}
 // 選擇服務人員的選項迴圈
 function s_card(){
 	$('.card_div').append(card_options);
@@ -346,7 +347,7 @@ let savedPets_Op ="";
 async function getMember_Pet() {
 	
 	let getMember_Pet_URL = 'http://localhost:8080/appointment/getMemberPet';
-	// getMember_Pet_URL +=`memberId=${memberId}` 
+	getMember_Pet_URL +=`?memId=${memberId}` 
 	console.log(getMember_Pet_URL)
 	try{
 		let res = await fetch(getMember_Pet_URL);
@@ -447,7 +448,7 @@ let updatePet_URL ='http://localhost:8080/appointment/putPet'
 			petInfoLightBox(`<p id="newPet_P" >此毛小孩資料將存於會員資料中<br>以利下次填寫</p>`);
 			$(petInfoBtn_Yes).off('click').on('click',async function(){
 				let thisPetDate = {
-					memberId : memberId,
+					memId : memberId,
 					type : thisPetType,
 					petName : thisPetName,
 					weight : thisPetWeight, 
@@ -462,7 +463,8 @@ let updatePet_URL ='http://localhost:8080/appointment/putPet'
 						body: JSON.stringify(thisPetDate)
 					});
 					let data = await res.json();
-					if(data.result == "成功更新" ){
+					if(data.result == "成功新增" ){
+						order.petId = data.petId;
 						resolve(true);
 						return;
 					} else{
@@ -501,6 +503,7 @@ let updatePet_URL ='http://localhost:8080/appointment/putPet'
 				$(petInfoBtn_Yes).off('click').on('click',async function(){
 				let thisPetDate = {
 					petId : petInfo.petId,
+					memId : memberId,
 					petName : thisPetName,
 					type : thisPetType,
 					petGender : thisPetGender, 
@@ -591,14 +594,14 @@ function setConfirmation(){
 			<div class="order_info">
 				<p><span class="label">預約項目：</span><span id="project">寵物接送</span></p>
 				<p><span class="label">預約時間：</span><span id="appTime">${order.appDate} ${order.apptTime}:00</span></p>
-				<p><span class="label">上車地址：</span><span id="onLoc">${order.onLoc}</span></p>
-				<p><span class="label">目的地地址：</span><span id="offLoc">${order.offLoc}</span></p>
+				<p><span class="label">上車地址：</span><span id="onLocation">${order.onLocation}</span></p>
+				<p><span class="label">目的地地址：</span><span id="offLocation">${order.offLocation}</span></p>
 				<p><span class="label">預約服務人員：</span><span id="staffName">${order.staffName}</span></p>
 				<p><span class="label">服務人員聯絡電話：</span><span id="staffPhone">${order.staffPhone}</span></p>
 				<p><span class="label">會員姓名：</span><span id="memName">${order.memName}</span></p>
 				<p><span class="label">會員電話：</span><span id="memPhone">${order.memPhone}</span></p>
 				<p><span class="label">毛小孩類別：</span><span id="petType">${order.petType}</span></p>
-				<p><span class="label">毛小孩性別：</span><span id="petGender">${order.petGender}</span></p>
+				<p><span class="label">毛小孩性別：</span><span id="petGender">${order.petGender = 1 ? "公": "母"}</span></p>
 				<p><span class="label">毛小孩大名：</span><span id="petName">${order.petName}</span></p>
 				<p><span class="label">毛小孩體重：</span><span id="petWeight">${order.petWeigh}kg</span></p>
 				<p><span class="label">其他注意事項：</span><span id="petNotes">${order.notes}</span></p>
@@ -618,16 +621,17 @@ function setConfirmation(){
 }
 
 async function setOrders(){
-	let setOrders_URL = 'http://localhost:8081/TIA105G1/ordersServlet';
+	let setOrders_URL = 'http://localhost:8080/appointment/postCheckout';
 	orderToDb.memId = memberId;
 	orderToDb.staffId = staffInfo.staffId;
-	orderToDb.scheduleId = staffInfo.scheduleId;
-	orderToDb.onLoc = order.onLoc;
-	orderToDb.offLoc = order.offLoc;
+	orderToDb.schId = staffInfo.schId;
+	orderToDb.onLocation = order.onLocation;
+	orderToDb.offLocation = order.offLocation;
 	orderToDb.point = 0;
 	orderToDb.payment = order.payment;
 	orderToDb.payMethod = 1;
 	orderToDb.notes = order.notes;
+	orderToDb.petId = order.petId;
 	console.log(orderToDb);
 	try {
 		let res = await fetch(setOrders_URL, {
@@ -637,6 +641,7 @@ async function setOrders(){
 			},
 			body: JSON.stringify(orderToDb)
 		});
+		console.log(res);
 		const html = await res.text();
 		// 將返回的 HTML 插入到頁面中
 		$(".body_text").append(html);
@@ -720,6 +725,7 @@ function changePage (){
 				break;
 			case 4:
 				savedPets_Op=""
+				petInfo = null;
 				getMember_Pet();
 				break;
 			case 5:

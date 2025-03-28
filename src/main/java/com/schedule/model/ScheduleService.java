@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,20 +59,18 @@ public class ScheduleService {
 	public List<StaffScheduleDTO> findByBookableStaff(LocalDate date,Integer apptttime ){
 		
 		List<ScheduleVO> bookableSchedule = repository.findByBookableStaff(date, apptttime);
-		List<StaffScheduleDTO> staffScheduleList = new ArrayList<StaffScheduleDTO>();
-		
-		for(ScheduleVO ScheduleVO : bookableSchedule) {
-			StaffScheduleDTO bookableStaff = new StaffScheduleDTO();
-			bookableStaff.setStaffId(ScheduleVO.getStaffVO().getStaffId());
-			bookableStaff.setScheduleId(ScheduleVO.getSchId());
-			bookableStaff.setStaffName(ScheduleVO.getStaffVO().getStaffName());
-			bookableStaff.setStaffPhone(ScheduleVO.getStaffVO().getStaffPhone());
-			bookableStaff.setStaffGender(ScheduleVO.getStaffVO().getStaffGender());
-			bookableStaff.setIntroduction(ScheduleVO.getStaffVO().getIntroduction());
-			staffScheduleList.add(bookableStaff);
-		}
+		List<StaffScheduleDTO> staffScheduleList = bookableSchedule.stream()
+				.map(schedule -> new StaffScheduleDTO(
+						schedule.getStaffVO().getStaffId(),
+						schedule.getSchId(),
+						schedule.getStaffVO().getStaffName(),
+						schedule.getStaffVO().getStaffPhone(),
+						schedule.getStaffVO().getStaffGender(),
+						schedule.getStaffVO().getIntroduction()
+				))
+				.collect(Collectors.toList());
 		return staffScheduleList;
 
 	}
-  
+
 }

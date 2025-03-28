@@ -6,16 +6,27 @@ import org.springframework.stereotype.Component;
 public class StaffScheduleDTO {
 	
 	private Integer staffId;
-	private Integer scheduleId;
+	private Integer schId;
 	private String staffName;
 	private String staffPhone;
 	private Integer staffGender;
 	private String introduction;
 	
+	public StaffScheduleDTO(Integer staffId, Integer schId, String staffName, String staffPhone,
+			Integer staffGender, String introduction) {
+		super();
+		this.staffId = staffId;
+		this.schId = schId;
+		this.staffName = staffName;
+		this.staffPhone = staffPhone;
+		this.staffGender = staffGender;
+		this.introduction = introduction;
+	}
+
 	public StaffScheduleDTO (){
 		
 	}
-	
+
 	public Integer getStaffId() {
 		return staffId;
 	}
@@ -24,12 +35,12 @@ public class StaffScheduleDTO {
 		this.staffId = staffId;
 	}
 
-	public Integer getScheduleId() {
-		return scheduleId;
+	public Integer getSchId() {
+		return schId;
 	}
 
-	public void setScheduleId(Integer scheduleId) {
-		this.scheduleId = scheduleId;
+	public void setSchId(Integer schId) {
+		this.schId = schId;
 	}
 
 	public String getStaffName() {
