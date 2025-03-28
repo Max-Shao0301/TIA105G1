@@ -1,0 +1,51 @@
+body {
+	font-family: Arial, sans-serif;
+	background-color: #f4f4f4;
+	padding-top: 70px;
+}
+
+.container {
+	max-width: 800px;
+}
+
+.form-group {
+	margin-bottom: 20px;
+}
+
+.btn-primary {
+	width: 100%;
+}
+
+table {
+	margin-top: 30px;
+	width: 100%;
+}
+
+th, td {
+	text-align: center;
+}
+
+.form-inline .form-group {
+	display: inline-block;
+	margin-right: 10px;
+}
+
+.form-inline .form-group:last-child {
+	margin-right: 0;
+}
+
+.form-row {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+/* 導覽列 */
+nav.navbar {
+	background-color: #C1B9AD;
+}
+
+/* 歡迎服務人員 */
+span.navbar-text {
+	margin-right: auto;
+}
