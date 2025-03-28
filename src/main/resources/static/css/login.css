@@ -20,7 +20,7 @@ body::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../img/dogpic.png'); 
+    background-image: url('/images/applycat.jpg'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -114,4 +114,16 @@ img{
 }
 a{
     color: #335288;
+}
+.form-label {
+    text-align: left;
+    display: block; /* 確保 text-align 生效 */
+    margin-left:12px ;
+}
+.fg{
+    margin-right: 10px;
+    text-align: right;
+}
+.form-check{
+    margin-left: 10px;
 }

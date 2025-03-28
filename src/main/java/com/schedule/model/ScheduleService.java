@@ -1,12 +1,16 @@
 package com.schedule.model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.enums.*;
+import com.enums.Status;
+import com.schedule.model.dto.StaffScheduleDTO;
 
 @Service("scheduleService")
 public class ScheduleService {
@@ -45,7 +49,29 @@ public class ScheduleService {
 		return repository.findAll();
 	}
 	
+
 	public List<ScheduleVO> getScheduleByStaff(Integer staffId) {
 		return repository.findByStaffOn(staffId);
+  }
+ 
+  
+	public List<StaffScheduleDTO> findByBookableStaff(LocalDate date,Integer apptttime ){
+		
+		List<ScheduleVO> bookableSchedule = repository.findByBookableStaff(date, apptttime);
+		List<StaffScheduleDTO> staffScheduleList = new ArrayList<StaffScheduleDTO>();
+		
+		for(ScheduleVO ScheduleVO : bookableSchedule) {
+			StaffScheduleDTO bookableStaff = new StaffScheduleDTO();
+			bookableStaff.setStaffId(ScheduleVO.getStaffVO().getStaffId());
+			bookableStaff.setScheduleId(ScheduleVO.getSchId());
+			bookableStaff.setStaffName(ScheduleVO.getStaffVO().getStaffName());
+			bookableStaff.setStaffPhone(ScheduleVO.getStaffVO().getStaffPhone());
+			bookableStaff.setStaffGender(ScheduleVO.getStaffVO().getStaffGender());
+			bookableStaff.setIntroduction(ScheduleVO.getStaffVO().getIntroduction());
+			staffScheduleList.add(bookableStaff);
+		}
+		return staffScheduleList;
+
 	}
+  
 }

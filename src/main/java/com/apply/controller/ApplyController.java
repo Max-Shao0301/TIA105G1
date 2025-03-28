@@ -4,12 +4,20 @@ package com.apply.controller;
 import com.springbootmail.MailService;
 import com.apply.model.ApplyService;
 import com.apply.model.ApplyVO;
+import com.staff.model.StaffService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Collections;
+import java.io.IOException;
+import java.util.List;
 
 
 @Controller
@@ -20,6 +28,9 @@ public class ApplyController {
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private StaffService staffService;
+
     @PostMapping("/updateResult")
     public String updateStatus(@RequestParam("applyId") Integer applyId, @RequestParam("results") Integer results) {
         String title = "寵愛牠平台審核通知";
@@ -27,15 +38,36 @@ public class ApplyController {
         applyVO.setApplyId(applyId);
         applyVO.setResults(results);
         applyService.updateApply(applyVO);
-        ApplyVO vo = applyService.getOne(applyId);
 
-        if (results == 1) { //如果返回1發送通過審核及帳密的信件
-
-            mailService.sendPlainText(Collections.singleton(vo.getApplyEmail()), title, vo.getApplyName() + " 先生/小姐，您好\n 您已通過平台審核成為寵愛牠接送服務人員\n登入帳號為您的電子信箱\n密碼為您的手機號碼\n\n歡迎您加入寵愛牠這個大家庭");
-        } else if (results == 0) {//如果返回0發送位通過審核感謝信
-            mailService.sendPlainText(Collections.singleton(vo.getApplyEmail()), title,  vo.getApplyName() + " 先生/小姐，您好\n 感謝您提交申請參與本次審核，經過審慎評估，我們遺憾地通知您，本次未能通過審核\n我們誠摯感謝您的參與，也期待未來能有更多合作的機會。\n\n敬祝\n順心如意");
-        }
         return "redirect:/admin/home/page";
+    }
+
+    @GetMapping("/joinus")
+    public String joinus(Model model) {
+        model.addAttribute("ApplyVO", new ApplyVO());
+        return "/front-end/joinus";
+    }
+
+    @PostMapping("/insert/apply")
+    public String insertApply(@Valid ApplyVO applyVO, BindingResult result, ModelMap model,
+                              @RequestParam("license") MultipartFile [] parts) throws IOException {
+        if(parts[0].isEmpty()) {
+            model.addAttribute("errorMessage", "請上傳駕照");
+        } else {
+            for (MultipartFile multipartFile : parts) {
+                byte[] licensePhoto = multipartFile.getBytes();
+                applyVO.setLicense(licensePhoto);
+            }
+        }
+        if (result.hasErrors() || parts[0].isEmpty()) {
+            return "front-end/joinus";
+        }
+
+
+        applyService.addApply(applyVO);
+        List<ApplyVO> applyList = applyService.getAll();
+        model.addAttribute("applyList", applyList);
+        return "index";
     }
 
 

@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js" lang="zxx">
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx" >
     <head>
         <!-- Meta Tags -->
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,34 +10,34 @@
 		
 		<!-- Title -->
 		<title>寵愛牠 PawCares</title>
-		<link rel="icon" href="img/logo.png">
+		<link rel="icon" th:href="@{/images/logo.png}">
 		<!-- Google Fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
 		<!-- Nice Select CSS -->
-		<link rel="stylesheet" href="css/nice-select.css">
+		<link rel="stylesheet" th:href="@{/css/nice-select.css}">
 		<!-- Font Awesome CSS -->
-        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
 		<!-- icofont CSS -->
-        <link rel="stylesheet" href="css/icofont.css">
+        <link rel="stylesheet" th:href="@{/css/icofont.css}">
 		<!-- Slicknav -->
-		<link rel="stylesheet" href="css/slicknav.min.css">
+		<link rel="stylesheet" th:href="@{/css/slicknav.min.css}">
 		<!-- Owl Carousel CSS -->
-        <link rel="stylesheet" href="css/owl-carousel.css">
+        <link rel="stylesheet" th:href="@{/css/owl-carousel.css}">
 		<!-- Datepicker CSS -->
-		<link rel="stylesheet" href="css/datepicker.css">
+		<link rel="stylesheet" th:href="@{/css/datepicker.css}">
 		<!-- Animate CSS -->
-        <link rel="stylesheet" href="css/animate.min.css">
+        <link rel="stylesheet" th:href="@{/css/animate.min.css}">
 		<!-- Magnific Popup CSS -->
-        <link rel="stylesheet" href="css/magnific-popup.css">
+        <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
 		
 		<!-- Medipro CSS -->
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/responsive.css">
-		<link rel="stylesheet" href="/css/add.css">
-        <link rel="stylesheet" href="/css/joinus.css">
+        <link rel="stylesheet" th:href="@{/css/normalize.css}">
+        <link rel="stylesheet" th:href="@{/css/style.css}">
+        <link rel="stylesheet" th:href="@{/css/responsive.css}">
+		<link rel="stylesheet" th:href="@{/css/add.css}">
+        <link rel="stylesheet" th:href="@{/css/joinus.css}">
 		
     </head>
     <body>
@@ -88,8 +88,8 @@
 						<div class="col-lg-6 col-md-7 col-12">
 							<!-- Top Contact -->
 							<ul class="top-contact">
-								<li><a href="./login.html"><i class="icofont-login"></i>會員登入</a></i></li>
-								<li></i><a href="./member.html"><i class="icofont-ui-user"></i>會員資料</a></li>
+								<li><a th:href="@{/front-end/login}"><i class="icofont-login"></i>會員登入</a></i></li>
+								<li></i><a th:href="@{/front-end/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
 							</ul>
 							<!-- End Top Contact -->
 						</div>
@@ -105,7 +105,7 @@
 							<div class="col-lg-3 col-md-3 col-12">
 								<!-- Start Logo -->
 								<div class="logo">
-									<a href="index.html"><img src="img/title.png" alt="#"></a>
+									<a href="index.html"><img th:src="@{/images/title.png}" alt="#"></a>
 								</div>
 								<!-- End Logo -->
 								<!-- Mobile Nav -->
@@ -118,11 +118,11 @@
 									
 									<nav class="navigation">
 										<ul class="nav menu">											
-											<li><a href="">關於我們</a></li>
-											<li class="active"><a href="./joinus.html" >加入我們 </a></li>
+											<li><a href="#">關於我們</a></li>
+											<li class="active"><a th:href="@{/front-end/joinus}" >加入我們 </a></li>
 											<li><a href="#">常見問題 </a></li>
-											<li><a href="./orderlist.html">訂單檢視 </a></li>
-											<li><a href="./index.html">首頁</a>	
+											<li><a th:href="@{/front-end/orderlist}">訂單檢視 </a></li>
+											<li><a th:href="@{/}">首頁</a>
 										</ul>
 									</nav>
 								</div>
@@ -130,7 +130,7 @@
 							</div>
 							<div class="col-lg-2 col-12">
 								<div class="get-quote">
-									<a href="appointment.html" class="btn">預約服務</a>
+									<a th:href="@{/front-end/appointment}" class="btn">預約服務</a>
 								</div>
 							</div>
 						</div>
@@ -156,7 +156,7 @@
 			</div>
 		</div>
         <article class="info">
-            <form action="javascript:void(0);" method="post" id="the_form">
+            <form id="the_form"  enctype="multipart/form-data" th:action="@{/insert/apply}" th:method="post" th:object="${ApplyVO}" >
               <div class="content_block">
           
                
@@ -164,27 +164,29 @@
                 <div class="right_block">
           
                   <div class="block">
-                    <label>姓名</label><input type="text" name="name">
+                    <label>姓名</label>
+					<input type="text" name="name" th:field="*{applyName}">
                   </div>
                   <div class="block">
-                    <label>車牌號碼</label><input type="text" id="plate_number">
+                    <label>車牌號碼</label>
+					<input type="text" id="plate_number" th:field="*{carNumber}">
                   </div>
                   <label class="nametype">性別</label>
-                  <label><input type="radio" name="gender" value="1"> 男</label>
-                  <label><input type="radio" name="gender" value="2"> 女</label>
+                  <label><input type="radio" name="gender" value="1" th:field="*{applyGender}"> 男</label>
+                  <label><input type="radio" name="gender" value="2" th:field="*{applyGender}"> 女</label>
                   <div class="form-group">
                     <label>聯絡電話</label>
-                    <input type="tel" name="phone">
+                    <input type="tel" name="phone" th:field="*{applyPhone}">
                 </div>
                 <div class="form-group">
                     <label>電子信箱</label>
-                    <input type="email" >
+                    <input type="email" th:field="*{applyEmail}" >
                 </div>
            
 
                 </div>
                 <div class="left_block">
-                    <input type="file" id="licence_photo">
+                    <input type="file" name="license" id="licence_photo" th:field="*{license}">
                     <div id="preview" class="drop_zone">
 						<span class="text">請上傳駕照<i class="icofont-upload-alt"></i></span>
                     </div>
@@ -194,7 +196,7 @@
               <footer class="footer">
                 <div class="form-group">
                     <label>自我介紹</label>
-                    <textarea rows="4"></textarea>
+                    <textarea rows="4" th:field="*{introduction}"></textarea>
                 </div>
               </footer>
              
@@ -218,7 +220,6 @@
 									<p> 邵柏中
 										陳華宣
 										林珍妮
-										蔡富任
 										高逢廷</p>
 								<!-- Social -->
 								<ul class="social">
@@ -294,46 +295,46 @@
 		<!--/ End Footer Area -->
 		
 		<!-- jquery Min JS -->
-		 <script src="js/add.js"></script>
-        <script src="js/jquery.min.js"></script>
+		<script th:src="@{/js/add.js}"></script>
+        <script th:src="@{/js/jquery.min.js}"></script>
 		<!-- jquery Migrate JS -->
-		<script src="js/jquery-migrate-3.0.0.js"></script>
+		<script th:src="@{/js/jquery-migrate-3.0.0.js}"></script>
 		<!-- jquery Ui JS -->
-		<script src="js/jquery-ui.min.js"></script>
+		<script th:src="@{/js/jquery-ui.min.js}"></script>
 		<!-- Easing JS -->
-        <script src="js/easing.js"></script>
+        <script th:src="@{/js/easing.js}"></script>
 		<!-- Color JS -->
-		<script src="js/colors.js"></script>
+		<script th:src="@{/js/colors.js}"></script>
 		<!-- Popper JS -->
-		<script src="js/popper.min.js"></script>
+		<script th:src="@{/js/popper.min.js}"></script>
 		<!-- Bootstrap Datepicker JS -->
-		<script src="js/bootstrap-datepicker.js"></script>
+		<script th:src="@{/js/bootstrap-datepicker.js}"></script>
 		<!-- Jquery Nav JS -->
-        <script src="js/jquery.nav.js"></script>
+        <script th:src="@{/js/jquery.nav.js}"></script>
 		<!-- Slicknav JS -->
-		<script src="js/slicknav.min.js"></script>
+		<script th:src="@{/js/slicknav.min.js}"></script>
 		<!-- ScrollUp JS -->
-        <script src="js/jquery.scrollUp.min.js"></script>
+        <script th:src="@{/js/jquery.scrollUp.min.js}"></script>
 		<!-- Niceselect JS -->
-		<script src="js/niceselect.js"></script>
+		<script th:src="@{/js/niceselect.js}"></script>
 		<!-- Tilt Jquery JS -->
-		<script src="js/tilt.jquery.min.js"></script>
+		<script th:src="@{/js/tilt.jquery.min.js}"></script>
 		<!-- Owl Carousel JS -->
-        <script src="js/owl-carousel.js"></script>
+        <script th:src="@{/js/owl-carousel.js}"></script>
 		<!-- counterup JS -->
-		<script src="js/jquery.counterup.min.js"></script>
+		<script th:src="@{/js/jquery.counterup.min.js}"></script>
 		<!-- Steller JS -->
-		<script src="js/steller.js"></script>
+		<script th:src="@{/js/steller.js}"></script>
 		<!-- Wow JS -->
-		<script src="js/wow.min.js"></script>
+		<script th:src="@{/js/wow.min.js}"></script>
 		<!-- Magnific Popup JS -->
-		<script src="js/jquery.magnific-popup.min.js"></script>
+		<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
 		<!-- Counter Up CDN JS -->
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 		<!-- Bootstrap JS -->
-		<script src="js/bootstrap.min.js"></script>
+		<script th:src="@{/js/bootstrap.min.js}"></script>
 		<!-- Main JS -->
-		<script src="js/main.js"></script>
-		<script src="js/joinus.js"></script>
+		<script th:src="@{/js/main.js}"></script>
+		<script th:src="@{/js/joinus.js}"></script>
     </body>
 </html>
