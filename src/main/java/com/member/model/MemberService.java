@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.member.model.dto.MemberDTO;
 import com.orders.model.OrdersVO;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -81,6 +82,18 @@ public class MemberService {
 		} else {
 			return false;
 		}
+	}
+	
+	public MemberDTO getMemberDTO(Integer memId) {
+		MemberVO memberVO = memberRepository.findById(memId).orElse(null);
+		MemberDTO memberDTO = new MemberDTO();
+		
+		memberDTO.setMemId(memberVO.getMemId());
+		memberDTO.setMemName(memberVO.getMemName());
+		memberDTO.setMemPhone(memberVO.getMemPhone());
+		memberDTO.setPoint(memberVO.getPoint());
+		
+		return memberDTO;
 	}
 
 }

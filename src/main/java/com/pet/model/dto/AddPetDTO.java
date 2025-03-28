@@ -27,6 +27,7 @@ public class AddPetDTO {
 	@Positive(message = "weight必須是正數")
     private Integer weight;
     
+	
 	public Integer getPetId() {
 		return petId;
 	}

@@ -11,6 +11,9 @@ public class PetDTO {
 	@Positive
 	private Integer petId;
 	
+	@Positive
+	private Integer memId;
+	
 	@NotNull(message = "name不得為空")
 	private String petName;  
 	
@@ -23,8 +26,11 @@ public class PetDTO {
     
 	@Positive(message = "weight必須是正數")
     private Integer weight;
-    
-	public PetDTO(Integer petId, String petName, String type, Integer petGender, Integer weight) {
+	
+	public PetDTO(@Positive Integer petId, @NotNull(message = "name不得為空") String petName,
+			@NotNull(message = "type不得為空") @Pattern(regexp = "dog|cat", message = "type必須是dog或cat") String type,
+			@Range(min = 0, max = 1, message = "gender必須是0或1") Integer petGender,
+			@Positive(message = "weight必須是正數") Integer weight) {
 		super();
 		this.petId = petId;
 		this.petName = petName;
@@ -32,37 +38,55 @@ public class PetDTO {
 		this.petGender = petGender;
 		this.weight = weight;
 	}
-	public PetDTO() {
-		
-	}
+
 	public Integer getPetId() {
 		return petId;
 	}
+
 	public void setPetId(Integer petId) {
 		this.petId = petId;
 	}
+
+	public Integer getMemId() {
+		return memId;
+	}
+
+	public void setMemId(Integer memId) {
+		this.memId = memId;
+	}
+
 	public String getPetName() {
 		return petName;
 	}
+
 	public void setPetName(String petName) {
 		this.petName = petName;
 	}
+
 	public String getType() {
 		return type;
 	}
+
 	public void setType(String type) {
 		this.type = type;
 	}
+
 	public Integer getPetGender() {
 		return petGender;
 	}
+
 	public void setPetGender(Integer petGender) {
 		this.petGender = petGender;
 	}
+
 	public Integer getWeight() {
 		return weight;
 	}
+
 	public void setWeight(Integer weight) {
 		this.weight = weight;
 	}
+    
+	
+	
 }
