@@ -34,24 +34,14 @@ public class IndexController_inSpringBoot {
 		return "index"; // 回傳 Thymeleaf 頁面
 	}
 
-	@GetMapping("/front-end/member")
-	public String member() {
-		return "/front-end/member";
-	}
+	
 
-	@GetMapping("/front-end/joinus")
-	public String joinus() {
-		return "/front-end/joinus";
-	}
-
-	@GetMapping("/front-end/orderlist")
+	
+	@GetMapping("/orderlist")
 	public String orderlist() {
 		return "/front-end/orderlist";
 	}
 
-	@GetMapping("/front-end/appointment")
-	public String appointment() {
-		return "/front-end/appointment";
-	}
+
 
 }

@@ -86,10 +86,10 @@
 						<div class="col-lg-6 col-md-7 col-12">
 							<!-- Top Contact -->
 							<ul class="top-contact">
-								<li th:if="${!isLoggedIn}"><a th:href="@{/front-end/login}"><i class="icofont-login"></i>會員登入</a></li>
+								<li th:if="${!isLoggedIn}"><a th:href="@{/login}"><i class="icofont-login"></i>會員登入</a></li>
 								<li th:if="${isLoggedIn}"><i class="icofont-paw"></i>Hi,<span th:text="${session.memName}"></span>!</li>
-								<li th:if="${!isLoggedIn}"><a th:href="@{/front-end/register}"><i class="icofont-ui-user"></i>會員註冊</a></li>
-								<li th:if="${isLoggedIn}"><a th:href="@{/front-end/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
+								<li th:if="${!isLoggedIn}"><a th:href="@{/register}"><i class="icofont-ui-user"></i>會員註冊</a></li>
+								<li th:if="${isLoggedIn}"><a th:href="@{/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
 							</ul>
 							<!-- End Top Contact -->
 						</div>
@@ -118,10 +118,10 @@
 									
 									<nav class="navigation">
 										<ul class="nav menu">											
-											<li><a th:href="@{/front-end/joinus}">關於我們</a></li>
+											<li><a th:href="@{/joinus}">關於我們</a></li>
 											<li><a th:href="@{/joinus}">加入我們 </a></li>
-											<li><a th:href="@{/front-end/joinus}">常見問題 </a></li>
-											<li><a th:href="@{/front-end/orderlist}">訂單檢視 </a></li>
+											<li><a th:href="@{/joinus}">常見問題 </a></li>
+											<li><a th:href="@{/orderlist}">訂單檢視 </a></li>
 											<li class="active"><a th:href="@{/}">首頁</a>	
 										</ul>
 									</nav>
@@ -130,7 +130,7 @@
 							</div>
 							<div class="col-lg-2 col-12">
 								<div class="get-quote">
-									<a th:href="@{/front-end/appointment}" class="btn">預約服務</a>
+									<a th:href="@{/appointment}" class="btn">預約服務</a>
 								</div>
 							</div>
 						</div>
@@ -169,8 +169,8 @@
 									<h1>We Provide <span>Pet Taxi</span> Services That You Can <span>Trust!</span></h1>
 									<p>寵愛牠致力於打造便利、安全的寵物計程車服務，讓毛孩隨時隨地享受充滿愛與關懷的出行體驗</p>
 									<div class="button">
-										<a th:href="@{/front-end/appointment}" class="btn">預約寵物計程車</a>
-										<a th:href="@{/front-end/orderlist}" class="btn primary">訂單檢視</a>
+										<a th:href="@{/appointment}" class="btn">預約寵物計程車</a>
+										<a th:href="@{/orderlist}" class="btn primary">訂單檢視</a>
 									</div>
 								</div>
 							</div>
@@ -187,8 +187,8 @@
 									<h1>We Provide <span>Pet Taxi</span> Services That You Can <span>Trust!</span></h1>
 									<p>寵愛牠致力於打造便利、安全的寵物計程車服務，讓毛孩隨時隨地享受充滿愛與關懷的出行體驗</p>
 									<div class="button">
-										<a th:href="@{/front-end/appointment}" class="btn">預約寵物計程車</a>
-										<a th:href="@{/front-end/orderlist}" class="btn primary">訂單檢視</a>
+										<a th:href="@{/appointment}" class="btn">預約寵物計程車</a>
+										<a th:href="@{/orderlist}" class="btn primary">訂單檢視</a>
 									</div>
 								</div>
 							</div>

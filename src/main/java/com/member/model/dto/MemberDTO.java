@@ -31,6 +31,16 @@ public class MemberDTO {
 	
 	@NotBlank(message = "請選擇區域")
 	private String district;
+	
+	private String confirmPassword;
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
 
 	public Integer getMemId() {
 		return memId;

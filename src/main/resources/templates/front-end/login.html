@@ -17,7 +17,7 @@
         <!-- 寵物圖標 -->
         <a th:href="@{/}"><img th:src="@{/images/title.png}"></a>
         
-        <form th:action="@{/front-end/login}" th:object="${loginDTO}" method="POST">
+        <form th:action="@{/login}" th:object="${loginDTO}" method="POST">
             <div class="mb-3">
 		         <div class="label-error-row">
 				    <label for="loginEmail" class="form-label">帳號</label>
@@ -53,7 +53,7 @@
                 	<input class="form-check-input" type="checkbox" id="rememberMe" name="rememberMe" th:checked="${rememberMeChecked} ? 'checked' : null" />
                     <label class="form-check-label" for="rememberMe">記住我</label>
                 </div>
-                <div class="fg"><a th:href="@{/front-end/forgetpassword}">忘記密碼</a></div>
+                <div class="fg"><a th:href="@{/forgetpassword}">忘記密碼</a></div>
             </div>
             <button type="submit" class="btn btn-primary">登入</button>
         </form>
@@ -63,7 +63,7 @@
             <button type="button" class="btn btn-outline-danger"><i class="fab fa-google"></i> Google</button>
         </div>
         <div class="register-link">
-            <p>沒有帳號？ <a th:href="@{/front-end/register}">點我註冊</a></p>
+            <p>沒有帳號？ <a th:href="@{/register}">點我註冊</a></p>
         </div>
     </div>
     

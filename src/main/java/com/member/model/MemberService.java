@@ -89,7 +89,7 @@ public class MemberService {
 			return 2;
 		}
 		if (memPassword.equals(member.getMemPassword()) ) {
-			session.setAttribute("memberId", member.getMemId());
+			session.setAttribute("memId", member.getMemId());
 			session.setAttribute("memName", member.getMemName());
 			return 1;
 		} else {

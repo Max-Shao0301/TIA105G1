@@ -29,8 +29,8 @@ public class LoginController{
 	private MemberService memberService;
 	
 	
-	@GetMapping("/front-end/login")
-	public String showLoginPage(Model model, HttpServletRequest request) {
+	@GetMapping("/login")
+	public String login(Model model, HttpServletRequest request) {
 	    LoginDTO loginDTO = (LoginDTO) model.getAttribute("loginDTO");
 	    boolean rememberMeChecked = false;
 
@@ -54,7 +54,7 @@ public class LoginController{
 	}
 	
 	@Validated
-	@PostMapping("/front-end/login")
+	@PostMapping("/login")
 	public String login(
 			@ModelAttribute @Valid LoginDTO loginDTO,
 			BindingResult bindingResult,
@@ -86,12 +86,21 @@ public class LoginController{
         case 2: 
         	redirectAttributes.addFlashAttribute("errorMessage1","此信箱未註冊");
         	redirectAttributes.addFlashAttribute("loginDTO", loginDTO);
-        	return "redirect:/front-end/login";
+        	return "redirect:/login";
         case 3: 
         	redirectAttributes.addFlashAttribute("errorMessage2","密碼錯誤");
         	redirectAttributes.addFlashAttribute("loginDTO", loginDTO);
-        	return "redirect:/front-end/login";
-        default: return "redirect:/front-end/login";
+        	return "redirect:/login";
+        default: return "redirect:/login";
 		}
+	}
+	
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.removeAttribute("loginDTO");
+		session.removeAttribute("isLoggedIn");
+		session.removeAttribute("memId");
+		session.removeAttribute("memName");
+		return "redirect:/";
 	}
 }

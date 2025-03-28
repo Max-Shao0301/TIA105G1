@@ -21,7 +21,7 @@
 		<!-- 寵物圖標 -->
 		<a th:href="@{/}"><img th:src="@{/images/title.png}"></a>
 		
-		<form th:action="@{/front-end/register}" th:object="${memberDTO}" method="post">
+		<form th:action="@{/register}" th:object="${memberDTO}" method="post">
 			<!-- 左右兩欄 -->
 			<div class="row">
 				<!-- 左側 -->
@@ -63,7 +63,10 @@
 					<input type="tel" class="form-control" th:field="*{memPhone}" placeholder="請輸入手機"> 
 					
 					<label class="form-label">再次輸入密碼</label>
-					<input type="password" class="form-control" placeholder="請再次輸入密碼" >
+					<div th:if="${wrongMessage}" class="wrong">
+						<i class="icofont-paw"></i> <span th:text="${wrongMessage}"></span>
+					</div>
+					<input type="password" class="form-control" th:field="*{confirmPassword}" placeholder="請再次輸入密碼" >
 
 				</div>
 				<div class="errors-container">
