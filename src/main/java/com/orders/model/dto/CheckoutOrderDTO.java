@@ -1,9 +1,15 @@
 package com.orders.model.dto;
 
-public class CheckoutOrderDTO {
+import java.time.LocalDate;
 
-	private Integer memId;
-	private Integer staffId;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+public class CheckoutOrderDTO {
+	
+	@JsonFormat(pattern = "yyyy/MM/dd")
+	private LocalDate date;
+	 
+	private Integer apptTime;
 	private Integer schId;
 	private Integer petId;
 	private String onLocation;
@@ -13,20 +19,21 @@ public class CheckoutOrderDTO {
 	private Integer payMethod;
 	private String notes;
 
-	public Integer getMemId() {
-		return memId;
+
+	public LocalDate getDate() {
+		return date;
 	}
 
-	public void setMemId(Integer memId) {
-		this.memId = memId;
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 
-	public Integer getStaffId() {
-		return staffId;
+	public Integer getApptTime() {
+		return apptTime;
 	}
 
-	public void setStaffId(Integer staffId) {
-		this.staffId = staffId;
+	public void setApptTime(Integer apptTime) {
+		this.apptTime = apptTime;
 	}
 
 	public Integer getSchId() {

@@ -1,0 +1,67 @@
+
+.body_text {
+    font-family: Arial, sans-serif;
+    margin: auto;
+    padding: 20px;
+    height: 100%;
+    background: #ffff;
+    justify-content: center;
+    align-items: center;
+    width: 650px;
+    font-size: 18px;
+}
+.title {
+    font-size: 26px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.order_info > p {
+    margin: 10px 0px 10px 0px;
+}
+.order_info{
+    box-shadow: 0 0 1000px rgba(0, 0, 0, 0.1);
+    border: 2px solid Gainsboro;
+    border-radius: 10px ;
+    margin: auto;
+    padding: 20px;
+    height: 100%;
+
+}
+.pay_info{
+    margin: 10px;
+    padding: 10px;
+}
+.pay_info  p {
+    margin: 15px;
+  
+}
+/* .points_info{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.points_total{
+    font-size: 16px;
+    color: gray;
+} */
+/* 上下頁按鈕 */
+.page_break_div {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+.page_break {
+    background-color: #839974;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 20px;
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+}
+.page_break:hover  {
+    background-color: #768968;
+}
