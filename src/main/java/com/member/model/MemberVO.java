@@ -7,6 +7,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import com.orders.model.OrdersVO;
+import com.pet.model.PetVO;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -57,11 +58,11 @@ public class MemberVO implements java.io.Serializable {
 	@Column(name = "update_time")
 	private LocalDateTime updateTime;
 
-	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private List<OrdersVO> orders;
 
-//	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//	private List<PetVO> pet;
+	@OneToMany(mappedBy = "member", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<PetVO> pet;
 
 	public MemberVO() { // 必需有一個不傳參數建構子(JavaBean基本知識)
 	}

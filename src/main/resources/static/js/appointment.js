@@ -26,15 +26,15 @@ const order = {
 	petType:{},
 	petGender:{},
 	petName:{},
-	petWeigh:{},
+	petWeight:{},
 	notes:{},
 	petId:{},
 	payment:100,  //暫時寫死
 	memPoints:{}
 };
 const orderToDb = {
-	memId : {},
-	staffId : {},
+	date:{},
+	apptTime:{},
 	schId : {},
 	onLocation : {},
 	offLocation : {},
@@ -197,7 +197,7 @@ let confirmation =`
 				<p><span class="label">毛小孩類別：</span><span id="petType">${order.petType}</span></p>
 				<p><span class="label">毛小孩性別：</span><span id="petGender">${order.petGender}</span></p>
 				<p><span class="label">毛小孩大名：</span><span id="petName">${order.petName}</span></p>
-				<p><span class="label">毛小孩體重：</span><span id="petWeight">${order.petWeigh}</span></p>
+				<p><span class="label">毛小孩體重：</span><span id="petWeight">${order.petWeight}</span></p>
 				<p><span class="label">其他注意事項：</span><span id="petNotes">無</span></p>
 			</div>
 			<div class="pay_info">
@@ -571,7 +571,7 @@ function orderPetSet (){
 	order.petGender = thisPetGender;
 	order.petName = thisPetName;
 	order.petType = thisPetType;
-	order.petWeigh = thisPetWeight;
+	order.petWeight = thisPetWeight;
 	order.notes = thisPetNotes;
 }
 //==========step4==========//
@@ -600,10 +600,10 @@ function setConfirmation(){
 				<p><span class="label">服務人員聯絡電話：</span><span id="staffPhone">${order.staffPhone}</span></p>
 				<p><span class="label">會員姓名：</span><span id="memName">${order.memName}</span></p>
 				<p><span class="label">會員電話：</span><span id="memPhone">${order.memPhone}</span></p>
-				<p><span class="label">毛小孩類別：</span><span id="petType">${order.petType}</span></p>
-				<p><span class="label">毛小孩性別：</span><span id="petGender">${order.petGender = 1 ? "公": "母"}</span></p>
+				<p><span class="label">毛小孩類別：</span><span id="petType">${order.petType == "cat"? "貓":"狗"}</span></p>
+				<p><span class="label">毛小孩性別：</span><span id="petGender">${order.petGender == 1 ? "公": "母"}</span></p>
 				<p><span class="label">毛小孩大名：</span><span id="petName">${order.petName}</span></p>
-				<p><span class="label">毛小孩體重：</span><span id="petWeight">${order.petWeigh}kg</span></p>
+				<p><span class="label">毛小孩體重：</span><span id="petWeight">${order.petWeight}kg</span></p>
 				<p><span class="label">其他注意事項：</span><span id="petNotes">${order.notes}</span></p>
 			</div>
 			<div class="pay_info">
@@ -622,8 +622,8 @@ function setConfirmation(){
 
 async function setOrders(){
 	let setOrders_URL = 'http://localhost:8080/appointment/postCheckout';
-	orderToDb.memId = memberId;
-	orderToDb.staffId = staffInfo.staffId;
+	orderToDb.apptTime = order.apptTime;
+	orderToDb.date = order.appDate;
 	orderToDb.schId = staffInfo.schId;
 	orderToDb.onLocation = order.onLocation;
 	orderToDb.offLocation = order.offLocation;
@@ -642,11 +642,19 @@ async function setOrders(){
 			body: JSON.stringify(orderToDb)
 		});
 		console.log(res);
-		const html = await res.text();
+		let data = await res.json();
+		if(data.NoPayment){
+			window.location.href = data.NoPayment;
+		}
+		if(data.ECPay){
+			$(".body_text").append(data.ECPay);
+			document.getElementById('allPayAPIForm').submit();
+		}
+		// const html = await res.text();
 		// 將返回的 HTML 插入到頁面中
-		$(".body_text").append(html);
+		// $(".body_text").append(html);
 		// 自動提交表單
-		document.getElementById('allPayAPIForm').submit();
+		
 	}catch(error){
 		console.log(error);
 	}
