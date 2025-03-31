@@ -73,15 +73,16 @@ public class OrdersController {
 		Integer memId = (Integer) session.getAttribute("memId");
 		Map result = ordersService.addOrders(checkoutOrderDTO, memId);
 		session.setAttribute("orderId", result.get("orderId"));
-
+		
 		if (result.get("error") != null) {
-			System.out.println("有錯哦");
 			response.put("error", result.get("error"));
+			System.out.println("有錯");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
-
+		
 		if ("true".equals(result.get("freeOrder"))) {
-			response.put("NoPayment", "/paymentResults");
+			response.put("NoPayment", "http://localhost:8080/appointment/paymentResults");
+			System.out.println("免費");
 			return ResponseEntity.ok(response);
 		}
 		response.put("ECPay", result.get("form"));

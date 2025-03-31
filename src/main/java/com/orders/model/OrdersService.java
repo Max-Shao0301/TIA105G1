@@ -76,10 +76,10 @@ public class OrdersService {
 	public Map<String, Object> addOrders(CheckoutOrderDTO checkoutOrderDTO, Integer memId ) {
 		Map<String, Object> result = new HashMap<>();
 		
-		Integer payMethood = checkoutOrderDTO.getPayMethod();
+		
 		ScheduleVO scheuleVO = scheduleRepository.findById(checkoutOrderDTO.getSchId()).orElse(null);
 		PetVO petVO = petRepository.findById(checkoutOrderDTO.getPetId()).orElse(null);
-		System.out.println("-----");
+
 		MemberVO memberVO = petVO.getMember();
 		Integer apptTime = checkoutOrderDTO.getApptTime();
 		
@@ -99,6 +99,33 @@ public class OrdersService {
 			System.out.println("寵物會員比對正常");
 		}
 		
+		Integer payMethood = checkoutOrderDTO.getPayMethod();
+		Integer memberPoint = memberVO.getPoint();
+		Integer orderPoint = checkoutOrderDTO.getPoint();
+		System.out.println("會員點數"+ memberPoint);
+		System.out.println("訂單點數"+ orderPoint);
+		//這是最終會丟給ECPay的結帳金額 而非存入資料庫的結帳金額
+		Integer checkoutAamount = checkoutOrderDTO.getPayment();
+		//用點數支付
+		if(payMethood.equals(0)) {
+			// 驗證前端提交過來的點數是否與資料庫儲存的會員點數一致、且點數足夠支付整筆訂單金額
+			if(memberPoint.equals(orderPoint) && memberPoint > checkoutAamount){
+				result.put("freeOrder", "true");
+				memberRepository.updatePoint(memberPoint - checkoutAamount, memId);
+				scheduleRepository.updateBooked(scheuleVO.getSchId());
+				orderPoint = checkoutAamount;
+				payMethood = 0;
+				System.out.println("點數單");
+			// 驗證前端提交過來的點數是否與資料庫儲存的會員點數一致、但點數不夠支付整筆訂單金額、而且user點數不是0
+			}else if (memberPoint.equals(orderPoint) && memberPoint < checkoutAamount && !(memberPoint.equals(0))) {
+				checkoutAamount -= memberPoint;
+				payMethood = 2;
+				System.out.println("點數+現金");
+			}else if(!(memberPoint.equals(orderPoint))) {
+				result.put("error", "點數");
+				System.out.println("錯錯錯");
+			}
+		}
 		
 		OrdersVO ordersVO = new OrdersVO();
 		ordersVO.setMember(memberVO);
@@ -106,11 +133,11 @@ public class OrdersService {
 		ordersVO.setStaff(scheuleVO.getStaffVO());
 		ordersVO.setOnLocation(checkoutOrderDTO.getOnLocation());
 		ordersVO.setOffLocation(checkoutOrderDTO.getOffLocation());
-		ordersVO.setPoint(checkoutOrderDTO.getPoint());
+		ordersVO.setPoint(orderPoint);
 		ordersVO.setPayment(checkoutOrderDTO.getPayment());
-		ordersVO.setPayMethod(checkoutOrderDTO.getPayMethod());
+		ordersVO.setPayMethod(payMethood);
 		ordersVO.setNotes(checkoutOrderDTO.getNotes());
-		ordersVO.setStatus(0);
+		ordersVO.setStatus(payMethood.equals(0)? 1 : 0);
 		ordersVO = ordersRepository.save(ordersVO);
 		
 		result.put("orderId", ordersVO.getOrderId());
@@ -121,9 +148,9 @@ public class OrdersService {
 		orderpetRepository.save(orderPetVO);
 		
 		if(payMethood.equals(0)) {
-			result.put("freeOrder", "true");
 			return result;
 		}
+		
 		LocalDateTime nowTime = LocalDateTime.now();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		Integer oderId = ordersVO.getOrderId();
@@ -137,23 +164,11 @@ public class OrdersService {
 		aco.setMerchantID("3002607"); //店家ID
 		aco.setMerchantTradeNo(TradeNo); //訂單ID
 		aco.setMerchantTradeDate(orderTime); //訂單時間 yyyy/MM/dd HH:mm:ss
-		switch (payMethood){
-			case 0:
-				System.out.println("全點數");
-				break;
-			case 1:
-				System.out.println("全刷卡");
-				aco.setTotalAmount(ordersVO.getPayment().toString()); //金額
-				break;
-			case 2:
-				System.out.println("混和付款");
-				aco.setTotalAmount( Integer.toString(ordersVO.getPayment()- ordersVO.getPoint()));
-				break;
-		}
+		aco.setTotalAmount(checkoutAamount.toString()); //金額
 		aco.setTradeDesc(des); //交易描述
 		aco.setItemName("Pet Taxi"); //商品名稱
 		aco.setNeedExtraPaidInfo("Y"); //額外資訊
-		aco.setReturnURL("https://6f32-124-218-108-244.ngrok-free.app/ecpayReturn"); //付款結果通知 應為商家的controller
+		aco.setReturnURL("https://feca-1-164-226-222.ngrok-free.app/ecpayReturn"); //付款結果通知 應為商家的controller
 		// aco.setOrderResultURL(""); //付款完成後的結果參數 傳至前端用的
 		aco.setClientBackURL("http://localhost:8080/appointment/paymentResults"); //付完錢後的返回商店按鈕會到的網址
 		String form = all.aioCheckOut(aco, null);
@@ -206,6 +221,7 @@ public class OrdersService {
 		
 		if(ordersVO.getStatus().equals(1)) {
 			result.put("pay", "1");
+			memberRepository.updatePoint(0, ordersVO.getMember().getMemId());
 		}else {
 			result.put("pay", "0");
 		}
