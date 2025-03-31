@@ -86,7 +86,7 @@ div#homepage_img img {
   padding: 20px;
   border-radius: 10px;
   width: 800px; /* 可以根據需要調整寬度 */
-  height: 500px;
+  height: auto;
   display: flex;
   justify-content: space-between; /* 使左右部分分開 */
   align-items: flex-start; /* 左右部分垂直對齊 */
@@ -97,6 +97,7 @@ div#homepage_img img {
 .modal-content .left-section {
   flex: 1; /* 左邊部分占據剩餘空間 */
   padding-right: 20px; /* 增加右邊的間距 */
+  width: 50%;
 }
 
 .modal-content .right-section {
@@ -171,5 +172,9 @@ div#homepage_img img {
 
 }
 
+#modal-introduction {
+  width: 75%;
+  word-wrap: break-word;
+}
 
 
