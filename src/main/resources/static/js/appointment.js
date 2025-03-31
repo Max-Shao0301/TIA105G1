@@ -619,9 +619,7 @@ function setConfirmation(){
 				<button class="page_break" id="payment">付款</button>
 			</div>`
 }
-
-async function setOrders(){
-	let setOrders_URL = 'http://localhost:8080/appointment/postCheckout';
+function setOrder(){
 	orderToDb.apptTime = order.apptTime;
 	orderToDb.date = order.appDate;
 	orderToDb.schId = staffInfo.schId;
@@ -629,10 +627,28 @@ async function setOrders(){
 	orderToDb.offLocation = order.offLocation;
 	orderToDb.point = 0;
 	orderToDb.payment = order.payment;
-	orderToDb.payMethod = 1;
+	// orderToDb.payMethod = 1;
 	orderToDb.notes = order.notes;
 	orderToDb.petId = order.petId;
 	console.log(orderToDb);
+	$('#use_points').on('click',function(){
+		if ($('#use_points').prop("checked")&& order.memPoints!= 0) {
+		    orderToDb.payMethod = 0;
+			orderToDb.point = order.memPoints;
+			$('#total_amount').text(`${order.payment-order.memPoints>= 0 ? order.payment - order.memPoints : 0}元`)
+			$('.points_total').text(`剩餘點數：${order.memPoints - order.payment >= 0 ? order.memPoints - order.payment : 0}點`)
+			console.log(orderToDb.payment);
+		} else {
+		    orderToDb.payMethod = 1;
+			orderToDb.point = 0;
+			$('#total_amount').text(`${order.payment}元`)
+			$('.points_total').text(`剩餘點數：${order.memPoints}點`)
+			console.log(orderToDb.payment);
+		}
+	})
+}
+async function OrderToDb(){
+	let setOrders_URL = 'http://localhost:8080/appointment/postCheckout';
 	try {
 		let res = await fetch(setOrders_URL, {
 			method: "POST",
@@ -650,11 +666,6 @@ async function setOrders(){
 			$(".body_text").append(data.ECPay);
 			document.getElementById('allPayAPIForm').submit();
 		}
-		// const html = await res.text();
-		// 將返回的 HTML 插入到頁面中
-		// $(".body_text").append(html);
-		// 自動提交表單
-		
 	}catch(error){
 		console.log(error);
 	}
@@ -836,9 +847,12 @@ function step3_js(){
 }
 
 function step5_js(){
+	setOrder();
 	$('#payment').on('click', function(){
-		setOrders();
+		OrderToDb();
 	})
+	
+	
 }
 
 function runStep () {
