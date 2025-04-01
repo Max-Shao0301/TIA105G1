@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.schedule.model.*;
 import com.staff.model.StaffVO;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class ScheduleController {
 
@@ -19,21 +21,33 @@ public class ScheduleController {
 
 
     @GetMapping("/staff/schedule")
-    public String staffSchedule(Model model) {
+    public String staffSchedule(Model model, HttpSession session) {
     	
         model.addAttribute("scheduleVO", new ScheduleVO());  // 避免NullPointerException錯誤
-        model.addAttribute("schedules", scheduleService.getScheduleByStaff(1));
+    	Integer staffId = (Integer) session.getAttribute("staffId");
+    	
+        if (staffId != null) {
+        	
+            model.addAttribute("schedules", scheduleService.getScheduleByStaff(staffId));
+            
+        } else {
+        	
+            return "redirect:/staff/login";
+            
+        }
+        
         return "back-end/staff/schedule";
         
     }
 
     @PostMapping("/staff/schedule/insert")
-    public String addSchedule(@ModelAttribute ScheduleVO scheduleVO) {
+    public String addSchedule(@ModelAttribute ScheduleVO scheduleVO,HttpSession session) {
     	
         StaffVO staffVO = new StaffVO();
-        staffVO.setStaffId(1);
+        staffVO.setStaffId((Integer) session.getAttribute("staffId"));
         scheduleVO.setStaffVO(staffVO);
         scheduleService.addSchedule(scheduleVO);
+        
         return "redirect:/staff/schedule";
         
     }
@@ -42,6 +56,7 @@ public class ScheduleController {
     public String deleteSchedule(@RequestParam("schId") Integer schId) {
     	
     	scheduleService.deleteSchedule(schId);
+    	
         return "redirect:/staff/schedule";
         
     }

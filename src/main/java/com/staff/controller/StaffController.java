@@ -7,10 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.staff.model.*;
-
 import jakarta.servlet.http.HttpSession;
 
+import com.staff.model.*;
 import com.orders.model.OrdersService;
 import com.orders.model.OrdersVO;
 
@@ -33,7 +32,7 @@ public class StaffController {
     @GetMapping("/staff/login")
     public String staffLoginPage() {
     	
-        return "back-end/staff/login";
+        return "/back-end/staff/login";
         
     }
     
@@ -41,28 +40,41 @@ public class StaffController {
     public String staffLogin(@RequestParam("staffEmail") String staffEmail,
                              @RequestParam("staffPassword") String staffPassword,
                              HttpSession session) {
-        StaffVO staffVO = staffService.getOneStaff(1);
+    	
+        StaffVO staffVO = staffService.getOneStaff(staffEmail,staffPassword);
 
         if (staffVO != null && staffVO.getStaffPassword().equals(staffPassword)) {
         	
-            session.setAttribute("staffEmail", staffEmail);
-            return "redirect:/staff/index";
+            session.setAttribute("staffName", staffVO.getStaffName());
+            session.setAttribute("staffId", staffVO.getStaffId());       
+            return "redirect:/staff/home";
             
         } else {
         	
-            return "back-end/staff/login"; 
+            return "/staff/login"; 
             
         }
     }
     
+    @PostMapping("/staff/logout")
+    public String logout(HttpSession session) {
+    	
+        session.invalidate();
+        return "redirect:/staff/login";
+        
+    }
+
     //staff 首頁顯示的是他的訂單
     @GetMapping("/staff/home")
     public String staffHome(Model model) {
     	
-        model.addAttribute("OrderVO", new OrdersVO());  // 避免NullPointerException錯誤
-        model.addAttribute("orders", ordersService.getAll());
-        return "back-end/staff/index";
+//        model.addAttribute("OrderVO", new OrdersVO());  // 避免NullPointerException錯誤
+//        model.addAttribute("orders", ordersService.getAll());
+        return "redirect:/staff/schedule";
+
         
     }
+    
+    
     
 }
