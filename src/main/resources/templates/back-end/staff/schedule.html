@@ -5,31 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>班表管理</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/staff/schedule.css">
+    <link rel="stylesheet" th:href="@{/css/staff/schedule.css}">
 </head>
 <body>
     <!-- 導覽列 -->
     <nav class="navbar navbar-dark fixed-top navbar-expand-lg">
         <div class="container-fluid">
             <a class="navbar-brand">
-                <img src="../images/logo.png" width="26" height="23" class="d-inline-block align-text-top">
+                <img th:src="@{/images/logo.png}" width="26" height="23" class="d-inline-block align-text-top">
                 寵愛牠
             </a>
-            <span class="navbar-text"> 歡迎你~服務人員 ${name}</span>
+			<span class="navbar-text">歡迎你~服務人員   <a th:text="${session.staffName}"></a></span>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/back-end/staff/index.jsp"> 
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                            </svg> 返回服務人員頁面
-                        </a>
-                    </li>
-                </ul>
-            </div>
+			<div class="collapse navbar-collapse" id="navbarNav">
+			    <ul class="navbar-nav ms-auto">
+			        <li class="nav-item d-flex align-items-center"> <a class="nav-link" href="/back-end/staff/index.jsp"> 
+			                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+			                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+			                </svg> 返回服務人員頁面
+			            </a>
+			            <form th:action="@{/staff/logout}" method="post" style="display:inline;">
+			                <button type="submit" class="nav-link" style="border:none; background:none; padding:0;">
+			                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+			                        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+			                    </svg> 登出
+			                </button>
+			            </form>
+			        </li>
+			    </ul>
+			</div>
         </div>
     </nav>
 
@@ -91,6 +97,6 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/staff/schedule.js"></script>
+    <script th:src="@{/js/staff/schedule.js}"></script>
 </body>
 </html>
