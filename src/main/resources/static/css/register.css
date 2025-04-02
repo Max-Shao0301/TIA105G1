@@ -103,24 +103,25 @@ img {
 
 
 
-.btn-send:hover {
-	background-color: #b95736;
-	color: #fff;
+.btn-send {
+  width: 100px;
+  border: none;
+  border-radius: 50px;
+  background-color: #df6840;
+  color: #fff;
+  font-size: 14px;
+  margin-left: 5px;
+  height: 30px;
+  display: flex;              /* ✅ 關鍵：啟用 flex 容器 */
+  align-items: center;        /* ✅ 垂直置中 */
+  justify-content: center;    /* ✅ 水平置中 */
+  text-align: center;         /* ✅ 多行文字置中 */
+  flex-direction: column;     /* ✅ 讓文字可換行變成上下排列 */
 }
 
-.btn-send {
-	width: 110px;
-	border-radius: 50px;
-	border-top-left-radius: 50px;
-	border-bottom-left-radius: 50px;
-	background-color: #df6840;
-	border: none;
-	font-size: auto;
-	color: #fff;
-	align-items: center;
-	justify-content: center;
-	margin: 20px 10px 15px 0px;
-	height: 50px
+.btn-send:hover {
+  background-color: #b95736;
+  color: #fff;
 }
 
 .chcek {
@@ -128,7 +129,7 @@ img {
 }
 
 .checkcontrol {
-	width: 240px;
+	width: 358px;
 	margin: 0;
 }
 
@@ -140,7 +141,8 @@ img {
 .wrong {
 	color: #df4040;
 	display: inline-block;
-	margin-left: 10px;
+	margin-left: 7px;
+	font-weight: bold;
 }
 
 .form-group{
@@ -166,4 +168,46 @@ img {
 }
 .address-label{
 	margin: 0;
+}
+
+.sendcheck{
+ display: flex;
+}
+.checkemail{
+    width: 400px;
+    margin-right: 20px;
+}
+
+.sendemail{
+ display: flex;
+}
+.btn-send.disabled-state {
+  background-color: white;
+  color: #666666;
+  cursor: not-allowed;
+  font-style: italic;
+  border-line:1px solid gray;
+  pointer-events: none; /* 更保險地禁用點擊 */
+}
+
+.btn-send.disabled-state:hover {
+  background-color: white; /* 禁止 hover 回原色 */
+}
+.btn-send:disabled,
+.btn-send:disabled:hover {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* 灰底、禁用、無焦點效果 */
+#emailInput:disabled,
+#emailInput:disabled:focus {
+  background-color: #f5f5f5 !important;
+  color: #666 !important;
+  border: 1px solid #ccc !important;
+  outline: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  cursor: not-allowed !important;
 }

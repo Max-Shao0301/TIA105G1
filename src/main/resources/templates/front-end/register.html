@@ -20,6 +20,42 @@
 	<div class="register-container">
 		<!-- 寵物圖標 -->
 		<a th:href="@{/}"><img th:src="@{/images/title.png}"></a>
+		<div class="sendcheck">
+		<div class="checkemail">
+		  <label class="form-label sendemail">
+		    帳號 (Email)
+		    <button type="button" class="btn btn-send" id="sendCodeBtn" th:disabled="${session.verifyCheck}">寄送驗證碼</button>
+		    <span id="countdown" class="text-muted ms-2"></span>
+		    <div id="emailMsg" class="wrong"></div>
+			<div id="emailError" th:if="${wrongMessageEmail}" class="wrong">
+			<i class="icofont-paw"></i> <span th:text="${wrongMessageEmail}"></span>
+			</div>
+		  </label>
+  
+		  <input type="email" id="emailInput"
+		         class="form-control"
+		         th:value="${session.verifyEmail}"
+		         th:disabled="${session.verifyCheck}"
+		         placeholder="請輸入正確信箱並點擊「寄送驗證碼」" required>
+		</div>
+		  <div class="chcek">
+		    <div class="checkcontro2 ">
+		      <label class="form-label sendemail">驗證碼
+		      <button type="button" class="btn btn-send" id="verifyCodeBtn" th:disabled="${session.verifyCheck}">認證驗證碼</button>
+		      <div id="codeMsg" class="wrong mt-2"></div></label>
+		     <input type="text"
+			       class="form-control checkcontrol"
+			       id="emailCodeInput"
+			       name="code"
+			       placeholder="請輸入6位數驗證碼並點擊「認證驗證碼」"
+			       th:value="${session.verifyCheck} ? '已驗證' : ''"
+			       th:disabled="${session.verifyCheck}" />
+		    </div>
+		    
+		  </div>
+		
+		 
+		</div>
 		
 		<form th:action="@{/register}" th:object="${memberDTO}" method="post">
 			<!-- 左右兩欄 -->
@@ -27,11 +63,6 @@
 				<!-- 左側 -->
 				<!-- 左側 -->
 				<div class="col-md-6">
-					<label class="form-label">帳號 (E-mail)</label>
-					<div th:if="${#fields.hasErrors('memEmail')}" class="wrong">
-						<i class="icofont-paw"></i> <span th:errors="*{memEmail}"></span>
-					</div>
-					<input type="text" class="form-control" th:field="*{memEmail}" placeholder="請輸入 e-mail"> 
 					
 					<label class="form-label">姓名</label>
 					<div th:if="${#fields.hasErrors('memName')}" class="wrong">
@@ -43,24 +74,19 @@
 					<div th:if="${#fields.hasErrors('memPassword')}" class="wrong">
 					<i class="icofont-paw"></i> <span th:errors="*{memPassword}"></span>
 					</div>
-					<input type="password" class="form-control" th:field="*{memPassword}" placeholder="請輸入密碼">
+					<input type="password" class="form-control" th:field="*{memPassword}" placeholder="請輸入8-16位數密碼">
 				</div>
 				<!-- 右側 -->
 				<div class="col-md-6 right">
-
-					<div class="chcek">
-						<button type="button" class="btn btn-send ">寄送驗證碼</button>
-						<div class="checkcontro2">
-							<label class="form-label">驗證碼</label> 
-							<input type="text" class="form-control checkcontrol" placeholder="請輸入驗證碼">
-						</div>
-					</div>
-
+					
 					<label class="form-label">手機</label>
 					<div th:if="${#fields.hasErrors('memPhone')}" class="wrong">
 						<i class="icofont-paw"></i> <span th:errors="*{memPhone}"></span>
 					</div>
-					<input type="tel" class="form-control" th:field="*{memPhone}" placeholder="請輸入手機"> 
+					<div th:if="${wrongMessagePhone}" class="wrong">
+						<i class="icofont-paw"></i> <span th:text="${wrongMessagePhone}"></span>
+					</div>
+					<input type="tel" class="form-control" th:field="*{memPhone}" placeholder="請輸入手機號碼"> 
 					
 					<label class="form-label">再次輸入密碼</label>
 					<div th:if="${wrongMessage}" class="wrong">
@@ -103,6 +129,7 @@
 					</div>
 				</div>
 				<!-- 註冊按鈕 -->
+				<input type="hidden" th:field="*{memEmail}">
 				<button type="submit" class="btn btn-primary mt-3">成為會員</button>
 		</form>
 	</div>
