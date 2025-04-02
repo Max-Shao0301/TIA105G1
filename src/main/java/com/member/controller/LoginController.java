@@ -67,7 +67,7 @@ public class LoginController{
 			model.addAttribute("loginDTO", loginDTO);
 			return "/front-end/login";
 		}
-		Integer login = memberService.findMember(loginDTO.getLoginEmail(),loginDTO.getLoginPassword(),session);
+		Integer login = memberService.checkMember(loginDTO.getLoginEmail(),loginDTO.getLoginPassword(),session);
 		switch (login) {
 		case 1: 
 			 if (rememberMe != null) {

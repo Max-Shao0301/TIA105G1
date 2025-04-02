@@ -9,8 +9,7 @@ public class MemberDTO {
 
 	private Integer memId;
 
-	@NotBlank(message = "請填入信箱")
-	@Email(message = "請確認信箱格式")
+
 	private String memEmail;
 
 	@Size(min = 8, max = 16, message = "請填入8-16位數密碼")

@@ -83,11 +83,18 @@ public class MemberService {
 	}
 
 	// 查詢某信箱是否為會員
-	public Integer findMember(String memEmail, String memPassword, HttpSession session) {
+	public Boolean findMember(String memEmail) {
+		MemberVO member = memberRepository.findByMemEmail(memEmail);
+		return member != null; //false表示無註冊過
+		
+	}
+	
+	
+	// 登入會員
+	public Integer checkMember(String memEmail, String memPassword, HttpSession session) {
 		MemberVO member = memberRepository.findByMemEmail(memEmail);
 		if (member == null) {
 			return 2;
-
 		}
 		if (memPassword.equals(member.getMemPassword())) {
 			session.setAttribute("memId", member.getMemId());
@@ -98,6 +105,7 @@ public class MemberService {
 		}
 	}
 
+	
 	public MemberDTO getMemberDTO(Integer memId) {
 		MemberVO memberVO = memberRepository.findById(memId).orElse(null);
 		MemberDTO memberDTO = new MemberDTO();
@@ -108,5 +116,12 @@ public class MemberService {
 		memberDTO.setPoint(memberVO.getPoint());
 
 		return memberDTO;
+	}
+	
+	// 查詢某手機號碼是否已註冊過
+	public Boolean findMemberByPhone(String memPhone) {
+		MemberVO member = memberRepository.findByMemPhone(memPhone);
+		return member != null; //false表示無註冊過
+		
 	}
 }
