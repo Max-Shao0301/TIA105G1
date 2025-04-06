@@ -4,6 +4,7 @@ import com.springbootmail.MailService;
 import com.staff.model.StaffService;
 import com.staff.model.StaffVO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,9 @@ public class ApplyService {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private StaffService staffService;
@@ -41,7 +45,7 @@ public class ApplyService {
             StaffVO staffVO = new StaffVO();  //通過後將履歷轉給員工進行保存
             staffVO.setApply(vo);
             staffVO.setStaffEmail(vo.getApplyEmail());
-            staffVO.setStaffPassword(vo.getApplyPhone());
+            staffVO.setStaffPassword(passwordEncoder.encode(vo.getApplyPhone()));//密碼加密保存
             staffVO.setStaffName(vo.getApplyName());
             staffVO.setStaffPhone(vo.getApplyPhone());
             staffVO.setStaffGender(vo.getApplyGender());
