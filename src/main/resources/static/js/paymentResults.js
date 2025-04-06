@@ -1,6 +1,6 @@
 
 let getResults_URL = "http://localhost:8080/appointment/checkPayment";
-let orderHtml =`<h2 class="title">訂單確認</h2>
+let orderHtml =`<h2 class="title">預約結果</h2>
                 <div class="order_info">
                     <p><span class="label">預約項目：</span><span id="project">寵物接送</span></p>
                     <p><span class="label">預約時間：</span><span id="appTime">:00</span></p>
@@ -23,7 +23,15 @@ let orderHtml =`<h2 class="title">訂單確認</h2>
                 </div>
                 <div class="page_break_div">
                     <button class="page_break" id="payment">返回首頁</button>
-                </div>`
+                </div>
+                <div class="none" id="lightbox">
+					<article id="lightboxMes">
+					<button class="close_card_btn">&times;</button>
+					<div >
+						<button type="button" id="Yes" class="check_btn">確定</button>
+					</div>
+					</article>
+				</div>`
 let count = 0;
 let checkPayment =  setInterval(async function(){
     console.log(1);
@@ -35,7 +43,7 @@ let checkPayment =  setInterval(async function(){
         console.log(order);
         if(data){
             clearInterval(checkPayment);
-            orderHtml=`<h2 class="title">訂單確認</h2>
+            orderHtml=`<h2 class="title">預約結果</h2>
                 <div class="order_info">
 				<p><span class="label">預約項目：</span><span id="project">寵物接送</span></p>
 				<p><span class="label">預約時間：</span><span id="appTime">${order.date} ${order.apptTime}:00</span></p>
@@ -58,15 +66,23 @@ let checkPayment =  setInterval(async function(){
                 </div>
                 <div class="page_break_div">
                     <button class="page_break" id="payment"  onclick="window.location.href='/';">返回首頁</button>
-                </div>`;
+                </div>
+                <div class="none" id="lightbox">
+					<article id="lightboxMes">
+					<button class="close_card_btn">&times;</button>
+					<div >
+						<button type="button" id="Yes" class="check_btn">確定</button>
+					</div>
+					</article>
+				</div>`;
         $(".body_text").append(orderHtml);
         }
         count++;
 		if(data.pay == '1'){
-			alert('有付款');
+			resultLightBox(`<p>付款成功</p>`);
 		}
 		else if(data.pay == '0'){
-            alert('未付款');
+            resultLightBox(`<p>付款失敗<br>請返回預約頁面重新下單</p>`);;
 		}
 
         if (count >= 10) {
@@ -78,5 +94,25 @@ let checkPayment =  setInterval(async function(){
     // clearInterval(checkPayment);
 },500);
 
+function resultLightBox(text){
+	$('article').children('p').remove();
+	$('#lightboxMes').prepend(text);
+	$('#lightbox').removeClass('none');
+	$("#lightbox").off('click').on('click',function(){
+		$("#lightbox").addClass("none");
+		$('article').children('p').remove();
+	});
+	$('#lightbox > article').off('click').on('click',function(e){
+		e.stopPropagation();
+	})
+	$('.close_card_btn').off('click').on('click',function(){
+		$("#lightbox").addClass("none");
+		$('article').children('p').remove();
+	})
+    $('.check_btn').off('click').on('click',function(){
+		$("#lightbox").addClass("none");
+		$('article').children('p').remove();
+	})
+}
 
 $(document).ready( checkPayment());

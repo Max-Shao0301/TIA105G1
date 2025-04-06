@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ecpay.payment.integration.AllInOne;
 import com.member.model.MemberService;
@@ -67,7 +68,7 @@ public class OrdersController {
 	}
 
 	@PostMapping("/appointment/postCheckout")
-	public ResponseEntity<Map<String, Object>> postCheckout(@RequestBody CheckoutOrderDTO checkoutOrderDTO,
+	public ResponseEntity<Map<String, Object>> postCheckout(@Valid @RequestBody CheckoutOrderDTO checkoutOrderDTO,
 			HttpSession session) {
 		Map<String, Object> response = new HashMap<>();
 		Integer memId = (Integer) session.getAttribute("memId");
@@ -76,13 +77,12 @@ public class OrdersController {
 		
 		if (result.get("error") != null) {
 			response.put("error", result.get("error"));
-			System.out.println("有錯");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
 		
+		//免費訂單
 		if ("true".equals(result.get("freeOrder"))) {
 			response.put("NoPayment", "http://localhost:8080/appointment/paymentResults");
-			System.out.println("免費");
 			return ResponseEntity.ok(response);
 		}
 		response.put("ECPay", result.get("form"));
@@ -113,6 +113,17 @@ public class OrdersController {
 		Integer orderId = (Integer) session.getAttribute("orderId");
 		Map result = ordersService.checkPayment(orderId);
 		
+		return ResponseEntity.ok(result);
+	}
+	
+	@GetMapping("/appointment/calculateAmoute")
+	public ResponseEntity<String> getAmoute(@RequestParam String origin, @RequestParam String destination) throws Exception{
+		
+		String result = ordersService.getAmoute(origin, destination);
+		if("OutOfRange".equals(result)) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OutOfRange");
+		}
+	
 		return ResponseEntity.ok(result);
 	}
 }

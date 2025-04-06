@@ -1,17 +1,18 @@
-div.body_text{
+.body_text{
     font-family: Arial, sans-serif;
-    margin: auto    ;
+    margin: auto;
     padding: 20px;
-    /* max-width: 400px; */
     height: 100%;
     background: #ffff;
     justify-content: center;
     align-items: center;
-    width: 600px;
     box-shadow: 0 0 1000px rgba(0, 0, 0, 0.1);
     border: 2px solid Gainsboro;
     border-radius: 10px ;
-    font-weight:400px;
+    font-weight:400;
+    margin-right: 0;
+    margin-top: 0;
+    width: 400px;
 }
 .title {
     font-size: 24px;
@@ -34,6 +35,7 @@ input, select,#nextPage {
     padding: 10px;
     margin-top: 5px;
     font-size: 16px;
+    color: black;
 }
 input.date{
     width: 100%;
@@ -47,10 +49,14 @@ select.time_menu{
     margin-top: 5px;
     font-size: 16px
 }
-.remark {
+p.remark, #amouteInfo>.remark {
     font-size: 14px;
     color: gray;
     margin-top: 5px;
+    font-weight: 400;
+}
+p.remark > span#scope{
+    color: red;
 }
 #nextPage {
     background-color: #839974;
@@ -61,4 +67,110 @@ select.time_menu{
 }
 #nextPage:hover {
     background-color: #768968;
+}
+#map{
+    width: 900px;
+    height: 900px;
+    margin: auto;
+    margin-left: 30px;
+    /* display: none; */
+}
+#body{
+    display: flex;
+}
+.move{
+    margin-right: 0;
+    margin-top: 0;
+    width: 400px;
+}
+.none{
+    display: none;
+}
+#amouteInfo p{
+    font-size: 20px;
+    /* color: rgb(29, 28, 28); */
+    /* color: red; */
+    
+    color: black;
+    margin: 15px 5px 0px 0px  ;
+}
+p#price{
+    color: rgb(241, 41, 41);
+    font-weight: bold;
+    /* font-size: 20px; */
+}
+/* #amoute,#driveDistance,#driveTime{
+    text-align: right;
+} */
+#amouteInfo p span{
+    float: right;
+    /* margin-right: 20px; */
+}
+#amouteInfo{
+    height: 100%;
+    margin: 35px 0px 0px 0px  ;
+}
+#lightbox{
+    /* border: 2px solid blue; */
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    background-color: hsla(0, 0%, 0%, .5);
+    color: white;
+    cursor: default;
+    z-index: 100;
+    height: 100%;
+}
+.close_card_btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: grey;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+#lightboxMes{
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width:35%;
+    max-width: 500px;
+    border-radius: 10px;
+    padding: 10px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: default;
+    text-align: center;
+    height: auto;
+}
+.check_btn{
+    background-color: #839974;
+    color: white;
+    border: none;
+    cursor: pointer;
+    margin: 10px;
+    flex: 1;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 40%;
+    margin-top: 10px;
+}
+#lightboxMes > P{
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: bold ;
+    line-height: 1.8;
+    margin-bottom: 10px;
+}
+.noVal{
+    border: 1px solid red !important; 
 }

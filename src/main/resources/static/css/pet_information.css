@@ -116,7 +116,7 @@ label{
     transform: translate(-50%, -50%);
     cursor: default;
     text-align: center;
-    height: 150px;
+    height: auto;
 }
 .close_card_btn {
     position: absolute;
@@ -143,17 +143,28 @@ label{
     width: 20%;
     margin-top: 20px;
 }
-#petInfo_Art > #updatePet_P{
-    margin-top: 30px;
-    font-size: 20px;
+#petInfo_Art > P{
+	font-size: 20px;
     font-weight: bold ;
 }
-#petInfo_Art > #newPet_P{
-    margin-top: 25px;
-    font-size: 20px;
+#petInfo_Art > P{
+	font-size: 20px;
     font-weight: bold ;
+    line-height: 1.8;
+}
+#petInfo_Art > P#updatePet_P{
+    margin-top: 30px;
+}
+#petInfo_Art > P#newPet_P{
+    margin-top: 25px;
 }
 .newPet{
     width: 40%;
     margin-top: 10px;
 }
+.noVal{
+    border: 1px solid red !important; 
+}
+.redText label {
+    color: red;
+} 
