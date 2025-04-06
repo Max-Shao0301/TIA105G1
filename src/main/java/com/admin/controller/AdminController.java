@@ -15,9 +15,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -41,6 +43,9 @@ public class AdminController {
 
     @Autowired
     private MemberService memberService;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private OrdersService ordersService;
@@ -72,10 +77,11 @@ public class AdminController {
     }
 
 
+
     @PostMapping("/admin/login")
     public ResponseEntity<Map<String, Object>> login(@RequestParam("account") String account, @RequestParam("password") String password, HttpSession session) {
         AdminVO admin = adminService.findByAccount(account);
-        if (admin != null && admin.getAccount().equals(account) && admin.getPassword().equals(password)) {
+        if (admin != null && admin.getAccount().equals(account) && passwordEncoder.matches(password, admin.getPassword())) {
             session.setAttribute("admin", admin);
             Map<String, Object> response = new HashMap<>();
             response.put("status", "success");
