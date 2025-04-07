@@ -1,26 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // 模擬從後端獲取的寵物數據
-    const petData = [
-        { name: "小白", type: "狗", gender: "公", weight: "5kg", notes: "怕生" },
-        { name: "咪咪", type: "貓", gender: "母", weight: "3.5kg", notes: "愛抓東西" },
-        { name: "球球", type: "狗", gender: "公", weight: "2kg", notes: "喜歡吃餅乾" }
-    ];
+  const logoutBtn = document.querySelector("form[action='/logout'] .button2"); // 登出按鈕
+  const logoutForm = document.querySelector("form[action='/logout']");
 
-    function addPetToTable(pet) {
-        const tableBody = document.querySelector("#petTable tbody");
-        const row = document.createElement("tr");
+  const popup = document.getElementById("logout-confirm-popup");
+  const confirmBtn = document.getElementById("logout-confirm-yes");
+  const cancelBtn = document.getElementById("logout-confirm-no");
 
-        row.innerHTML = `
-            <td>${pet.name}</td>
-            <td>${pet.type}</td>
-            <td>${pet.gender}</td>
-            <td>${pet.weight}</td>
-            <td>${pet.notes}</td>
-        `;
-        
-        tableBody.appendChild(row);
-    }
+  if (logoutBtn && popup && confirmBtn && cancelBtn) {
+    logoutBtn.addEventListener("click", function (e) {
+      e.preventDefault(); // 阻止直接提交
+      popup.style.display = "flex";
+    });
 
-    // 填充寵物數據
-    petData.forEach(addPetToTable);
+    confirmBtn.addEventListener("click", function () {
+      logoutForm.submit(); // 使用者按確認才真的提交
+    });
+
+    cancelBtn.addEventListener("click", function () {
+      popup.style.display = "none";
+    });
+  }
 });

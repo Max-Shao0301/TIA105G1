@@ -35,13 +35,4 @@ public class IndexController_inSpringBoot {
 	}
 
 	
-
-	
-	@GetMapping("/orderlist")
-	public String orderlist() {
-		return "/front-end/orderlist";
-	}
-
-
-
 }

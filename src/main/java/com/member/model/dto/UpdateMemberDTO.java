@@ -5,16 +5,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class MemberDTO {
+public class UpdateMemberDTO {
 
 	private Integer memId;
 
 
 	private String memEmail;
 
-	@Size(min = 8, max = 16, message = "請填入8-16位數密碼")
-	private String memPassword;
-
+	
 	@NotBlank(message = "請填入姓名")
 	private String memName;
 
@@ -57,13 +55,6 @@ public class MemberDTO {
 		this.memEmail = memEmail;
 	}
 
-	public String getMemPassword() {
-		return memPassword;
-	}
-
-	public void setMemPassword(String memPassword) {
-		this.memPassword = memPassword;
-	}
 
 	public String getMemName() {
 		return memName;
@@ -112,4 +103,6 @@ public class MemberDTO {
 	public void setDistrict(String district) {
 		this.district = district;
 	}
+	
+	
 }

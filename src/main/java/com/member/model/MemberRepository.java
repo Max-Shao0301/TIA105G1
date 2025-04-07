@@ -30,4 +30,5 @@ public interface MemberRepository extends JpaRepository<MemberVO, Integer>{
 	@Query(value="SELECT * FROM member WHERE mem_phone = :phone", nativeQuery = true)
 	MemberVO findByMemPhone(@Param("phone") String phone);
 	
+
 }

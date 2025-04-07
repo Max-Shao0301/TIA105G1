@@ -1,6 +1,8 @@
 package com.orders.model;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -18,6 +20,8 @@ import com.member.model.MemberVO;
 import com.orderpet.model.OrderPetRepository;
 import com.orderpet.model.OrderPetVO;
 import com.orders.model.dto.CheckoutOrderDTO;
+import com.orders.model.dto.CommentDTO;
+import com.orders.model.dto.OrderDetailDTO;
 import com.orders.model.dto.OrderViewDTO;
 import com.pet.model.PetRepository;
 import com.pet.model.PetVO;
@@ -67,6 +71,12 @@ public class OrdersService {
 		return optional.orElse(null);
 	}
 
+	// 用會員標號查詢訂單
+	public List<OrdersVO> getOrderByMemId(Integer memId) {
+		List<OrdersVO> optional = ordersRepository.findByMemId(memId);
+		return optional;
+	}
+	
 	// 查詢所有訂單
 	public List<OrdersVO> getAll() {
 		return ordersRepository.findAll();// 方法都不是自己寫的!(要先測試!)
@@ -256,4 +266,61 @@ public class OrdersService {
 		result.put("order", orderViewDTO);
 		return result;
 	}
+	
+	public OrderDetailDTO showOrderDetail(OrdersVO order) {
+		OrderDetailDTO oderDetailDTO = new OrderDetailDTO();
+		oderDetailDTO.setOrderId(order.getOrderId());
+		oderDetailDTO.setOrderStatus(order.getStatus());
+		oderDetailDTO.setAppointmentTime(format(getOrderLocalDateTime(order)));
+		oderDetailDTO.setCreatedTime(format(order.getCreateTime()));
+		oderDetailDTO.setUpdateTime(format(order.getUpdateTime()));
+		oderDetailDTO.setOnLocation(order.getOnLocation());
+		oderDetailDTO.setOffLocation(order.getOffLocation());
+		oderDetailDTO.setCarNumber(order.getStaff().getCarNumber());
+		oderDetailDTO.setStaffName(order.getStaff().getStaffName());
+		oderDetailDTO.setPet(order.getPet().get(0).getPet().getPetName());
+		oderDetailDTO.setPayment(order.getPayment());
+		oderDetailDTO.setPayMethod(order.getPayMethod());
+		oderDetailDTO.setPoint(order.getPoint());
+		oderDetailDTO.setNotes(order.getNotes());
+		oderDetailDTO.setRating(order.getRating());
+		oderDetailDTO.setStar(order.getStar());
+		
+		
+		return oderDetailDTO;
+	}
+	private String format(LocalDateTime localDateTime) {
+	    return localDateTime != null ? localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : "";
+	}
+	
+	public LocalDateTime getOrderLocalDateTime(OrdersVO order) {
+		Integer startTime;
+		String slot = order.getSchedule().getTimeslot();
+		LocalDate date = order.getSchedule().getDate();
+		
+		if(slot.contains("1")) {
+			startTime = slot.indexOf("1");
+		}else {
+			startTime = slot.indexOf("2");
+		}
+		String timeStr = date + " " + LocalTime.of(startTime, 0); //LocalTime.of(小時, 分鐘) 用 LocalTime.of(9, 0) → 得到 09:00
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime localDateTime = LocalDateTime.parse(timeStr, formatter);
+		return localDateTime;
+	}
+	
+	public void saveComment(CommentDTO commentDTO) {
+		OrdersVO ordersVO = getOneOrder(commentDTO.getOrderId());
+		 if (ordersVO.getStatus() != 2) {
+		        throw new IllegalStateException("只有已完成的訂單可以評價");
+		    }
+
+		    if (ordersVO.getStar() != null || ordersVO.getRating() != null) {
+		        throw new IllegalStateException("此訂單已評價過");
+		    }
+		ordersVO.setStar(commentDTO.getStar());
+		ordersVO.setRating(commentDTO.getRating());
+		updateOrders(ordersVO);
+	}
+	
 }

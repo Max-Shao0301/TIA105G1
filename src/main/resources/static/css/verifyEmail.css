@@ -44,7 +44,7 @@ h1 {
 .info-text {
   font-size: 14px;
   color: #666;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 /* 表單排版 */
@@ -68,6 +68,16 @@ h1 {
   color: #333;
 }
 
+label {
+  font-weight: bold;
+  display: block;
+  color: #333;
+ display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  font-weight: bold;
+  margin:10px 0;
+}
 .verify-group input {
   width: 100%;
   padding: 12px;
@@ -88,7 +98,7 @@ h1 {
   cursor: pointer;
   white-space: nowrap;
   transition: background-color 0.3s ease;
-  margin-top: 25px;
+  margin-top: 45px;
 }
 
 .btn:hover {
@@ -103,10 +113,10 @@ h1 {
 
 /* 錯誤提示 */
 .wrong {
-	color: #df4040;
-	display: flex;
-	margin-left: 7px;
-	font-weight: bold;
+
+  font-size: 14px;
+  margin-bottom: 4px;
+
 }
 .label-row {
   display: flex;
@@ -135,16 +145,4 @@ h1 {
   font-size: 20px;
   color: white;
   text-align: center;
-}
-label{
-	display:flex;
-}
-
-.label-row .wrong {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  color: #df4040;
-  font-size: 14px;
-  font-weight: bold;
 }
