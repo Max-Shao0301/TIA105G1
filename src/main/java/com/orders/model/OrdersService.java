@@ -11,10 +11,15 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import com.ecpay.payment.integration.AllInOne;
 import com.ecpay.payment.integration.domain.AioCheckOutALL;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.member.model.MemberRepository;
 import com.member.model.MemberVO;
 import com.orderpet.model.OrderPetRepository;
@@ -178,7 +183,7 @@ public class OrdersService {
 		aco.setTradeDesc(des); //交易描述
 		aco.setItemName("Pet Taxi"); //商品名稱
 		aco.setNeedExtraPaidInfo("Y"); //額外資訊
-		aco.setReturnURL("https://feca-1-164-226-222.ngrok-free.app/ecpayReturn"); //付款結果通知 應為商家的controller
+		aco.setReturnURL("https://e732-124-218-108-244.ngrok-free.app/ecpayReturn"); //付款結果通知 應為商家的controller
 		// aco.setOrderResultURL(""); //付款完成後的結果參數 傳至前端用的
 		aco.setClientBackURL("http://localhost:8080/appointment/paymentResults"); //付完錢後的返回商店按鈕會到的網址
 		String form = all.aioCheckOut(aco, null);
@@ -231,7 +236,9 @@ public class OrdersService {
 		
 		if(ordersVO.getStatus().equals(1)) {
 			result.put("pay", "1");
-			memberRepository.updatePoint(0, ordersVO.getMember().getMemId());
+			if(ordersVO.getPayMethod().equals(2)) {
+				memberRepository.updatePoint(0, ordersVO.getMember().getMemId());
+			}
 		}else {
 			result.put("pay", "0");
 		}
@@ -265,9 +272,58 @@ public class OrdersService {
 		
 		result.put("order", orderViewDTO);
 		return result;
+	}	
+
+	public String getAmoute(String origin, String destination) {
+		final String API_KEY = "AIzaSyAJ4YeUWLDhM530z0_jUFfzYvSsQx_GVaU";
+		final String ROUTES_API_URL = "https://routes.googleapis.com/directions/v2:computeRoutes";
+		final Integer STARTPRICE = 100;
+		final Integer PRICEPERKM = 50;
+		Integer amoute = null;
+		//去除前面的數字 避免郵遞區號影響範圍判斷
+		origin = origin.replaceFirst("^\\d+", "").trim();
+		destination = destination.replaceFirst("^\\d+", "").trim(); 
+		//判斷是否為在新北跟台北的範圍內
+		if (!(origin.startsWith("新北市") || origin.startsWith("台北市")) || 
+			    !(destination.startsWith("新北市") || destination.startsWith("台北市"))) {
+			    return "OutOfRange";
+			}
+		
+		//把地址資料塞req，並且將模式設定成開車
+		 Map<String, Object> reqToRoutes = new HashMap<>();
+		 reqToRoutes.put("origin", Map.of("address", origin));
+		 reqToRoutes.put("destination", Map.of("address", destination));
+		 reqToRoutes.put("travelMode", "DRIVE");
+		
+
+		 
+		 //設定header
+		 HttpHeaders headers = new HttpHeaders();
+		 headers.set("Content_Type", "application/json"); //我們發送的請求格式
+		 headers.set("X-Goog-Api-Key", API_KEY); //API KEY google要的
+		 headers.set("X-Goog-FieldMask", "routes.distanceMeters"); //設定好回傳只要拿哪些資料 減少API費用
+		 
+		//請求實體中放入body跟header
+		 HttpEntity<Map<String, Object>> entity = new HttpEntity<>(reqToRoutes, headers); 
+		 
+		 //發送請求用的類別 spring提供的
+		 RestTemplate restTemplate = new RestTemplate();
+		 ResponseEntity<Map> res = restTemplate.postForEntity(ROUTES_API_URL, entity, Map.class);
+		
+		 //拆解得到的回應
+		 Map<String, Object> body = res.getBody();
+		 List<Map<String, Object>> routes = (List<Map<String, Object>>) body.get("routes");
+		 //取得資料後轉成double再加上公式 四捨五入成金額
+		 if(!routes.isEmpty()) {
+			 Integer distanceInt =(Integer) routes.get(0).get("distanceMeters");
+			 Double distance = Math.round((distanceInt / 1000.0) * 10) / 10.0;
+			 amoute = (int) Math.round(distance*PRICEPERKM+STARTPRICE); 
+			 System.out.println("距離" + distance);
+		 }
+		 System.out.println("金額" + amoute);
+		 return amoute.toString();
 	}
-	
-	public OrderDetailDTO showOrderDetail(OrdersVO order) {
+  	public OrderDetailDTO showOrderDetail(OrdersVO order) {
 		OrderDetailDTO oderDetailDTO = new OrderDetailDTO();
 		oderDetailDTO.setOrderId(order.getOrderId());
 		oderDetailDTO.setOrderStatus(order.getStatus());
@@ -322,5 +378,4 @@ public class OrdersService {
 		ordersVO.setRating(commentDTO.getRating());
 		updateOrders(ordersVO);
 	}
-	
 }

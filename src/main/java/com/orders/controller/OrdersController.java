@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.ecpay.payment.integration.AllInOne;
 import com.member.model.MemberService;
 import com.member.model.dto.MemberDTO;
@@ -77,7 +76,7 @@ public class OrdersController {
 	}
 
 	@PostMapping("/appointment/postCheckout")
-	public ResponseEntity<Map<String, Object>> postCheckout(@RequestBody CheckoutOrderDTO checkoutOrderDTO,
+	public ResponseEntity<Map<String, Object>> postCheckout(@Valid @RequestBody CheckoutOrderDTO checkoutOrderDTO,
 			HttpSession session) {
 		Map<String, Object> response = new HashMap<>();
 		Integer memId = (Integer) session.getAttribute("memId");
@@ -86,13 +85,12 @@ public class OrdersController {
 		
 		if (result.get("error") != null) {
 			response.put("error", result.get("error"));
-			System.out.println("有錯");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
 		
+		//免費訂單
 		if ("true".equals(result.get("freeOrder"))) {
 			response.put("NoPayment", "http://localhost:8080/appointment/paymentResults");
-			System.out.println("免費");
 			return ResponseEntity.ok(response);
 		}
 		response.put("ECPay", result.get("form"));
@@ -126,6 +124,22 @@ public class OrdersController {
 		return ResponseEntity.ok(result);
 	}
 	
+
+
+	
+
+	@GetMapping("/appointment/calculateAmoute")
+	public ResponseEntity<String> getAmoute(@RequestParam String origin, @RequestParam String destination) throws Exception{
+		
+		String result = ordersService.getAmoute(origin, destination);
+		if("OutOfRange".equals(result)) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OutOfRange");
+		}
+	
+		return ResponseEntity.ok(result);
+	}
+
+}
 	@GetMapping("/orderList")
 	public String orderlist(HttpSession session, Model model) {
 		List<OrdersVO> orderList = ordersService.getOrderByMemId((Integer) session.getAttribute("memId"));
@@ -165,5 +179,3 @@ public class OrdersController {
 	        return ResponseEntity.badRequest().body(e.getMessage());
 	    }
 	}
-	
-}

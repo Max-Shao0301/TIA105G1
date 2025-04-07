@@ -17,7 +17,7 @@ $("form#loginForm").on("submit", function (event) {
         alert(response.message);  // 顯示登入成功訊息
         window.location.href = "/admin/home/page";  // 跳轉到管理面板
       } else {
-        alert(response.message); // 顯示錯誤訊息（但這種情況應該不會發生，因為錯誤會走 error）
+        alert(response.message); // 顯示錯誤訊息
       }
     },
     error: function(xhr) {

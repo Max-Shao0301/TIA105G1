@@ -9,6 +9,7 @@ import com.springbootmail.MailService;
 import jakarta.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.member.model.dto.MemberDTO;
@@ -24,6 +25,9 @@ public class MemberService {
 	MemberRepository memberRepository;
 
 	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
 	private MailService mailService;
 
 	// 新增會員
@@ -35,6 +39,7 @@ public class MemberService {
 		member.setMemEmail(memberDTO.getMemEmail());
 		member.setMemName(memberDTO.getMemName());
 		member.setMemPhone(memberDTO.getMemPhone());
+//		member.setMemPassword(passwordEncoder.encode(memberDTO.getMemPassword())); //雜湊密碼加密
 		member.setMemPassword(memberDTO.getMemPassword());
 		member.setAddress(memAddress);
 		memberRepository.save(member);
@@ -96,6 +101,12 @@ public class MemberService {
 		if (member == null) {
 			return 2;
 		}
+		//	雜湊密碼加密比對
+//		if (passwordEncoder.matches(memPassword, member.getMemPassword())) {
+//			session.setAttribute("memId", member.getMemId());
+//			session.setAttribute("memName", member.getMemName());
+//			return 1;
+//		}
 		if (memPassword.equals(member.getMemPassword())) {
 			session.setAttribute("memId", member.getMemId());
 			session.setAttribute("memName", member.getMemName());
