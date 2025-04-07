@@ -88,7 +88,7 @@
 							<ul class="top-contact">
 								<li th:if="${!isLoggedIn}"><a th:href="@{/login}"><i class="icofont-login"></i>會員登入</a></li>
 								<li th:if="${isLoggedIn}"><i class="icofont-paw"></i>Hi,<span th:text="${session.memName}"></span>!</li>
-								<li th:if="${!isLoggedIn}"><a th:href="@{/register}"><i class="icofont-ui-user"></i>會員註冊</a></li>
+								<li th:if="${!isLoggedIn}"><a th:href="@{/verifyEmail}"><i class="icofont-ui-user"></i>會員註冊</a></li>
 								<li th:if="${isLoggedIn}"><a th:href="@{/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
 							</ul>
 							<!-- End Top Contact -->
@@ -121,7 +121,7 @@
 											<li><a th:href="@{/joinus}">關於我們</a></li>
 											<li><a th:href="@{/joinus}">加入我們 </a></li>
 											<li><a th:href="@{/joinus}">常見問題 </a></li>
-											<li><a th:href="@{/orderlist}">訂單檢視 </a></li>
+											<li><a th:href="@{/orderList}">訂單檢視 </a></li>
 											<li class="active"><a th:href="@{/}">首頁</a>	
 										</ul>
 									</nav>
@@ -152,7 +152,7 @@
 									<p>寵愛牠致力於打造便利、安全的寵物計程車服務，讓毛孩隨時隨地享受充滿愛與關懷的出行體驗</p>
 									<div class="button">
 										<a th:href="@{/front-end/appointment}" class="btn">預約寵物計程車</a>
-										<a th:href="@{/front-end/orderlist}" class="btn primary">訂單檢視</a>
+										<a th:href="@{/front-end/orderList}" class="btn primary">訂單檢視</a>
 									</div>
 								</div>
 							</div>
@@ -170,7 +170,7 @@
 									<p>寵愛牠致力於打造便利、安全的寵物計程車服務，讓毛孩隨時隨地享受充滿愛與關懷的出行體驗</p>
 									<div class="button">
 										<a th:href="@{/appointment}" class="btn">預約寵物計程車</a>
-										<a th:href="@{/orderlist}" class="btn primary">訂單檢視</a>
+										<a th:href="@{/orderList}" class="btn primary">訂單檢視</a>
 									</div>
 								</div>
 							</div>
@@ -188,7 +188,7 @@
 									<p>寵愛牠致力於打造便利、安全的寵物計程車服務，讓毛孩隨時隨地享受充滿愛與關懷的出行體驗</p>
 									<div class="button">
 										<a th:href="@{/appointment}" class="btn">預約寵物計程車</a>
-										<a th:href="@{/orderlist}" class="btn primary">訂單檢視</a>
+										<a th:href="@{/orderList}" class="btn primary">訂單檢視</a>
 									</div>
 								</div>
 							</div>
@@ -346,7 +346,7 @@
 									<div class="col-lg-6 col-md-6 col-12">
 										<ul>
 											<li><a href="./index.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-											<li><a href="./orderlist.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Orders</a></li>
+											<li><a href="./orderList.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Orders</a></li>
 											<li><a href="#"><i class="fa fa-caret-right" aria-hidden="true"></i>Question</a></li>
 										</ul>
 									</div>

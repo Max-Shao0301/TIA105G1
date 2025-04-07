@@ -164,7 +164,7 @@ table{
     transition: background 0.3s;
 }
 .gobackbtn:hover{
-  background-color: #23395f;
+  background-color: #23395f !important;
 }
 
 .review-container {
@@ -247,18 +247,7 @@ table{
 
 
 
-  .cancelbtn{
-    position: absolute;
-    border: #335288;
-    background-color: #8d96a5;
-    color: white;
-    border: none;
-    margin-left: 600px;
-    padding: 5px 10px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background 0.3s;
-  }
+
   .cancelbtn:hover {
     background-color: #df6840;
   }
@@ -270,7 +259,7 @@ table{
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../img/grassdog.jpg'); 
+    background-image: url('/images/grassdog.jpg'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -279,7 +268,7 @@ table{
   }
 
   .breadcrumbs {
-    background-image: url('../img/grassdog.jpg');
+    background-image: url('/images/grassdog.jpg');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -287,3 +276,319 @@ table{
     padding: 120px 0px;
   }
   
+  /* === 訂單詳情 Modal 客製化樣式 === */
+
+/* 整個 Modal 背景 & 圓角 */
+.modal-content {
+  border-radius: 20px;
+  background-color: #C1B9AD;
+  border: none;
+  padding: 20px;
+}
+
+/* 標題區塊 */
+.modal-header {
+  background-color: transparent;
+  border-bottom: none;
+}
+
+.modal-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  background-color:#839974;
+  text-align: center;
+  width:20%;
+  border-radius: 30px;
+    font-weight: bold;
+  font-size: 22px;
+  color:white;
+  display: flex;
+  align-items: center; /* 垂直置中 */
+  justify-content: center; 
+  height: 50px;
+}
+.modal-body{
+	padding:0;
+}
+
+/* 資料表格樣式 */
+.detailtable {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  font-size: 16px;
+  padding:20px;
+   background-color:#eae8df;
+   border-spacing: 5px; 
+}
+
+/* 標籤欄位（藍色按鈕風格） */
+.detailtable .clo {
+  background-color: #38537b;
+  color: #fff;
+  border-radius: 30px;
+  text-align: center;
+  font-weight: 500;
+  padding: 10px 12px;
+  min-width: 100px;
+}
+
+/* 欄位值欄位 */
+.detailtable td {
+  background-color: white;
+  border-radius: 30px;
+  padding: 10px 20px;
+  color: #444;
+}
+
+
+/* 返回與取消按鈕區塊 */
+.backandcancel {
+  margin-top: 30px;
+}
+
+.gobackbtn {
+  background-color: #6c6d6f;
+  color: white;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-weight: bold;
+  border: none;
+}
+
+.gobackbtn:hover {
+  background-color: #2e4365 ;
+}
+
+.btn-danger {
+  background-color: #e07b60;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-weight: bold;
+}
+
+.cancelbtn .btn-danger:hover {
+  background-color: #c4654b !important;
+}
+
+/* 可選：對應 container1 額外圓角 */
+.container1 {
+  border-radius: 20px;
+}
+
+.detailtable td:nth-child(1),
+.detailtable td:nth-child(3) {
+  width: 20%;
+}
+
+.detailtable td:nth-child(2),
+.detailtable td:nth-child(4) {
+  width: 30%;
+}
+
+ .cancelOrderBtn{
+  background-color: #e07b60; /* 溫柔紅 */
+  color: white;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+  height:41px;
+}
+
+.cancelOrderBtn:hover {
+  background-color: #c4654b;
+}
+.btn-close{
+	background-color: #C1B9AD;
+	width:20px;
+	border:none;
+	font-size:20px;
+	color: gray;
+}
+.disabled-btn {
+  background-color: #C1B9AD !important;
+  color: #666 !important;
+  cursor: not-allowed;
+  border: none;
+}
+
+.cancel-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.6);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+  display: none; /* ← 這個一定要寫在最後，不能有其他地方覆蓋它 */
+}
+
+
+.cancel-dialog {
+  background-color: #fff;
+  border-radius: 16px;
+  padding: 30px 40px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cancel-text {
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+.cancel-btn-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+}
+
+.cancel-btn {
+  padding: 10px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+
+.cancel-cancel {
+  background-color: #c1c2c3;
+  color: white;
+}
+
+.cancel-confirm {
+  background-color: #e07b60;
+  color: white;
+}
+
+.cancel-cancel:hover {
+  background-color: #626364 !important;
+}
+
+.cancel-confirm:hover {
+  background-color: #cd421c !important;
+}
+.cancel-success-modal {
+  border-radius: 16px;
+  padding: 30px 20px;
+  background-color: #f8fff4;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cancel-success-modal h5 {
+  font-weight: bold;
+  color:#747474
+}
+
+.successmessage{
+	color:#747474
+}
+.check{
+	background-color:#6086474d;
+	    border:0px
+}
+
+#ratedBadge {
+  font-size: 16px;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.badge{
+	background-color:#6086474d;
+}
+.commentBtn{
+  background-color: #e07b60;
+  color: white;
+  width:90px;
+  height:40px;
+  border:none;
+  border-radius: 25px;
+  
+}
+#rating {
+  
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  padding-left: 10px;
+  text-align: left;
+}
+.show-star {
+  font-size: 28px;             /* 放大一點比較圓 */
+  font-family: "Arial Rounded MT Bold", "Arial", sans-serif; /* 比一般字型更圓 */
+  margin-right: 2px;
+  display: inline-block;
+  transform: scale(1.05);      /* 微放大讓字體邊緣更飽滿 */
+  text-shadow: 0 0 1px #00000022; /* 淡淡的柔邊陰影，增強圓感 */
+}
+
+.show-star.filled {
+  color: #fff58a; /* 橘黃色：接近你圖裡的顏色 */
+}
+
+.show-star.empty {
+  color: #d8cfcf; /* 圖中偏灰色 */
+}
+
+.comment-text {
+  font-size: 16px;
+  color: #444;
+}
+td#rating {
+  text-align: left;
+}
+
+.commentbox{
+	  background-color:#fff;
+	  height:360px;
+}
+
+.star{
+  font-size: 28px;             /* 放大一點比較圓 */
+  font-family: "Arial Rounded MT Bold", "Arial", sans-serif; /* 比一般字型更圓 */
+  margin-right: 2px;
+  display: inline-block;
+  transform: scale(1.05);      /* 微放大讓字體邊緣更飽滿 */
+  text-shadow: 0 0 1px #00000022; /* 淡淡的柔邊陰影，增強圓感 */
+}
+.comment-title{
+	width:150px;
+}
+.star {
+  font-size: 30px;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star.filled {
+  color: #fff58a; /* 你要的亮黃色 */
+}
+
+.star.empty {
+  color: #b0b0b0; /* 淡灰色 */
+}
+#rating{
+	padding-left:30px;
+}
+
+#onLocation{
+	 text-align: left;
+	 padding-left:30px;
+}
+
+#offLocation{
+	 text-align: left;
+	 padding-left:30px;
+}
+#notes{
+	 text-align: left;
+	 padding-left:30px;
+}

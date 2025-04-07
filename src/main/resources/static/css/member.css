@@ -49,6 +49,7 @@ h2 {
   cursor: pointer;
   transition: background-color 0.3s ease;
   height: 36px;
+  margin-left:1px;
 }
 
 .button2 {
@@ -62,7 +63,7 @@ h2 {
   transition: background-color 0.3s ease;
   margin: 10px;
   height: 36px;
-  margin-left: 428px;
+  margin-left: 417px;
 }
 
 .button:hover {
@@ -101,7 +102,7 @@ body {
 }
 
 .breadcrumbs {
-	background-image: url('/images/cutcat.jpg');
+	background-image: url('/images/cutecat.jpg');
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -331,7 +332,7 @@ table{
   text-align: center;
   align-items: bottom;
   display: inline-block;
-  width: 30%;
+  width: 30.2%;
 }
 
 .value2{
@@ -383,7 +384,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/images/cutcat.jpg'); 
+  background-image: url('/images/cutecat.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -394,4 +395,66 @@ body::before {
   width: 100%;
   border-collapse: collapse;
   margin:20px 0 20px 0;
+}
+
+#logout-confirm-popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#logout-confirm-box {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.logout-btn-group {
+  margin-top: 20px;
+}
+
+.logout-btn-group .btn {
+  padding: 8px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.logout-btn-group .btn-yes {
+  background-color: #df6840;
+  color: white;
+    padding: 10px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+
+.logout-btn-group .btn-no {
+  background-color: #c1c2c3;
+  color: white;
+    padding: 10px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+
+.btn-no:hover {
+  background-color: #626364 !important;
+}
+
+.btn-yes:hover {
+  background-color: #cd421c !important;
 }
