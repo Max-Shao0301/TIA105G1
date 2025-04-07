@@ -139,7 +139,7 @@ public class OrdersController {
 		return ResponseEntity.ok(result);
 	}
 
-}
+
 	@GetMapping("/orderList")
 	public String orderlist(HttpSession session, Model model) {
 		List<OrdersVO> orderList = ordersService.getOrderByMemId((Integer) session.getAttribute("memId"));
@@ -179,3 +179,4 @@ public class OrdersController {
 	        return ResponseEntity.badRequest().body(e.getMessage());
 	    }
 	}
+}
