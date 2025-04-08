@@ -93,9 +93,10 @@
 					</div>
 					<div class="col-lg-6 col-md-7 col-12">
 						<!-- Top Contact -->
-						<ul class="top-contact">
-							<li><a href="/front-end/login"><i class="icofont-login"></i>會員登入</a></i></li>
-							<li></i><a href="/front-end/member"><i class="icofont-ui-user"></i>會員資料</a></li>
+<ul class="top-contact">
+							<li><i class="icofont-paw"></i>Hi,<span
+								th:text="${session.memName}"></span>!</li>
+							<li><a th:href="@{/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
 						</ul>
 						<!-- End Top Contact -->
 					</div>
