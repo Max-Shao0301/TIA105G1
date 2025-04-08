@@ -1,8 +1,10 @@
 package com.member.model;
 
+import java.lang.reflect.Member;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import com.springbootmail.MailService;
 
@@ -101,7 +103,7 @@ public class MemberService {
 		if (member == null) {
 			return 2;
 		}
-		//	雜湊密碼加密比對
+		// 雜湊密碼加密比對
 //		if (passwordEncoder.matches(memPassword, member.getMemPassword())) {
 //			session.setAttribute("memId", member.getMemId());
 //			session.setAttribute("memName", member.getMemName());
@@ -132,8 +134,8 @@ public class MemberService {
 	public Integer findMemberByPhone(String memPhone) {
 		MemberVO member = memberRepository.findByMemPhone(memPhone);
 		if (member == null) {
-	        return null; 
-	    }
+			return null;
+		}
 		return member.getMemId(); // false表示無註冊過
 	}
 
@@ -164,15 +166,66 @@ public class MemberService {
 	// 分割地址
 	public String[] separateAddress(String fullAddress) {
 		String city;
-		if (fullAddress.contains("台北市")) {
-			city = "Taipei";
+
+		if (fullAddress == null) {
+			String[] noAddress = { "請選擇縣市", "請選擇區域", "" };
+			return noAddress;
 		} else {
-			city = "NewTaipei";
+			if (fullAddress.contains("台北市")) {
+				city = "Taipei";
+			} else {
+				city = "NewTaipei";
+			}
+
+			String district = fullAddress.substring(3, 6);
+			String address = fullAddress.substring(6);
+			String[] separate = { city, district, address };
+			return separate;
 		}
 
-		String district = fullAddress.substring(3, 6);
-		String address = fullAddress.substring(6);
-		String[] separate = { city, district, address };
-		return separate;
 	}
+
+	@Transactional
+	public MemberVO saveOAuth2Member(String memEmail, String memName, HttpSession session) {
+		MemberVO existingMember = memberRepository.findByMemEmail(memEmail);
+		// 如果會員已存在，則不需要註冊，用現有資料登入
+		if (existingMember != null) {
+			session.setAttribute("memId", existingMember.getMemId());
+			session.setAttribute("memName", existingMember.getMemName());
+			session.setAttribute("isLoggedIn", true);// 首頁登入判斷
+			return existingMember;
+		}
+
+		MemberVO memberVO = new MemberVO();
+		memberVO.setMemEmail(memEmail);
+		memberVO.setMemName(memName);
+
+		// 產生隨機密碼
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		int length = 10;
+		StringBuilder result = new StringBuilder();
+		Random random = new Random();
+		String code ="";
+
+		for (int i = 0; i < length; i++) {
+			int index = random.nextInt(characters.length());
+			code = result.append(characters.charAt(index)).toString();
+		}
+
+		memberVO.setMemPassword(passwordEncoder.encode(code));// 隨機密碼加密
+
+		MemberVO save = memberRepository.save(memberVO);
+
+		session.setAttribute("memId", memberVO.getMemId());
+		session.setAttribute("memName", memberVO.getMemName());
+		session.setAttribute("isLoggedIn", true);// 首頁登入判斷
+
+		mailService.sendPlainText(Collections.singleton(memEmail), "寵愛牠會員註冊通知",
+				"親愛的 " + memName + " 您好，感謝您使用第三方登入註冊寵愛牠平台\n未來您可選擇繼續使用第三方登入或者在官網輸入下列個人資訊登入\n您的帳號為：" + memEmail + "\n您的預設密碼為：" + code + "\n請妥善保管，謝謝");
+
+		return save;
+
+	}
+
+
 }

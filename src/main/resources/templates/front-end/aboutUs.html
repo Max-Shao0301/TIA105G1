@@ -13,7 +13,6 @@
 <!-- Title -->
 <title>寵愛牠 PawCares</title>
 <link rel="icon" th:href="@{/images/logo.png}">
-<link rel="stylesheet" th:href="@{/css/addpet.css}">
 <!-- Google Fonts -->
 <link
 	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
@@ -27,6 +26,8 @@
 <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
 <!-- icofont CSS -->
 <link rel="stylesheet" th:href="@{/css/icofont.css}">
+<!-- Slicknav -->
+<link rel="stylesheet" th:href="@{/css/slicknav.min.css}">
 <!-- Owl Carousel CSS -->
 <link rel="stylesheet" th:href="@{/css/owl-carousel.css}">
 <!-- Datepicker CSS -->
@@ -41,13 +42,10 @@
 <link rel="stylesheet" th:href="@{/css/style.css}">
 <link rel="stylesheet" th:href="@{/css/responsive.css}">
 <link rel="stylesheet" th:href="@{/css/add.css}">
-<link rel="stylesheet" th:href="@{/css/orderlist.css}">
-
-<link rel="stylesheet" th:href="@{/css/updateMember.css}">
-
+<link rel="stylesheet" th:href="@{/css/aboutUs.css}">
 </head>
 <body>
-	<input type="hidden" id="member-updated-flag" th:value="${memberUpdated}">
+
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="loader">
@@ -104,9 +102,14 @@
 					<div class="col-lg-6 col-md-7 col-12">
 						<!-- Top Contact -->
 						<ul class="top-contact">
-							<li><i class="icofont-paw"></i>Hi,<span
+							<li th:if="${!session.isLoggedIn}"><a th:href="@{/login}"><i
+									class="icofont-login"></i>會員登入</a></li>
+							<li th:if="${session.isLoggedIn}"><i class="icofont-paw"></i>Hi,<span
 								th:text="${session.memName}"></span>!</li>
-							<li><a th:href="@{/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
+							<li th:if="${!session.isLoggedIn}"><a th:href="@{/verifyEmail}"><i
+									class="icofont-ui-user"></i>會員註冊</a></li>
+							<li th:if="${session.isLoggedIn}"><a th:href="@{/member}"><i
+									class="icofont-ui-user"></i>會員資料</a></li>
 						</ul>
 						<!-- End Top Contact -->
 					</div>
@@ -122,7 +125,8 @@
 						<div class="col-lg-3 col-md-3 col-12">
 							<!-- Start Logo -->
 							<div class="logo">
-								<a th:href="@{/}"><img th:src="@{/images/title.png}" alt="#"></a>
+								<a href="index.html"><img th:src="@{/images/title.png}"
+									alt="#"></a>
 							</div>
 							<!-- End Logo -->
 							<!-- Mobile Nav -->
@@ -135,9 +139,9 @@
 
 								<nav class="navigation">
 									<ul class="nav menu">
-										<li><a th:href="@{/}">關於我們</a></li>
+										<li class="active"><a th:href="@{/joinus}">關於我們</a></li>
 										<li><a th:href="@{/joinus}">加入我們 </a></li>
-										<li><a th:href="@{/}">常見問題 </a></li>
+										<li><a th:href="@{/joinus}">常見問題 </a></li>
 										<li><a th:href="@{/orderList}">訂單檢視 </a></li>
 										<li><a th:href="@{/}">首頁</a>
 									</ul>
@@ -147,7 +151,7 @@
 						</div>
 						<div class="col-lg-2 col-12">
 							<div class="get-quote">
-								<a th:href="@{/appointment}" class="btn">預約服務</a>
+								<a href="appointment.html" class="btn">預約服務</a>
 							</div>
 						</div>
 					</div>
@@ -156,92 +160,89 @@
 		</div>
 		<!--/ End Header Inner -->
 	</header>
-	<div class="titlename">修改會員個人資料</div>
-	<div class="memcontainer">
-		<!-- 修改會員資料表單 -->
-		<!-- 修改會員資料表單 -->
-		<form th:action="@{/updateMember}" th:object="${updateMemberDTO}"
-			method="post">
-			<div class="row">
-				<!-- 姓名 -->
-				<div class="col-md-6">
-					<label class="form-label"> 姓名
-						<div th:if="${#fields.hasErrors('memName')}" class="wrong">
-							<i class="icofont-paw"></i> <span th:errors="*{memName}"></span>
-						</div>
-					</label> <input type="text" class="form-control" th:field="*{memName}"
-						placeholder="請輸入姓名">
-				</div>
-
-				<!-- 手機 -->
-				<div class="col-md-6 right">
-					<label class="form-label"> 手機
-						<div th:if="${#fields.hasErrors('memPhone')}" class="wrong">
-							<i class="icofont-paw"></i> <span th:errors="*{memPhone}"></span>
-						</div>
-						<div th:if="${wrongMessagePhone}" class="wrong">
-							<i class="icofont-paw"></i> <span th:text="${wrongMessagePhone}"></span>
-						</div>
-					</label> <input type="tel" class="form-control" th:field="*{memPhone}"
-						placeholder="請輸入手機號碼">
-				</div>
-			</div>
-
-			<!-- 地址標題與錯誤訊息 -->
-			<div class="row mt-3">
-				<div class="col-12 address">
-					<label class="form-label address-label">地址</label>
-					<div th:if="${#fields.hasErrors('city')}" class="wrong">
-						<i class="icofont-paw"></i> <span th:errors="*{city}"></span>
-					</div>
-					<div th:if="${#fields.hasErrors('district')}" class="wrong">
-						<i class="icofont-paw"></i> <span th:errors="*{district}"></span>
-					</div>
-
-				</div>
-			</div>
-
-			<!-- 縣市 + 區域（橫向排列） -->
-			<div class="form-group flex-container">
-				<div class="flex-group">
-					<label for="city">縣市</label> <select class="form-control" id="city"
-						name="city" onchange="updateDistricts()" th:field="*{city}">
-						<option value="">請選擇縣市</option>
-						<option value="Taipei">台北市</option>
-						<option value="NewTaipei">新北市</option>
-					</select>
-				</div>
-				<div class="flex-group">
-					<label for="district">區域</label> <select class="form-control"
-						id="district" name="district" data-selected="中山區" th:field="*{district}" th:attr="data-selected=*{district}">
-						<option value="">請選擇區域</option>
-					</select>
-				</div>
-			</div>
-
-			<!-- 詳細地址 -->
-			<div class="form-group">
-				<div class="address">
-					<label for="address">詳細地址</label>
-					<div th:if="${#fields.hasErrors('address')}" class="wrong">
-						<i class="icofont-paw"></i> <span th:errors="*{address}"></span>
+	<!-- End Header Area -->
+	<div class="breadcrumbs overlay">
+		<div class="container">
+			<div class="bread-inner">
+				<div class="row">
+					<div class="col-12">
+						<h2>關於我們</h2>
+						<ul class="bread-list">
+							<li><i class="icofont-simple-right"></i></li>
+							<li class="active">About Us</li>
+						</ul>
 					</div>
 				</div>
-				<input type="text" class="form-control addressinput"
-					th:field="*{address}" placeholder="請輸入詳細地址">
 			</div>
-			<div class="button-group">
-				<button type="button" class="btn cancel">取消</button>
-				<button type="submit" class="btn btn-send">確定修改</button>
-			</div>
-		</form>
-	</div>
-	<div id="success-popup" style="display: none;">
-		<div id="success-popup-box">
-			<p>資料修改成功！</p>
-			<button id="success-popup-confirm">確定</button>
 		</div>
 	</div>
+	<section class="team-section py-5">
+		<div class="container">
+			<div class="row text-center mb-4">
+				<div class="mb-3">我們的團隊</div>
+				<p class="text-muted">認識我們五位專案夥伴與負責項目</p>
+			</div>
+
+			<div class="row g-4 justify-content-center">
+				<!-- 👤 1 -->
+				<div class="col-md-6 col-lg-3">
+					<div class="card h-100 text-center p-3">
+						<img src="/images/member1.jpg"
+							class="card-img-top rounded-circle mx-auto mt-3"
+							style="width: 120px; height: 120px; object-fit: cover;">
+						<div class="card-body">
+							<h5 class="card-title">邵柏中</h5>
+							<p class="card-text text-muted">前端設計師</p>
+							<p class="card-text">負責訂單列表、會員UI頁面、搜尋與分頁功能</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- 👤 2 -->
+				<div class="col-md-6 col-lg-3">
+					<div class="card h-100 text-center p-3">
+						<img src="/images/member2.jpg"
+							class="card-img-top rounded-circle mx-auto mt-3"
+							style="width: 120px; height: 120px; object-fit: cover;">
+						<div class="card-body">
+							<h5 class="card-title">陳華宣</h5>
+							<p class="card-text text-muted">後端工程師</p>
+							<p class="card-text">負責 Spring Boot API、資料庫設計與會員驗證機制</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- 👤 3 -->
+				<div class="col-md-6 col-lg-3">
+					<div class="card h-100 text-center p-3">
+						<img src="/images/member3.jpg"
+							class="card-img-top rounded-circle mx-auto mt-3"
+							style="width: 120px; height: 120px; object-fit: cover;">
+						<div class="card-body">
+							<h5 class="card-title">林珍妮</h5>
+							<p class="card-text text-muted">全端開發者</p>
+							<p class="card-text">負責評論系統、訂單詳情 Modal、評價與取消彈窗</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- 👤 4 -->
+				<div class="col-md-6 col-lg-3">
+					<div class="card h-100 text-center p-3">
+						<img src="/images/member5.jpg"
+							class="card-img-top rounded-circle mx-auto mt-3"
+							style="width: 120px; height: 120px; object-fit: cover;">
+						<div class="card-body">
+							<h5 class="card-title">高逢廷</h5>
+							<p class="card-text text-muted">專案協調</p>
+							<p class="card-text">負責專案進度管理、UI一致性與跨組功能串聯</p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
 	<!-- Footer Area -->
 	<footer id="footer" class="footer ">
 		<!-- Footer Top -->
@@ -307,6 +308,16 @@
 						<div class="single-footer">
 							<h2>Contact Us</h2>
 							<p>客服專線: 7061776361726573</p>
+							<form action="mail/mail.php" method="get" target="_blank"
+								class="newsletter-inner">
+								<input name="email" placeholder="Email Address"
+									class="common-input" onfocus="this.placeholder = ''"
+									onblur="this.placeholder = 'Your email address'" required=""
+									type="email">
+								<button class="button">
+									<i class="icofont icofont-paper-plane"></i>
+								</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -330,8 +341,11 @@
 	<!--/ End Footer Area -->
 
 	<!-- jquery Min JS -->
-	<script src="/js/add.js"></script>
 	<script src="/js/jquery.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/add.js"></script>
+
 	<!-- jquery Migrate JS -->
 	<script src="/js/jquery-migrate-3.0.0.js"></script>
 	<!-- jquery Ui JS -->
@@ -350,6 +364,8 @@
 	<script src="/js/slicknav.min.js"></script>
 	<!-- ScrollUp JS -->
 	<script src="/js/jquery.scrollUp.min.js"></script>
+	<!-- Niceselect JS -->
+	<script src="/js/niceselect.js"></script>
 	<!-- Tilt Jquery JS -->
 	<script src="/js/tilt.jquery.min.js"></script>
 	<!-- Owl Carousel JS -->
@@ -369,7 +385,5 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<!-- Main JS -->
 	<script src="/js/main.js"></script>
-	<script src="/js/order.js"></script>
-	<script src="/js/updateMember.js"></script>
 </body>
 </html>

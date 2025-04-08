@@ -59,8 +59,12 @@
         </form>
         <div class="social-login">
             <p>或使用下列帳號登入</p>
-            <button type="button" class="btn btn-outline-primary"><i class="fab fa-facebook"></i> Facebook</button>
-            <button type="button" class="btn btn-outline-danger"><i class="fab fa-google"></i> Google</button>
+            <a href="/oauth2/authorization/google" class="btn btn-outline-danger">
+                <i class="fab fa-google"></i> Google
+            </a>
+            <a href="/oauth2/authorization/facebook" class="btn btn-outline-primary">
+                <i class="fab fa-facebook"></i> Facebook
+            </a>
         </div>
         <div class="register-link">
             <p>沒有帳號？ <a th:href="@{/verifyEmail}">點我註冊</a></p>

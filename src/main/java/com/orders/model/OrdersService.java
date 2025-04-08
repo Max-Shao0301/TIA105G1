@@ -39,6 +39,7 @@ import com.schedule.model.ScheduleRepository;
 import com.schedule.model.ScheduleVO;
 import com.staff.model.StaffRepository;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 @Service("orderService")
@@ -364,7 +365,9 @@ public class OrdersService {
 		return amoute.toString();
 	}
 
-	public OrderDetailDTO showOrderDetail(OrdersVO order) {
+	
+  	public OrderDetailDTO showOrderDetail(OrdersVO order) {
+
 		OrderDetailDTO oderDetailDTO = new OrderDetailDTO();
 		oderDetailDTO.setOrderId(order.getOrderId());
 		oderDetailDTO.setOrderStatus(order.getStatus());
@@ -386,8 +389,10 @@ public class OrdersService {
 		return oderDetailDTO;
 	}
 
-	private String format(LocalDateTime localDateTime) {
-		return localDateTime != null ? localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : "";
+
+
+	public String format(LocalDateTime localDateTime) {
+	    return localDateTime != null ? localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")) : "";
 	}
 
 	public LocalDateTime getOrderLocalDateTime(OrdersVO order) {
@@ -419,5 +424,20 @@ public class OrdersService {
 		ordersVO.setStar(commentDTO.getStar());
 		ordersVO.setRating(commentDTO.getRating());
 		updateOrders(ordersVO);
+	}
+	
+	
+	public Integer getPageTotal(Integer memId, Integer pageSize) {
+		 Integer total = ordersRepository.getOrderAmount(memId);
+		 Integer pageQty = (int)(total % pageSize == 0 ? (total / pageSize) : (total / pageSize + 1));
+		 return pageQty;
+	}
+	public List<OrdersVO> getOrdersByPage(Integer memId, Integer page, Integer pageSize) {
+	    int offset = (page - 1) * pageSize; //從第幾筆開始查
+	    return ordersRepository.findOrdersByMemIdWithPagination(memId, offset, pageSize);
+	}
+	
+	public List<OrdersVO> searchOrdersByKeyword(Integer memId, String keyword) {
+	    return ordersRepository.findByMemberAndKeyword(memId, keyword);
 	}
 }

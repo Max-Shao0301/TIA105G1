@@ -33,6 +33,11 @@ public class IndexController_inSpringBoot {
 		model.addAttribute("isLoggedIn", isLoggedIn);
 		return "index"; // 回傳 Thymeleaf 頁面
 	}
+	
+	@GetMapping("/aboutUs")
+	public String aboutUs() {
+		return "/front-end/aboutUs";
+	}
 
 	
 }
