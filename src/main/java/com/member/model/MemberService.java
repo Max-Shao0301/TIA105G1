@@ -178,13 +178,14 @@ public class MemberService {
 		String[] separate = { city, district, address };
 		return separate;
 	}
-
+	@Transactional
 	public MemberVO saveOAuth2Member(String memEmail, String memName, HttpSession session) {
 		MemberVO existingMember = memberRepository.findByMemEmail(memEmail);
 		// 如果會員已存在，則不需要註冊，用現有資料登入
 		if (existingMember != null) {
 			session.setAttribute("memId", existingMember.getMemId());
 			session.setAttribute("memName", existingMember.getMemName());
+			session.setAttribute("isLoggedIn", true);//首頁登入判斷
 			return existingMember;
 		}
 
@@ -193,22 +194,23 @@ public class MemberService {
 		memberVO.setMemName(memName);
 		memberVO.setMemPassword(passwordEncoder.encode(memEmail));// 使用email當作預設密碼
 
-		// 生成10位隨機數字
-		Random random = new Random();
-		StringBuilder phoneNumber = new StringBuilder();
+//		// 生成10位隨機數字
+//		Random random = new Random();
+//		StringBuilder phoneNumber = new StringBuilder();
+//
+//		for (int i = 0; i < 10; i++) {
+//			int digit = random.nextInt(10); // 生成0-9之間的隨機數字
+//			phoneNumber.append(digit);
+//		}
+//		String phoneNumberString = phoneNumber.toString();
 
-		for (int i = 0; i < 10; i++) {
-			int digit = random.nextInt(10); // 生成0-9之間的隨機數字
-			phoneNumber.append(digit);
-		}
-		String phoneNumberString = phoneNumber.toString();
-
-		memberVO.setMemPhone(phoneNumberString); // 預設電話
+//		memberVO.setMemPhone(phoneNumberString); // 預設電話
 		memberVO.setAddress("台北市大安區xxxxxxx"); // 預設地址
 		MemberVO save = memberRepository.save(memberVO);
 
 		session.setAttribute("memId", memberVO.getMemId());
 		session.setAttribute("memName", memberVO.getMemName());
+		session.setAttribute("isLoggedIn", true);//首頁登入判斷
 
 		return save;
 
