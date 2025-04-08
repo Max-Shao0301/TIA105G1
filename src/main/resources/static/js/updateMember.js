@@ -1,3 +1,6 @@
+const  phone = document.querySelector("#memPhone").value
+const name = document.querySelector("#memName").value
+const address = document.querySelector("#address").value
 
   const districtData = {
     Taipei: ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區"],
@@ -28,6 +31,9 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+      if (!phone || !address) {
+          alert(`歡迎 ${name} 使用第三方登入，請先填寫完整個人資料～`);
+      }
     updateDistricts(); // 首次載入自動帶入
     document.getElementById("city").addEventListener("change", updateDistricts);
   });

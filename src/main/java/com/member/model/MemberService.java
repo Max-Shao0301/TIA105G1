@@ -199,27 +199,33 @@ public class MemberService {
 		MemberVO memberVO = new MemberVO();
 		memberVO.setMemEmail(memEmail);
 		memberVO.setMemName(memName);
-		memberVO.setMemPassword(passwordEncoder.encode(memEmail));// 使用email當作預設密碼
 
-//		// 生成10位隨機數字
-//		Random random = new Random();
-//		StringBuilder phoneNumber = new StringBuilder();
-//
-//		for (int i = 0; i < 10; i++) {
-//			int digit = random.nextInt(10); // 生成0-9之間的隨機數字
-//			phoneNumber.append(digit);
-//		}
-//		String phoneNumberString = phoneNumber.toString();
+		// 產生隨機密碼
+		String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+		int length = 10;
+		StringBuilder result = new StringBuilder();
+		Random random = new Random();
+		String code ="";
 
-//		memberVO.setMemPhone(phoneNumberString); // 預設電話
-		memberVO.setAddress("台北市大安區xxxxxxx"); // 預設地址
+		for (int i = 0; i < length; i++) {
+			int index = random.nextInt(characters.length());
+			code = result.append(characters.charAt(index)).toString();
+		}
+
+		memberVO.setMemPassword(passwordEncoder.encode(code));// 隨機密碼加密
+
 		MemberVO save = memberRepository.save(memberVO);
 
 		session.setAttribute("memId", memberVO.getMemId());
 		session.setAttribute("memName", memberVO.getMemName());
 		session.setAttribute("isLoggedIn", true);// 首頁登入判斷
 
+		mailService.sendPlainText(Collections.singleton(memEmail), "寵愛牠會員註冊通知",
+				"親愛的 " + memName + " 您好，感謝您使用第三方登入註冊寵愛牠平台\n未來您可選擇繼續使用第三方登入或者在官網輸入下列個人資訊登入\n您的帳號為：" + memEmail + "\n您的預設密碼為：" + code + "\n請妥善保管，謝謝");
+
 		return save;
 
 	}
+
+
 }
