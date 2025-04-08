@@ -226,6 +226,14 @@ let confirmation =`
 			<div class="page_break_div">
 				<button class="page_break" id="backPage">上一步</button>
 				<button class="page_break" id="payment">付款</button>
+			</div>
+			<div class="none" id="lightbox">
+				<article id="lightboxMes">
+				<button class="close_card_btn">&times;</button>
+				<div >
+					<button type="button" id="Yes" class="check_btn">確定</button>
+				</div>
+				</article>
 			</div>`
 //==========個別頁面的內容==========//
 
@@ -466,6 +474,7 @@ async function getCan_Work_Staff(){
 	// console.log(getSchedule_URL);
 	try{
 		let res = await fetch(getSchedule_URL);
+
 		let data =await res.json();
 		// console.log(data);
 
@@ -821,6 +830,14 @@ function setConfirmation(){
 			<div class="page_break_div">
 				<button class="page_break" id="backPage">上一步</button>
 				<button class="page_break" id="payment">付款</button>
+			</div>
+			<div class="none" id="lightbox">
+				<article id="lightboxMes">
+				<button class="close_card_btn">&times;</button>
+				<div >
+					<button type="button" id="Yes" class="check_btn">確定</button>
+				</div>
+				</article>
 			</div>`
 }
 
@@ -862,7 +879,16 @@ async function OrderToDb(){
 			body: JSON.stringify(orderToDb)
 		});
 		// console.log(res);
+		
 		let data = await res.json();
+		console.log(data);
+		if(!res.ok){
+			if(data.error == "schError"){
+				refreshLightBox(`<p>此服務人員已被預約<br>請選擇其他服務人員或時段後再次下單</p>`)
+			}else{
+				refreshLightBox(`<p>預約資料有誤<br>請重新整理後再次下單</p>`)
+			}
+		}
 		if(data.NoPayment){
 			window.location.href = data.NoPayment;
 		}
@@ -875,8 +901,26 @@ async function OrderToDb(){
 		console.log(error);
 	}
 }
-
-
+//重新整理網頁用的燈箱
+function refreshLightBox(text){
+	$('article').children('p').remove();
+	$('#lightboxMes').prepend(text);
+	$('#lightbox').removeClass('none');
+	$("#lightbox").off('click').on('click',function(){
+		$("#lightbox").addClass("none");
+		$('article').children('p').remove();
+	});
+	$('#lightbox > article').off('click').on('click',function(e){
+		e.stopPropagation();
+	})
+	$('.close_card_btn').off('click').on('click',function(){
+		$("#lightbox").addClass("none");
+		$('article').children('p').remove();
+	})
+    $('.check_btn').off('click').on('click',function(){
+		location.reload();
+	})
+}
 //==========全頁邏輯==========//
 // 跳頁更換css
 function changeCss(cssFile){
@@ -1048,7 +1092,24 @@ function step3_js(){
 function step5_js(){
 	setOrder();
 	$('#payment').on('click', function(){
-		OrderToDb();
+		$('article').children('p').remove();
+		$('#lightboxMes').prepend(`<p>請於三十分鐘內付款完畢否則將視為取消訂單<br>若不慎關閉付款頁面請重新下單</p>`);
+		$('#lightbox').removeClass('none');
+		$("#lightbox").off('click').on('click',function(){
+			$("#lightbox").addClass("none");
+			$('article').children('p').remove();
+		});
+		$('#lightbox > article').off('click').on('click',function(e){
+			e.stopPropagation();
+		})
+		$('.close_card_btn').off('click').on('click',function(){
+			$("#lightbox").addClass("none");
+			$('article').children('p').remove();
+		})
+		$('.check_btn').off('click').on('click',function(){
+			OrderToDb();
+		})
+		
 	})
 }
 
