@@ -42,7 +42,7 @@
 <link rel="stylesheet" th:href="@{/css/style.css}">
 <link rel="stylesheet" th:href="@{/css/responsive.css}">
 <link rel="stylesheet" th:href="@{/css/add.css}">
-<link rel="stylesheet" th:href="@{/css/orderlist.css}">
+<link rel="stylesheet" th:href="@{/css/aboutUs.css}">
 </head>
 <body>
 
@@ -134,10 +134,10 @@
 
 								<nav class="navigation">
 									<ul class="nav menu">
-										<li><a th:href="@{/joinus}">關於我們</a></li>
+										<li class="active"><a th:href="@{/joinus}">關於我們</a></li>
 										<li><a th:href="@{/joinus}">加入我們 </a></li>
 										<li><a th:href="@{/joinus}">常見問題 </a></li>
-										<li class="active"><a th:href="@{/orderList}">訂單檢視 </a></li>
+										<li><a th:href="@{/orderList}">訂單檢視 </a></li>
 										<li><a th:href="@{/}">首頁</a>
 									</ul>
 								</nav>
@@ -161,258 +161,75 @@
 			<div class="bread-inner">
 				<div class="row">
 					<div class="col-12">
-						<h2>訂單檢視</h2>
+						<h2>關於我們</h2>
 						<ul class="bread-list">
 							<li><i class="icofont-simple-right"></i></li>
-							<li class="active">Order List</li>
+							<li class="active">About Us</li>
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="container1">
-		<div class="container2">
-			<div class="pageSize box">
-				<div class="pagetitle" id="paginationWrapper2">
-					<label for="pageSize" class="pagetitle1">每頁顯示數量&nbsp;&nbsp;&nbsp;</label><select
-						id="pageSize" onchange="updatePageSize()">
-						<option th:value="5" th:selected="${pageSize == 5}">5</option>
-						<option th:value="10" th:selected="${pageSize == 10}">10</option>
-						<option th:value="15" th:selected="${pageSize == 15}">15</option>
-					</select>
-				</div>
-			</div>
-			<div class="search box">
-				<label class="search" for="searchInput">搜尋訂單</label> <input
-					type="text" id="searchInput" oninput="searchOrders()"
-					placeholder="輸入關鍵字搜尋訂單">
-			</div>
-		</div>
-		<table id="orderTable">
-			<thead>
-				<tr>
-					<th onclick="sortOrders('orderId')">訂單編號 <i
-						class="icofont-sort"></i>
-					</th>
-					<th onclick="sortOrders('orderDate')">訂單時間 <i
-						class="icofont-sort"></i>
-					</th>
-					<th>上車地點<i class="icofont-arrow-right"></i>下車地點
-					</th>
-					<th>服務人員</th>
-					<th onclick="sortOrders('status')">訂單狀態<i class="icofont-sort"></i></th>
-					<th>訂單詳情</th>
-				</tr>
-			</thead>
-			<tbody th:fragment="orderTableBody">
-				<tr th:each="order : ${orderList}">
-					<td th:text="${order.orderId}"></td>
-					<td><span th:text="${order.schedule.date}"></span></td>
-					<td><span th:text="${order.onLocation}"></span><br> <i
-						class="icofont-arrow-right"></i><span
-						th:text="${order.offLocation}"></span></td>
+	<section class="team-section py-5">
+  <div class="container">
+    <div class="row text-center mb-4">
+      <div class="mb-3">我們的團隊</div>
+      <p class="text-muted">認識我們五位專案夥伴與負責項目</p>
+    </div>
 
-					<td th:text="${order.staff.staffName}"></td>
-					<td
-						th:text="${order.status == 0? '已取消' : order.status== 1? '未完成' :'已完成'}"></td>
-					<td><button type="button" class="check"
-							th:data-id="${order.orderId}">
-							<i class="icofont-paw"></i>檢視
-						</button></td>
-				</tr>
-			</tbody>
-		</table>
+    <div class="row g-4 justify-content-center">
+      <!-- 👤 1 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 text-center p-3">
+          <img src="/images/member1.jpg" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;">
+          <div class="card-body">
+            <h5 class="card-title">邵柏中</h5>
+            <p class="card-text text-muted">前端設計師</p>
+            <p class="card-text">負責訂單列表、會員UI頁面、搜尋與分頁功能</p>
+          </div>
+        </div>
+      </div>
 
-		<div>
-			<div id="paginationWrapper">
-				<nav>
-					<ul class="pagination justify-content-center">
-						<!-- 上一頁 -->
-						<li class="page-item"
-							th:classappend="${currentPage == 1} ? 'disabled'"><a
-							class="page-link"
-							th:href="@{/orderList(page=${currentPage - 1}, pageSize=${pageSize})}">上一頁</a>
-						</li>
+      <!-- 👤 2 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 text-center p-3">
+          <img src="/images/member2.jpg" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;">
+          <div class="card-body">
+            <h5 class="card-title">陳華宣</h5>
+            <p class="card-text text-muted">後端工程師</p>
+            <p class="card-text">負責 Spring Boot API、資料庫設計與會員驗證機制</p>
+          </div>
+        </div>
+      </div>
 
-						<!-- 頁碼 -->
-						<li class="page-item" th:if="${currentPage > 3}"><a
-							class="page-link page-num"
-							th:href="@{/orderList(page=1, pageSize=${pageSize})}">1</a></li>
+      <!-- 👤 3 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 text-center p-3">
+          <img src="/images/member3.jpg" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;">
+          <div class="card-body">
+            <h5 class="card-title">林珍妮</h5>
+            <p class="card-text text-muted">全端開發者</p>
+            <p class="card-text">負責評論系統、訂單詳情 Modal、評價與取消彈窗</p>
+          </div>
+        </div>
+      </div>
 
-						<li class="page-item disabled" th:if="${currentPage > 4}"><span
-							class="page-link">...</span></li>
+      <!-- 👤 4 -->
+      <div class="col-md-6 col-lg-3">
+        <div class="card h-100 text-center p-3">
+          <img src="/images/member5.jpg" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;">
+          <div class="card-body">
+            <h5 class="card-title">高逢廷</h5>
+            <p class="card-text text-muted">專案協調</p>
+            <p class="card-text">負責專案進度管理、UI一致性與跨組功能串聯</p>
+          </div>
+        </div>
+      </div>
 
-						<!-- 中間頁碼範圍（前2後2） -->
-						<li class="page-item"
-							th:each="i : ${#numbers.sequence(currentPage - 2 > 1 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}"
-							th:classappend="${i == currentPage} ? 'active'"><a
-							class="page-link page-num"
-							th:href="@{/orderList(page=${i}, pageSize=${pageSize})}"
-							th:text="${i}"></a></li>
-
-						<li class="page-item disabled"
-							th:if="${currentPage < totalPages - 3}"><span
-							class="page-link">...</span></li>
-
-						<li class="page-item" th:if="${currentPage < totalPages - 2}">
-							<a class="page-link page-num"
-							th:href="@{/orderList(page=${totalPages}, pageSize=${pageSize})}"
-							th:text="${totalPages}"></a>
-						</li>
-
-
-						<!-- 下一頁 -->
-						<li class="page-item"
-							th:classappend="${currentPage == totalPages} ? 'disabled'"><a
-							class="page-link"
-							th:href="@{/orderList(page=${currentPage + 1}, pageSize=${pageSize})}">下一頁</a>
-						</li>
-					</ul>
-				</nav>
-			</div>
-		</div>
-	</div>
-	<!--/ End Feautes -->
-	<!-- 詳細資料 Modal -->
-	<div class="modal fade" id="orderDetailModal" tabindex="-1"
-		aria-labelledby="orderDetailModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<div class="modal-title" id="orderDetailModalLabel">訂單明細</div>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="關閉">x</button>
-				</div>
-				<div class="modal-body">
-
-					<table class="detailtable">
-						<tr>
-							<td class="clo">訂單編號</td>
-							<td id="orderId"></td>
-							<td class="clo">訂單狀態</td>
-							<td id="orderStatus"></td>
-						</tr>
-						<tr>
-							<td class="clo">總花費金額</td>
-							<td id="payment"></td>
-							<td class="clo">服務寵物</td>
-							<td id="petName"></td>
-						</tr>
-						<tr>
-							<td class="clo">預約日期時間</td>
-							<td id="appointmentTime"></td>
-							<td class="clo">訂單建立時間</td>
-							<td id="createdTime"></td>
-
-						</tr>
-						<tr>
-							<td class="clo">上車地點</td>
-							<td colspan="3" id="onLocation"></td>
-						</tr>
-						<tr>
-							<td class="clo">下車地點</td>
-							<td colspan="3" id="offLocation"></td>
-						</tr>
-						<tr>
-							<td class="clo">車牌號碼</td>
-							<td id="carNumber"></td>
-							<td class="clo">服務人員</td>
-							<td id="staffName"></td>
-						</tr>
-
-						<tr>
-							<td class="clo">支付方式</td>
-							<td id="payMethod"></td>
-							<td class="clo">使用點數</td>
-							<td id="point"></td>
-						</tr>
-						<tr>
-							<td class="clo">訂單備註</td>
-							<td colspan="3" class="clonote" id="notes"></td>
-						<tr>
-						<tr>
-							<td class="clo">訂單評論</td>
-							<td colspan="3" class="clonote" id="rating"></td>
-						</tr>
-					</table>
-
-					<div class="backandcancel mt-3 d-flex justify-content-between">
-						<button class="gobackbtn btn-secondary" data-bs-dismiss="modal">返回</button>
-						<form method="get" action="/order/cancelOrder">
-							<button type="button" class="cancelOrderBtn">取消訂單</button>
-							<input type="hidden" name="orderId" id="cancelOrderId">
-						</form>
-						<!-- 評價按鈕區：預設都隱藏 -->
-						<div class="review-action">
-							<button id="reviewBtn" class="commentBtn" style="display: none;">我要評價</button>
-							<span id="ratedBadge" class="commentok" style="display: none;">已評價</span>
-						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- ✨ 訂單取消自訂彈窗 Overlay HTML -->
-	<div id="customCancelOverlay" class="cancel-overlay"
-		style="display: none;">
-		<div class="cancel-dialog">
-			<p class="cancel-text">確定要取消訂單嗎？</p>
-			<div class="cancel-btn-group">
-				<button id="cancelDismissBtn" class="cancel-btn cancel-cancel">取消</button>
-				<button id="confirmCancelSubmitBtn"
-					class="cancel-btn cancel-confirm">確認</button>
-			</div>
-		</div>
-	</div>
-
-	<!-- 成功取消訂單 Modal -->
-	<div class="modal fade" id="cancelSuccessModal" tabindex="-1"
-		aria-labelledby="cancelSuccessLabel" aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content cancel-success-modal">
-				<div class="modal-body text-center">
-					<h5 class="successmessage mb-3">訂單已成功取消！</h5>
-					<button type="button" class="gobackbtn" data-bs-dismiss="modal">確定</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!-- 評論彈窗 -->
-	<div class="modal fade" id="reviewModal" tabindex="-1"
-		aria-hidden="true">
-		<div class="modal-dialog modal-dialog-centered">
-			<div class="modal-content p-4 commentbox">
-				<div class="modal-header">
-					<h5 class="modal-title comment-title">訂單評價</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="關閉"></button>
-				</div>
-				<div class="modal-body">
-					<div class="stars text-center mb-3" id="starContainer">
-						<!-- 星星區 -->
-						<span class="star empty" data-value="1">&#9734;</span> <span
-							class="star empty" data-value="2">&#9734;</span> <span
-							class="star empty" data-value="3">&#9734;</span> <span
-							class="star empty" data-value="4">&#9734;</span> <span
-							class="star empty" data-value="5">&#9734;</span>
-					</div>
-					<textarea class="form-control" id="reviewText"
-						placeholder="請留下評語..." rows="3"></textarea>
-					<input type="hidden" id="selectedRating">
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="cancel-btn" data-bs-dismiss="modal">取消</button>
-					<button type="button" id="submitReviewBtn"
-						class="cancel-btn cancel-confirm">送出評價</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
+    </div>
+  </div>
+</section>
 	<!-- Footer Area -->
 	<footer id="footer" class="footer ">
 		<!-- Footer Top -->
@@ -555,6 +372,5 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<!-- Main JS -->
 	<script src="/js/main.js"></script>
-	<script src="/js/orderlist.js"></script>
 </body>
 </html>
