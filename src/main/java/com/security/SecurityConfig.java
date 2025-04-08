@@ -39,7 +39,7 @@ public class SecurityConfig {
                         .userInfoEndpoint(userInfo -> userInfo
                                 .userService(customOAuth2UserService)//指定自訂service
                         )
-                        .successHandler(customAuthenticationSuccessHandler)
+                        .successHandler(customAuthenticationSuccessHandler) //指定登入成功後網頁導向
                         .failureUrl("/login")
                 )
                 .build();
