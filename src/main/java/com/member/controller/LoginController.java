@@ -97,10 +97,7 @@ public class LoginController{
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("loginDTO");
-		session.removeAttribute("isLoggedIn");
-		session.removeAttribute("memId");
-		session.removeAttribute("memName");
+		session.invalidate();
 		return "redirect:/";
 	}
 }

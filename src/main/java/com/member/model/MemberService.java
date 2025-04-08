@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.member.model.dto.MemberDTO;
+import com.member.model.dto.UpdateMemberDTO;
 import com.orders.model.OrdersVO;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -90,11 +91,10 @@ public class MemberService {
 	// 查詢某信箱是否為會員
 	public Boolean findMember(String memEmail) {
 		MemberVO member = memberRepository.findByMemEmail(memEmail);
-		return member != null; //false表示無註冊過
-		
+		return member != null; // false表示無註冊過
+
 	}
-	
-	
+
 	// 登入會員
 	public Integer checkMember(String memEmail, String memPassword, HttpSession session) {
 		MemberVO member = memberRepository.findByMemEmail(memEmail);
@@ -116,7 +116,6 @@ public class MemberService {
 		}
 	}
 
-	
 	public MemberDTO getMemberDTO(Integer memId) {
 		MemberVO memberVO = memberRepository.findById(memId).orElse(null);
 		MemberDTO memberDTO = new MemberDTO();
@@ -128,11 +127,52 @@ public class MemberService {
 
 		return memberDTO;
 	}
-	
+
 	// 查詢某手機號碼是否已註冊過
-	public Boolean findMemberByPhone(String memPhone) {
+	public Integer findMemberByPhone(String memPhone) {
 		MemberVO member = memberRepository.findByMemPhone(memPhone);
-		return member != null; //false表示無註冊過
-		
+		if (member == null) {
+	        return null; 
+	    }
+		return member.getMemId(); // false表示無註冊過
+	}
+
+	// 更新密碼
+	public void updatePassword(String memEmail, String memPassword) {
+		MemberVO member = memberRepository.findByMemEmail(memEmail);
+		member.setMemPassword(memPassword);
+		updateMember(member);
+	}
+
+	public void updatePassword(Integer memId, String memPassword) {
+		MemberVO member = getOneMember(memId);
+		member.setMemPassword(memPassword);
+		updateMember(member);
+	}
+
+	// 更新會員資料
+	public void updateMemberData(Integer memId, UpdateMemberDTO updateMemberDTO) {
+		MemberVO member = getOneMember(memId);
+		String city = updateMemberDTO.getCity().equals("Taipei") ? "台北市" : "新北市";
+		String memAddress = city + updateMemberDTO.getDistrict() + updateMemberDTO.getAddress();
+		member.setMemName(updateMemberDTO.getMemName());
+		member.setMemPhone(updateMemberDTO.getMemPhone());
+		member.setAddress(memAddress);
+		updateMember(member);
+	}
+
+	// 分割地址
+	public String[] separateAddress(String fullAddress) {
+		String city;
+		if (fullAddress.contains("台北市")) {
+			city = "Taipei";
+		} else {
+			city = "NewTaipei";
+		}
+
+		String district = fullAddress.substring(3, 6);
+		String address = fullAddress.substring(6);
+		String[] separate = { city, district, address };
+		return separate;
 	}
 }

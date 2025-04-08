@@ -13,7 +13,6 @@
 <!-- Title -->
 <title>寵愛牠 PawCares</title>
 <link rel="icon" th:href="@{/images/logo.png}">
-<link rel="stylesheet" th:href="@{/css/addpet.css}">
 <!-- Google Fonts -->
 <link
 	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
@@ -27,6 +26,8 @@
 <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
 <!-- icofont CSS -->
 <link rel="stylesheet" th:href="@{/css/icofont.css}">
+<!-- Slicknav -->
+<link rel="stylesheet" th:href="@{/css/slicknav.min.css}">
 <!-- Owl Carousel CSS -->
 <link rel="stylesheet" th:href="@{/css/owl-carousel.css}">
 <!-- Datepicker CSS -->
@@ -42,12 +43,9 @@
 <link rel="stylesheet" th:href="@{/css/responsive.css}">
 <link rel="stylesheet" th:href="@{/css/add.css}">
 <link rel="stylesheet" th:href="@{/css/orderlist.css}">
-
-<link rel="stylesheet" th:href="@{/css/updateMember.css}">
-
 </head>
 <body>
-	<input type="hidden" id="member-updated-flag" th:value="${memberUpdated}">
+
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="loader">
@@ -122,7 +120,8 @@
 						<div class="col-lg-3 col-md-3 col-12">
 							<!-- Start Logo -->
 							<div class="logo">
-								<img th:src="@{/images/title.png}" alt="#"></a>
+								<a href="index.html"><img th:src="@{/images/title.png}"
+									alt="#"></a>
 							</div>
 							<!-- End Logo -->
 							<!-- Mobile Nav -->
@@ -138,7 +137,7 @@
 										<li><a href="">關於我們</a></li>
 										<li><a href="./joinus.html">加入我們 </a></li>
 										<li><a href="#">常見問題 </a></li>
-										<li><a href="./orderlist.html">訂單檢視 </a></li>
+										<li class="active"><a href="./orderlist.html">訂單檢視 </a></li>
 										<li><a href="./index.html">首頁</a>
 									</ul>
 								</nav>
@@ -156,92 +155,216 @@
 		</div>
 		<!--/ End Header Inner -->
 	</header>
-	<div class="titlename">修改會員個人資料</div>
-	<div class="memcontainer">
-		<!-- 修改會員資料表單 -->
-		<!-- 修改會員資料表單 -->
-		<form th:action="@{/updateMember}" th:object="${updateMemberDTO}"
-			method="post">
-			<div class="row">
-				<!-- 姓名 -->
-				<div class="col-md-6">
-					<label class="form-label"> 姓名
-						<div th:if="${#fields.hasErrors('memName')}" class="wrong">
-							<i class="icofont-paw"></i> <span th:errors="*{memName}"></span>
-						</div>
-					</label> <input type="text" class="form-control" th:field="*{memName}"
-						placeholder="請輸入姓名">
-				</div>
-
-				<!-- 手機 -->
-				<div class="col-md-6 right">
-					<label class="form-label"> 手機
-						<div th:if="${#fields.hasErrors('memPhone')}" class="wrong">
-							<i class="icofont-paw"></i> <span th:errors="*{memPhone}"></span>
-						</div>
-						<div th:if="${wrongMessagePhone}" class="wrong">
-							<i class="icofont-paw"></i> <span th:text="${wrongMessagePhone}"></span>
-						</div>
-					</label> <input type="tel" class="form-control" th:field="*{memPhone}"
-						placeholder="請輸入手機號碼">
-				</div>
-			</div>
-
-			<!-- 地址標題與錯誤訊息 -->
-			<div class="row mt-3">
-				<div class="col-12 address">
-					<label class="form-label address-label">地址</label>
-					<div th:if="${#fields.hasErrors('city')}" class="wrong">
-						<i class="icofont-paw"></i> <span th:errors="*{city}"></span>
-					</div>
-					<div th:if="${#fields.hasErrors('district')}" class="wrong">
-						<i class="icofont-paw"></i> <span th:errors="*{district}"></span>
-					</div>
-
-				</div>
-			</div>
-
-			<!-- 縣市 + 區域（橫向排列） -->
-			<div class="form-group flex-container">
-				<div class="flex-group">
-					<label for="city">縣市</label> <select class="form-control" id="city"
-						name="city" onchange="updateDistricts()" th:field="*{city}">
-						<option value="">請選擇縣市</option>
-						<option value="Taipei">台北市</option>
-						<option value="NewTaipei">新北市</option>
-					</select>
-				</div>
-				<div class="flex-group">
-					<label for="district">區域</label> <select class="form-control"
-						id="district" name="district" data-selected="中山區" th:field="*{district}" th:attr="data-selected=*{district}">
-						<option value="">請選擇區域</option>
-					</select>
-				</div>
-			</div>
-
-			<!-- 詳細地址 -->
-			<div class="form-group">
-				<div class="address">
-					<label for="address">詳細地址</label>
-					<div th:if="${#fields.hasErrors('address')}" class="wrong">
-						<i class="icofont-paw"></i> <span th:errors="*{address}"></span>
+	<!-- End Header Area -->
+	<div class="breadcrumbs overlay">
+		<div class="container">
+			<div class="bread-inner">
+				<div class="row">
+					<div class="col-12">
+						<h2>訂單檢視</h2>
+						<ul class="bread-list">
+							<li><i class="icofont-simple-right"></i></li>
+							<li class="active">Order View</li>
+						</ul>
 					</div>
 				</div>
-				<input type="text" class="form-control addressinput"
-					th:field="*{address}" placeholder="請輸入詳細地址">
 			</div>
-			<div class="button-group">
-				<button type="button" class="btn cancel">取消</button>
-				<button type="submit" class="btn btn-send">確定修改</button>
-			</div>
-		</form>
-	</div>
-	<div id="success-popup" style="display: none;">
-		<div id="success-popup-box">
-			<p>資料修改成功！</p>
-			<button id="success-popup-confirm">確定</button>
 		</div>
 	</div>
+	<div class="container1">
+		<div class="container2">
+			<div class="pageSize box">
+				<label for="pageSize">每頁顯示數量:</label> <select id="pageSize"
+					onchange="updatePageSize()">
+					<option value="5">5</option>
+					<option value="10">10</option>
+					<option value="15">15</option>
+				</select>
+			</div>
+			<div class="search box">
+				<label for="searchInput">搜尋訂單:</label> <input type="text"
+					id="searchInput" oninput="filterOrders()" placeholder="輸入關鍵字...">
+			</div>
+		</div>
+		<table id="orderTable">
+			<thead>
+				<tr>
+					<th onclick="sortOrders('orderId')">訂單編號 <i
+						class="icofont-sort"></i>
+					</th>
+					<th onclick="sortOrders('orderDate')">訂單日期 <i
+						class="icofont-sort"></i>
+					</th>
+					<th>上車地點</th>
+					<th>下車地點</th>
+					<th>服務人員</th>
+					<th onclick="sortOrders('status')">訂單狀態<i class="icofont-sort"></i></th>
+					<th>訂單詳情</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="order : ${orderList}">
+					<td th:text="${order.orderId}"></td>
+					<td th:text="${order.schedule.date}"></td>
+					<td><span th:text="${order.onLocation}"></span></td>
+					<td><span th:text="${order.offLocation}"></span></td>
+					<td th:text="${order.staff.staffName}"></td>
+					<td
+						th:text="${order.status == 0? '已取消' : order.status== 1? '未完成' :'已完成'}"></td>
+					<td><button type="button" class="check"
+							th:data-id="${order.orderId}">
+							<i class="icofont-paw"></i>訂單檢視
+						</button></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<div class="pagination">
+			<button id="prevPage" onclick="changePage(-1)">上一頁</button>
+			<span id="pageNumber">第 1 頁</span>
+			<button id="nextPage" onclick="changePage(1)">下一頁</button>
+		</div>
+	</div>
+	<!--/ End Feautes -->
+	<!-- 詳細資料 Modal -->
+	<div class="modal fade" id="orderDetailModal" tabindex="-1"
+		aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<div class="modal-title" id="orderDetailModalLabel">訂單明細</div>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="關閉">x</button>
+				</div>
+				<div class="modal-body">
+
+					<table class="detailtable">
+						<tr>
+							<td class="clo">訂單編號</td>
+							<td id="orderId"></td>
+							<td class="clo">訂單狀態</td>
+							<td id="orderStatus"></td>
+						</tr>
+						<tr>
+							<td class="clo">總花費金額</td>
+							<td id="payment"></td>
+							<td class="clo">服務寵物</td>
+							<td id="petName"></td>
+						</tr>
+						<tr>
+							<td class="clo">預約日期時間</td>
+							<td id="appointmentTime"></td>
+							<td class="clo">訂單建立時間</td>
+							<td id="createdTime"></td>
+
+						</tr>
+						<tr>
+							<td class="clo">上車地點</td>
+							<td colspan="3" id="onLocation"></td>
+						</tr>
+						<tr>
+							<td class="clo">下車地點</td>
+							<td colspan="3" id="offLocation"></td>
+						</tr>
+						<tr>
+							<td class="clo">車牌號碼</td>
+							<td id="carNumber"></td>
+							<td class="clo">服務人員</td>
+							<td id="staffName"></td>
+						</tr>
+
+						<tr>
+							<td class="clo">支付方式</td>
+							<td id="payMethod"></td>
+							<td class="clo">使用點數</td>
+							<td id="point"></td>
+						</tr>
+						<tr>
+							<td class="clo">訂單備註</td>
+							<td colspan="3" class="clonote" id="notes"></td>
+						<tr>
+						<tr>
+							<td class="clo">訂單評論</td>
+							<td colspan="3" class="clonote" id="rating"></td>
+						</tr>
+					</table>
+
+					<div class="backandcancel mt-3 d-flex justify-content-between">
+						<button class="gobackbtn btn-secondary" data-bs-dismiss="modal">返回</button>
+						<form method="get" action="/order/cancelOrder">
+							<button type="button" class="cancelOrderBtn">取消訂單</button>
+							<input type="hidden" name="orderId" id="cancelOrderId">
+						</form>
+						<!-- 評價按鈕區：預設都隱藏 -->
+						<div class="review-action">
+							<button id="reviewBtn" class="commentBtn" style="display: none;">我要評價</button>
+							<span id="ratedBadge" class="commentok" style="display: none;">已評價</span>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- ✨ 訂單取消自訂彈窗 Overlay HTML -->
+	<div id="customCancelOverlay" class="cancel-overlay"
+		style="display: none;">
+		<div class="cancel-dialog">
+			<p class="cancel-text">確定要取消訂單嗎？</p>
+			<div class="cancel-btn-group">
+				<button id="cancelDismissBtn" class="cancel-btn cancel-cancel">取消</button>
+				<button id="confirmCancelSubmitBtn"
+					class="cancel-btn cancel-confirm">確認</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- 成功取消訂單 Modal -->
+	<div class="modal fade" id="cancelSuccessModal" tabindex="-1"
+		aria-labelledby="cancelSuccessLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content cancel-success-modal">
+				<div class="modal-body text-center">
+					<h5 class="successmessage mb-3">訂單已成功取消！</h5>
+					<button type="button" class="gobackbtn" data-bs-dismiss="modal">確定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 評論彈窗 -->
+	<div class="modal fade" id="reviewModal" tabindex="-1"
+		aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content p-4 commentbox">
+				<div class="modal-header">
+					<h5 class="modal-title comment-title">訂單評價</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="關閉"></button>
+				</div>
+				<div class="modal-body">
+					<div class="stars text-center mb-3" id="starContainer">
+						<!-- 星星區 -->
+						<span class="star empty" data-value="1">&#9734;</span> <span
+							class="star empty" data-value="2">&#9734;</span> <span
+							class="star empty" data-value="3">&#9734;</span> <span
+							class="star empty" data-value="4">&#9734;</span> <span
+							class="star empty" data-value="5">&#9734;</span>
+					</div>
+					<textarea class="form-control" id="reviewText"
+						placeholder="請留下評語..." rows="3"></textarea>
+					<input type="hidden" id="selectedRating">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="cancel-btn" data-bs-dismiss="modal">取消</button>
+					<button type="button" id="submitReviewBtn"
+						class="cancel-btn cancel-confirm">送出評價</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
 	<!-- Footer Area -->
 	<footer id="footer" class="footer ">
 		<!-- Footer Top -->
@@ -307,6 +430,16 @@
 						<div class="single-footer">
 							<h2>Contact Us</h2>
 							<p>客服專線: 7061776361726573</p>
+							<form action="mail/mail.php" method="get" target="_blank"
+								class="newsletter-inner">
+								<input name="email" placeholder="Email Address"
+									class="common-input" onfocus="this.placeholder = ''"
+									onblur="this.placeholder = 'Your email address'" required=""
+									type="email">
+								<button class="button">
+									<i class="icofont icofont-paper-plane"></i>
+								</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -330,8 +463,11 @@
 	<!--/ End Footer Area -->
 
 	<!-- jquery Min JS -->
-	<script src="/js/add.js"></script>
 	<script src="/js/jquery.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/add.js"></script>
+
 	<!-- jquery Migrate JS -->
 	<script src="/js/jquery-migrate-3.0.0.js"></script>
 	<!-- jquery Ui JS -->
@@ -350,6 +486,8 @@
 	<script src="/js/slicknav.min.js"></script>
 	<!-- ScrollUp JS -->
 	<script src="/js/jquery.scrollUp.min.js"></script>
+	<!-- Niceselect JS -->
+	<script src="/js/niceselect.js"></script>
 	<!-- Tilt Jquery JS -->
 	<script src="/js/tilt.jquery.min.js"></script>
 	<!-- Owl Carousel JS -->
@@ -369,7 +507,6 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<!-- Main JS -->
 	<script src="/js/main.js"></script>
-	<script src="/js/order.js"></script>
-	<script src="/js/updateMember.js"></script>
+	<script src="/js/orderlist.js"></script>
 </body>
 </html>
