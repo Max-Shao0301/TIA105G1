@@ -29,7 +29,6 @@ public class MemberService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
-
 	@Autowired
 	private MailService mailService;
 
@@ -104,7 +103,7 @@ public class MemberService {
 		if (member == null) {
 			return 2;
 		}
-		//	雜湊密碼加密比對
+		// 雜湊密碼加密比對
 //		if (passwordEncoder.matches(memPassword, member.getMemPassword())) {
 //			session.setAttribute("memId", member.getMemId());
 //			session.setAttribute("memName", member.getMemName());
@@ -135,8 +134,8 @@ public class MemberService {
 	public Integer findMemberByPhone(String memPhone) {
 		MemberVO member = memberRepository.findByMemPhone(memPhone);
 		if (member == null) {
-	        return null; 
-	    }
+			return null;
+		}
 		return member.getMemId(); // false表示無註冊過
 	}
 
@@ -167,17 +166,25 @@ public class MemberService {
 	// 分割地址
 	public String[] separateAddress(String fullAddress) {
 		String city;
-		if (fullAddress.contains("台北市")) {
-			city = "Taipei";
+
+		if (fullAddress == null) {
+			String[] noAddress = { "請選擇縣市", "請選擇區域", "" };
+			return noAddress;
 		} else {
-			city = "NewTaipei";
+			if (fullAddress.contains("台北市")) {
+				city = "Taipei";
+			} else {
+				city = "NewTaipei";
+			}
+
+			String district = fullAddress.substring(3, 6);
+			String address = fullAddress.substring(6);
+			String[] separate = { city, district, address };
+			return separate;
 		}
 
-		String district = fullAddress.substring(3, 6);
-		String address = fullAddress.substring(6);
-		String[] separate = { city, district, address };
-		return separate;
 	}
+
 	@Transactional
 	public MemberVO saveOAuth2Member(String memEmail, String memName, HttpSession session) {
 		MemberVO existingMember = memberRepository.findByMemEmail(memEmail);
@@ -185,7 +192,7 @@ public class MemberService {
 		if (existingMember != null) {
 			session.setAttribute("memId", existingMember.getMemId());
 			session.setAttribute("memName", existingMember.getMemName());
-			session.setAttribute("isLoggedIn", true);//首頁登入判斷
+			session.setAttribute("isLoggedIn", true);// 首頁登入判斷
 			return existingMember;
 		}
 
@@ -210,7 +217,7 @@ public class MemberService {
 
 		session.setAttribute("memId", memberVO.getMemId());
 		session.setAttribute("memName", memberVO.getMemName());
-		session.setAttribute("isLoggedIn", true);//首頁登入判斷
+		session.setAttribute("isLoggedIn", true);// 首頁登入判斷
 
 		return save;
 
