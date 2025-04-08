@@ -102,9 +102,14 @@
 					<div class="col-lg-6 col-md-7 col-12">
 						<!-- Top Contact -->
 						<ul class="top-contact">
-							<li><i class="icofont-paw"></i>Hi,<span
+							<li th:if="${!session.isLoggedIn}"><a th:href="@{/login}"><i
+									class="icofont-login"></i>會員登入</a></li>
+							<li th:if="${session.isLoggedIn}"><i class="icofont-paw"></i>Hi,<span
 								th:text="${session.memName}"></span>!</li>
-							<li><a th:href="@{/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
+							<li th:if="${!session.isLoggedIn}"><a th:href="@{/verifyEmail}"><i
+									class="icofont-ui-user"></i>會員註冊</a></li>
+							<li th:if="${session.isLoggedIn}"><a th:href="@{/member}"><i
+									class="icofont-ui-user"></i>會員資料</a></li>
 						</ul>
 						<!-- End Top Contact -->
 					</div>
@@ -172,64 +177,72 @@
 		</div>
 	</div>
 	<section class="team-section py-5">
-  <div class="container">
-    <div class="row text-center mb-4">
-      <div class="mb-3">我們的團隊</div>
-      <p class="text-muted">認識我們五位專案夥伴與負責項目</p>
-    </div>
+		<div class="container">
+			<div class="row text-center mb-4">
+				<div class="mb-3">我們的團隊</div>
+				<p class="text-muted">認識我們五位專案夥伴與負責項目</p>
+			</div>
 
-    <div class="row g-4 justify-content-center">
-      <!-- 👤 1 -->
-      <div class="col-md-6 col-lg-3">
-        <div class="card h-100 text-center p-3">
-          <img src="/images/member1.jpg" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;">
-          <div class="card-body">
-            <h5 class="card-title">邵柏中</h5>
-            <p class="card-text text-muted">前端設計師</p>
-            <p class="card-text">負責訂單列表、會員UI頁面、搜尋與分頁功能</p>
-          </div>
-        </div>
-      </div>
+			<div class="row g-4 justify-content-center">
+				<!-- 👤 1 -->
+				<div class="col-md-6 col-lg-3">
+					<div class="card h-100 text-center p-3">
+						<img src="/images/member1.jpg"
+							class="card-img-top rounded-circle mx-auto mt-3"
+							style="width: 120px; height: 120px; object-fit: cover;">
+						<div class="card-body">
+							<h5 class="card-title">邵柏中</h5>
+							<p class="card-text text-muted">前端設計師</p>
+							<p class="card-text">負責訂單列表、會員UI頁面、搜尋與分頁功能</p>
+						</div>
+					</div>
+				</div>
 
-      <!-- 👤 2 -->
-      <div class="col-md-6 col-lg-3">
-        <div class="card h-100 text-center p-3">
-          <img src="/images/member2.jpg" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;">
-          <div class="card-body">
-            <h5 class="card-title">陳華宣</h5>
-            <p class="card-text text-muted">後端工程師</p>
-            <p class="card-text">負責 Spring Boot API、資料庫設計與會員驗證機制</p>
-          </div>
-        </div>
-      </div>
+				<!-- 👤 2 -->
+				<div class="col-md-6 col-lg-3">
+					<div class="card h-100 text-center p-3">
+						<img src="/images/member2.jpg"
+							class="card-img-top rounded-circle mx-auto mt-3"
+							style="width: 120px; height: 120px; object-fit: cover;">
+						<div class="card-body">
+							<h5 class="card-title">陳華宣</h5>
+							<p class="card-text text-muted">後端工程師</p>
+							<p class="card-text">負責 Spring Boot API、資料庫設計與會員驗證機制</p>
+						</div>
+					</div>
+				</div>
 
-      <!-- 👤 3 -->
-      <div class="col-md-6 col-lg-3">
-        <div class="card h-100 text-center p-3">
-          <img src="/images/member3.jpg" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;">
-          <div class="card-body">
-            <h5 class="card-title">林珍妮</h5>
-            <p class="card-text text-muted">全端開發者</p>
-            <p class="card-text">負責評論系統、訂單詳情 Modal、評價與取消彈窗</p>
-          </div>
-        </div>
-      </div>
+				<!-- 👤 3 -->
+				<div class="col-md-6 col-lg-3">
+					<div class="card h-100 text-center p-3">
+						<img src="/images/member3.jpg"
+							class="card-img-top rounded-circle mx-auto mt-3"
+							style="width: 120px; height: 120px; object-fit: cover;">
+						<div class="card-body">
+							<h5 class="card-title">林珍妮</h5>
+							<p class="card-text text-muted">全端開發者</p>
+							<p class="card-text">負責評論系統、訂單詳情 Modal、評價與取消彈窗</p>
+						</div>
+					</div>
+				</div>
 
-      <!-- 👤 4 -->
-      <div class="col-md-6 col-lg-3">
-        <div class="card h-100 text-center p-3">
-          <img src="/images/member5.jpg" class="card-img-top rounded-circle mx-auto mt-3" style="width:120px; height:120px; object-fit:cover;">
-          <div class="card-body">
-            <h5 class="card-title">高逢廷</h5>
-            <p class="card-text text-muted">專案協調</p>
-            <p class="card-text">負責專案進度管理、UI一致性與跨組功能串聯</p>
-          </div>
-        </div>
-      </div>
+				<!-- 👤 4 -->
+				<div class="col-md-6 col-lg-3">
+					<div class="card h-100 text-center p-3">
+						<img src="/images/member5.jpg"
+							class="card-img-top rounded-circle mx-auto mt-3"
+							style="width: 120px; height: 120px; object-fit: cover;">
+						<div class="card-body">
+							<h5 class="card-title">高逢廷</h5>
+							<p class="card-text text-muted">專案協調</p>
+							<p class="card-text">負責專案進度管理、UI一致性與跨組功能串聯</p>
+						</div>
+					</div>
+				</div>
 
-    </div>
-  </div>
-</section>
+			</div>
+		</div>
+	</section>
 	<!-- Footer Area -->
 	<footer id="footer" class="footer ">
 		<!-- Footer Top -->
