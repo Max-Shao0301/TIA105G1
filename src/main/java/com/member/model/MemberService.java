@@ -1,8 +1,10 @@
 package com.member.model;
 
+import java.lang.reflect.Member;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 import com.springbootmail.MailService;
 
@@ -26,6 +28,7 @@ public class MemberService {
 
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+
 
 	@Autowired
 	private MailService mailService;
@@ -174,5 +177,40 @@ public class MemberService {
 		String address = fullAddress.substring(6);
 		String[] separate = { city, district, address };
 		return separate;
+	}
+
+	public MemberVO saveOAuth2Member(String memEmail, String memName, HttpSession session) {
+		MemberVO existingMember = memberRepository.findByMemEmail(memEmail);
+		// 如果會員已存在，則不需要註冊，用現有資料登入
+		if (existingMember != null) {
+			session.setAttribute("memId", existingMember.getMemId());
+			session.setAttribute("memName", existingMember.getMemName());
+			return existingMember;
+		}
+
+		MemberVO memberVO = new MemberVO();
+		memberVO.setMemEmail(memEmail);
+		memberVO.setMemName(memName);
+		memberVO.setMemPassword(passwordEncoder.encode(memEmail));// 使用email當作預設密碼
+
+		// 生成10位隨機數字
+		Random random = new Random();
+		StringBuilder phoneNumber = new StringBuilder();
+
+		for (int i = 0; i < 10; i++) {
+			int digit = random.nextInt(10); // 生成0-9之間的隨機數字
+			phoneNumber.append(digit);
+		}
+		String phoneNumberString = phoneNumber.toString();
+
+		memberVO.setMemPhone(phoneNumberString); // 預設電話
+		memberVO.setAddress("台北市大安區xxxxxxx"); // 預設地址
+		MemberVO save = memberRepository.save(memberVO);
+
+		session.setAttribute("memId", memberVO.getMemId());
+		session.setAttribute("memName", memberVO.getMemName());
+
+		return save;
+
 	}
 }
