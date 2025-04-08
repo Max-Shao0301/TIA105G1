@@ -60,9 +60,9 @@ let checkPayment =  setInterval(async function(){
 				<p><span class="label">其他注意事項：</span><span id="petNotes">${order.notes}</span></p>
 			</div>
                 <div class="pay_info">
-                    <p><span class="label">訂單金額：</span><span id="order_amount">${order.payment}</span></p>
-                    <p><span class="label">折抵點數：</span><span id="order_point">${order.point}</span><br></p>
-                    <p><span class="label">總金額：</span><span id="total_amount">${order.payment - order.point }</span></p>
+                    <p><span class="label">訂單金額：</span><span id="order_amount">${order.payment}元</span></p>
+                    <p><span class="label">折抵點數：</span><span id="order_point">${order.point}點</span><br></p>
+                    <p><span class="label">總金額：</span><span id="total_amount">${order.payment - order.point }元</span></p>
                 </div>
                 <div class="page_break_div">
                     <button class="page_break" id="payment"  onclick="window.location.href='/';">返回首頁</button>

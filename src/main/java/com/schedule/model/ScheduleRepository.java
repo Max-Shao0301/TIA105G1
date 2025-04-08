@@ -31,6 +31,11 @@ public interface ScheduleRepository extends JpaRepository<ScheduleVO, Integer> {
 	
 	@Transactional
 	@Modifying
+	@Query(value="UPDATE schedule SET timeslot = REPLACE(timeslot, '2', '1') WHERE sch_id = ?1 ", nativeQuery = true)
+	void updateUnbooked(Integer schId);
+	
+	@Transactional
+	@Modifying
 	@Query(value="UPDATE schedule SET timeslot = REPLACE(timeslot, '1', '2') WHERE sch_id = ?1 ", nativeQuery = true)
 	void updateBooked(Integer schId);
 }

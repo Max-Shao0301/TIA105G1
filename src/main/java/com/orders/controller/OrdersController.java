@@ -80,23 +80,34 @@ public class OrdersController {
 			HttpSession session) {
 		Map<String, Object> response = new HashMap<>();
 		Integer memId = (Integer) session.getAttribute("memId");
-		Map result = ordersService.addOrders(checkoutOrderDTO, memId);
+		String amouteStr = (String) session.getAttribute("amoute");
+		Integer amoute = Integer.parseInt(amouteStr);
+		
+		Map result = ordersService.addOrders(checkoutOrderDTO, memId, amoute);
+		
 		session.setAttribute("orderId", result.get("orderId"));
 		
 		if (result.get("error") != null) {
 			response.put("error", result.get("error"));
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
-		
+
 		//免費訂單
 		if ("true".equals(result.get("freeOrder"))) {
 			response.put("NoPayment", "http://localhost:8080/appointment/paymentResults");
 			return ResponseEntity.ok(response);
 		}
+		
+		String tradeNo =(String) result.get("tradeNo");
+		Integer schId = (Integer) result.get("schId");
+		Integer orderId = (Integer) result.get("orderId");
+		ordersService.startCheckECPayOrder(tradeNo, schId, orderId);
+		
+		
 		response.put("ECPay", result.get("form"));
 		return ResponseEntity.ok(response);
 	}
-
+		
 	@PostMapping("/ecpayReturn")
 	public ResponseEntity<String> ecpayRequest(HttpServletRequest req) throws IOException {
 
@@ -108,8 +119,6 @@ public class OrdersController {
 			reqBody.append(line);
 		}
 		reader.close();
-
-		System.out.println("ECPay傳過來的" + reqBody);
 
 		ordersService.checkECPayReq(reqBody.toString());
 
@@ -129,13 +138,13 @@ public class OrdersController {
 	
 
 	@GetMapping("/appointment/calculateAmoute")
-	public ResponseEntity<String> getAmoute(@RequestParam String origin, @RequestParam String destination) throws Exception{
+	public ResponseEntity<String> getAmoute(@RequestParam String origin, @RequestParam String destination, HttpSession session) throws Exception{
 		
 		String result = ordersService.getAmoute(origin, destination);
 		if("OutOfRange".equals(result)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OutOfRange");
 		}
-	
+		session.setAttribute("amoute", result);
 		return ResponseEntity.ok(result);
 	}
 
