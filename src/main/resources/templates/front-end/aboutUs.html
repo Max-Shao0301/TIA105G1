@@ -125,7 +125,7 @@
 						<div class="col-lg-3 col-md-3 col-12">
 							<!-- Start Logo -->
 							<div class="logo">
-								<a href="index.html"><img th:src="@{/images/title.png}"
+								<a th:href="@{/}"><img th:src="@{/images/title.png}"
 									alt="#"></a>
 							</div>
 							<!-- End Logo -->
@@ -139,7 +139,7 @@
 
 								<nav class="navigation">
 									<ul class="nav menu">
-										<li class="active"><a th:href="@{/joinus}">關於我們</a></li>
+										<li class="active"><a th:href="@{/aboutUs}">關於我們</a></li>
 										<li><a th:href="@{/joinus}">加入我們 </a></li>
 										<li><a th:href="@{/joinus}">常見問題 </a></li>
 										<li><a th:href="@{/orderList}">訂單檢視 </a></li>
@@ -151,7 +151,7 @@
 						</div>
 						<div class="col-lg-2 col-12">
 							<div class="get-quote">
-								<a href="appointment.html" class="btn">預約服務</a>
+								<a th:href="@{/appointment}" class="btn">預約服務</a>
 							</div>
 						</div>
 					</div>
