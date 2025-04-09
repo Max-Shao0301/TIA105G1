@@ -42,7 +42,7 @@ public class MemberService {
 		member.setMemName(memberDTO.getMemName());
 		member.setMemPhone(memberDTO.getMemPhone());
 //		member.setMemPassword(passwordEncoder.encode(memberDTO.getMemPassword())); //雜湊密碼加密
-		member.setMemPassword(memberDTO.getMemPassword());
+		member.setMemPassword(memberDTO.getMemPassword());//明碼保存
 		member.setAddress(memAddress);
 		memberRepository.save(member);
 		session.setAttribute("memId", member.getMemId());
@@ -148,7 +148,8 @@ public class MemberService {
 
 	public void updatePassword(Integer memId, String memPassword) {
 		MemberVO member = getOneMember(memId);
-		member.setMemPassword(memPassword);
+//		member.setMemPassword(passwordEncoder.encode(memPassword));//雜湊密碼加密
+		member.setMemPassword(memPassword);	//明碼保存
 		updateMember(member);
 	}
 

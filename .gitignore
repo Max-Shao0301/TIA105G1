@@ -41,4 +41,4 @@ bin/
 .DS_Store
 
 ###  Hide sensitive information ###
-#applicaton.properties
+*.properties

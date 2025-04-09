@@ -1,6 +1,7 @@
 package com.member.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,8 @@ public class ResetPasswordController {
 
 	@Autowired
 	private MemberService memberService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 	@GetMapping("/forgetPassword")
 	public String forgetPassword() {
@@ -59,7 +62,7 @@ public class ResetPasswordController {
 			model.addAttribute("errorMessage", "與新密碼輸入不一致");
 			return "/front-end/resetPassword";
 		}
-		memberService.updatePassword((String) session.getAttribute("verifyEmail"), password); //加密
+		memberService.updatePassword((String) session.getAttribute("verifyEmail"), password);
 		session.removeAttribute("verifyCheck");
 		session.removeAttribute("verifyCode");
 		session.removeAttribute("verifyEmail");
@@ -79,8 +82,13 @@ public class ResetPasswordController {
 	        model.addAttribute("errorOldPassword", "請填入舊密碼");
 	        return "/front-end/passwordUpdate";
 	    }
-		
-		if (!oldPassword.equals(memberVO.getMemPassword())){ //加密比對
+
+//		if (passwordEncoder.matches(oldPassword, memberVO.getMemPassword())) { //雜湊密碼比對
+//			model.addAttribute("errorOldPassword", "舊密碼錯誤");
+//			return "/front-end/passwordUpdate";
+//		}
+
+		if (!oldPassword.equals(memberVO.getMemPassword())){ //明碼比對
 			model.addAttribute("errorOldPassword", "舊密碼錯誤");
 			return "/front-end/passwordUpdate";
 		}
@@ -95,7 +103,7 @@ public class ResetPasswordController {
 			model.addAttribute("resetPasswordDTO", resetPasswordDTO);
 			return "/front-end/passwordUpdate";
 		}
-		memberService.updatePassword(memId, password); //加密
+		memberService.updatePassword(memId, password);
 		session.setAttribute("passwordUpdated", true);
 		return "redirect:/passwordUpdate";
 	}
