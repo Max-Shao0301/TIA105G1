@@ -2,10 +2,12 @@ const  phone = document.querySelector("#memPhone").value
 const name = document.querySelector("#memName").value
 const address = document.querySelector("#address").value
 
-  const districtData = {
-    Taipei: ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區"],
-    NewTaipei: ["板橋區", "新莊區", "中和區", "永和區", "三重區", "土城區"]
-  };
+const districtData = {
+	Taipei: ["中正區", "大同區", "中山區", "松山區", "大安區", "萬華區", "信義區", "士林區", "北投區", "內湖區", "南港區", "文山區"],
+	NewTaipei: ["板橋區", "新莊區", "中和區", "永和區", "土城區", "蘆洲區", "三重區",	"新店區", "汐止區", "樹林區", "鶯歌區", "三峽區", "林口區", "五股區",
+		"泰山區", "深坑區", "石碇區", "坪林區", "三芝區", "石門區", "金山區",	"萬里區", "淡水區", "八里區", "瑞芳區", "貢寮區", "雙溪區", "平溪區", "烏來區"
+	]
+};
 
   function updateDistricts() {
     const city = document.getElementById("city").value;

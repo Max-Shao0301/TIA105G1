@@ -215,7 +215,7 @@
 
 					<td th:text="${order.staff.staffName}"></td>
 					<td
-						th:text="${order.status == 0? '已取消' : order.status== 1? '未完成' :'已完成'}"></td>
+						th:text="${order.status == 0? '已取消' : order.status== 1? '已付款尚未搭乘' : order.status== 2? '已完成訂單' :'未付款'}"></td>
 					<td><button type="button" class="check"
 							th:data-id="${order.orderId}">
 							<i class="icofont-paw"></i>檢視

@@ -109,7 +109,7 @@ public class OrdersService {
 
 		// 比對前端送過來的預約時段是否真的能預約
 		if (!(scheuleVO.getDate().equals(checkoutOrderDTO.getDate()))
-				|| !(scheuleVO.getTimeslot().substring(apptTime , apptTime + 3).equals("111"))) {
+				|| !(scheuleVO.getTimeslot().substring(apptTime, apptTime + 3).equals("111"))) {
 			result.put("error", "schError");
 			System.out.println("比對不成功");
 			return result;
