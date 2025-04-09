@@ -137,7 +137,7 @@ public class OrdersService {
 		MemberVO memberVO = petVO.getMember();
 		Integer apptTime = checkoutOrderDTO.getApptTime();
 
-		// 比對前端送過來的預約時段是否真的能預約
+		// 比對前端送過來的預約時段是否真的能預約 
 		if (!(scheuleVO.getDate().equals(checkoutOrderDTO.getDate()))
 				|| !(scheuleVO.getTimeslot().substring(apptTime, apptTime + 3).equals("111"))) {
 			result.put("error", "schError");
