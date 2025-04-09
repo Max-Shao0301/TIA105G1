@@ -39,3 +39,6 @@ build/
 bin/
 ### MAC ###
 .DS_Store
+
+###  Hide sensitive information ###
+#applicaton.properties
