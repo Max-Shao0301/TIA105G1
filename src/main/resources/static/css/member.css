@@ -311,7 +311,7 @@ table{
 }
 .infront1{
   /* border: 1px solid black; */
-  background-color:#335288;
+  background-color:#406384;
   color: #ffffff;
   margin: 3px;
   border-radius: 50px;
@@ -457,4 +457,88 @@ body::before {
 
 .btn-yes:hover {
   background-color: #cd421c !important;
+}.member-info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 80px 200px 80px 200px auto;
+    row-gap: 12px;
+    column-gap: 10px;
+    align-items: center;
+}
+
+/* 標籤欄 */
+.label {
+    background-color: #4a6e73;
+    color: white;
+    text-align: center;
+    border-radius: 25px;
+    padding: 8px 12px;
+    font-weight: bold;
+}
+
+/* 輸入欄位（一般） */
+.value {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 8px 16px;
+    color: #333;
+}
+
+/* 信箱與地址用長欄位（佔兩格） */
+.value-long {
+    grid-column: span 2;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 8px 16px;
+    color: #333;
+}
+
+/* 按鈕 */
+.button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    background-color: #6a6a6a;
+    color: white;
+    white-space: nowrap;
+}
+.button:hover {
+    background-color: #555;
+}
+
+/* 空格欄 */
+.spacer {
+    /* 留空不顯示東西 */
+}
+
+.button2 {
+    margin-left: 10px;
+    background-color: #f16745;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    color: white;
+}
+ul.table li {
+    display: inline-block;
+    vertical-align: middle;
+}
+.button1, .logout-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    background-color: #6a6a6a;
+    color: white;
+    margin-left: 10px;
+    margin-top: 5px;
+    vertical-align: middle;
+}
+
+.logout-btn {
+    background-color: #f16745; /* 登出按鈕特別色 */
+    margin-left:435px;
 }

@@ -51,7 +51,7 @@ public class OrdersController {
 
 	@Autowired
 	private MemberService memberService;
-
+ 
 	@GetMapping("/appointment/getbookableStaff")
 	public ResponseEntity<List<StaffScheduleDTO>> getBookableStaff(@Valid @ModelAttribute AppointmentTimeDTO apptDTO) {
 

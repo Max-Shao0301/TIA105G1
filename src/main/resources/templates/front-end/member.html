@@ -176,23 +176,33 @@
 				<ul class="table">
 					<li class="infront1"><strong>姓名</strong></li>
 					<li class="value1" th:text="${memberVO.memName}"></li>
+
 					<li class="infront1"><strong>手機</strong></li>
 					<li class="value1" th:text="${memberVO.memPhone}"></li>
 					<a th:href="@{/updateMember}" class="button1">修改會員資料</a>
 					<br>
+
 					<li class="infront1"><strong>信箱</strong></li>
 					<li class="value2" th:text="${memberVO.memEmail}"></li>
 					<a th:href="@{/passwordUpdate}" class="button1">修改密碼</a>
 					<br>
+
 					<li class="infront1"><strong>地址</strong></li>
 					<li class="value2" th:text="${memberVO.address}"></li>
 					<button class="button1">啟用兩步驟驗證</button>
 					<br>
-					<form th:action="@{/logout}" method="get">
-						<li class="infront1"><strong>點數</strong></li>
-						<li class="value1" th:text="${memberVO.point}+ 點"></li>
-						<button class="button2">登出</button>
-					</form>
+
+					<!-- 點數 -->
+					<li class="infront1"><strong>點數</strong></li>
+					<li class="value1" th:text="${memberVO.point} + ' 點'"></li>
+
+					<!-- 登出按鈕（獨立 form） -->
+					<li>
+						<form th:action="@{/logout}" method="get" style="display: inline;">
+							<button class="button1 logout-btn">登出</button>
+							<!-- 和其他一樣用 .button1 -->
+						</form>
+					</li>
 				</ul>
 
 			</div>
