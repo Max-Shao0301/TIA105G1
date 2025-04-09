@@ -16,6 +16,7 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -62,6 +63,9 @@ public class OrdersService {
 
 	@Autowired
 	PetRepository petRepository;
+
+	@Value("{google.maps.api.key}")
+	private  String  googleMapApiKey;
 
 	public void addOrders(OrdersVO ordersVO) {
 		ordersRepository.save(ordersVO);
@@ -318,7 +322,7 @@ public class OrdersService {
 	}
 
 	public String getAmoute(String origin, String destination) {
-		final String API_KEY = "AIzaSyAJ4YeUWLDhM530z0_jUFfzYvSsQx_GVaU";
+//		final String API_KEY = "AIzaSyAJ4YeUWLDhM530z0_jUFfzYvSsQx_GVaU";
 		final String ROUTES_API_URL = "https://routes.googleapis.com/directions/v2:computeRoutes";
 		final Integer STARTPRICE = 100;
 		final Integer PRICEPERKM = 50;
@@ -341,7 +345,7 @@ public class OrdersService {
 		// 設定header
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("Content_Type", "application/json"); // 我們發送的請求格式
-		headers.set("X-Goog-Api-Key", API_KEY); // API KEY google要的
+		headers.set("X-Goog-Api-Key", googleMapApiKey); // API KEY google要的
 		headers.set("X-Goog-FieldMask", "routes.distanceMeters"); // 設定好回傳只要拿哪些資料 減少API費用
 
 		// 請求實體中放入body跟header

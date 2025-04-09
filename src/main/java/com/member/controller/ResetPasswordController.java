@@ -59,7 +59,7 @@ public class ResetPasswordController {
 			model.addAttribute("errorMessage", "與新密碼輸入不一致");
 			return "/front-end/resetPassword";
 		}
-		memberService.updatePassword((String) session.getAttribute("verifyEmail"), password);
+		memberService.updatePassword((String) session.getAttribute("verifyEmail"), password); //加密
 		session.removeAttribute("verifyCheck");
 		session.removeAttribute("verifyCode");
 		session.removeAttribute("verifyEmail");
@@ -80,7 +80,7 @@ public class ResetPasswordController {
 	        return "/front-end/passwordUpdate";
 	    }
 		
-		if (!oldPassword.equals(memberVO.getMemPassword())){
+		if (!oldPassword.equals(memberVO.getMemPassword())){ //加密比對
 			model.addAttribute("errorOldPassword", "舊密碼錯誤");
 			return "/front-end/passwordUpdate";
 		}
@@ -95,7 +95,7 @@ public class ResetPasswordController {
 			model.addAttribute("resetPasswordDTO", resetPasswordDTO);
 			return "/front-end/passwordUpdate";
 		}
-		memberService.updatePassword(memId, password);
+		memberService.updatePassword(memId, password); //加密
 		session.setAttribute("passwordUpdated", true);
 		return "redirect:/passwordUpdate";
 	}
