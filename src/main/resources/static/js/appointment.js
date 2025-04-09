@@ -120,18 +120,23 @@ let petInformation =`
 				<label for="savedPets" class="question_title">選擇已儲存的毛小孩</label>
 				<select id="savedPets" class="question_input">
 					<option id="noPet"value="noPet">未選擇</option>
+					
 				</select>
 			</div>
 			<div class="q_div" id="q2">
 				<span class="question_title">毛小孩類別</span>
+				<div id="petType">
 				<label><input type="radio" id="typeCat" name="petType" value="cat"> 貓</label>
 				<label><input type="radio" id="typeDog" name="petType" value="dog"> 狗</label>
+				</div>
 			</div>
 	
 			<div class="q_div" id="q3">
 				<span class="question_title">毛小孩性別</span>
+				<div id="petGender">
 				<label><input type="radio" id="genderM" name="petGender" value="1"> 公</label>
 				<label><input type="radio" id="genderF" name="petGender" value="2"> 母</label>
+				</div>
 			</div>
 			<div class="q_div" id="q4">
 				<label for="petName" class="question_title">毛小孩大名</label>
@@ -151,10 +156,11 @@ let petInformation =`
 				<button class="page_break" id="nextPage">下一步</button>
 			</div>
 			<div class="none" id="lightbox">
-				<article id="lightboxMes">
+				<article id="petInfo_Art">
 					<button class="close_card_btn">&times;</button>
 					<div >
-						<button type="button" id="Yes" class="check_btn">確認</button>
+						<button type="button" id="no" class="petInfo_btn">否</button>
+						<button type="button" id="yes" class="petInfo_btn">是</button>
 					</div>
 				</article>
 			</div>`
@@ -765,7 +771,7 @@ function petInfoLightBox(text){
 		$('article').children('p').remove();
 		$(this).removeClass('check_btn');
 	});
-	$('#lightbox > article').off('click').on('click',function(){
+	$('#lightbox > article').off('click').on('click',function(e){
 		e.stopPropagation();
 	})
 	$('.close_card_btn').off('click').on('click',function(){
