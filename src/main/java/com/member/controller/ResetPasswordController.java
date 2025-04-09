@@ -31,7 +31,7 @@ public class ResetPasswordController {
 		return "/front-end/forgetPassword";
 	}
 
-	// 忘記密碼
+	// 登入時的忘記密碼 
 	@GetMapping("/resetPassword")
 	public String showResetPasswordPage(HttpSession session, Model model) {
 		Boolean verified = (Boolean) session.getAttribute("verifyCheck");
@@ -45,7 +45,7 @@ public class ResetPasswordController {
 
 		return "/front-end/resetPassword";
 	}
-
+	// 登入時的忘記密碼 密碼重設
 	@PostMapping("/resetPassword")
 	public String resetPassword(@ModelAttribute("resetPasswordDTO") @Validated ResetPasswordDTO resetPasswordDTO,
 			BindingResult bindingResult, HttpSession session, Model model) {
@@ -67,7 +67,7 @@ public class ResetPasswordController {
 
 	}
 
-	// 重設密碼
+	// 會員資料的重設密碼
 	@PostMapping("/passwordUpdate")
 	public String passwordUpdate(@ModelAttribute("resetPasswordDTO") @Validated ResetPasswordDTO resetPasswordDTO,
 			BindingResult bindingResult, HttpSession session,
@@ -99,7 +99,7 @@ public class ResetPasswordController {
 		session.setAttribute("passwordUpdated", true);
 		return "redirect:/passwordUpdate";
 	}
-
+	// 會員資料的重設密碼頁面
 	@GetMapping("/passwordUpdate")
 	public String passwordUpdate(Model model, HttpSession session) {
 		if (!model.containsAttribute("resetPasswordDTO")) {

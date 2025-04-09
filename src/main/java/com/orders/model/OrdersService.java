@@ -64,7 +64,7 @@ public class OrdersService {
 	@Autowired
 	PetRepository petRepository;
 
-	@Value("{google.maps.api.key}")
+	@Value("${google.maps.api.key}")
 	private  String  googleMapApiKey;
 
 	public void addOrders(OrdersVO ordersVO) {
@@ -322,7 +322,7 @@ public class OrdersService {
 	}
 
 	public String getAmoute(String origin, String destination) {
-//		final String API_KEY = "AIzaSyAJ4YeUWLDhM530z0_jUFfzYvSsQx_GVaU";
+		final String API_KEY = "AIzaSyAJ4YeUWLDhM530z0_jUFfzYvSsQx_GVaU";
 		final String ROUTES_API_URL = "https://routes.googleapis.com/directions/v2:computeRoutes";
 		final Integer STARTPRICE = 100;
 		final Integer PRICEPERKM = 50;
@@ -335,7 +335,8 @@ public class OrdersService {
 				|| !(destination.startsWith("新北市") || destination.startsWith("台北市"))) {
 			return "OutOfRange";
 		}
-
+		System.out.println(API_KEY);
+		System.out.println(googleMapApiKey);
 		// 把地址資料塞req，並且將模式設定成開車
 		Map<String, Object> reqToRoutes = new HashMap<>();
 		reqToRoutes.put("origin", Map.of("address", origin));
