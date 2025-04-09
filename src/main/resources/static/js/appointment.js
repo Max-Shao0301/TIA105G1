@@ -765,7 +765,7 @@ function petInfoLightBox(text){
 		$('article').children('p').remove();
 		$(this).removeClass('check_btn');
 	});
-	$('#lightbox > article').off('click').on('click',function(){
+	$('#lightbox > article').off('click').on('click',function(e){
 		e.stopPropagation();
 	})
 	$('.close_card_btn').off('click').on('click',function(){

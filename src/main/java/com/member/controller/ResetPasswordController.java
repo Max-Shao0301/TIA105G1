@@ -83,15 +83,15 @@ public class ResetPasswordController {
 	        return "/front-end/passwordUpdate";
 	    }
 
-//		if (passwordEncoder.matches(oldPassword, memberVO.getMemPassword())) { //雜湊密碼比對
-//			model.addAttribute("errorOldPassword", "舊密碼錯誤");
-//			return "/front-end/passwordUpdate";
-//		}
-
-		if (!oldPassword.equals(memberVO.getMemPassword())){ //明碼比對
+		if (!passwordEncoder.matches(oldPassword, memberVO.getMemPassword())) { //雜湊密碼比對
 			model.addAttribute("errorOldPassword", "舊密碼錯誤");
 			return "/front-end/passwordUpdate";
 		}
+
+//		if (!oldPassword.equals(memberVO.getMemPassword())){ //明碼比對
+//			model.addAttribute("errorOldPassword", "舊密碼錯誤");
+//			return "/front-end/passwordUpdate";
+//		}
 		
 		if (bindingResult.hasErrors()) {
 			return "/front-end/passwordUpdate";

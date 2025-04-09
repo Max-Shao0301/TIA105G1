@@ -104,18 +104,22 @@ public class MemberService {
 			return 2;
 		}
 		// 雜湊密碼加密比對
-//		if (passwordEncoder.matches(memPassword, member.getMemPassword())) {
-//			session.setAttribute("memId", member.getMemId());
-//			session.setAttribute("memName", member.getMemName());
-//			return 1;
-//		}
-		if (memPassword.equals(member.getMemPassword())) {
+		if (passwordEncoder.matches(memPassword, member.getMemPassword())) {
 			session.setAttribute("memId", member.getMemId());
 			session.setAttribute("memName", member.getMemName());
 			return 1;
 		} else {
 			return 3;
 		}
+
+		// 明碼比對
+//		if (memPassword.equals(member.getMemPassword())) {
+//			session.setAttribute("memId", member.getMemId());
+//			session.setAttribute("memName", member.getMemName());
+//			return 1;
+//		} else {
+//			return 3;
+//		}
 	}
 
 	public MemberDTO getMemberDTO(Integer memId) {
@@ -142,14 +146,15 @@ public class MemberService {
 	// 更新密碼
 	public void updatePassword(String memEmail, String memPassword) {
 		MemberVO member = memberRepository.findByMemEmail(memEmail);
-		member.setMemPassword(memPassword);
+		member.setMemPassword(passwordEncoder.encode(memPassword));//雜湊密碼加密
+//		member.setMemPassword(memPassword);//明碼保存
 		updateMember(member);
 	}
 
 	public void updatePassword(Integer memId, String memPassword) {
 		MemberVO member = getOneMember(memId);
-//		member.setMemPassword(passwordEncoder.encode(memPassword));//雜湊密碼加密
-		member.setMemPassword(memPassword);	//明碼保存
+		member.setMemPassword(passwordEncoder.encode(memPassword));//雜湊密碼加密
+//		member.setMemPassword(memPassword);	//明碼保存
 		updateMember(member);
 	}
 
