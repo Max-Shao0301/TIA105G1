@@ -26,7 +26,7 @@ public interface ScheduleRepository extends JpaRepository<ScheduleVO, Integer> {
 	int checkScheduleUnique(Integer staffId, LocalDate date, String timeslot);
 
 	// 用日期、預約時間查詢可工作的服務人員  使用join fetch 避免查班表拿員工資料的N+1問題
-	@Query("SELECT s FROM ScheduleVO s JOIN FETCH s.staffVO WHERE FUNCTION('substring', s.timeslot, ?2, 3) = '111' AND s.date = ?1")
+	@Query("SELECT s FROM ScheduleVO s JOIN FETCH s.staffVO WHERE FUNCTION('substring', s.timeslot, ?2 +1, 3) = '111' AND s.date = ?1")
 	List<ScheduleVO> findByBookableStaff(LocalDate date, Integer appttime);
 	
 	@Transactional
