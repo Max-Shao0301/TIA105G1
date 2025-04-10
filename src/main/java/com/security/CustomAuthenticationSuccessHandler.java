@@ -33,11 +33,17 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             String email = (String) oAuth2User.getAttributes().get("email");
             // 根據 email 查詢會員資料
             MemberVO memberVO = memberRepository.findByMemEmail(email);
-            //如果手機和地址已填寫完成則導向首頁，若未完成則導向資料更新頁面
-            if (memberVO != null && memberVO.getMemPhone() != null && memberVO.getAddress() != null) {
-                response.sendRedirect("/");
-            } else {
-                response.sendRedirect("/updateMember");
+            if (memberVO != null) {
+                if (memberVO.getSecret() != null && !memberVO.getSecret().isEmpty()) {
+                    // 若有設定二階段驗證 secret，導向驗證器登入頁面
+                    response.sendRedirect("/mfaLoginPage");
+                } else if (memberVO.getMemPhone() != null && memberVO.getAddress() != null) {
+                    // 若手機和地址有填寫，導向首頁
+                    response.sendRedirect("/");
+                } else {
+                    // 否則導向會員資料補填頁面
+                    response.sendRedirect("/updateMember");
+                }
             }
         }
 

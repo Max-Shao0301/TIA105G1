@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>二階段驗證登入</title>
+</head>
+<body>
+  <form th:action="@{/mfa/login}" th:method="post">
+    <label for="otp">請輸入Google Authenticator上的驗證碼:</label>
+    <input type="text" id="otp" name="otp" required pattern="\d{6}" title="格式有誤，Google Authenticator驗證碼為六位數字">
+      <p th:text="${error}" style="color: red"></p>
+
+
+    <button type="submit">Verify OTP</button>
+  </form>
+</body>
+</html>
