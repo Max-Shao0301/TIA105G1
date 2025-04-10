@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Google 驗證器 QR Code</title>
+</head>
+<body>
+<h2>請掃描 QR Code 綁定 Google Authenticator</h2>
+<img th:src="${qrCode}" />
+
+<form th:action="@{/}" th:method="get">
+  <button type="submit">返回首頁</button>
+</form>
+</body>
+</html>
