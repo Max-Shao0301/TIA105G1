@@ -1,6 +1,5 @@
 package com.mfa;
 
-import com.fasterxml.jackson.databind.ser.std.StdKeySerializers;
 import dev.samstevens.totp.code.DefaultCodeGenerator;
 import dev.samstevens.totp.code.DefaultCodeVerifier;
 import dev.samstevens.totp.qr.QrData;
@@ -30,7 +29,7 @@ public class TotpService {
                 .issuer(issuer)
                 .build();
 
-        ZxingPngQrGenerator generator = new ZxingPngQrGenerator();
+        ZxingPngQrGenerator generator = new ZxingPngQrGenerator(); // 使用 ZXing 生成 QR Code
         byte[] qrCode = generator.generate(data);
         return "data:image/png;base64," + java.util.Base64.getEncoder().encodeToString(qrCode);
     }

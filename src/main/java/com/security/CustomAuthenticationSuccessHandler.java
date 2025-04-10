@@ -34,8 +34,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
             // 根據 email 查詢會員資料
             MemberVO memberVO = memberRepository.findByMemEmail(email);
             if (memberVO != null) {
+                // 若有設定二階段驗證 secret，導向驗證器登入頁面
                 if (memberVO.getSecret() != null && !memberVO.getSecret().isEmpty()) {
-                    // 若有設定二階段驗證 secret，導向驗證器登入頁面
                     response.sendRedirect("/mfaLoginPage");
                 } else if (memberVO.getMemPhone() != null && memberVO.getAddress() != null) {
                     // 若手機和地址有填寫，導向首頁
