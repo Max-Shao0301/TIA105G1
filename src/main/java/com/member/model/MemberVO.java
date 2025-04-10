@@ -45,6 +45,9 @@ public class MemberVO implements java.io.Serializable {
 	@Column(name = "address")
 	private String address;
 
+	@Column(name="secret")
+	private String secret;
+
 	@Column(name = "point")
 	private Integer point;
 
@@ -113,6 +116,14 @@ public class MemberVO implements java.io.Serializable {
 
 	public void setAddress(String address) {
 		this.address = address;
+	}
+
+	public String getSecret() {
+		return secret;
+	}
+
+	public void setSecret(String secret) {
+		this.secret = secret;
 	}
 
 	public Integer getPoint() {
