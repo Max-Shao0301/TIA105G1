@@ -189,7 +189,10 @@
 
 					<li class="infront1"><strong>地址</strong></li>
 					<li class="value2" th:text="${memberVO.address}"></li>
-					<button class="button1">啟用兩步驟驗證</button>
+					<form th:action="@{/QRGenerate}" th:method="get">
+						<input type="hidden" name="user" value="PawCares">
+						<button class="button1" type="submit">啟用兩步驟驗證</button>
+					</form>
 					<br>
 
 					<!-- 點數 -->
