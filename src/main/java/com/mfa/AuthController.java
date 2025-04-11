@@ -18,6 +18,7 @@ public class AuthController {
     @Autowired
     private MemberService memberService;
 
+    //設定二階段驗證頁面
     @GetMapping("/QRGenerate")
     public String generateSecret(HttpSession session, Model model) throws Exception {
         Integer memId = (Integer) session.getAttribute("memId"); //從session中取得會員ID
@@ -39,12 +40,13 @@ public class AuthController {
 
         return "front-end/mfa";
     }
-
+    //二階段登入頁面
     @GetMapping("/mfaLoginPage")
     public String mfaLogin(){
         return "front-end/mfaLoginPage";
     }
 
+    //二階段登入驗證
     @PostMapping("/mfa/login")
     public String Otp(String otp, HttpSession session, Model model) {
         Integer memId = (Integer) session.getAttribute("memId");
