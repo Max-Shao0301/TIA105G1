@@ -10,5 +10,5 @@ import com.orderpet.model.OrderPetService;
 public class OrderPetController {
 	
 	@Autowired
-	private OrderPetService orderPetService;
+	private OrderPetService orderPetService; 
 }
