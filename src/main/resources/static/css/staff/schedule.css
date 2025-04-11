@@ -1,51 +1,156 @@
 body {
-	font-family: Arial, sans-serif;
-	background-color: #f4f4f4;
-	padding-top: 70px;
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: #f8f9fa;
+    padding-top: 70px;
+    margin: 0;
+    color: #333;
 }
 
-.container {
-	max-width: 800px;
+.container,
+.container-fluid {
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+nav.navbar {
+    background-color: #5c6bc0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand img {
+    margin-right: 10px;
+}
+
+.navbar-text,
+.nav-link {
+    color: white !important;
 }
 
 .form-group {
-	margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .btn-primary {
-	width: 100%;
+    width: 100%;
+    background-color: #5c6bc0;
+    border-color: #5c6bc0;
+    transition: background-color 0.3s ease;
 }
 
-table {
-	margin-top: 30px;
-	width: 100%;
-}
-
-th, td {
-	text-align: center;
+.btn-primary:hover {
+    background-color: #3f51b5;
+    border-color: #3f51b5;
 }
 
 .form-inline .form-group {
-	display: inline-block;
-	margin-right: 10px;
+    display: inline-block;
+    margin-right: 10px;
 }
 
 .form-inline .form-group:last-child {
-	margin-right: 0;
+    margin-right: 0;
 }
 
 .form-row {
-	display: flex;
-	align-items: center;
-	gap: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-/* 導覽列 */
-nav.navbar {
-	background-color: #C1B9AD;
+@media (max-width: 576px) {
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
 }
 
-/* 歡迎服務人員 */
-span.navbar-text {
-	margin-right: auto;
+.table-responsive {
+    overflow-x: auto;
+}
+
+#scheduleTable,
+#data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+#scheduleTable th,
+#scheduleTable td,
+#data-table th,
+#data-table td {
+    padding: 1rem;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#scheduleTable thead.table-bordered th,
+#data-table thead.table-bordered th,
+#scheduleTable th {
+    color: #ffffff !important;
+    background-color: #5c6bc0 !important;
+    text-align: center;
+}
+
+.th-font {
+    background-color: #5c6bc0 !important;
+    border-radius: 5px;
+    padding: 5px;
+    display: inline-block;
+    color: white;
+}
+
+hr {
+    border: 0.5px solid #ddd !important;
+    margin: 10px 0;
+}
+
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 576px) {
+    #scheduleTable th,
+    #scheduleTable td,
+    #data-table th,
+    #data-table td {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+
+    .th-font {
+        padding: 4px;
+        font-size: 0.9rem;
+    }
+
+    hr {
+        margin: 5px;
+    }
+
+    .navbar-nav .nav-item {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+
+.delete {
+    background: none;
+    border: none;
+    color: red;
 }

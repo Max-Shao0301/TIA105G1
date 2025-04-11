@@ -55,6 +55,11 @@ public class StaffService {
 		Optional<StaffVO> optional = repository.findByLogin(email, password); 
 		return optional.orElse(null);
 	}
+	
+	public StaffVO getOneStaffByEmail(String email) {
+		Optional<StaffVO> optional = repository.findByLoginByEmail(email); 
+		return optional.orElse(null);
+	}
 
 	public List<StaffVO> getAll() {
 		return repository.findAll();

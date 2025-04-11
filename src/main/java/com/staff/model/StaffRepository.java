@@ -21,4 +21,7 @@ public interface StaffRepository extends JpaRepository<StaffVO, Integer> {
 	@Query(value = "SELECT * FROM staff WHERE staff_email=?1 AND staff_password =?2 AND status= 1", nativeQuery = true)
 	Optional<StaffVO> findByLogin(String email, String password);
 	
+	@Query(value = "SELECT * FROM staff WHERE staff_email=?1 AND status= 1", nativeQuery = true)
+	Optional<StaffVO> findByLoginByEmail(String email);
+	
 }

@@ -1,7 +1,6 @@
 package com.schedule.model;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -19,11 +18,19 @@ public class ScheduleService {
 	@Autowired
 	ScheduleRepository repository;
 
+	
 	@Transactional
-	public void addSchedule(ScheduleVO scheduleVO) {
+	public boolean addSchedule(ScheduleVO scheduleVO) {
 		if(repository.checkScheduleUnique(scheduleVO.getStaffVO().getStaffId(), scheduleVO.getDate(), scheduleVO.getTimeslot())<=0) {
+			
 			scheduleVO.setStatus(Status.open.getNumber());
 			repository.save(scheduleVO);
+			return true;
+			
+		}else {
+			
+			return false;
+			
 		}
 	}
 
