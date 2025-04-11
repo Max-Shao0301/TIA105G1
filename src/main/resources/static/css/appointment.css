@@ -174,3 +174,9 @@ p#price{
 .noVal{
     border: 1px solid red !important; 
 }
+#ui-datepicker-div{
+    z-index: 1051;
+}
+#map{
+    width: 60%;
+}

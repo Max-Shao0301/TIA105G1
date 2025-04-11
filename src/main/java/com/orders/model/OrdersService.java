@@ -128,9 +128,12 @@ public class OrdersService {
         }
     }
 	@Transactional
-	public Map<String, Object> addOrders(CheckoutOrderDTO checkoutOrderDTO, Integer memId, Integer checkoutAamount) {
+	public Map<String, Object> addOrders(CheckoutOrderDTO checkoutOrderDTO, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
-
+		Integer memId = (Integer) session.getAttribute("memId"); 
+		Integer checkoutAamount = (Integer) session.getAttribute("amoute"); //取得事先存好的訂單金額
+		
+		//拿出結帳訂單中的班表跟寵物物件
 		ScheduleVO scheuleVO = scheduleRepository.findById(checkoutOrderDTO.getSchId()).orElse(null);
 		PetVO petVO = petRepository.findById(checkoutOrderDTO.getPetId()).orElse(null);
 
@@ -154,21 +157,19 @@ public class OrdersService {
 		} else {
 			System.out.println("寵物會員比對正常");
 		}
-
+		
+		//從結帳訂單中拿出訂單使用的點數、支付方法，來跟此會員物件的點數比對 確保資料正確
 		Integer payMethood = checkoutOrderDTO.getPayMethod();
 		Integer memberPoint = memberVO.getPoint();
 		Integer orderPoint = checkoutOrderDTO.getPoint();
 		System.out.println("會員點數" + memberPoint);
 		System.out.println("訂單點數" + orderPoint);
-		// 這是最終會丟給ECPay的結帳金額 而非存入資料庫的結帳金額
-//		Integer checkoutAamount = checkoutOrderDTO.getPayment();
 		// 用點數支付
 		if (payMethood.equals(0)) {
 			// 驗證前端提交過來的點數是否與資料庫儲存的會員點數一致、且點數足夠支付整筆訂單金額
 			if (memberPoint.equals(orderPoint) && memberPoint > checkoutAamount) {
 				result.put("freeOrder", "true");
 				memberRepository.updatePoint(memberPoint - checkoutAamount, memId);
-//				scheduleRepository.updateBooked(scheuleVO.getSchId());
 				orderPoint = checkoutAamount;
 				payMethood = 0;
 				System.out.println("點數單");
@@ -182,7 +183,7 @@ public class OrdersService {
 				System.out.println("錯錯錯");
 			}
 		}
-
+		//建立訂單物件
 		OrdersVO ordersVO = new OrdersVO();
 		ordersVO.setMember(memberVO);
 		ordersVO.setSchedule(scheuleVO);
@@ -194,24 +195,25 @@ public class OrdersService {
 		ordersVO.setPayMethod(payMethood);
 		ordersVO.setNotes(checkoutOrderDTO.getNotes());
 		ordersVO.setStatus(3);
-		ordersVO = ordersRepository.save(ordersVO);
+		ordersVO = ordersRepository.save(ordersVO); //儲存訂單物件
 
 		result.put("orderId", ordersVO.getOrderId());
 
-		OrderPetVO orderPetVO = new OrderPetVO();
+		OrderPetVO orderPetVO = new OrderPetVO(); 
 		orderPetVO.setOrders(ordersVO);
 		orderPetVO.setPet(petVO);
-		orderpetRepository.save(orderPetVO);
-		scheduleRepository.updateBooked(scheuleVO.getSchId());
-		if (payMethood.equals(0)) {
+		orderpetRepository.save(orderPetVO); //儲存寵物訂單物件
+		scheduleRepository.updateBooked(scheuleVO.getSchId()); //訂單建立後直接將班表改成已預約，防止二次預約
+		if (payMethood.equals(0)) { //確定支付方式為全點數付款則直接返回，不必串接綠界金流
 			return result;
 		}
-
+		//準備處理綠界金流串接 建立金流用的訂單物件
 		LocalDateTime nowTime = LocalDateTime.now();
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
 		Integer orderId = ordersVO.getOrderId();
 		String orderTime = nowTime.format(dtf);
-		String TradeNo = "P" + orderId + "T" + orderTime.substring(2).replaceAll("[ /:]", "");
+		//訂單編號用資料庫的P+訂單編號+T+時間
+		String TradeNo = "P" + orderId + "T" + orderTime.substring(2).replaceAll("[ /:]", ""); 
 		String des = "Pet Taxi-" + TradeNo;
 		System.out.println(TradeNo);
 		System.out.println(orderTime);
@@ -227,14 +229,12 @@ public class OrdersService {
 		aco.setReturnURL("https://5d81-124-218-108-244.ngrok-free.app/ecpayReturn"); // 付款結果通知 應為商家的controller
 		// aco.setOrderResultURL(""); //付款完成後的結果參數 傳至前端用的
 		aco.setClientBackURL("http://localhost:8080/appointment/paymentResults"); // 付完錢後的返回商店按鈕會到的網址
-
-		String form = all.aioCheckOut(aco, null);
-		System.out.println(form);
-		result.put("tradeNo", TradeNo);
-		result.put("schId", scheuleVO.getSchId());
-		result.put("orderId", orderId);
+		//使用ECPay建立付款頁面的方法 兩個參數分別是訂單物件跟發票物件 不開發票第二個就傳null
+		String form = all.aioCheckOut(aco, null); 
+//		System.out.println(form);
 		result.put("form", form);
-		paymentCountdown(orderId);
+		session.setAttribute("orderId", orderId); 
+		paymentCountdown(orderId); //呼叫結帳倒數計時
 		return result;
 	}
 
@@ -276,14 +276,17 @@ public class OrdersService {
 	}
 
 	
-
-	public Map<String, Object> checkPayment(Integer orderId) {
+	//前端的驗證付款結果用的方法
+	public Map<String, Object> checkPayment(HttpSession session) {
+		Integer orderId = (Integer) session.getAttribute("orderId");
 		OrdersVO ordersVO = ordersRepository.findByOrderId(orderId);
+		
 		Map<String, Object> result = new HashMap<>();
 		if (ordersVO == null) {
 			return result;
 		}
-
+		//上面調出訂單物件後，比對訂單物件的狀態 確認是否已付款，以及如果付款了並且使用點數+現金 則把使用者的點數歸0
+		//如果用點數+現金代表他點數一定不夠支付整筆訂單費用，所以不可能剩點數
 		if (ordersVO.getStatus().equals(1)) {
 			result.put("pay", "1");
 			if (ordersVO.getPayMethod().equals(2)) {
@@ -294,14 +297,15 @@ public class OrdersService {
 		}
 		String timeslot = ordersVO.getSchedule().getTimeslot();
 		Integer apptTime = 0;
+		//用迴圈索引的方式找第一個不是0的數，藉此來辨別這個班表的起始預約時間是幾點
 		for (int i = 0; i < timeslot.length(); i++) {
 			if (timeslot.charAt(i) != '0') {
-				apptTime = i + 1;
+				apptTime = i;
 				break; // 找到後就跳出迴圈
 			}
 		}
 		PetVO petVO = ordersVO.getPet().get(0).getPet();
-
+		//建立訂單檢視的物件
 		OrderViewDTO orderViewDTO = new OrderViewDTO(ordersVO.getSchedule().getDate(), apptTime,
 				ordersVO.getOnLocation(), ordersVO.getOffLocation(), ordersVO.getStaff().getStaffName(),
 				ordersVO.getStaff().getStaffPhone(), ordersVO.getMember().getMemName(),
@@ -312,11 +316,10 @@ public class OrdersService {
 		return result;
 	}
 
-	public String getAmoute(String origin, String destination) {
-		final String API_KEY = "AIzaSyAJ4YeUWLDhM530z0_jUFfzYvSsQx_GVaU";
+	public String getAmoute(String origin, String destination, HttpSession session) {
 		final String ROUTES_API_URL = "https://routes.googleapis.com/directions/v2:computeRoutes";
-		final Integer STARTPRICE = 100;
-		final Integer PRICEPERKM = 50;
+		final Integer STARTPRICE = 100; //起跳價
+		final Integer PRICEPERKM = 50;	//每公里價格
 		Integer amoute = null;
 		// 去除前面的數字 避免郵遞區號影響範圍判斷
 		origin = origin.replaceFirst("^\\d+", "").trim();
@@ -326,8 +329,6 @@ public class OrdersService {
 				|| !(destination.startsWith("新北市") || destination.startsWith("台北市"))) {
 			return "OutOfRange";
 		}
-		System.out.println(API_KEY);
-		System.out.println(googleMapApiKey);
 		// 把地址資料塞req，並且將模式設定成開車
 		Map<String, Object> reqToRoutes = new HashMap<>();
 		reqToRoutes.put("origin", Map.of("address", origin));
@@ -357,7 +358,8 @@ public class OrdersService {
 			amoute = (int) Math.round(distance * PRICEPERKM + STARTPRICE);
 			System.out.println("距離" + distance);
 		}
-		System.out.println("金額" + amoute);
+		System.out.println("金額" + amoute.getClass());
+		session.setAttribute("amoute", amoute);
 		return amoute.toString();
 	}
 
