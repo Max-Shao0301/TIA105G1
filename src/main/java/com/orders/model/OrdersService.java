@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -38,6 +39,7 @@ import com.pet.model.PetRepository;
 import com.pet.model.PetVO;
 import com.schedule.model.ScheduleRepository;
 import com.schedule.model.ScheduleVO;
+import com.springbootmail.MailService;
 import com.staff.model.StaffRepository;
 
 import jakarta.servlet.http.HttpSession;
@@ -63,6 +65,9 @@ public class OrdersService {
 
 	@Autowired
 	PetRepository petRepository;
+	
+	@Autowired
+	MailService mailService;
 
 	@Value("${google.maps.api.key}")
 	private  String  googleMapApiKey;
@@ -96,7 +101,31 @@ public class OrdersService {
 	public List<OrdersVO> getAll() {
 		return ordersRepository.findAll();// 方法都不是自己寫的!(要先測試!)
 	}
-
+	
+	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);//設定任務的執行池數量
+    private final ConcurrentHashMap<Integer, ScheduledFuture<?>> tradeNoMap = new ConcurrentHashMap<>(); //儲存任務用
+	//計時十分鐘，如果超過十分鐘未付款則視為訂單取消
+    public void paymentCountdown(Integer orderId) {
+		Runnable nonPayment = () -> {  //超過十分鐘時所要執行的任務
+	    	System.out.println(orderId + "未付款");
+			Integer schId = ordersRepository.findById(orderId).orElse(null).getSchedule().getSchId();
+			scheduleRepository.updateUnbooked(schId);
+			ordersRepository.updateOrderStatus(0, orderId);
+			tradeNoMap.remove(orderId);//執行完後把orderId對應的任務從map中移除
+	    };
+	  //使用ScheduledFuture設定十分鐘後執行任務
+	    ScheduledFuture<?> take = scheduler.schedule(nonPayment, 10, TimeUnit.MINUTES); 
+	    tradeNoMap.put(orderId, take); //用orderId當作key將任務儲存至map中
+        System.out.println("計時開始 orderId = " + orderId);
+	}
+    public void stopPaymentCountdown(Integer orderId) {
+        ScheduledFuture<?> take = tradeNoMap.get(orderId);
+        if (take != null) {
+        	take.cancel(true);  // 取消計時器的排程任務
+            tradeNoMap.remove(orderId); // 把orderId對應的任務從map中移除
+            System.out.println("確認付款 取消任務，orderId = " + orderId);
+        }
+    }
 	@Transactional
 	public Map<String, Object> addOrders(CheckoutOrderDTO checkoutOrderDTO, Integer memId, Integer checkoutAamount) {
 		Map<String, Object> result = new HashMap<>();
@@ -163,7 +192,7 @@ public class OrdersService {
 		ordersVO.setPayment(checkoutOrderDTO.getPayment());
 		ordersVO.setPayMethod(payMethood);
 		ordersVO.setNotes(checkoutOrderDTO.getNotes());
-		ordersVO.setStatus(1);
+		ordersVO.setStatus(3);
 		ordersVO = ordersRepository.save(ordersVO);
 
 		result.put("orderId", ordersVO.getOrderId());
@@ -194,7 +223,7 @@ public class OrdersService {
 		aco.setTradeDesc(des); // 交易描述
 		aco.setItemName("Pet Taxi"); // 商品名稱
 		aco.setNeedExtraPaidInfo("Y"); // 額外資訊
-		aco.setReturnURL("https://8377-124-218-108-244.ngrok-free.app/ecpayReturn"); // 付款結果通知 應為商家的controller
+		aco.setReturnURL("https://5d81-124-218-108-244.ngrok-free.app/ecpayReturn"); // 付款結果通知 應為商家的controller
 		// aco.setOrderResultURL(""); //付款完成後的結果參數 傳至前端用的
 		aco.setClientBackURL("http://localhost:8080/appointment/paymentResults"); // 付完錢後的返回商店按鈕會到的網址
 
@@ -204,7 +233,7 @@ public class OrdersService {
 		result.put("schId", scheuleVO.getSchId());
 		result.put("orderId", orderId);
 		result.put("form", form);
-
+		paymentCountdown(orderId);
 		return result;
 	}
 
@@ -212,7 +241,7 @@ public class OrdersService {
 	public void checkECPayReq(String reqBody) {
 		String[] strArr = reqBody.split("&");
 		Hashtable<String, String> ECPayReq = new Hashtable<>();
-
+		
 		for (String str : strArr) {
 			String[] keyValue = str.split("=", 2);
 			String key = keyValue[0];
@@ -221,15 +250,18 @@ public class OrdersService {
 		}
 		Integer orderId = Integer.valueOf(ECPayReq.get("MerchantTradeNo").substring(1, 3));
 		System.out.println("訂單編號" + orderId);
-
+		String email = ordersRepository.findById(orderId).orElseGet(null).getMember().getMemEmail();
 		AllInOne aio = new AllInOne("");
 		// 檢查是否為ECPay回傳的資料
 		if (aio.compareCheckMacValue(ECPayReq)) {
 			System.out.println("比對通過");
 			if ("1".equals(ECPayReq.get("RtnCode"))) {
 				System.out.println("已付款");
-//				System.out.println(schId);
-//				scheduleRepository.updateUnbooked(schId);
+				ordersRepository.updateOrderStatus(1, orderId);
+				stopPaymentCountdown(orderId);
+			    String subject = "寵愛牠註冊會員";
+			    String content = "訂單預約完成，請再多加留意預約時間";
+			    mailService.sendPlainText(Collections.singleton(email), subject, content);
 			} else {
 				// 收到的不是付款成功通知時 更改訂單狀態、修改該員工班表
 				Integer schId = ordersRepository.findById(orderId).orElse(null).getSchedule().getSchId();
@@ -242,49 +274,7 @@ public class OrdersService {
 		}
 	}
 
-	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);
-
-	public void startCheckECPayOrder(String tradeNo, Integer schId, Integer orderId) {
-		final ScheduledFuture<?>[] scheduledFuture = new ScheduledFuture[1]; // 使用陣列來包裝，使它可被修改
-		final ConcurrentHashMap<String, Integer> tradeNoCountMap = new ConcurrentHashMap<>(); // 用於存儲每個 tradeNo 的計數器
-		tradeNoCountMap.putIfAbsent(tradeNo, 0);
-		
-		scheduledFuture[0] = scheduler.scheduleAtFixedRate(() -> {
-			 // 每次執行時更新對應的 tradeNo 的計數器
-            int currentCount = tradeNoCountMap.get(tradeNo);
-            tradeNoCountMap.put(tradeNo, currentCount + 1); // 增加次數
-			AllInOne all = new AllInOne("");
-			QueryTradeInfoObj queryTradeInfoObj = new QueryTradeInfoObj();
-
-			String MerchantID = "3002607";
-			queryTradeInfoObj.setMerchantID(MerchantID); // 設定商戶ID
-			queryTradeInfoObj.setMerchantTradeNo(tradeNo);
-
-			String result = all.queryTradeInfo(queryTradeInfoObj);
-			System.out.println("查詢結果: " + result);
-
-			String[] strArr = result.split("&");
-			Hashtable<String, String> ECPayReq = new Hashtable<>();
-
-			for (String str : strArr) {
-				String[] keyValue = str.split("=", 2);
-				String key = keyValue[0];
-				String Value = keyValue.length > 1 ? keyValue[1] : "";
-				ECPayReq.put(key, Value);
-			}
-			String TradeStatus = ECPayReq.get("TradeStatus");
-			System.out.println("第" + currentCount + "次執行:TradeStatus = " + ECPayReq.get("TradeStatus"));
-			if ("1".equals(TradeStatus)) {
-				scheduledFuture[0].cancel(false);
-				return;
-			}
-			 if (!"0".equals(TradeStatus) || currentCount >= 6) {
-				scheduleRepository.updateUnbooked(schId);
-				ordersRepository.updateOrderStatus(0, orderId);
-				scheduledFuture[0].cancel(false);
-			}
-		}, 2, 5, TimeUnit.MINUTES); //設定首次執行時延遲兩分鐘 後續每五分鐘執行一次一共執行六次
-	}
+	
 
 	public Map<String, Object> checkPayment(Integer orderId) {
 		OrdersVO ordersVO = ordersRepository.findByOrderId(orderId);

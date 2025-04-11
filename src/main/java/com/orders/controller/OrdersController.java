@@ -62,10 +62,8 @@ public class OrdersController {
 	}
 
 	@PostMapping("/appointment/getMemInfo")
-	public ResponseEntity<MemberDTO> getMemInfo(@RequestBody Map<String, Integer> reqBody, HttpSession session) {
-		Integer memId = reqBody.get("memId");
-
-		session.setAttribute("memId", memId); // 模擬登入成功
+	public ResponseEntity<MemberDTO> getMemInfo(HttpSession session) {
+		Integer memId = (Integer) session.getAttribute("memId"); // 模擬登入成功
 		MemberDTO memberDTO = memberService.getMemberDTO(memId);
 
 		return ResponseEntity.ok(memberDTO);
@@ -75,7 +73,11 @@ public class OrdersController {
 	public String paymentResults() {
 		return "/front-end/paymentResults";
 	}
-
+	@GetMapping("/appointment") 
+	public String getAppointnetn() {
+		return "/front-end/appointment";
+	}
+	
 	@PostMapping("/appointment/postCheckout")
 	public ResponseEntity<Map<String, Object>> postCheckout(@Valid @RequestBody CheckoutOrderDTO checkoutOrderDTO,
 			HttpSession session) {
@@ -92,21 +94,11 @@ public class OrdersController {
 			response.put("error", result.get("error"));
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
-
-
 		//免費訂單
-
 		if ("true".equals(result.get("freeOrder"))) {
 			response.put("NoPayment", "http://localhost:8080/appointment/paymentResults");
 			return ResponseEntity.ok(response);
 		}
-		
-		String tradeNo =(String) result.get("tradeNo");
-		Integer schId = (Integer) result.get("schId");
-		Integer orderId = (Integer) result.get("orderId");
-		ordersService.startCheckECPayOrder(tradeNo, schId, orderId);
-		
-		
 		response.put("ECPay", result.get("form"));
 		return ResponseEntity.ok(response);
 	}

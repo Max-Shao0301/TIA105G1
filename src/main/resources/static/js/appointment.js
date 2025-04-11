@@ -13,7 +13,7 @@ const documentHeight = document.documentElement.scrollHeight;
 //使用者的會員ID
 let memberId;
 // 當前畫面頁數
-let currenStep = 0;
+let currenStep = 1;
 //訂單資料
 const order = {
 	apptTime:{},
@@ -120,23 +120,18 @@ let petInformation =`
 				<label for="savedPets" class="question_title">選擇已儲存的毛小孩</label>
 				<select id="savedPets" class="question_input">
 					<option id="noPet"value="noPet">未選擇</option>
-					
 				</select>
 			</div>
 			<div class="q_div" id="q2">
 				<span class="question_title">毛小孩類別</span>
-				<div id="petType">
 				<label><input type="radio" id="typeCat" name="petType" value="cat"> 貓</label>
 				<label><input type="radio" id="typeDog" name="petType" value="dog"> 狗</label>
-				</div>
 			</div>
 	
 			<div class="q_div" id="q3">
 				<span class="question_title">毛小孩性別</span>
-				<div id="petGender">
 				<label><input type="radio" id="genderM" name="petGender" value="1"> 公</label>
 				<label><input type="radio" id="genderF" name="petGender" value="2"> 母</label>
-				</div>
 			</div>
 			<div class="q_div" id="q4">
 				<label for="petName" class="question_title">毛小孩大名</label>
@@ -156,11 +151,10 @@ let petInformation =`
 				<button class="page_break" id="nextPage">下一步</button>
 			</div>
 			<div class="none" id="lightbox">
-				<article id="petInfo_Art">
+				<article id="lightboxMes">
 					<button class="close_card_btn">&times;</button>
 					<div >
-						<button type="button" id="no" class="petInfo_btn">否</button>
-						<button type="button" id="yes" class="petInfo_btn">是</button>
+						<button type="button" id="Yes" class="check_btn">確認</button>
 					</div>
 				</article>
 			</div>`
@@ -246,15 +240,14 @@ let confirmation =`
 
 
 //到時候要刪掉的，取得測試會員ID  刪掉
-let setMember=`
-			<label for="memberId" class="selection">輸入測試的會員ID</label>
-			<input type="text" id="memberId"  placeholder="輸入測試的會員ID" required>
-			<button class="page_break" id="nextPage">下一步</button>`
-function getMemberId(){
-	memberId = $('#memberId').val();
-	// console.log(memberId);
-}
-
+// let setMember=`
+// 			<label for="memberId" class="selection">輸入測試的會員ID</label>
+// 			<input type="text" id="memberId"  placeholder="輸入測試的會員ID" required>
+// 			<button class="page_break" id="nextPage">下一步</button>`
+// function getMemberId(){
+// 	memberId = $('#memberId').val();
+// 	// console.log(memberId);
+// }
 async function getMemInfo(){
 	let getMemInfo_URL = `http://localhost:8080/appointment/getMemInfo`;
     try{
@@ -263,9 +256,10 @@ async function getMemInfo(){
 			headers: {
 				"Content-Type": "application/json"
 			},
-			body: JSON.stringify({memId:memberId})
+			// body: JSON.stringify({memId:memberId})
 		});
 		let data =await res.json();
+		memberId = data.memId;
 		// console.log(data);
 		// console.log(data.memName);
 		
@@ -369,8 +363,6 @@ function calculateRoute() {
 			$('#driveDistance').text(`${driveDistance}`)
 			$('#driveTime').text(`${driveTime}`)
 			$('#amoute').text(`${amoute} 元`)
-		} else {
-			errorLightBox(`<p>無法計算路線，請確認地址是否正確！</p>`);
 		}
 	});
 }
@@ -507,7 +499,7 @@ async function getCan_Work_Staff(){
 		}
 		if(!res.ok){
 			if ( data.status == 400) {
-				errorLightBox(`<p>請輸入正確的日期格式</p>`)
+				errorLightBox(`<p>僅能預約今日之後的日期<br>並請確認日期格式</p>`)
 			}
 			// console.log(data.errors[0].defaultMessage);
 			// console.log('-2');
@@ -771,7 +763,7 @@ function petInfoLightBox(text){
 		$('article').children('p').remove();
 		$(this).removeClass('check_btn');
 	});
-	$('#lightbox > article').off('click').on('click',function(e){
+	$('#lightbox > article').off('click').on('click',function(){
 		e.stopPropagation();
 	})
 	$('.close_card_btn').off('click').on('click',function(){
@@ -1008,8 +1000,9 @@ function changePage (){
 
 // 個別頁面的js註冊事件
 function step1_js(){
+	getMemInfo();
 	time_menu();
-	$( function() {
+	$(function() {
 		$("#date_picker" ).datepicker();
 		$('#date_picker').datepicker('option','showAnim','slideDown');
 		$('#date_picker').datepicker('option', 'minDate', 0);
@@ -1099,7 +1092,7 @@ function step5_js(){
 	setOrder();
 	$('#payment').on('click', function(){
 		$('article').children('p').remove();
-		$('#lightboxMes').prepend(`<p>請於三十分鐘內付款完畢否則將視為取消訂單<br>若不慎關閉付款頁面請重新下單</p>`);
+		$('#lightboxMes').prepend(`<p>請於十分鐘內付款完畢否則將視為取消訂單<br>若不慎關閉付款頁面請重新下單</p>`);
 		$('#lightbox').removeClass('none');
 		$("#lightbox").off('click').on('click',function(){
 			$("#lightbox").addClass("none");

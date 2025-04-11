@@ -41,7 +41,7 @@ let checkPayment =  setInterval(async function(){
 		console.log(data);
         order = data.order;
         console.log(order);
-        if(data){
+        if(order!= undefined){
             clearInterval(checkPayment);
             orderHtml=`<h2 class="title">預約結果</h2>
                 <div class="order_info">
@@ -76,6 +76,8 @@ let checkPayment =  setInterval(async function(){
 					</article>
 				</div>`;
         $(".body_text").append(orderHtml);
+        }else{
+            window.location.href ="http://localhost:8080/appointment";
         }
         count++;
 		if(data.pay == '1'){
@@ -85,7 +87,7 @@ let checkPayment =  setInterval(async function(){
             resultLightBox(`<p>付款失敗<br>請返回預約頁面重新下單</p>`);;
 		}
 
-        if (count >= 10) {
+        if (count >= 5) {
             clearInterval(intervalId);
         }
     }catch(error){
