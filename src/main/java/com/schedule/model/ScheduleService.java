@@ -20,10 +20,17 @@ public class ScheduleService {
 	ScheduleRepository repository;
 
 	@Transactional
-	public void addSchedule(ScheduleVO scheduleVO) {
+	public boolean addSchedule(ScheduleVO scheduleVO) {
 		if(repository.checkScheduleUnique(scheduleVO.getStaffVO().getStaffId(), scheduleVO.getDate(), scheduleVO.getTimeslot())<=0) {
+			
 			scheduleVO.setStatus(Status.open.getNumber());
 			repository.save(scheduleVO);
+			return true;
+			
+		}else {
+			
+			return false;
+			
 		}
 	}
 
@@ -53,7 +60,7 @@ public class ScheduleService {
 
 	public List<ScheduleVO> getScheduleByStaff(Integer staffId) {
 		return repository.findByStaffOn(staffId);
-  }
+	}
  
   
 	public List<StaffScheduleDTO> findByBookableStaff(LocalDate date,Integer apptttime ){

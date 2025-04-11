@@ -1,0 +1,247 @@
+body {
+           font-family: 'Noto Sans TC', sans-serif;
+           background-color: #f8f9fa;
+           padding-top: 70px;
+           margin: 0;
+           color: #333;
+       }
+
+       .container,
+       .container-fluid {
+           max-width: 95%;
+           margin-left: auto;
+           margin-right: auto;
+       }
+
+       nav.navbar {
+           background-color: #5c6bc0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-brand img {
+    margin-right: 10px;
+}
+
+.navbar-text,
+.nav-link {
+    color: white !important;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.btn-primary {
+    width: 100%;
+    background-color: #5c6bc0;
+    border-color: #5c6bc0;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #3f51b5;
+    border-color: #3f51b5;
+}
+
+.form-inline .form-group {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.form-inline .form-group:last-child {
+    margin-right: 0;
+}
+
+.form-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+@media (max-width: 576px) {
+    .form-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+#scheduleTable,
+#data-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+}
+
+#scheduleTable th,
+#scheduleTable td,
+#data-table th,
+#data-table td {
+    padding: 1rem;
+    white-space: nowrap;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#data-table thead.table-bordered th {
+    color: #ffffff !important;
+    background-color: #5c6bc0 !important;
+    text-align: center;
+}
+
+.th-font {
+    background-color: #5c6bc0 !important;
+    border-radius: 100px;
+    padding: 5px 20px;
+    display: inline-block;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+hr {
+    border: 0.5px solid #ddd !important;
+    margin: 10px 0;
+}
+
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 576px) {
+    #scheduleTable th,
+    #scheduleTable td,
+    #data-table th,
+    #data-table td {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+    }
+
+    .th-font {
+        padding: 4px 12px;
+        font-size: 0.9rem;
+    }
+
+    hr {
+        margin: 5px;
+    }
+
+    .navbar-nav .nav-item {
+        margin-left: 5px;
+        margin-right: 5px;
+    }
+}
+
+.delete {
+    background: none;
+    border: none;
+    color: red;
+}
+
+/* 彈窗樣式 */
+.modal-content {
+    border-radius: 10px;
+    border: none;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background-color: #5c6bc0;
+    color: #ffffff;
+    border-bottom: 1px solid #dee2e6;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.modal-title {
+    font-weight: bold;
+}
+
+.modal-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.modal-footer {
+    border-top: 1px solid #dee2e6;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+/* 寵物彈窗 */
+#petInfoModalBody {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.pet-info-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    color: #333;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.pet-info-label {
+    font-weight: bold;
+    margin-right: 5px;
+    white-space: nowrap;
+    width: 50px;
+    text-align: left;
+}
+
+.pet-info-value {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.pet-info-modal-title {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #444;
+    margin-bottom: 0.5em;
+}
+
+/* 星星圖示樣式 */
+.star-icon {
+    color: gold;
+    font-size: 1.2em;
+    margin-right: 2px;
+}
+
+.empty-star {
+    color: #ddd;
+}
+
+.upload-button {
+    background-color: #5c6bc0;
+    border-color: #5c6bc0;
+    color: #ffffff;
+    border-radius: 5px;
+}
