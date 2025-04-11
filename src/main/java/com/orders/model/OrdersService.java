@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Hashtable;
@@ -22,6 +23,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import jakarta.transaction.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.ecpay.payment.integration.AllInOne;
@@ -44,6 +46,7 @@ import com.staff.model.StaffRepository;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
+
 
 @Service("orderService")
 public class OrdersService {
@@ -90,6 +93,83 @@ public class OrdersService {
 		Optional<OrdersVO> optional = ordersRepository.findById(orderId);
 		return optional.orElse(null);
 	}
+	
+	//只查該服務人員的訂單
+	public List<OrdersVO> getstaffOrder(Integer staffId) {
+	    List<Object[]> results = ordersRepository.findByStaff(staffId);
+	    Map<Integer, OrdersVO> ordersMap = new HashMap<>();
+
+	    for (Object[] result : results) {
+
+	        int orderIdIndex = 0;
+	        int onLocationIndex = 1;
+	        int offLocationIndex = 2;
+	        int paymentIndex = 3;
+	        int notesIndex = 4;
+	        int statusIndex = 5;
+	        int starIndex = 6;
+	        int ratingIndex = 7;
+	        int pictureIndex = 8;
+	        int petTypeIndex = 9;
+	        int petNameIndex = 10;
+	        int petGenderIndex = 11;
+	        int petWeightIndex = 12;
+	        int scheduleTimeslotIndex = 13;
+	        int scheduleDateIndex = 14;
+	        int memberPhoneIndex = 15;
+
+	        Integer orderId = (Integer) result[orderIdIndex];
+	        OrdersVO order = ordersMap.get(orderId);
+	        if (order == null) {
+	            order = new OrdersVO();
+	            order.setOrderId(orderId);
+	            order.setOnLocation((String) result[onLocationIndex]);
+	            order.setOffLocation((String) result[offLocationIndex]);
+	            order.setPayment((Integer) result[paymentIndex]);
+	            order.setNotes((String) result[notesIndex]);
+	            order.setStatus((Integer) result[statusIndex]);
+	            order.setStar((Integer) result[starIndex]);
+	            order.setRating((String) result[ratingIndex]);
+	            order.setPicture((byte[]) result[pictureIndex]);
+	            order.setPet(new ArrayList<>());
+	            order.setSchedule(new ScheduleVO());
+	            order.setMember(new MemberVO());
+
+	            // ScheduleVO的部分
+	            if (result[scheduleTimeslotIndex] != null) {
+	                order.getSchedule().setTimeslot((String) result[scheduleTimeslotIndex]);
+	            }
+	            if (result[scheduleDateIndex] != null) {
+	                java.sql.Timestamp timestamp = (java.sql.Timestamp) result[scheduleDateIndex];
+	                order.getSchedule().setDate(timestamp.toLocalDateTime().toLocalDate());
+	            }
+
+	            // MemberVO的部分
+	            if (result[memberPhoneIndex] != null) {
+	                order.getMember().setMemPhone((String) result[memberPhoneIndex]);
+	            }
+
+	            ordersMap.put(orderId, order);
+	        }
+
+	        PetVO petVO = new PetVO();
+	        petVO.setType((String) result[petTypeIndex]);
+	        petVO.setPetName((String) result[petNameIndex]);
+	        petVO.setPetGender((Integer) result[petGenderIndex]);
+	        petVO.setWeight((Integer) result[petWeightIndex]);
+
+	        OrderPetVO orderPet = new OrderPetVO();
+	        orderPet.setOrders(order);
+	        orderPet.setPet(petVO);
+
+	        order.getPet().add(orderPet);
+	        
+	    }
+
+	    return new ArrayList<>(ordersMap.values());
+	    
+	}
+
 
 	// 用會員標號查詢訂單
 	public List<OrdersVO> getOrderByMemId(Integer memId) {
