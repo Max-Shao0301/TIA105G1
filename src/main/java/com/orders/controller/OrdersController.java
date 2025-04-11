@@ -63,8 +63,7 @@ public class OrdersController {
 
 	@PostMapping("/appointment/getMemInfo")
 	public ResponseEntity<MemberDTO> getMemInfo(HttpSession session) {
-		Integer memId = (Integer) session.getAttribute("memId"); // 模擬登入成功
-		MemberDTO memberDTO = memberService.getMemberDTO(memId);
+		MemberDTO memberDTO = memberService.getMemberDTO(session);
 
 		return ResponseEntity.ok(memberDTO);
 	}
@@ -82,13 +81,8 @@ public class OrdersController {
 	public ResponseEntity<Map<String, Object>> postCheckout(@Valid @RequestBody CheckoutOrderDTO checkoutOrderDTO,
 			HttpSession session) {
 		Map<String, Object> response = new HashMap<>();
-		Integer memId = (Integer) session.getAttribute("memId");
-		String amouteStr = (String) session.getAttribute("amoute");
-		Integer amoute = Integer.parseInt(amouteStr);
+		Map result = ordersService.addOrders(checkoutOrderDTO, session);
 		
-		Map result = ordersService.addOrders(checkoutOrderDTO, memId, amoute);
-		
-		session.setAttribute("orderId", result.get("orderId"));
 
 		if (result.get("error") != null) {
 			response.put("error", result.get("error"));
@@ -122,8 +116,7 @@ public class OrdersController {
 
 	@GetMapping("/appointment/checkPayment")
 	public ResponseEntity<Map<String, Object>> cehckPayment(HttpSession session) {
-		Integer orderId = (Integer) session.getAttribute("orderId");
-		Map result = ordersService.checkPayment(orderId);
+		Map result = ordersService.checkPayment(session);
 
 		return ResponseEntity.ok(result);
 	}
@@ -131,14 +124,10 @@ public class OrdersController {
 	@GetMapping("/appointment/calculateAmoute")
 
 	public ResponseEntity<String> getAmoute(@RequestParam String origin, @RequestParam String destination, HttpSession session) throws Exception{
-		String result = ordersService.getAmoute(origin, destination);
+		String result = ordersService.getAmoute(origin, destination, session);
 		if ("OutOfRange".equals(result)) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OutOfRange");
 		}
-
-		session.setAttribute("amoute", result);
-
-
 		return ResponseEntity.ok(result);
 	}
 

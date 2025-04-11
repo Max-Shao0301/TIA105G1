@@ -122,7 +122,8 @@ public class MemberService {
 //		}
 	}
 
-	public MemberDTO getMemberDTO(Integer memId) {
+	public MemberDTO getMemberDTO(HttpSession session) {
+		Integer memId = (Integer) session.getAttribute("memId");
 		MemberVO memberVO = memberRepository.findById(memId).orElse(null);
 		MemberDTO memberDTO = new MemberDTO();
 
