@@ -11,10 +11,4 @@ public class OrderPetController {
 	
 	@Autowired
 	private OrderPetService orderPetService;
-	
-	@GetMapping("/appointment") //暫時測試用
-	public String getAppointnetn() {
-		
-		return "/front-end/appointment";
-	}
 }
