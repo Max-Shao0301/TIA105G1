@@ -41,8 +41,8 @@ public class MemberService {
 		member.setMemEmail(memberDTO.getMemEmail());
 		member.setMemName(memberDTO.getMemName());
 		member.setMemPhone(memberDTO.getMemPhone());
-//		member.setMemPassword(passwordEncoder.encode(memberDTO.getMemPassword())); //雜湊密碼加密
-		member.setMemPassword(memberDTO.getMemPassword());//明碼保存
+		member.setMemPassword(passwordEncoder.encode(memberDTO.getMemPassword())); //雜湊密碼加密
+//		member.setMemPassword(memberDTO.getMemPassword());//明碼保存
 		member.setAddress(memAddress);
 		memberRepository.save(member);
 		session.setAttribute("memId", member.getMemId());
