@@ -4,9 +4,13 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +32,10 @@ public class StaffController {
 
     @Autowired
     private StaffService staffService;
-    
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     private OrdersService ordersService;
     
@@ -53,9 +60,25 @@ public class StaffController {
     @PostMapping("/staff/login")
     public String staffLogin(@RequestParam("staffEmail") String staffEmail,
                              @RequestParam("staffPassword") String staffPassword,
+
                              Model model, HttpSession session, HttpServletRequest request) {
     	
         StaffVO staffVO = staffService.getOneStaff(staffEmail,staffPassword);
+
+                             HttpSession session) {
+
+        StaffVO staffVO = staffService.getOneStaff(staffEmail, staffPassword);
+
+        //比對雜湊登入
+//        StaffVO staffVO = staffService.getOneStaff(staffEmail);
+//        if (staffVO != null && passwordEncoder.matches(staffPassword, staffVO.getStaffPassword())) {
+//            session.setAttribute("staffName", staffVO.getStaffName());
+//            session.setAttribute("staffId", staffVO.getStaffId());
+//            return "redirect:/staff/home";
+//        } else {
+//            return "/back-end/staff/login";
+//        }
+
 
         if (staffVO != null && staffVO.getStaffPassword().equals(staffPassword)) {
         	
@@ -67,8 +90,12 @@ public class StaffController {
             
         } else {
         	
+
         	model.addAttribute("error", "帳號或密碼錯誤"); 
             return "/back-end/staff/login"; 
+
+            return "/staff/login";
+
             
         }
         

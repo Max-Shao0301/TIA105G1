@@ -27,4 +27,8 @@ public interface MemberRepository extends JpaRepository<MemberVO, Integer>{
 	@Query(value="UPDATE member SET point = ?1 WHERE mem_id =?2;", nativeQuery = true)
 	void updatePoint(Integer point, Integer memId);
 	
+	@Query(value="SELECT * FROM member WHERE mem_phone = :phone", nativeQuery = true)
+	MemberVO findByMemPhone(@Param("phone") String phone);
+	
+
 }

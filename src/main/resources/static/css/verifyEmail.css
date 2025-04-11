@@ -1,0 +1,148 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+  body::before {
+    content: "";
+    position: fixed; /* 讓背景不隨滾動 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/jointaxi.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.15; /* 設定透明度 */
+    z-index: -1; /* 讓背景圖片不影響內容 */
+}
+/* 主要區塊 */
+.reset-password-container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 450px;
+  text-align: center;
+}
+
+/* 標題與描述 */
+img {
+  width: 350px;
+}
+h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 10px;
+}
+.info-text {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* 表單排版 */
+.verify-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.verify-group {
+  flex: 1;
+}
+
+.verify-group label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  color: #333;
+ display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  font-weight: bold;
+  margin:10px 0;
+}
+.verify-group input {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+}
+
+/* 按鈕 */
+.btn {
+  background-color: #335288;
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.3s ease;
+  margin-top: 45px;
+}
+
+.btn:hover {
+  background-color: #243a60;
+  color: #fff;
+}
+
+.btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* 錯誤提示 */
+.wrong {
+
+  font-size: 14px;
+  margin-bottom: 4px;
+
+}
+.label-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; 
+  margin-bottom: 4px;
+  font-weight: bold;
+}
+
+.label-row label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.label-row .wrong {
+  font-size: 14px;
+}
+
+
+.orangetitle {
+  width: 150px;
+  background-color: #df6840;
+  border-radius: 30px;
+  margin: 10px auto;  /* ← auto 讓它水平置中 */
+  font-weight: bold;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+}

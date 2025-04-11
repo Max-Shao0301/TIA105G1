@@ -61,6 +61,12 @@ public class StaffService {
 		return optional.orElse(null);
 	}
 
+	//比對雜湊登入
+	public StaffVO getOneStaff(String email) {
+		Optional<StaffVO> optional = repository.findByEmail(email);
+		return optional.orElse(null);
+	}
+
 	public List<StaffVO> getAll() {
 		return repository.findAll();
 	}

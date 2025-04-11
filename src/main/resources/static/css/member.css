@@ -49,6 +49,7 @@ h2 {
   cursor: pointer;
   transition: background-color 0.3s ease;
   height: 36px;
+  margin-left:1px;
 }
 
 .button2 {
@@ -62,7 +63,7 @@ h2 {
   transition: background-color 0.3s ease;
   margin: 10px;
   height: 36px;
-  margin-left: 428px;
+  margin-left: 417px;
 }
 
 .button:hover {
@@ -101,7 +102,7 @@ body {
 }
 
 .breadcrumbs {
-	background-image: url('/images/cutcat.jpg');
+	background-image: url('/images/cutecat.jpg');
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -310,7 +311,7 @@ table{
 }
 .infront1{
   /* border: 1px solid black; */
-  background-color:#335288;
+  background-color:#406384;
   color: #ffffff;
   margin: 3px;
   border-radius: 50px;
@@ -331,7 +332,7 @@ table{
   text-align: center;
   align-items: bottom;
   display: inline-block;
-  width: 30%;
+  width: 30.2%;
 }
 
 .value2{
@@ -383,7 +384,7 @@ body::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('/images/cutcat.jpg'); 
+  background-image: url('/images/cutecat.jpg'); 
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -394,4 +395,150 @@ body::before {
   width: 100%;
   border-collapse: collapse;
   margin:20px 0 20px 0;
+}
+
+#logout-confirm-popup {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#logout-confirm-box {
+  background: #fff;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+.logout-btn-group {
+  margin-top: 20px;
+}
+
+.logout-btn-group .btn {
+  padding: 8px 20px;
+  margin: 0 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.logout-btn-group .btn-yes {
+  background-color: #df6840;
+  color: white;
+    padding: 10px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+
+.logout-btn-group .btn-no {
+  background-color: #c1c2c3;
+  color: white;
+    padding: 10px 25px;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  font-size: 16px;
+}
+
+.btn-no:hover {
+  background-color: #626364 !important;
+}
+
+.btn-yes:hover {
+  background-color: #cd421c !important;
+}.member-info {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 80px 200px 80px 200px auto;
+    row-gap: 12px;
+    column-gap: 10px;
+    align-items: center;
+}
+
+/* 標籤欄 */
+.label {
+    background-color: #4a6e73;
+    color: white;
+    text-align: center;
+    border-radius: 25px;
+    padding: 8px 12px;
+    font-weight: bold;
+}
+
+/* 輸入欄位（一般） */
+.value {
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 8px 16px;
+    color: #333;
+}
+
+/* 信箱與地址用長欄位（佔兩格） */
+.value-long {
+    grid-column: span 2;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 25px;
+    padding: 8px 16px;
+    color: #333;
+}
+
+/* 按鈕 */
+.button {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    background-color: #6a6a6a;
+    color: white;
+    white-space: nowrap;
+}
+.button:hover {
+    background-color: #555;
+}
+
+/* 空格欄 */
+.spacer {
+    /* 留空不顯示東西 */
+}
+
+.button2 {
+    margin-left: 10px;
+    background-color: #f16745;
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    color: white;
+}
+ul.table li {
+    display: inline-block;
+    vertical-align: middle;
+}
+.button1, .logout-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    border: none;
+    background-color: #6a6a6a;
+    color: white;
+    margin-left: 10px;
+    margin-top: 5px;
+    vertical-align: middle;
+}
+
+.logout-btn {
+    background-color: #f16745; /* 登出按鈕特別色 */
+    margin-left:435px;
 }

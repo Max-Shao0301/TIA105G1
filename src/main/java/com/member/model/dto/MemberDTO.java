@@ -9,8 +9,7 @@ public class MemberDTO {
 
 	private Integer memId;
 
-	@NotBlank(message = "請填入信箱")
-	@Email(message = "請確認信箱格式")
+
 	private String memEmail;
 
 	@Size(min = 8, max = 16, message = "請填入8-16位數密碼")
@@ -19,7 +18,7 @@ public class MemberDTO {
 	@NotBlank(message = "請填入姓名")
 	private String memName;
 
-	@Pattern(regexp = "^09\\d{8}$", message = "請輸入有效的手機，例如：0912345678")
+	@Pattern(regexp = "^09\\d{8}$", message = "請輸入有效的手機號碼")
 	private String memPhone;
 
 	@NotBlank(message = "請填入詳細地址")

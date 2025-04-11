@@ -93,9 +93,10 @@
 					</div>
 					<div class="col-lg-6 col-md-7 col-12">
 						<!-- Top Contact -->
-						<ul class="top-contact">
-							<li><a href="/front-end/login"><i class="icofont-login"></i>會員登入</a></i></li>
-							<li></i><a href="/front-end/member"><i class="icofont-ui-user"></i>會員資料</a></li>
+<ul class="top-contact">
+							<li><i class="icofont-paw"></i>Hi,<span
+								th:text="${session.memName}"></span>!</li>
+							<li><a th:href="@{/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
 						</ul>
 						<!-- End Top Contact -->
 					</div>
@@ -111,7 +112,7 @@
 						<div class="col-lg-3 col-md-3 col-12">
 							<!-- Start Logo -->
 							<div class="logo">
-								<img src="/images/title.png" alt="#"></a>
+								<a th:href="@{/}"><img src="/images/title.png" alt="#"></a>
 							</div>
 							<!-- End Logo -->
 							<!-- Mobile Nav -->
@@ -124,10 +125,10 @@
 								
 								<nav class="navigation">
 									<ul class="nav menu">											
-										<li><a href="">關於我們</a></li>
-										<li><a href="/front-end/joinus">加入我們 </a></li>
+										<li><a href="/aboutUs">關於我們</a></li>
+										<li><a href="/joinus">加入我們 </a></li>
 										<li><a href="#">常見問題 </a></li>
-										<li><a href="/front-end/orderlist">訂單檢視 </a></li>
+										<li><a href="/orderList">訂單檢視 </a></li>
 										<li class="active"><a href="/">首頁</a>	
 									</ul>
 								</nav>
@@ -167,7 +168,7 @@
 		<!-- End Breadcrumbs -->
 	
 		<!-- Start Portfolio Details Area -->
-		<section class="pf-details section">
+		<section class="pf-details section" id="body">
 			<div class="body_text">
 				<!-- 裡面文字透過js傳入 -->
 			</div>
@@ -188,7 +189,6 @@
 									<p> 邵柏中
 										陳華宣
 										林珍妮
-										蔡富任
 										高逢廷</p>
 								<!-- Social -->
 								<ul class="social">
@@ -311,7 +311,7 @@
 		<script src="/vendors/jquery/datepicker-zh-TW.js"></script>
 
 		<script src="/js/add.js"></script>
-
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJ4YeUWLDhM530z0_jUFfzYvSsQx_GVaU&libraries=places&region=TW&language=zh-Tw"></script>
 		<script src="/js/appointment.js"></script>
     </body>  
 </html>

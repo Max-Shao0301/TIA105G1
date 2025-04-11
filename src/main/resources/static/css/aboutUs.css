@@ -1,0 +1,88 @@
+
+
+  .petcontainer1 {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  body::before {
+    content: "";
+    position: fixed; /* 讓背景不隨滾動 */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/images/fourdog.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    opacity: 0.2; /* 設定透明度 */
+    z-index: -1; /* 讓背景圖片不影響內容 */
+}
+
+.breadcrumbs {
+	background-image: url('/images/fourdog.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: relative;
+	padding: 120px 0px;
+}
+
+
+  .header h1 {
+    font-size: 28px;
+    color: #333333;
+    margin: 0;
+  }
+
+  .pet-icon {
+    font-size: 24px;
+    color: #335288;
+    margin-right: 10px;
+  }
+
+  h2 {
+    font-size: 24px;
+    color: #333333;
+    margin-top: 20px;
+    margin-bottom: 15px;
+  }
+
+ .team-section .card {
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease-in-out;
+  border: none;
+  background-color: #f6f5f0;
+  border-radius: 50px;
+}
+.team-section .card:hover {
+  transform: translateY(-5px);
+    background-color: #fff;
+
+}
+
+.py-5{
+	margin:30px;
+	  background-color: #C1B9AD;
+	  border-radius: 50px;
+}
+.mb-3 {
+    background-color: #ee8065; /* 綠色背景 */
+    color: white;              /* 文字白色 */
+    border-radius: 50px;
+    padding: 12px 36px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align: center;        /* ✅ 核心：讓內容在框裡置中 */
+}
+.text-muted {
+    padding: 9px 36px;
+    font-size: 20px;
+    color: #666 !important;;
+    line-height: 1.5;
+}

@@ -1,0 +1,189 @@
+.memcontainer {
+	background-color: #fffdfd;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	margin: 300px;
+	width: 600px;
+	margin: 0 auto;
+}
+
+body::before {
+	content: "";
+	position: fixed; /* 讓背景不隨滾動 */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url('/images/cutecat.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	opacity: 0.1; /* 設定透明度 */
+	z-index: -1; /* 讓背景圖片不影響內容 */
+}
+
+.form-group {
+	display: block;
+}
+
+.form-group label {
+	display: block;
+	font-size: 16px;
+	color: #555555;
+	margin: 10px 0;
+}
+
+.form-group input[type="text"], .form-group input[type="email"],
+	.form-group input[type="tel"] {
+	width: 100%;
+	padding: 10px;
+	border: 1px solid #cccccc;
+	border-radius: 5px;
+	font-size: 16px;
+	box-sizing: border-box;
+}
+
+.button {
+	background-color: #335288;
+	color: #ffffff;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	margin-top: 10px;
+}
+
+.button:hover {
+	background-color: #24395e;
+}
+
+.form-label {
+	font-weight: 600;
+	color: #555;
+	display: flex;
+	font-size: 16px;
+}
+
+.form-control {
+	border-radius: 10px;
+	margin-top: 5px;
+	font-size: 0.9rem;
+}
+
+input {
+	border-top-right-radius: 10px !important;
+	border-bottom-right-radius: 10px !important;
+	border-top-left-radius: 10px !important;
+	border-bottom-left-radius: 10px !important;
+	height: 35px;
+}
+
+input:focus {
+	border-top-right-radius: 10px !important;
+	border-bottom-right-radius: 10px !important;
+	border-top-left-radius: 10px !important;
+	border-bottom-left-radius: 10px !important;
+	height: 35px;
+}
+
+.form-label {
+	font-weight: 600;
+	color: #333;
+}
+
+select.form-control, input.form-control {
+	border-radius: 12px;
+	padding: 8px 12px;
+}
+
+.row .col-md-3, .row .col-md-6 {
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-container {
+	display: flex;
+	gap: 10px;
+	flex-wrap: wrap;
+	margin-bottom: 0;
+}
+
+.flex-group {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.flex-group label {
+	white-space: nowrap;
+	font-size: 16px;
+	color: #555;
+}
+
+select.form-control {
+	border-radius: 12px;
+	padding: 8px 8px;
+	font-size: 14px;
+	border: 1px solid #cccccc;
+	height: 40px;
+	width: 110px;
+}
+
+.btn {
+	width: 100px;
+}
+
+.wrong {
+	color: #df4040;
+	margin: auto 0;
+	margin-left: 7px;
+	font-weight: bold;
+	font-size: 15px;
+}
+
+.address {
+	display: flex;
+}
+
+.addressinput {
+	margin: 0;
+}
+
+#success-popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#success-popup-box {
+  background-color: white;
+  padding: 24px 32px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+#success-popup-box p {
+  font-size: 18px;
+  margin-bottom: 16px;
+}
+
+#success-popup-box button {
+  padding: 8px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #df6840;
+  color: white;
+  cursor: pointer;
+}

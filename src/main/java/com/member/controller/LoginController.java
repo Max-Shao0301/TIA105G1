@@ -1,5 +1,6 @@
 package com.member.controller;
 
+import com.member.model.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,7 +68,7 @@ public class LoginController{
 			model.addAttribute("loginDTO", loginDTO);
 			return "/front-end/login";
 		}
-		Integer login = memberService.findMember(loginDTO.getLoginEmail(),loginDTO.getLoginPassword(),session);
+		Integer login = memberService.checkMember(loginDTO.getLoginEmail(),loginDTO.getLoginPassword(),session);
 		switch (login) {
 		case 1: 
 			 if (rememberMe != null) {
@@ -82,8 +83,17 @@ public class LoginController{
                  response.addCookie(cookie);
              }
 			 session.setAttribute("isLoggedIn", true);
-			return "redirect:/";
-        case 2: 
+
+			//如果有設定二階段登入驗證，則轉向到二階段登入頁面
+			Integer memId = (Integer) session.getAttribute("memId");
+			MemberVO memberVO = memberService.getOneMember(memId);
+			if (memberVO.getSecret() != null && !memberVO.getSecret().isEmpty()) {
+				return "redirect:/mfaLoginPage";
+			} else {
+				return "redirect:/";
+			}
+
+        case 2:
         	redirectAttributes.addFlashAttribute("errorMessage1","此信箱未註冊");
         	redirectAttributes.addFlashAttribute("loginDTO", loginDTO);
         	return "redirect:/login";
@@ -97,10 +107,7 @@ public class LoginController{
 	
 	@GetMapping("/logout")
 	public String logout(HttpSession session) {
-		session.removeAttribute("loginDTO");
-		session.removeAttribute("isLoggedIn");
-		session.removeAttribute("memId");
-		session.removeAttribute("memName");
+		session.invalidate();
 		return "redirect:/";
 	}
 }

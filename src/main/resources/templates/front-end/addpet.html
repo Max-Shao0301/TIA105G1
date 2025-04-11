@@ -90,10 +90,11 @@
 						</div>
 						<div class="col-lg-6 col-md-7 col-12">
 							<!-- Top Contact -->
-							<ul class="top-contact">
-								<li><a href="./login.html"><i class="icofont-login"></i>會員登入</a></i></li>
-								<li></i><a href="./member.html"><i class="icofont-ui-user"></i>會員資料</a></li>
-							</ul>
+				<ul class="top-contact">
+							<li><i class="icofont-paw"></i>Hi,<span
+								th:text="${session.memName}"></span>!</li>
+							<li><a th:href="@{/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
+						</ul>
 							<!-- End Top Contact -->
 						</div>
 					</div>
@@ -220,7 +221,6 @@
 									<p> 邵柏中
 										陳華宣
 										林珍妮
-										蔡富任
 										高逢廷</p>
 								<!-- Social -->
 								<ul class="social">

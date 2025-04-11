@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>二階段驗證登入</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        form {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+        }
+
+        img {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #2c3e50;
+            text-align: left;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        p {
+            font-size: 14px;
+            color: red;
+            margin-bottom: 15px;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+<form th:action="@{/mfa/login}" th:method="post">
+    <img src="/images/GoogleAuthenticator.png" alt="Google Authenticator logo">
+    <label for="otp">請輸入 Google Authenticator 上的驗證碼:</label>
+    <input type="text" id="otp" name="otp" required pattern="\d{6}" title="格式有誤，Google Authenticator 驗證碼為六位數字">
+    <p th:text="${error}"></p>
+    <button type="submit">確認</button>
+</form>
+</body>
+</html>

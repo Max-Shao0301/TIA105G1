@@ -1,7 +1,11 @@
+
 package com.orders.controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
@@ -11,18 +15,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import com.ecpay.payment.integration.AllInOne;
 import com.member.model.MemberService;
 import com.member.model.dto.MemberDTO;
 import com.orders.model.OrdersService;
+import com.orders.model.OrdersVO;
 import com.orders.model.dto.AppointmentTimeDTO;
 import com.orders.model.dto.CheckoutOrderDTO;
+import com.orders.model.dto.OrderDetailDTO;
 import com.orders.model.dto.OrderViewDTO;
+import com.orders.model.dto.CommentDTO;
 import com.schedule.model.ScheduleService;
 import com.schedule.model.dto.StaffScheduleDTO;
 
@@ -41,7 +51,7 @@ public class OrdersController {
 
 	@Autowired
 	private MemberService memberService;
-
+ 
 	@GetMapping("/appointment/getbookableStaff")
 	public ResponseEntity<List<StaffScheduleDTO>> getBookableStaff(@Valid @ModelAttribute AppointmentTimeDTO apptDTO) {
 
@@ -52,10 +62,8 @@ public class OrdersController {
 	}
 
 	@PostMapping("/appointment/getMemInfo")
-	public ResponseEntity<MemberDTO> getMemInfo(@RequestBody Map<String, Integer> reqBody, HttpSession session) {
-		Integer memId = reqBody.get("memId");
-
-		session.setAttribute("memId", memId); // 模擬登入成功
+	public ResponseEntity<MemberDTO> getMemInfo(HttpSession session) {
+		Integer memId = (Integer) session.getAttribute("memId"); // 模擬登入成功
 		MemberDTO memberDTO = memberService.getMemberDTO(memId);
 
 		return ResponseEntity.ok(memberDTO);
@@ -65,30 +73,36 @@ public class OrdersController {
 	public String paymentResults() {
 		return "/front-end/paymentResults";
 	}
-
+	@GetMapping("/appointment") 
+	public String getAppointnetn() {
+		return "/front-end/appointment";
+	}
+	
 	@PostMapping("/appointment/postCheckout")
-	public ResponseEntity<Map<String, Object>> postCheckout(@RequestBody CheckoutOrderDTO checkoutOrderDTO,
+	public ResponseEntity<Map<String, Object>> postCheckout(@Valid @RequestBody CheckoutOrderDTO checkoutOrderDTO,
 			HttpSession session) {
 		Map<String, Object> response = new HashMap<>();
 		Integer memId = (Integer) session.getAttribute("memId");
-		Map result = ordersService.addOrders(checkoutOrderDTO, memId);
-		session.setAttribute("orderId", result.get("orderId"));
+		String amouteStr = (String) session.getAttribute("amoute");
+		Integer amoute = Integer.parseInt(amouteStr);
 		
+		Map result = ordersService.addOrders(checkoutOrderDTO, memId, amoute);
+		
+		session.setAttribute("orderId", result.get("orderId"));
+
 		if (result.get("error") != null) {
 			response.put("error", result.get("error"));
-			System.out.println("有錯");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
 		}
-		
+		//免費訂單
 		if ("true".equals(result.get("freeOrder"))) {
 			response.put("NoPayment", "http://localhost:8080/appointment/paymentResults");
-			System.out.println("免費");
 			return ResponseEntity.ok(response);
 		}
 		response.put("ECPay", result.get("form"));
 		return ResponseEntity.ok(response);
 	}
-
+		
 	@PostMapping("/ecpayReturn")
 	public ResponseEntity<String> ecpayRequest(HttpServletRequest req) throws IOException {
 
@@ -101,8 +115,6 @@ public class OrdersController {
 		}
 		reader.close();
 
-		System.out.println("ECPay傳過來的" + reqBody);
-
 		ordersService.checkECPayReq(reqBody.toString());
 
 		return ResponseEntity.ok("1|OK");
@@ -112,7 +124,81 @@ public class OrdersController {
 	public ResponseEntity<Map<String, Object>> cehckPayment(HttpSession session) {
 		Integer orderId = (Integer) session.getAttribute("orderId");
 		Map result = ordersService.checkPayment(orderId);
-		
+
 		return ResponseEntity.ok(result);
 	}
+
+	@GetMapping("/appointment/calculateAmoute")
+
+	public ResponseEntity<String> getAmoute(@RequestParam String origin, @RequestParam String destination, HttpSession session) throws Exception{
+		String result = ordersService.getAmoute(origin, destination);
+		if ("OutOfRange".equals(result)) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("OutOfRange");
+		}
+
+		session.setAttribute("amoute", result);
+
+
+		return ResponseEntity.ok(result);
+	}
+
+	@GetMapping("/orderList")
+	public String orderlist(@RequestParam(defaultValue = "1") Integer page,
+			@RequestParam(defaultValue = "5") Integer pageSize, HttpSession session, Model model) {
+		Integer memId = (Integer) session.getAttribute("memId");
+		List<OrdersVO> orderList = ordersService.getOrdersByPage(memId, page, pageSize);
+		Integer totalPages = ordersService.getPageTotal(memId, pageSize);
+		model.addAttribute("orderList", orderList);
+		model.addAttribute("pageSize", pageSize);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", totalPages);
+		return "/front-end/orderList";
+	}
+
+	@GetMapping("/orders/detail/{orderId}")
+	@ResponseBody
+	public ResponseEntity<OrderDetailDTO> getOrderDetail(@PathVariable Integer orderId) {
+		OrdersVO order = ordersService.getOneOrder(orderId);
+		OrderDetailDTO oderDetailDTO = ordersService.showOrderDetail(order);
+		return ResponseEntity.ok(oderDetailDTO);
+	}
+
+	// 取消訂單
+	@GetMapping("/order/cancelOrder")
+	public String cancelOrder(@RequestParam("orderId") Integer orderId) {
+		OrdersVO order = ordersService.getOneOrder(orderId);
+		if (order.getStatus() == 0 || order.getStatus() == 2) {
+			return "redirect:/orderList";
+		}
+		LocalDateTime appointmentTime = ordersService.getOrderLocalDateTime(order);
+		LocalDateTime now = LocalDateTime.now();
+		if (now.isAfter(appointmentTime.minusMinutes(30))) {
+			return "redirect:/orderList";
+		}
+		ordersService.updateStatus(orderId);
+		return "redirect:/orderList";
+	}
+
+	// 評論
+	@PostMapping("/order/submitComment")
+	public ResponseEntity<Object> submitComment(@RequestBody CommentDTO commentDTO) {
+		try {
+			ordersService.saveComment(commentDTO);
+			return ResponseEntity.ok().build();
+		} catch (IllegalStateException e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+
+	//搜尋
+	@GetMapping("/orders/search")
+	public String searchOrders(@RequestParam String keyword,
+	                           HttpSession session,
+	                           Model model) {
+	    Integer memId = (Integer) session.getAttribute("memId");
+	    List<OrdersVO> filtered = ordersService.searchOrdersByKeyword(memId, keyword);
+	    model.addAttribute("orderList", filtered);
+	    return "front-end/orderList :: orderTableBody";
+	}
+
 }

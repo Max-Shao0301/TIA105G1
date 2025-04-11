@@ -31,17 +31,15 @@ public class IndexController_inSpringBoot {
 			isLoggedIn = false;
 		}
 		model.addAttribute("isLoggedIn", isLoggedIn);
+		session.setAttribute("isLoggedIn", isLoggedIn);
+		System.out.println();
 		return "index"; // 回傳 Thymeleaf 頁面
 	}
-
 	
-
-	
-	@GetMapping("/orderlist")
-	public String orderlist() {
-		return "/front-end/orderlist";
+	@GetMapping("/aboutUs")
+	public String aboutUs() {
+		return "/front-end/aboutUs";
 	}
 
-
-
+	
 }
