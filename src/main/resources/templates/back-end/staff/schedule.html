@@ -82,13 +82,13 @@
         </form>
 
         <table class="table table-bordered table-striped" id="scheduleTable">
-            <thead>
-                <tr>
-                    <th>日期</th>
-                    <th>時段</th>
-                    <th>操作</th>
-                </tr>
-            </thead>
+		<thead>
+		    <tr>
+		        <th><span>日期</span></th>
+		        <th><span>時段</span></th>
+		        <th><span>操作</span></th>
+		    </tr>
+		</thead>
             <tbody>
                 <tr th:each="schedule : ${schedules}">
                     <td th:text="${schedule.date}"></td>

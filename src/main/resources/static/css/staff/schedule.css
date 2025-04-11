@@ -80,39 +80,35 @@ nav.navbar {
 #scheduleTable,
 #data-table {
     width: 100%;
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0;
     border-radius: 10px;
     overflow: hidden;
     border: 1px solid #ddd;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     background-color: white;
+    margin: 0 auto;
 }
 
 #scheduleTable th,
-#scheduleTable td,
-#data-table th,
-#data-table td {
+#scheduleTable td {
     padding: 1rem;
     white-space: nowrap;
     vertical-align: middle;
     text-align: center;
 }
 
-#scheduleTable thead.table-bordered th,
-#data-table thead.table-bordered th,
-#scheduleTable th {
-    color: #ffffff !important;
+/* 膠囊樣式應用到 span 元素 */
+#scheduleTable th span {
     background-color: #5c6bc0 !important;
-    text-align: center;
-}
-
-.th-font {
-    background-color: #5c6bc0 !important;
-    border-radius: 5px;
-    padding: 5px;
+    border-radius: 100px;
+    padding: 5px 20px;
+    color: #ffffff;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
     display: inline-block;
-    color: white;
+    margin: 5px; /* 添加膠囊與表格之間的間距 */
 }
 
 hr {

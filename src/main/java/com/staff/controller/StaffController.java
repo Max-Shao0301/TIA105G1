@@ -201,6 +201,8 @@ public class StaffController {
         }
 
         StaffVO staff = staffService.getOneStaff(staffId);
+
+        
         model.addAttribute("StaffVO", staff); 
         return "/back-end/staff/setting";
         
@@ -360,6 +362,28 @@ public class StaffController {
 
         return "redirect:/staff/home";
         
+    }
+    
+    
+    //結案圖片上傳
+    @PostMapping("/staff/endOrders")
+    public String endOrders(@RequestParam("orderId") Integer orderId,@RequestParam("image") MultipartFile image,Model model) {
+
+        OrdersVO ordersVO = ordersService.getOneOrder(orderId);
+        
+        try {
+        	
+			ordersVO.setPicture(image.getBytes());
+	        ordersVO.setStatus(2);
+	        ordersService.updateOrders(ordersVO);
+	        
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+			
+		}
+
+        return "redirect:/staff/home";
     }
     
 }

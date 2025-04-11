@@ -1,20 +1,20 @@
 body {
-           font-family: 'Noto Sans TC', sans-serif;
-           background-color: #f8f9fa;
-           padding-top: 70px;
-           margin: 0;
-           color: #333;
-       }
+    font-family: 'Noto Sans TC', sans-serif;
+    background-color: #f8f9fa;
+    padding-top: 70px;
+    margin: 0;
+    color: #333;
+}
 
-       .container,
-       .container-fluid {
-           max-width: 95%;
-           margin-left: auto;
-           margin-right: auto;
-       }
+.container,
+.container-fluid {
+    max-width: 95%;
+    margin-left: auto;
+    margin-right: auto;
+}
 
-       nav.navbar {
-           background-color: #5c6bc0;
+nav.navbar {
+    background-color: #5c6bc0;
     position: fixed;
     top: 0;
     width: 100%;
@@ -86,7 +86,7 @@ body {
     overflow: hidden;
     border: 1px solid #ddd;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    background-color: white;
+    background-color: white; /* 修改此處，設定表格背景為白色 */
 }
 
 #scheduleTable th,
@@ -97,11 +97,11 @@ body {
     white-space: nowrap;
     vertical-align: middle;
     text-align: center;
+    /* background-color: transparent;  移除此行，讓表格繼承白色背景 */
 }
 
 #data-table thead.table-bordered th {
     color: #ffffff !important;
-    background-color: #5c6bc0 !important;
     text-align: center;
 }
 
@@ -113,6 +113,7 @@ body {
     color: #ffffff;
     font-weight: bold;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* 修改此處，新增 overflow: hidden; */
 }
 
 hr {
@@ -244,4 +245,9 @@ hr {
     border-color: #5c6bc0;
     color: #ffffff;
     border-radius: 5px;
+}
+
+.upload-button:hover {
+    background-color: #3f51b5;
+    border-color: #3f51b5;
 }
