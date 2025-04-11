@@ -45,7 +45,8 @@ public class ApplyService {
             StaffVO staffVO = new StaffVO();  //通過後將履歷轉給員工進行保存
             staffVO.setApply(vo);
             staffVO.setStaffEmail(vo.getApplyEmail());
-            staffVO.setStaffPassword(passwordEncoder.encode(vo.getApplyPhone()));//密碼加密保存
+//            staffVO.setStaffPassword(passwordEncoder.encode(vo.getApplyPhone()));//雜湊加密保存
+            staffVO.setStaffPassword(vo.getApplyPhone());//明碼保存
             staffVO.setStaffName(vo.getApplyName());
             staffVO.setStaffPhone(vo.getApplyPhone());
             staffVO.setStaffGender(vo.getApplyGender());
