@@ -6,8 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>服務人員系統</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-    
-    <link rel="stylesheet" th:href="@{/css/staff/staffhome.css}">        
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <link rel="stylesheet" th:href="@{/css/staff/staffhome.css}">
+
 </head>
 
 <body>
@@ -33,14 +35,17 @@
                                     d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M2 2a1 1 0 0 0-1 1v1h14V3a1 1.0 0 0 0-1-1zm13 3H1v9a1 1.0 0 0 0 1 1h12a1 1.0 0 0 0 1-1z" />
                             </svg> 班表
                         </a>
-			             <form th:action="@{/staff/setting}" method="post" style="display:inline;">
-			                <button type="submit" class="nav-link" style="border:none; background:none; padding:0;">
-								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-								  <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0"/>
-								  <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z"/>
-								</svg>  設定&nbsp;
-			                </button>
-			            </form>
+                        <form th:action="@{/staff/setting}" method="post" style="display:inline;">
+                            <button type="submit" class="nav-link" style="border:none; background:none; padding:0;">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-gear" viewBox="0 0 16 16">
+                                    <path
+                                        d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492M5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0" />
+                                    <path
+                                        d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115z" />
+								</svg> 設定&nbsp;
+                            </button>
+                        </form>
                         <form th:action="@{/staff/logout}" method="post" style="display:inline;">
                             <button type="submit" class="nav-link" style="border:none; background:none; padding:0;">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -149,131 +154,156 @@
         </div>
     </div>
 
+    <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadModalLabel">上傳圖片</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/staff/endOrders}" method="post" enctype="multipart/form-data">
+                        <input type="hidden" id="orderIdInput" name="orderId">
+                        <label for="imageUpload">選擇圖片:</label>
+                        <input type="file" class="form-control" id="imageUpload" name="image" accept="image/*" required>
+                        <img id="imagePreview" src="#" alt="預覽" style="max-width: 100%; max-height: 200px; display: none;">
+                        <button type="submit" class="btn btn-primary mt-3">上傳</button>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    
-    <script th:src="@{/js/staff/staffhome.js}"></script>
-<script>
-$(document).ready(function () {
-    // 是幾點到幾點
-    var text = $(this).text();
-    var firstOneOrTwoIndex = text.search(/[12]/);
-    var lastOneOrTwoIndex = text.search(/[12](?=[^12]*$)/);
 
-    if ((lastOneOrTwoIndex + 1) <= 9) {
-        lastOneOrTwoIndex = "0" + (lastOneOrTwoIndex + 1);
-    } else {
-        lastOneOrTwoIndex = (lastOneOrTwoIndex + 1);
-    }
+    <script>
+        $(document).ready(function () {
 
-    if (firstOneOrTwoIndex <= 9) {
-        firstOneOrTwoIndex = "0" + firstOneOrTwoIndex;
-    }
+            // 是幾點到幾點
+            $(".timeslotTd").each(function () {
+                let text = $(this).text();
+                let firstOneOrTwoIndex = text.search(/[12]/);
+                let lastOneOrTwoIndex = text.search(/[12](?=[^12]*$)/);
 
-    $(this).text(firstOneOrTwoIndex + ":00 ~ " + lastOneOrTwoIndex + ":00");
-
-    $('.order-row').each(function () {
-        let status = $(this).find('.status-cell').data('status');
-        let orderId = $(this).find('.status-cell').data('order-id');
-        let statusCell = $(this).find('.status-cell');
-
-        if (status == 1) {
-            statusCell.html(
-                '<button class="btn btn-success btn-sm upload-button" data-bs-toggle="modal" data-bs-target="#uploadModal" data-order-id="' +
-                orderId + '">未結案</button>');
-        } else if (status == 2) {
-            statusCell.text('已結案');
-        }
-    });
-
-    $('.order-row').each(function () {
-        let status = $(this).find('.payment-cell').data('status');
-        let star = $(this).find('.star-cell').data('star');
-        let rating = $(this).find('.rating-cell').data('rating');
-        let starCell = $(this).find('.star-cell');
-        let ratingCell = $(this).find('.rating-cell');
-
-        if (status == 1) {
-            starCell.text('未結案');
-        } else if (status == 2) {
-            // Corrected star display logic:
-            if (star !== undefined && star !== null) {
-                let starsHTML = "";
-                for (let i = 1; i <= 5; i++) {
-                    if (i <= star) {
-                        starsHTML += '<i class="fas fa-star star-icon"></i>';
+                if (firstOneOrTwoIndex !== -1 && lastOneOrTwoIndex !== -1) {
+                    if ((parseInt(lastOneOrTwoIndex) + 1) <= 9) {
+                        lastOneOrTwoIndex = "0" + (parseInt(lastOneOrTwoIndex) + 1);
                     } else {
-                        starsHTML += '<i class="far fa-star star-icon empty-star"></i>';
+                        lastOneOrTwoIndex = (parseInt(lastOneOrTwoIndex) + 1).toString();
                     }
+
+                    if (parseInt(firstOneOrTwoIndex) <= 9) {
+                        firstOneOrTwoIndex = "0" + firstOneOrTwoIndex;
+                    }
+
+                    $(this).text(firstOneOrTwoIndex + ":00 ~ " + lastOneOrTwoIndex + ":00");
                 }
-                starCell.html(starsHTML);
-            } else {
+            });
+            
+					
+            $(".order-row").each(function () {
+                let status = $(this).find(".status-cell").data("status");
+                let orderId = $(this).find(".status-cell").data("order-id");
+                let statusCell = $(this).find(".status-cell");
+
+                if (status == 1) {
+                    statusCell.html(
+                        '<button class="btn btn-success btn-sm upload-button" data-bs-toggle="modal" data-bs-target="#uploadModal" data-order-id="' +
+                        orderId + '">未結案</button>');
+                } else if (status == 2) {
+                    statusCell.text("已結案");
+                }
+            });
+
+            $(".order-row").each(function () {
+                let status = $(this).find(".payment-cell").data("status");
+                let star = $(this).find(".star-cell").data("star");
+                let rating = $(this).find(".rating-cell").data("rating");
+                let starCell = $(this).find(".star-cell");
+                let ratingCell = $(this).find(".rating-cell");
                 let starsHTML = "";
                 for (let i = 1; i <= 5; i++) {
                     starsHTML += '<i class="far fa-star star-icon empty-star"></i>';
                 }
                 starCell.html(starsHTML);
-            }
 
-            if (rating !== undefined && rating !== null) {
-                ratingCell.text(rating);
-            } else {
-                ratingCell.text("無評價");
-            }
-        }
-    });
+                if (status == 1) {
+                    ratingCell.text("未結案");
+                } else if (status == 2) {
 
-    $('#imageUpload').change(function () {
-        let file = this.files[0];
-        if (file) {
-            let reader = new FileReader();
-            reader.onload = function (event) {
-                $('#imagePreview').attr('src', event.target.result).show();
-            }
-            reader.readAsDataURL(file);
-        } else {
-            $('#imagePreview').attr('src', '#').hide();
-        }
-    });
+                    if (star !== undefined && star !== null) {
+                        let starsHTML = "";
+                        for (let i = 1; i <= 5; i++) {
+                            if (i <= star) {
+                                starsHTML += '<i class="fas fa-star star-icon"></i>';
+                            } else {
+                                starsHTML += '<i class="far fa-star star-icon empty-star"></i>';
+                            }
+                        }
+                        starCell.html(starsHTML);
+                    }
 
-    $('#uploadModal').on('hidden.bs.modal', function (e) {
-        $('#imageUpload').val('');
-        $('#imagePreview').attr('src', '#').hide();
-    });
+                    if (rating !== undefined && rating !== null) {
+                        ratingCell.text(rating);
+                    } else {
+                        ratingCell.text("無評價");
+                    }
+                }
+            });
+			
+            //圖片上傳
+            $("#imageUpload").change(function () {
+                let file = this.files[0];
+                if (file) {
+                    let reader = new FileReader();
+                    reader.onload = function (event) {
+                        $("#imagePreview").attr("src", event.target.result).show();
+                    }
+                    reader.readAsDataURL(file);
+                } else {
+                    $("#imagePreview").attr("src", "#").hide();
+                }
+            });
 
-    $('.upload-button').click(function () {
-        let orderId = $(this).data('order-id');
-        $('#orderIdInput').val(orderId);
-    });
+            $("#uploadModal").on("hidden.bs.modal", function (e) {
+                $("#imageUpload").val("");
+                $("#imagePreview").attr("src", "#").hide();
+            });
 
-    $('.pet-button').click(function () {
-        let orderId = $(this).data('order-id');
-        let petInfo = "";
-        $('.order-row').each(function () {
-            if ($(this).find('.status-cell').data('order-id') == orderId) {
-                $(this).find('.pet-info-data').each(function () {
-                    let type = $(this).find('.pet-type').text();
-                    let name = $(this).find('.pet-name').text();
-                    let gender = $(this).find('.pet-gender').text();
-                    let weight = $(this).find('.pet-weight').text();
-                    petInfo += "<div class='pet-info-item'>";
-                    petInfo += "<span class='pet-info-label'>類別:</span><span class='pet-info-value'>" + type + "</span>";
-                    petInfo += "<span class='pet-info-label'>大名:</span><span class='pet-info-value'>" + name + "</span>";
-                    if (gender) petInfo += "<span class='pet-info-label'>性別:</span><span class='pet-info-value'>" + gender + "</span>";
-                    if (weight) petInfo += "<span class='pet-info-label'>體重:</span><span class='pet-info-value'>" + weight + "</span>";
-                    petInfo += "</div>";
+            //寵物資訊
+            $("#data-table").on("click", ".upload-button", function () {
+                let orderId = $(this).data("order-id");
+                $("#orderIdInput").val(orderId);
+            });
+
+            $(".pet-button").click(function () {
+                let orderId = $(this).data("order-id");
+                let petInfo = "";
+                $(".order-row").each(function () {
+                    if ($(this).find(".status-cell").data("order-id") == orderId) {
+                        $(this).find(".pet-info-data").each(function () {
+                            let type = $(this).find(".pet-type").text();
+                            let name = $(this).find(".pet-name").text();
+                            let gender = $(this).find(".pet-gender").text();
+                            let weight = $(this).find(".pet-weight").text();
+                            petInfo += "<div class='pet-info-item'>";
+                            petInfo += "<span class='pet-info-label'>類別:</span><span class='pet-info-value'>" + type + "</span>";
+                            petInfo += "<span class='pet-info-label'>大名:</span><span class='pet-info-value'>" + name + "</span>";
+                            if (gender) petInfo += "<span class='pet-info-label'>性別:</span><span class='pet-info-value'>" + gender + "</span>";
+                            if (weight) petInfo += "<span class='pet-info-label'>體重:</span><span class='pet-info-value'>" + weight + "</span>";
+                            petInfo += "</div>";
+                        });
+                    }
                 });
-            }
+                $("#petInfoModalBody").html("<h5 class='pet-info-modal-title'>寵物資訊</h5>" + petInfo);
+            });
         });
-        $('#petInfoModalBody').html("<h5 class='pet-info-modal-title'>寵物資訊</h5>" + petInfo);
-    });
-});
-</script>
-</body>
+    </script>
 
-</html>
-
-</script>
 </body>
 
 </html>
