@@ -12,6 +12,7 @@ import com.member.model.MemberVO;
 import com.pet.model.dto.AddPetDTO;
 import com.pet.model.dto.PetDTO;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
 @Service("petService")
@@ -73,6 +74,22 @@ public class PetService {
 		PetVO petVO = new PetVO();
 
 		MemberVO memberVO = memberService.getOneMember(addPetDTO.getMemId());
+		if (memberVO != null) {
+			petVO.setMember(memberVO);
+			petVO.setPetName(addPetDTO.getPetName());
+			petVO.setType(addPetDTO.getType());
+			petVO.setPetGender(addPetDTO.getPetGender());
+			petVO.setWeight(addPetDTO.getWeight());
+			petVO = petRepository.save(petVO);
+		}
+		return petVO.getPetId();
+	}
+	
+	@Transactional 
+	public Integer addPet(AddPetDTO addPetDTO, HttpSession session) {
+		PetVO petVO = new PetVO();
+		Integer memId = (Integer) session.getAttribute("memId");
+		MemberVO memberVO = memberService.getOneMember(memId);
 		if (memberVO != null) {
 			petVO.setMember(memberVO);
 			petVO.setPetName(addPetDTO.getPetName());

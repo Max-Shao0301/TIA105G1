@@ -355,10 +355,10 @@ public class OrdersService {
 		if (!routes.isEmpty()) {
 			Integer distanceInt = (Integer) routes.get(0).get("distanceMeters");
 			Double distance = Math.round((distanceInt / 1000.0) * 10) / 10.0;
-			amoute = (int) Math.round(distance * PRICEPERKM + STARTPRICE);
+			amoute = (distance > 1 ? (int) Math.round(distance * PRICEPERKM + STARTPRICE) : STARTPRICE);
 			System.out.println("距離" + distance);
 		}
-		System.out.println("金額" + amoute.getClass());
+		System.out.println("金額" + amoute);
 		session.setAttribute("amoute", amoute);
 		return amoute.toString();
 	}

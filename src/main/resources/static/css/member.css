@@ -542,3 +542,17 @@ ul.table li {
     background-color: #f16745; /* 登出按鈕特別色 */
     margin-left:435px;
 }
+.deletePet{
+  padding: 8px 16px;
+   background-color: #f16745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+td.deletePet-td {
+    text-align: center; /* 讓按鈕置中 */
+ 	background-color: #eae8df;
+ 	border: none;
+ 	width: 0;
+}
