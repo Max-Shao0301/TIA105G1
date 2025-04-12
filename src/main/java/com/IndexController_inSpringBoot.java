@@ -32,12 +32,21 @@ public class IndexController_inSpringBoot {
 		}
 		model.addAttribute("isLoggedIn", isLoggedIn);
 		session.setAttribute("isLoggedIn", isLoggedIn);
-		System.out.println();
 		return "index"; // 回傳 Thymeleaf 頁面
 	}
 	
 	@GetMapping("/aboutUs")
-	public String aboutUs() {
+	public String aboutUs(Model model, HttpSession session) {
+		boolean isLoggedIn;
+		if (session.getAttribute("isLoggedIn") != null) {
+			isLoggedIn = (boolean) session.getAttribute("isLoggedIn");
+			model.addAttribute("memName", session.getAttribute("memName"));
+		} else {
+			isLoggedIn = false;
+		}
+		model.addAttribute("isLoggedIn", isLoggedIn);
+		session.setAttribute("isLoggedIn", isLoggedIn);
+		System.out.println();
 		return "/front-end/aboutUs";
 	}
 

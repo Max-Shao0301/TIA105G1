@@ -29,7 +29,7 @@ body::before {
 }
 img{
     width: 300px;
-    margin-bottom: 30px;
+
 }
 .login-container {
     max-width: 400px;
@@ -146,4 +146,19 @@ a{
     display: flex;
     align-items: center;
     gap: 0.25rem; /* icon 和文字間距 */
+    font-weight: bold;
+    
+}
+.margin30px{
+	height:30px;
+	align-items: center;
+}
+.error-message1 {
+  display: flex;
+  align-items: center;    /* 垂直置中 */
+  justify-content: center; /* 水平置中 */
+  font-weight: bold;       /* 順便加粗 */
+  color: #d9534f;          /* 紅色提示（可選） */
+  gap: 8px;                /* 圖示與文字間距（可選） */
+  height: 40px;            /* 可以依需要加高度 */
 }
