@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const confirmBtn = document.getElementById("logout-confirm-yes");
   const cancelBtn = document.getElementById("logout-confirm-no");
 
+
   if (logoutBtn && popup && confirmBtn && cancelBtn) {
     logoutBtn.addEventListener("click", function (e) {
       e.preventDefault(); // 阻止直接提交

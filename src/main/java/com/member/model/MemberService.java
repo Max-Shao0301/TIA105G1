@@ -192,11 +192,12 @@ public class MemberService {
 
 	}
 
+	// 透過第三方登入註冊會員
 	@Transactional
 	public MemberVO saveOAuth2Member(String memEmail, String memName, HttpSession session) {
 		MemberVO existingMember = memberRepository.findByMemEmail(memEmail);
 		// 如果會員已存在，則不需要註冊，用現有資料登入
-		if (existingMember != null) {
+		if (existingMember != null && existingMember.getStatus() ==1) {
 			session.setAttribute("memId", existingMember.getMemId());
 			session.setAttribute("memName", existingMember.getMemName());
 			session.setAttribute("isLoggedIn", true);// 首頁登入判斷

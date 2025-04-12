@@ -26,9 +26,9 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomOAuth2UserService customOAuth2UserService) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable())
-                .httpBasic(basic -> basic.disable())
-                .formLogin(form -> form.disable())
+                .csrf(csrf -> csrf.disable()) //關閉 CSRF 保護
+                .httpBasic(basic -> basic.disable()) // 關閉 HTTP 基本認證
+                .formLogin(form -> form.disable()) // 關閉security表單登入
 
                 .authorizeHttpRequests(request -> request
                         .anyRequest().permitAll()
@@ -39,7 +39,7 @@ public class SecurityConfig {
                                 .userService(customOAuth2UserService)//指定自訂service
                         )
                         .successHandler(customAuthenticationSuccessHandler) //指定登入成功後網頁導向
-                        .failureUrl("/login")
+                        .failureUrl("/login")// 登入失敗導向登入畫面
                 )
                 .build();
     }
