@@ -120,8 +120,7 @@
 						<div class="col-lg-3 col-md-3 col-12">
 							<!-- Start Logo -->
 							<div class="logo">
-								<a th:href="@{/}"><img th:src="@{/images/title.png}"
-									alt="#"></a>
+								<a th:href="@{/}"><img th:src="@{/images/title.png}" alt="#"></a>
 							</div>
 							<!-- End Logo -->
 							<!-- Mobile Nav -->
@@ -206,6 +205,10 @@
 				</tr>
 			</thead>
 			<tbody th:fragment="orderTableBody">
+				<tr th:if="${#lists.isEmpty(orderList)}">
+					<td colspan="6" class="text-center text-muted">🐾
+						目前尚無任何訂單紀錄，快來預約你的寵物旅程吧! 🐾</td>
+				</tr>
 				<tr th:each="order : ${orderList}">
 					<td th:text="${order.orderId}"></td>
 					<td><span th:text="${order.schedule.date}"></span></td>
@@ -227,52 +230,37 @@
 		<div>
 			<div id="paginationWrapper">
 				<nav>
-					<ul class="pagination justify-content-center">
+					<ul class="pagination justify-content-center"
+						th:if="${totalPages > 0}">
 						<!-- 上一頁 -->
 						<li class="page-item"
 							th:classappend="${currentPage == 1} ? 'disabled'"><a
 							class="page-link"
-							th:href="@{/orderList(page=${currentPage - 1}, pageSize=${pageSize})}">上一頁</a>
+							th:href="@{/orderList(page=${currentPage == 1 ? 1 : currentPage - 1}, pageSize=${pageSize})}">上一頁</a>
 						</li>
 
-						<!-- 頁碼 -->
-						<li class="page-item" th:if="${currentPage > 3}"><a
-							class="page-link page-num"
-							th:href="@{/orderList(page=1, pageSize=${pageSize})}">1</a></li>
-
-						<li class="page-item disabled" th:if="${currentPage > 4}"><span
-							class="page-link">...</span></li>
-
-						<!-- 中間頁碼範圍（前2後2） -->
+						<!-- 頁碼清單（前2後2） -->
 						<li class="page-item"
-							th:each="i : ${#numbers.sequence(currentPage - 2 > 1 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}"
+							th:each="i : ${#numbers.sequence(
+            (currentPage - 2) < 1 ? 1 : (currentPage - 2),
+            (currentPage + 2) > totalPages ? totalPages : (currentPage + 2))}"
 							th:classappend="${i == currentPage} ? 'active'"><a
 							class="page-link page-num"
 							th:href="@{/orderList(page=${i}, pageSize=${pageSize})}"
 							th:text="${i}"></a></li>
 
-						<li class="page-item disabled"
-							th:if="${currentPage < totalPages - 3}"><span
-							class="page-link">...</span></li>
-
-						<li class="page-item" th:if="${currentPage < totalPages - 2}">
-							<a class="page-link page-num"
-							th:href="@{/orderList(page=${totalPages}, pageSize=${pageSize})}"
-							th:text="${totalPages}"></a>
-						</li>
-
-
 						<!-- 下一頁 -->
 						<li class="page-item"
-							th:classappend="${currentPage == totalPages} ? 'disabled'"><a
-							class="page-link"
-							th:href="@{/orderList(page=${currentPage + 1}, pageSize=${pageSize})}">下一頁</a>
+							th:classappend="${currentPage == totalPages} ? 'disabled'">
+							<a class="page-link"
+							th:href="@{/orderList(page=${currentPage == totalPages ? totalPages : currentPage + 1}, pageSize=${pageSize})}">下一頁</a>
 						</li>
 					</ul>
 				</nav>
 			</div>
 		</div>
 	</div>
+
 	<!--/ End Feautes -->
 	<!-- 詳細資料 Modal -->
 	<div class="modal fade" id="orderDetailModal" tabindex="-1"
@@ -426,42 +414,18 @@
 								我們是緯育 Tibame JAVA養成班 <br>TIA105 第一組, 成員有:
 							</p>
 							<p>邵柏中 陳華宣 林珍妮 高逢廷</p>
-							<!-- Social -->
-							<ul class="social">
-								<li><a href="#"><i class="icofont-facebook"></i></a></li>
-								<li><a href="#"><i class="icofont-google-plus"></i></a></li>
-								<li><a href="#"><i class="icofont-twitter"></i></a></li>
-								<li><a href="#"><i class="icofont-vimeo"></i></a></li>
-								<li><a href="#"><i class="icofont-pinterest"></i></a></li>
-							</ul>
-							<!-- End Social -->
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer f-link">
 							<h2>Quick Links</h2>
-							<div class="row">
-								<div class="col-lg-6 col-md-6 col-12">
-									<ul>
-										<li><a href="./index.html"><i
-												class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-										<li><a href="./orderlist.html"><i
-												class="fa fa-caret-right" aria-hidden="true"></i>Orders</a></li>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>Question</a></li>
-									</ul>
-								</div>
-								<div class="col-lg-6 col-md-6 col-12">
-									<ul>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>Reserve</a></li>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>About Us</a></li>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>Join Us</a></li>
-									</ul>
-								</div>
-							</div>
+								<ul>
+									<li><a href="/staff/login"><i
+											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠服務人員工作系統</a></li>
+									<li><a href="/admin/login/page"><i
+											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠平台方管理系統</a></li>
+								</ul>
+
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
@@ -469,25 +433,18 @@
 							<h2>Open Hours</h2>
 							<p></p>
 							<ul class="time-sidual">
-								<li class="day">預約服務時間<span>8.00 - 21.00</span></li>
-								<li class="day">客服營業時間<span>7.00 - 22.00</span></li>
+								<li class="day">預約服務時間&nbsp;&nbsp;&nbsp;&nbsp;8.00 - 20.00</li>
+								<li class="day">客服營業時間&nbsp;&nbsp;&nbsp;&nbsp;7.00 - 22.00</li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer">
 							<h2>Contact Us</h2>
-							<p>客服專線: 7061776361726573</p>
-							<form action="mail/mail.php" method="get" target="_blank"
-								class="newsletter-inner">
-								<input name="email" placeholder="Email Address"
-									class="common-input" onfocus="this.placeholder = ''"
-									onblur="this.placeholder = 'Your email address'" required=""
-									type="email">
-								<button class="button">
-									<i class="icofont icofont-paper-plane"></i>
-								</button>
-							</form>
+							<p>客服信箱&nbsp;&nbsp;&nbsp;&nbsp;	a0912622502@gmail.com</p>
+							<p>客服專線&nbsp;&nbsp;&nbsp;&nbsp;(02) 5555-8858</p>
+							<p style="margin-left:70px">汪汪汪汪-幫幫我吧</p>
+							
 						</div>
 					</div>
 				</div>

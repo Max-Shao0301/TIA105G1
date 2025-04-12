@@ -66,23 +66,44 @@
 
 }
 
-.py-5{
-	margin:30px;
-	  background-color: #C1B9AD;
-	  border-radius: 50px;
+.team-img {
+  width: 150px;
+  height: 260px;
+  object-fit: cover;
 }
-.mb-3 {
-    background-color: #ee8065; /* 綠色背景 */
-    color: white;              /* 文字白色 */
-    border-radius: 50px;
-    padding: 12px 36px;
-    font-size: 30px;
-    font-weight: bold;
-    text-align: center;        /* ✅ 核心：讓內容在框裡置中 */
+
+.team-card {
+  padding: 1.5rem;
+  border-radius: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  background-color: #ffffff;
+  width:540px;
+  
+  margin-bottom:30px;
+  
+  height:400px;
 }
-.text-muted {
-    padding: 9px 36px;
-    font-size: 20px;
-    color: #666 !important;;
-    line-height: 1.5;
+
+.card-title {
+  font-weight: bold;
+  font-size: 1.4rem;
+  color: #2d2d2d;
+}
+
+.card-role {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #999;
+  margin-bottom: 0.75rem;
+}
+
+.team-list {
+  font-size: 1rem;
+  color: #444;
+  padding-left: 1.2rem;
+  list-style-type: disc;
+}
+
+.team-list li::marker {
+  color: #444;
 }

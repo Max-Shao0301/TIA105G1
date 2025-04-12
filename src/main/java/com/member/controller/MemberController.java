@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -61,21 +62,30 @@ public class MemberController {
 	// 註冊 - 到註冊頁
 	@GetMapping("/registerMember")
 	public String register(Model model, HttpSession session) {
-		Boolean verifyCheck = (Boolean)session.getAttribute("verifyCheck");
-		if(verifyCheck != null && verifyCheck) {
-		model.addAttribute("memberDTO", new MemberDTO());
-		return "/front-end/registerMember";
+		Boolean verifyCheck = (Boolean) session.getAttribute("verifyCheck");
+		if (verifyCheck != null && verifyCheck) {
+			model.addAttribute("memberDTO", new MemberDTO());
+			model.addAttribute("recaptchaSiteKey", memberService.getSiteKey()); //讓前端拿到reCAPTCHA的KEY
+			return "/front-end/registerMember";
 		}
 		return "/front-end/verifyEmail";
 	}
 
 	// 註冊 - 增加會員資料
 	@PostMapping("/registerMember")
-	public String register(@ModelAttribute @Valid MemberDTO memberDTO, BindingResult bindingResult, HttpSession session,
-			Model model) {
-		Integer count = 0;
+	public String register(@RequestParam("g-recaptcha-response") String recaptchaResponse,
+			@ModelAttribute @Valid MemberDTO memberDTO, BindingResult bindingResult, HttpSession session, Model model) {
 
+		Integer count = 0;
+		
 		memberDTO.setMemEmail((String) session.getAttribute("verifyEmail"));
+		
+		//reCAPTCHA
+		boolean captchaVerified = memberService.verifyCaptcha(recaptchaResponse);
+		
+		if (!captchaVerified) {
+			model.addAttribute("captchaError", "請通過驗證");
+		}
 
 		// 密碼再次輸入檢查
 		if (memberDTO.getConfirmPassword().isEmpty()) {
@@ -111,39 +121,41 @@ public class MemberController {
 			return "redirect:/";
 
 		}
+		
+		model.addAttribute("recaptchaSiteKey", memberService.getSiteKey()); //要加不然前端沒拿到KEY
 
 		return "/front-end/registerMember";
 
 	}
 
 	// 更新會員資料 - 到更新頁面
-	@GetMapping("/updateMember")
+	@GetMapping("/member/updateMember")
 	public String updateMember(Model model, HttpSession session) {
-	    Integer memId = (Integer) session.getAttribute("memId");
-	    MemberVO member = memberService.getOneMember(memId);
-	    UpdateMemberDTO dto = new UpdateMemberDTO();
-	    dto.setMemName(member.getMemName());
-	    dto.setMemPhone(member.getMemPhone());
+		Integer memId = (Integer) session.getAttribute("memId");
+		MemberVO member = memberService.getOneMember(memId);
+		UpdateMemberDTO dto = new UpdateMemberDTO();
+		dto.setMemName(member.getMemName());
+		dto.setMemPhone(member.getMemPhone());
 
-	    String fullAddress = member.getAddress();
-	    dto.setCity(memberService.separateAddress(fullAddress)[0]);
-	    dto.setDistrict(memberService.separateAddress(fullAddress)[1]);
-	    dto.setAddress(memberService.separateAddress(fullAddress)[2]);
+		String fullAddress = member.getAddress();
+		dto.setCity(memberService.separateAddress(fullAddress)[0]);
+		dto.setDistrict(memberService.separateAddress(fullAddress)[1]);
+		dto.setAddress(memberService.separateAddress(fullAddress)[2]);
 
-	    model.addAttribute("updateMemberDTO", dto);
+		model.addAttribute("updateMemberDTO", dto);
 
-	    // 顯示修改成功的彈窗
-	    Boolean memberUpdated = (Boolean) session.getAttribute("memberUpdated");
-	    if (memberUpdated != null && memberUpdated) {
-	        model.addAttribute("memberUpdated", true);
-	        session.removeAttribute("memberUpdated");
-	    }
+		// 顯示修改成功的彈窗
+		Boolean memberUpdated = (Boolean) session.getAttribute("memberUpdated");
+		if (memberUpdated != null && memberUpdated) {
+			model.addAttribute("memberUpdated", true);
+			session.removeAttribute("memberUpdated");
+		}
 
-	    return "/front-end/updateMember";
+		return "/front-end/updateMember";
 	}
 
 	// 更新會員資料
-	@PostMapping("/updateMember")
+	@PostMapping("/member/updateMember")
 	public String updateMemberdata(@ModelAttribute @Valid UpdateMemberDTO updateMemberDTO, BindingResult bindingResult,
 			HttpSession session, Model model) {
 
@@ -152,7 +164,7 @@ public class MemberController {
 		Integer registerPhoneId = memberService.findMemberByPhone(updateMemberDTO.getMemPhone());
 		System.out.println(memId);
 		System.out.println(registerPhoneId);
-		
+
 		if (registerPhoneId != null && !registerPhoneId.equals(memId)) {
 			model.addAttribute("wrongMessagePhone", "此號碼已綁定其他帳號");
 			count++;
@@ -168,7 +180,6 @@ public class MemberController {
 			return "/front-end/updateMember";
 		}
 
-		
 		memberService.updateMemberData(memId, updateMemberDTO);
 		session.setAttribute("memName", updateMemberDTO.getMemName());
 		session.setAttribute("memberUpdated", true);

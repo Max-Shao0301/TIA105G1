@@ -131,6 +131,7 @@ public class OrdersController {
 		return ResponseEntity.ok(result);
 	}
 
+	//顯示訂單列表
 	@GetMapping("/orderList")
 	public String orderlist(@RequestParam(defaultValue = "1") Integer page,
 			@RequestParam(defaultValue = "5") Integer pageSize, HttpSession session, Model model) {
@@ -144,6 +145,7 @@ public class OrdersController {
 		return "/front-end/orderList";
 	}
 
+	//顯示訂單詳情
 	@GetMapping("/orders/detail/{orderId}")
 	@ResponseBody
 	public ResponseEntity<OrderDetailDTO> getOrderDetail(@PathVariable Integer orderId) {

@@ -1,24 +1,27 @@
 package com.member.model;
 
-import java.lang.reflect.Member;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
-import com.springbootmail.MailService;
-
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import com.member.model.dto.MemberDTO;
 import com.member.model.dto.UpdateMemberDTO;
 import com.orders.model.OrdersVO;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.springbootmail.MailService;
+
+import jakarta.servlet.http.HttpSession;
 
 @Service("memberService")
 public class MemberService {
@@ -31,7 +34,17 @@ public class MemberService {
 
 	@Autowired
 	private MailService mailService;
+	
+	@Value("${recaptcha.secret}")
+	private  String  recaptchaSecret;
 
+    @Value("${recaptcha.sitekey}")
+    private String siteKey;
+    
+    public String getSiteKey() {
+        return siteKey;
+    }
+	
 	// 新增會員
 	@Transactional
 	public MemberVO saveMember(MemberDTO memberDTO, HttpSession session) {
@@ -41,7 +54,7 @@ public class MemberService {
 		member.setMemEmail(memberDTO.getMemEmail());
 		member.setMemName(memberDTO.getMemName());
 		member.setMemPhone(memberDTO.getMemPhone());
-		member.setMemPassword(passwordEncoder.encode(memberDTO.getMemPassword())); //雜湊密碼加密
+		member.setMemPassword(passwordEncoder.encode(memberDTO.getMemPassword())); // 雜湊密碼加密
 //		member.setMemPassword(memberDTO.getMemPassword());//明碼保存
 		member.setAddress(memAddress);
 		memberRepository.save(member);
@@ -100,9 +113,15 @@ public class MemberService {
 	// 登入會員
 	public Integer checkMember(String memEmail, String memPassword, HttpSession session) {
 		MemberVO member = memberRepository.findByMemEmail(memEmail);
+		
 		if (member == null) {
 			return 2;
 		}
+		
+		if ((Integer) member.getStatus() == 0){
+			return 4;
+		}
+		
 		// 雜湊密碼加密比對
 		if (passwordEncoder.matches(memPassword, member.getMemPassword())) {
 			session.setAttribute("memId", member.getMemId());
@@ -147,14 +166,14 @@ public class MemberService {
 	// 更新密碼
 	public void updatePassword(String memEmail, String memPassword) {
 		MemberVO member = memberRepository.findByMemEmail(memEmail);
-		member.setMemPassword(passwordEncoder.encode(memPassword));//雜湊密碼加密
+		member.setMemPassword(passwordEncoder.encode(memPassword));// 雜湊密碼加密
 //		member.setMemPassword(memPassword);//明碼保存
 		updateMember(member);
 	}
 
 	public void updatePassword(Integer memId, String memPassword) {
 		MemberVO member = getOneMember(memId);
-		member.setMemPassword(passwordEncoder.encode(memPassword));//雜湊密碼加密
+		member.setMemPassword(passwordEncoder.encode(memPassword));// 雜湊密碼加密
 //		member.setMemPassword(memPassword);	//明碼保存
 		updateMember(member);
 	}
@@ -213,7 +232,7 @@ public class MemberService {
 		int length = 10;
 		StringBuilder result = new StringBuilder();
 		Random random = new Random();
-		String code ="";
+		String code = "";
 
 		for (int i = 0; i < length; i++) {
 			int index = random.nextInt(characters.length());
@@ -229,11 +248,34 @@ public class MemberService {
 		session.setAttribute("isLoggedIn", true);// 首頁登入判斷
 
 		mailService.sendPlainText(Collections.singleton(memEmail), "寵愛牠會員註冊通知",
-				"親愛的 " + memName + " 您好，感謝您使用第三方登入註冊寵愛牠平台\n未來您可選擇繼續使用第三方登入或者在官網輸入下列個人資訊登入\n您的帳號為：" + memEmail + "\n您的預設密碼為：" + code + "\n請妥善保管，謝謝");
+				"親愛的 " + memName + " 您好，感謝您使用第三方登入註冊寵愛牠平台\n未來您可選擇繼續使用第三方登入或者在官網輸入下列個人資訊登入\n您的帳號為：" + memEmail
+						+ "\n您的預設密碼為：" + code + "\n請妥善保管，謝謝");
 
 		return save;
 
 	}
 
+	// reCAPTCHA
+	public boolean verifyCaptcha(String responseToken) {
+		String secret = recaptchaSecret;
+		String verifyUrl = "https://www.google.com/recaptcha/api/siteverify";
+
+		RestTemplate restTemplate = new RestTemplate();  // RestTemplate送 application/x-www-form-urlencoded 格式(Google 要求的參數格式)
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>(); //會自動轉成表單格式
+		params.add("secret", secret);
+		params.add("response", responseToken);
+
+		ResponseEntity<Map> response = restTemplate.postForEntity(verifyUrl, params, Map.class);
+		Map body = response.getBody();
+
+		return (Boolean) body.get("success"); 
+//		API Response
+//		{
+//		  "success": true|false,
+//		  "challenge_ts": timestamp,  // timestamp of the challenge load (ISO format yyyy-MM-dd'T'HH:mm:ssZZ)
+//		  "hostname": string,         // the hostname of the site where the reCAPTCHA was solved
+//		  "error-codes": [...]        // optional
+//		}
+	}
 
 }

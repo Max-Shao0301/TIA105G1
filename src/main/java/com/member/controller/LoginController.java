@@ -31,7 +31,7 @@ public class LoginController{
 	
 	
 	@GetMapping("/login")
-	public String login(Model model, HttpServletRequest request) {
+	public String login(Model model, HttpServletRequest request, HttpSession session) {
 	    LoginDTO loginDTO = (LoginDTO) model.getAttribute("loginDTO");
 	    boolean rememberMeChecked = false;
 
@@ -47,6 +47,12 @@ public class LoginController{
 	                }
 	            }
 	        }
+	    }
+	    
+	    String error = (String) session.getAttribute("loginError");
+	    if (error != null) {
+	        model.addAttribute("errorMessage", error);
+	        session.removeAttribute("loginError"); // 拿完就清掉
 	    }
 
 	    model.addAttribute("loginDTO", loginDTO);
@@ -99,6 +105,10 @@ public class LoginController{
         	return "redirect:/login";
         case 3: 
         	redirectAttributes.addFlashAttribute("errorMessage2","密碼錯誤");
+        	redirectAttributes.addFlashAttribute("loginDTO", loginDTO);
+        	return "redirect:/login";
+        case 4:
+        	redirectAttributes.addFlashAttribute("errorMessage1","此帳號已停權，請聯絡客服或換帳號");
         	redirectAttributes.addFlashAttribute("loginDTO", loginDTO);
         	return "redirect:/login";
         default: return "redirect:/login";

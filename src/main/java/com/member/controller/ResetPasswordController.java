@@ -71,7 +71,7 @@ public class ResetPasswordController {
 	}
 
 	// 會員資料的重設密碼
-	@PostMapping("/passwordUpdate")
+	@PostMapping("/member/passwordUpdate")
 	public String passwordUpdate(@ModelAttribute("resetPasswordDTO") @Validated ResetPasswordDTO resetPasswordDTO,
 			BindingResult bindingResult, HttpSession session,
 			Model model) {
@@ -108,7 +108,7 @@ public class ResetPasswordController {
 		return "redirect:/passwordUpdate";
 	}
 	// 會員資料的重設密碼頁面
-	@GetMapping("/passwordUpdate")
+	@GetMapping("/member/passwordUpdate")
 	public String passwordUpdate(Model model, HttpSession session) {
 		if (!model.containsAttribute("resetPasswordDTO")) {
 			model.addAttribute("resetPasswordDTO", new ResetPasswordDTO());

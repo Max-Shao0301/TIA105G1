@@ -102,13 +102,13 @@
 					<div class="col-lg-6 col-md-7 col-12">
 						<!-- Top Contact -->
 						<ul class="top-contact">
-							<li th:if="${!session.isLoggedIn}"><a th:href="@{/login}"><i
+							<li th:if="${!isLoggedIn}"><a th:href="@{/login}"><i
 									class="icofont-login"></i>會員登入</a></li>
-							<li th:if="${session.isLoggedIn}"><i class="icofont-paw"></i>Hi,<span
+							<li th:if="${isLoggedIn}"><i class="icofont-paw"></i>Hi,<span
 								th:text="${session.memName}"></span>!</li>
-							<li th:if="${!session.isLoggedIn}"><a th:href="@{/verifyEmail}"><i
+							<li th:if="${!isLoggedIn}"><a th:href="@{/verifyEmail}"><i
 									class="icofont-ui-user"></i>會員註冊</a></li>
-							<li th:if="${session.isLoggedIn}"><a th:href="@{/member}"><i
+							<li th:if="${isLoggedIn}"><a th:href="@{/member}"><i
 									class="icofont-ui-user"></i>會員資料</a></li>
 						</ul>
 						<!-- End Top Contact -->
@@ -176,75 +176,106 @@
 			</div>
 		</div>
 	</div>
-	<section class="team-section py-5">
-		<div class="container">
-			<div class="row text-center mb-4">
-				<div class="mb-3">我們的團隊</div>
-				<p class="text-muted">認識我們四位專案夥伴與負責項目</p>
-			</div>
+<section class="team-section py-5">
+  <div class="container">
+    <div class="row text-center mb-4">
+      <div class="mb-3 fs-4 fw-bold">我們的團隊</div>
+      <p class="text-muted">認識我們四位專案夥伴與負責項目</p>
+    </div>
 
-			<div class="row g-4 justify-content-center">
-				<!-- 👤 1 -->
-				<div class="col-md-6 col-lg-3">
-					<div class="card h-100 text-center p-3">
-						<img src="/images/member1.jpg"
-							class="card-img-top rounded-circle mx-auto mt-3"
-							style="width: 120px; height: 120px; object-fit: cover;">
-						<div class="card-body">
-							<h5 class="card-title">邵柏中</h5>
-							<p class="card-text text-muted">組長</p>
-							<p class="card-text">負責訂單列表、會員UI頁面、搜尋與分頁功能</p>
-						</div>
-					</div>
-				</div>
+    <div class="row row-cols-1 row-cols-md-2 g-5">
+      <!-- 👤 郭柏中 -->
+      <div class="col">
+        <div class="card team-card">
+          <div class="d-flex">
+            <img src="/images/member1.jpg" class="rounded team-img me-4">
+            <div class="card-body p-0">
+              <h5 class="card-title">邵柏中</h5>
+              <p class="card-role">組長</p>
+              <ul class="team-list">
+                <li>平台方後台登入</li>
+                <li>後台會員管理</li>
+                <li>後台服務人員管理</li>
+                <li>後台訂單檢視</li>
+                <li>後台履歷審核</li>
+                <li>前台新增履歷</li>
+                <li>Spring Security 密碼加密</li>
+                <li>Spring Boot Mail 串接</li>
+                <li>OAuth2 登入串接</li>
+                <li>Google Authenticator 驗證</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-				<!-- 👤 2 -->
-				<div class="col-md-6 col-lg-3">
-					<div class="card h-100 text-center p-3">
-						<img src="/images/member2.jpg"
-							class="card-img-top rounded-circle mx-auto mt-3"
-							style="width: 120px; height: 120px; object-fit: cover;">
-						<div class="card-body">
-							<h5 class="card-title">陳華宣</h5>
-							<p class="card-text text-muted">副組長</p>
-							<p class="card-text">負責 Spring Boot API、資料庫設計與會員驗證機制</p>
-						</div>
-					</div>
-				</div>
+      <!-- 👤 陳華宣 -->
+      <div class="col">
+        <div class="card team-card">
+          <div class="d-flex">
+            <img src="/images/member2.jpg" class="rounded team-img me-4">
+            <div class="card-body p-0">
+              <h5 class="card-title">陳華宣</h5>
+              <p class="card-role">副組長</p>
+              <ul class="team-list">
+                <li>服務人員登入</li>
+                <li>班表系統</li>
+                <li>資料修改設定</li>
+                <li>訂單案件結案</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-				<!-- 👤 3 -->
-				<div class="col-md-6 col-lg-3">
-					<div class="card h-100 text-center p-3">
-						<img src="/images/member3.jpg"
-							class="card-img-top rounded-circle mx-auto mt-3"
-							style="width: 120px; height: 120px; object-fit: cover;">
-						<div class="card-body">
-							<h5 class="card-title">林珍妮</h5>
-							<p class="card-text text-muted">組員</p>
-							<p class="card-text">負責評論系統、訂單詳情 Modal、評價與取消彈窗</p>
-						</div>
-					</div>
-				</div>
+      <!-- 👤 林珍妮 -->
+      <div class="col">
+        <div class="card team-card">
+          <div class="d-flex">
+            <img src="/images/member3.jpg" class="rounded team-img me-4">
+            <div class="card-body p-0">
+              <h5 class="card-title">林珍妮</h5>
+              <p class="card-role">組員</p>
+              <ul class="team-list">
+                <li>評論系統</li>
+                <li>訂單詳情 Modal</li>
+                <li>評價彈窗</li>
+                <li>取消彈窗</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-				<!-- 👤 4 -->
-				<div class="col-md-6 col-lg-3">
-					<div class="card h-100 text-center p-3">
-						<img src="/images/member5.jpg"
-							class="card-img-top rounded-circle mx-auto mt-3"
-							style="width: 120px; height: 120px; object-fit: cover;">
-						<div class="card-body">
-							<h5 class="card-title">高逢廷</h5>
-							<p class="card-text text-muted">組員</p>
-							<p class="card-text">負責專案進度管理、UI一致性與跨組功能串聯</p>
-						</div>
-					</div>
-				</div>
+      <!-- 👤 高逢廷 -->
+      <div class="col">
+        <div class="card team-card">
+          <div class="d-flex">
+            <img src="/images/member5.jpg" class="rounded team-img me-4">
+            <div class="card-body p-0">
+              <h5 class="card-title">高逢廷</h5>
+              <p class="card-role">組員</p>
+              <ul class="team-list">
+                <li>訂單預約系統</li>
+                <li>訂單結帳系統</li>
+                <li>寵物資料系統</li>
+                <li>前端串接<br> Google Maps JavaScript API</li>
+                <li>Google Maps Places Autocomplete API</li>
+                <li>Google Maps Directions API</li>
+                <li>後端串接 <br>Google Maps Distance Matrix API</li>
+                <li>ECPay 全方位支付 API</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-			</div>
-		</div>
-	</section>
+    </div>
+  </div>
+</section>
+
 	<!-- Footer Area -->
-	<footer id="footer" class="footer ">
+		<footer id="footer" class="footer ">
 		<!-- Footer Top -->
 		<div class="footer-top">
 			<div class="container">
@@ -256,42 +287,18 @@
 								我們是緯育 Tibame JAVA養成班 <br>TIA105 第一組, 成員有:
 							</p>
 							<p>邵柏中 陳華宣 林珍妮 高逢廷</p>
-							<!-- Social -->
-							<ul class="social">
-								<li><a href="#"><i class="icofont-facebook"></i></a></li>
-								<li><a href="#"><i class="icofont-google-plus"></i></a></li>
-								<li><a href="#"><i class="icofont-twitter"></i></a></li>
-								<li><a href="#"><i class="icofont-vimeo"></i></a></li>
-								<li><a href="#"><i class="icofont-pinterest"></i></a></li>
-							</ul>
-							<!-- End Social -->
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer f-link">
 							<h2>Quick Links</h2>
-							<div class="row">
-								<div class="col-lg-6 col-md-6 col-12">
-									<ul>
-										<li><a href="./index.html"><i
-												class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-										<li><a href="./orderlist.html"><i
-												class="fa fa-caret-right" aria-hidden="true"></i>Orders</a></li>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>Question</a></li>
-									</ul>
-								</div>
-								<div class="col-lg-6 col-md-6 col-12">
-									<ul>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>Reserve</a></li>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>About Us</a></li>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>Join Us</a></li>
-									</ul>
-								</div>
-							</div>
+								<ul>
+									<li><a href="/staff/login"><i
+											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠服務人員工作系統</a></li>
+									<li><a href="/admin/login/page"><i
+											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠平台方管理系統</a></li>
+								</ul>
+
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
@@ -299,25 +306,18 @@
 							<h2>Open Hours</h2>
 							<p></p>
 							<ul class="time-sidual">
-								<li class="day">預約服務時間<span>8.00 - 21.00</span></li>
-								<li class="day">客服營業時間<span>7.00 - 22.00</span></li>
+								<li class="day">預約服務時間&nbsp;&nbsp;&nbsp;&nbsp;8.00 - 20.00</li>
+								<li class="day">客服營業時間&nbsp;&nbsp;&nbsp;&nbsp;7.00 - 22.00</li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer">
 							<h2>Contact Us</h2>
-							<p>客服專線: 7061776361726573</p>
-							<form action="mail/mail.php" method="get" target="_blank"
-								class="newsletter-inner">
-								<input name="email" placeholder="Email Address"
-									class="common-input" onfocus="this.placeholder = ''"
-									onblur="this.placeholder = 'Your email address'" required=""
-									type="email">
-								<button class="button">
-									<i class="icofont icofont-paper-plane"></i>
-								</button>
-							</form>
+							<p>客服信箱&nbsp;&nbsp;&nbsp;&nbsp;	a0912622502@gmail.com</p>
+							<p>客服專線&nbsp;&nbsp;&nbsp;&nbsp;(02) 5555-8858</p>
+							<p style="margin-left:70px">汪汪汪汪-幫幫我吧</p>
+							
 						</div>
 					</div>
 				</div>
