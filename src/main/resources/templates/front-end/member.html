@@ -191,7 +191,7 @@
 					<li class="value2" th:text="${memberVO.address}"></li>
 					<form th:action="@{/QRGenerate}" th:method="get">
 						<input type="hidden" name="user" value="PawCares">
-						<button class="button1" type="submit">啟用MFA登入二階段驗證</button>
+						<button class="button1" id="mfaButton" type="submit">啟用MFA登入二階段驗證</button>
 					</form>
 					<br>
 
@@ -388,5 +388,19 @@
 	<!-- Main JS -->
 	<script src="/js/main.js"></script>
 	<script src="/js/member.js"></script>
+	<script th:if="${message}" th:inline="javascript">
+		alert([[${message}]]);
+		const btn = document.getElementById('mfaButton');
+		if (btn) {
+			btn.innerText = "2FA已啟用";
+			btn.disabled = true;
+			btn.style.backgroundColor = "green";
+			btn.style.cursor = "not-allowed";
+			btn.style.opacity = "0.7";
+			btn.addEventListener("click", function(event) {
+				event.preventDefault(); // 阻止跳轉（submit 或超連結）
+			});
+		}
+	</script>
 </body>
 </html>

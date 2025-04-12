@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AuthController {
@@ -20,12 +21,13 @@ public class AuthController {
 
     //設定二階段驗證頁面
     @GetMapping("/QRGenerate")
-    public String generateSecret(HttpSession session, Model model) throws Exception {
+    public String generateSecret(HttpSession session, Model model, RedirectAttributes redirectAttributes) throws Exception {
         Integer memId = (Integer) session.getAttribute("memId"); //從session中取得會員ID
         MemberVO memberVO = memberService.getOneMember(memId);
         //如果會員已經有密鑰，則不需要再產生新的密鑰，轉向回首頁
         if (memberVO.getSecret() != null && !memberVO.getSecret().isEmpty()) {
-            return "redirect:/";
+            redirectAttributes.addFlashAttribute("message", "二階段登入已設定完成，請勿重複設定");
+            return "redirect:/member";
         }
 
         String user = memberVO.getMemEmail();
@@ -63,6 +65,18 @@ public class AuthController {
             model.addAttribute("error", "驗證碼錯誤，請重新輸入");
             return "front-end/mfaLoginPage";
         }
+    }
 
+    //放棄設定二階段登入
+    @GetMapping("/mfa/cancel")
+    public String cancel(HttpSession session) {
+        Integer memId = (Integer) session.getAttribute("memId");
+        MemberVO memberVO = memberService.getOneMember(memId);
+        //若使用者放棄設定則把密鑰設為null並且返回
+        if (memberVO.getSecret() != null && !memberVO.getSecret().isEmpty()) {
+            memberVO.setSecret(null);
+            memberService.updateMember(memberVO);
+        }
+        return "redirect:/";
     }
 }

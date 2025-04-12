@@ -110,11 +110,16 @@
   </div>
 
   <form th:action="@{/}" th:method="get">
-    <button type="submit">設定完成返回首頁</button>
+    <button type="submit">設定完成</button>
+  </form>
+  <form th:action="@{/mfa/cancel}" th:method="get">
+    <button type="submit" style="background-color: red">放棄設定</button>
   </form>
 </div>
 
 <script th:src="@{/vendors/jquery/jquery-3.7.1.min.js}"></script>
 <script th:src="@{/vendors/fontawesome-6.7.2/js/all.min.js}"></script>
+
+
 </body>
 </html>

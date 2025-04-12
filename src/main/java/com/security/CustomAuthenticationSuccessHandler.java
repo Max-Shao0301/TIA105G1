@@ -41,7 +41,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                     // 若手機和地址有填寫，導向首頁
                     response.sendRedirect("/");
                 } else {
-                    // 否則導向會員資料補填頁面
+                    // 否則導向更新會員資料頁面
                     response.sendRedirect("/updateMember");
                 }
             }
