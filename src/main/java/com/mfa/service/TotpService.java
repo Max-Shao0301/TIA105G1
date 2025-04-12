@@ -1,4 +1,4 @@
-package com.mfa;
+package com.mfa.service;
 
 import dev.samstevens.totp.code.DefaultCodeGenerator;
 import dev.samstevens.totp.code.DefaultCodeVerifier;

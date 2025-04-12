@@ -183,7 +183,7 @@ public class MemberController {
 		memberService.updateMemberData(memId, updateMemberDTO);
 		session.setAttribute("memName", updateMemberDTO.getMemName());
 		session.setAttribute("memberUpdated", true);
-		return "redirect:/updateMember";
+		return "redirect:/member/updateMember";
 	}
 
 }

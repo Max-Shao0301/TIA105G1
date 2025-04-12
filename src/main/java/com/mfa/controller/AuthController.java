@@ -1,7 +1,8 @@
-package com.mfa;
+package com.mfa.controller;
 
 import com.member.model.MemberService;
 import com.member.model.MemberVO;
+import com.mfa.service.TotpService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
