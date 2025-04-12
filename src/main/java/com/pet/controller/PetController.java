@@ -21,6 +21,8 @@ import com.pet.model.PetVO;
 import com.pet.model.dto.AddPetDTO;
 import com.pet.model.dto.PetDTO;
 
+import jakarta.servlet.http.HttpSession;
+
 @Controller
 public class PetController {
 
@@ -60,5 +62,25 @@ public class PetController {
 		response.put("result", "成功更新");
 
 		return ResponseEntity.ok(response);
+	}
+	
+	@PostMapping("/member/disablePet")
+	public String disablePet(PetDTO petDTO) {
+		petService.disableByPetId(petDTO.getPetId());
+		 return "redirect:/member"; 
+	}
+	//新增寵物
+	@PostMapping("/member/postPet")
+	public ResponseEntity<Map<String, Object>> postPet(@RequestBody AddPetDTO addPetDTO, HttpSession session) {
+		
+		Integer petId = petService.addPet(addPetDTO, session);
+		Map<String, Object> response = new HashMap<>();
+		response.put("result", "成功新增");
+
+		return ResponseEntity.status(HttpStatus.CREATED).body(response);
+	}
+	@GetMapping("/member/addpet")
+	public String addPet() {
+		return "/front-end/addpet";
 	}
 }
