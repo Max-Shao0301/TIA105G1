@@ -42,7 +42,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                     response.sendRedirect("/");
                 } else {
                     // 否則導向更新會員資料頁面
-                    response.sendRedirect("/updateMember");
+                    response.sendRedirect("/member/updateMember");
                 }
             }
         }
