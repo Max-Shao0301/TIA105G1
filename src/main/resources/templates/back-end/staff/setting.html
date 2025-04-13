@@ -105,13 +105,27 @@
     </div>
     <form th:action="@{/staff/update}" method="post" th:object="${StaffVO}" id="profileForm">
         <input type="hidden" th:field="*{staffId}"/>
-        <label for="staffName">姓名:</label>
+        <label for="staffName">姓名:
+        	<div th:if="${nameError}" class="alert alert-danger" role="alert">
+		        <span th:text="${nameError}"></span>
+		    </div>
+        </label>
         <input type="text" id="staffName" name="staffName" th:field="*{staffName}" required>
 
-        <label for="staffPhone">手機:</label>
-        <input type="text" id="staffPhone" name="staffPhone" th:field="*{staffPhone}" required>
 
-        <label for="carNumber">車牌號碼:</label>
+        <label for="staffPhone">手機:
+	        <div th:if="${phoneError}" class="alert alert-danger" role="alert">
+		        <span th:text="${phoneError}"></span>
+		    </div>
+	    </label>
+        <input type="text" id="staffPhone" name="staffPhone" th:field="*{staffPhone}" required>
+	    
+
+        <label for="carNumber">車牌號碼:
+        <div th:if="${carNumberError}" class="alert alert-danger" role="alert">
+	        <span th:text="${carNumberError}"></span>
+	    </div>        
+        </label>
         <input type="text" id="carNumber" name="carNumber" th:field="*{carNumber}" required>
 
         <label for="introduction">自我介紹:</label>
