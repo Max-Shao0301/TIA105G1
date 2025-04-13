@@ -177,4 +177,12 @@ div#homepage_img img {
   word-wrap: break-word;
 }
 
+a.logout_link,
+a.logout_link:visited,
+a.logout_link:hover,
+a.logout_link:active {
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+}
 

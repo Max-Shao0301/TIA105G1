@@ -30,6 +30,7 @@ function showContent(sectionId) {
     }
 }
 
+
 $(document).ready(function () {
     //彈窗
     let modal = $("#resumeModal");
