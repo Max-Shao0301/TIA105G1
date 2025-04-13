@@ -24,7 +24,7 @@ public class ScheduleController {
     @GetMapping("/staff/schedule")
     public String staffSchedule(Model model, HttpSession session) {
     	
-        model.addAttribute("scheduleVO", new ScheduleVO());  // 避免NullPointerException錯誤
+        model.addAttribute("scheduleVO", new ScheduleVO());
     	Integer staffId = (Integer) session.getAttribute("staffId");
     	
         if (staffId != null) {

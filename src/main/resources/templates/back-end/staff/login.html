@@ -21,6 +21,9 @@
             <div th:if="${error}" class="alert alert-danger" role="alert">
                 <span th:text="${error}"></span>
             </div>
+            <div th:if="${ok}" class="alert alert-success" role="alert">
+                <span th:text="${ok}"></span>
+            </div>
             <form th:action="@{/staff/login}" method="POST">
                 <div class="form-group">
                     <label for="email">帳號</label>

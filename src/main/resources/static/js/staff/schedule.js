@@ -1,6 +1,12 @@
 $(document).ready(function() {
 
     $(".timeslotTd").each(function() {
+		// 如果如果有預約就不能修改
+		if (text.search(/[2]/) !== -1) {
+			$('<span>已預約</span>').insertAfter($(this).closest('tr').find('input[name="action"]'));
+			$(this).closest('tr').find(".delete").remove();
+
+		}
 		
         // 是幾點到幾點
         var text = $(this).text();
@@ -19,12 +25,7 @@ $(document).ready(function() {
 			
 		$(this).text(firstOneOrTwoIndex + ":00 ~ " + lastOneOrTwoIndex + ":00");
 		
-		// 如果如果有預約就不能修改
-		if (text.search(/[2]/) !== -1) {
-  			$('<span>已預約</span>').insertAfter($(this).closest('tr').find('input[name="action"]'));
-			$(this).closest('tr').find(".delete").remove();
 
-		}
 		
     });
 });
