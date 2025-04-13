@@ -150,3 +150,25 @@ hr {
     border: none;
     color: red;
 }
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.pagination-button {
+    padding: 5px 10px;
+    margin: 0 5px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.active-page {
+    background-color: #007bff;
+    color: white;
+}
+
+.page-size-selector {
+    margin-bottom: 10px;
+}
