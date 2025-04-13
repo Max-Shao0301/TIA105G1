@@ -1,6 +1,13 @@
 package com.staff.controller;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +42,10 @@ public class StaffController {
     
     @Autowired
     private JavaMailSender mailSender;
-
+    
+    private Map<String, Map<String, Object>> resetPasswordData = new HashMap<>();
+    private final ScheduledExecutorService scheduleDeleteMap = Executors.newScheduledThreadPool(1);
+    
     @PostMapping("/updateStaffStatus")
     public String updateStaffStatus(@RequestParam("staff_id") Integer staffId){
     	
@@ -53,7 +64,7 @@ public class StaffController {
     @PostMapping("/staff/login")
     public String staffLogin(@RequestParam("staffEmail") String staffEmail,
                              @RequestParam("staffPassword") String staffPassword,
-                             Model model, HttpSession session, HttpServletRequest request) {
+                             RedirectAttributes redirectAttributes, HttpSession session, HttpServletRequest request) {
     	
         StaffVO staffVO = staffService.getOneStaff(staffEmail,staffPassword);
 		
@@ -78,9 +89,9 @@ public class StaffController {
             return "redirect:/staff/home";
             
         } else {
-        	
-        	model.addAttribute("error", "帳號或密碼錯誤"); 
-            return "/back-end/staff/login"; 
+            
+            redirectAttributes.addFlashAttribute("error", "帳號或密碼錯誤");
+            return "redirect:/staff/login";
             
         }
         
@@ -104,69 +115,130 @@ public class StaffController {
     
     
     @PostMapping("/staff/forgotPassword")
-    public String forgotPassword(@RequestParam("staffEmailForget") String staffEmail, Model model, HttpSession session) {
-
-        int passwordCode = (int) (Math.random() * 9000 + 1000);
-
-        // 將驗證碼和電子郵件存儲在 Session 中，增加一個新的flag參數
-        session.setAttribute("passwordCode", passwordCode);
-        session.setAttribute("forgotPasswordEmail", staffEmail);
-    	session.setAttribute("resetPasswordFlag", "true");
-
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(staffEmail);
-        message.setSubject("你於寵愛他申請重設密碼，" + passwordCode);
-
-        // 建立完整的 URL，不包含查詢參數
-        String baseUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/staff/login/forgotSetPassword")
-                .queryParam("reset", "true")
-                .toUriString();
-        message.setText("請用下列網址重設:\n" + baseUrl);
-
-        try {
-            mailSender.send(message);
-            System.err.println("信件發送成功");
-            model.addAttribute("error", "已寄送新亂碼密碼，請至信箱查收，並在30分鐘內重設");
-        } catch (MailException e) {
-            System.err.println("信件發送失敗: " + e.getMessage());
-            model.addAttribute("error", "信件發送失敗，請稍後再試");
-        }
-
-        return "/back-end/staff/login";
-    }
-    
-    //重設密碼
-    @PostMapping("/staff/login/forgotSetPassword")
-    public String forgotSetPassword(@RequestParam("reset") String reset, Model model, HttpSession session) {
-    	
-    	String resetPasswordFlag = (String) session.getAttribute("resetPasswordFlag");
-    	
-    	if(resetPasswordFlag == null) {
+    public String forgotPassword(@RequestParam("staffEmailForget") String staffEmail, RedirectAttributes redirectAttributes)  {
+        
+    	if((staffService.getOneStaffByEmail(staffEmail.trim())) == null) {
     		
-    		 model.addAttribute("error", "重設密碼的資訊已過期，請重新發送請求。");
-    		 return "/back-end/staff/login";
+    		redirectAttributes.addFlashAttribute("error", "找不到帳號，請再次確認帳號");
+            return "redirect:/staff/login";
+            
     	}
     	
-        Integer passwordCode = (Integer) session.getAttribute("passwordCode");
-        String staffEmail = (String) session.getAttribute("forgotPasswordEmail");
-
-        if (passwordCode == null || staffEmail == null) {
+    	//產生亂數
+        int codeLong = 20;
+        int resatTime = 10;
+        String codeValue = "ABCDEFGHJKMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789";
+		String randCode = "";
+        Random random = new Random();
+        
+        for (int i = 0; i < codeLong; i++) {
         	
-            model.addAttribute("error", "重設密碼的資訊已過期，請重新發送請求。");
-            return "/back-end/staff/login";
+        	randCode += codeValue.charAt(random.nextInt(codeValue.length()));
+        	
+        }
+        
+        //存入亂數
+        Map<String, Object> codeInfo = new HashMap<>();
+        codeInfo.put("staffEmail", staffEmail.trim());       
+        codeInfo.put("resetEndTime", LocalDateTime.now().plusMinutes(resatTime));
+        resetPasswordData.put(randCode, codeInfo);
+        
+        //設定十分鐘移除
+        scheduleDeleteMap.schedule(new MyTask(randCode), resatTime, TimeUnit.MINUTES);
+        
+        
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(staffEmail);
+        message.setSubject("你於寵愛他申請重設密碼，若沒有要重設密碼請忽視");
+        message.setText("請用下列網址重設:\n" + 
+	        		ServletUriComponentsBuilder.fromCurrentContextPath()
+			        .path("/staff/login/forgotSetPassword")
+			        .queryParam("value", randCode)
+			        .toUriString()
+        		);
+        
+        try {
+        	
+            mailSender.send(message);
+    		redirectAttributes.addFlashAttribute("ok", "已寄送重設密碼連結，請至信箱查收，並在10分鐘內重設");
+    		
+        } catch (MailException e) {
+        	
+            System.err.println("信件發送失敗: " + e.getMessage());
+    		redirectAttributes.addFlashAttribute("error", "信件發送失敗，請稍後再試");
+        }
+
+        return "redirect:/staff/login";
+        
+    }
+    
+    //移除Map排程
+    class MyTask implements Runnable {
+
+        private final String code;
+
+        public MyTask(String code) {
+        	
+            this.code = code;
             
         }
 
-        // 使用驗證碼和電子郵件進行密碼重設的邏輯
-        model.addAttribute("passwordCode", passwordCode);
-        model.addAttribute("staffEmail", staffEmail);
+        @Override
+        public void run() {
+        	
+            resetPasswordData.remove(code);
+            
+        }
+        
+    }
+    
+    
+    @GetMapping("/staff/login/forgotSetPassword")
+    public String forgotSetPasswordPage(@RequestParam("value") String randCode, Model model, HttpSession session) {
 
-        // 重設完密碼後，請記得清除 Session 中的資料
-        session.removeAttribute("passwordCode");
-        session.removeAttribute("forgotPasswordEmail");
-    	session.removeAttribute("resetPasswordFlag");
-        return "/back-end/staff/login";
+    	Map<String, Object> codeInfo = resetPasswordData.get(randCode);
+
+    	if(codeInfo == null) {
+    		
+	   		 return "redirect:/staff/login";
+ 		 
+    	}
+    	
+    	LocalDateTime resetEndTime = (LocalDateTime) codeInfo.get("resetEndTime");
+        String staffEmail = (String) codeInfo.get("staffEmail");
+        StaffVO staffVO = staffService.getOneStaffByEmail(staffEmail);
+        
+    	if(!(LocalDateTime.now().isBefore(resetEndTime)) || staffVO == null) {
+    		
+	   		 return "redirect:/staff/login";
+		 
+    	}
+    	
+		session.setAttribute("changestaffId", staffVO.getStaffId());
+        return "/back-end/staff/setpassword";
+        
+    }
+    
+    
+    //重設密碼
+    @PostMapping("/staff/login/forgotSetPassword")
+    public String forgotSetPassword(@RequestParam("checkNewPassword") String staffPassword,
+    		 						HttpSession session,RedirectAttributes redirectAttributes) {
+    	
+    	int staffId = (int) session.getAttribute("changestaffId");
+    	StaffVO staffVO = staffService.getOneStaff(staffId);
+    	
+    	if(staffVO == null) {
+    		
+    		redirectAttributes.addFlashAttribute("error", "請再確認信箱");
+   		 	return "redirect:/staff/login";
+   		 
+    	}
+   	
+    	staffVO.setStaffPassword(staffPassword);
+    	staffService.updateStaff(staffVO);
+		redirectAttributes.addFlashAttribute("ok", "密碼已經重設密碼，請重新登入。");
+        return "redirect:/staff/login";
         
     }    
        
@@ -182,8 +254,8 @@ public class StaffController {
 
         }
 
-        StaffVO staff = staffService.getOneStaff(staffId);
-        model.addAttribute("StaffVO", staff);
+        StaffVO staffVO = staffService.getOneStaff(staffId);
+        model.addAttribute("StaffVO", staffVO);
         return "/back-end/staff/setting";
 
     }
@@ -210,9 +282,11 @@ public class StaffController {
     
     //修改資料
     @PostMapping("/staff/update")
-    public String updateStaffInfo(@ModelAttribute StaffVO staffVO, HttpSession session) {
+    public String updateStaffInfo(@ModelAttribute StaffVO staffVO,
+    							HttpSession session, RedirectAttributes redirectAttributes) {
     	
         Integer staffId = (Integer) session.getAttribute("staffId");
+        boolean error = true;
         
         if (staffId == null || !(staffId.equals(staffVO.getStaffId()))) {
         	
@@ -221,12 +295,51 @@ public class StaffController {
         }
         
         StaffVO staffVODB = staffService.getOneStaff(staffId);
-    	staffVODB.setStaffName(staffVO.getStaffName());
-    	staffVODB.setCarNumber(staffVO.getCarNumber());
-    	staffVODB.setStaffPhone(staffVO.getStaffPhone());
-    	staffVODB.setIntroduction(staffVO.getIntroduction());
+        
+    	if (staffVO.getStaffName().trim() != "") {
+    		
+        	staffVODB.setStaffName(staffVO.getStaffName().trim());
+        	
+    	} else {
+    		
+			redirectAttributes.addFlashAttribute("nameError", "姓名不得為空值!");
+			error = true;
+			
+    	}
+        
+    	
+    	if (staffVO.getStaffPhone().trim().matches("\\d{10}")) {
+    		
+        	staffVODB.setStaffPhone(staffVO.getStaffPhone().trim());
+        	
+    	} else {
+    		
+			redirectAttributes.addFlashAttribute("phoneError", "電話號碼必須為十個數字！");
+			error = true;
+			
+    	}
+    	
+    	if (staffVO.getCarNumber().trim().matches("^[A-Z0-9]+$")) {
+    		
+        	staffVODB.setCarNumber(staffVO.getCarNumber().trim());
+        	
+    	} else {
+    		
+    		redirectAttributes.addFlashAttribute("carNumberError", "車牌號僅能輸入大寫英及數字");
+    		error = true;
+    		
+    	}
+    	
+    	staffVODB.setIntroduction(staffVO.getIntroduction().trim());
         staffService.updateStaff(staffVODB);
-        session.setAttribute("staffName", staffVODB.getStaffName());
+        session.setAttribute("staffName", staffVODB.getStaffName().trim());
+        
+    	if (error) {
+    		
+    		return "redirect:/staff/setting";
+    		
+    	}
+
         return "redirect:/staff/home";
         
     }
@@ -235,13 +348,14 @@ public class StaffController {
     @GetMapping("/staff/updateEmail")
     public String fupdateStaffEmailPage() {
     	
-        return "redirect:/staff/login";
+        return "redirect:/staff/setting";
         
     }
     
     
     @PostMapping("/staff/updateEmail")
-    public String updateStaffEmail(@RequestParam("staffEmail") String staffEmail, Model model, HttpSession session) {
+    public String updateStaffEmail(@RequestParam("staffEmail") String staffEmail,
+    								RedirectAttributes redirectAttributes, HttpSession session) {
 
         Integer staffId = (Integer) session.getAttribute("staffId");
         StaffVO staffVO = staffService.getOneStaff(staffId);
@@ -252,22 +366,29 @@ public class StaffController {
             
         }
         
-        // 信箱驗證
-        Matcher matcher = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$").matcher(staffEmail);
-        if (staffEmail == null || staffEmail.isEmpty() ||!matcher.matches()) {
+        if (staffEmail == null || staffEmail.isEmpty() ||!(staffEmail.trim().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))) {
         	
-        	model.addAttribute("error", "信箱格式錯誤"); 
-        	model.addAttribute("errorEmail", "信箱格式錯誤"); 
-        	model.addAttribute("StaffVO", staffVO);
+        	redirectAttributes.addFlashAttribute("error", "設定信箱格式錯誤"); 
+        	redirectAttributes.addFlashAttribute("StaffVO", staffVO);
             return "/back-end/staff/setting";
             
         }
 
-        staffVO.setStaffEmail(staffEmail);
-        staffService.updateStaff(staffVO);
-        model.addAttribute("error", "信箱重設成功，請重新登入"); 
-        return "/back-end/staff/login";
+        if(staffService.getOneStaffByEmail(staffEmail) == null) {
+        	
+            staffVO.setStaffEmail(staffEmail);
+            staffService.updateStaff(staffVO);
+            redirectAttributes.addFlashAttribute("ok", "信箱重設成功，請重新登入"); 
+            return "/back-end/staff/login";
+        	
+        }else {
+        	
+			redirectAttributes.addFlashAttribute("error", "該信箱無法註冊請重新設定"); 
+        	return "redirect:/staff/setting";
+        	
+        }
         
+
     }
     
     @GetMapping("/staff/updatePassword")
@@ -333,11 +454,8 @@ public class StaffController {
     }
     
     //訂單結案
-    @PostMapping("/staff/finishOrder")
-    public String finishStaffOrder(
-            @RequestParam("orderId") Integer orderId,
-            @RequestParam("image") MultipartFile image,
-            HttpSession session) {
+    @PostMapping("/staff/endOrders")
+    public String endOrders(@RequestParam("orderId") Integer orderId,@RequestParam("image") MultipartFile image,HttpSession session) {
 
         Integer staffId = (Integer) session.getAttribute("staffId");
         OrdersVO ordersVO = ordersService.getOneOrder(orderId);
@@ -347,29 +465,6 @@ public class StaffController {
             return "redirect:/staff/login";
             
         }
-       
-        try {
-        	
-        	ordersVO.setPicture(image.getBytes());
-            ordersVO.setStatus(2);
-            ordersService.updateOrders(ordersVO);
-            
-		} catch (IOException e) {
-
-			e.printStackTrace();
-			
-		}
-
-        return "redirect:/staff/home";
-        
-    }
-    
-    
-    //結案圖片上傳
-    @PostMapping("/staff/endOrders")
-    public String endOrders(@RequestParam("orderId") Integer orderId,@RequestParam("image") MultipartFile image,Model model) {
-
-        OrdersVO ordersVO = ordersService.getOneOrder(orderId);
         
         try {
         	

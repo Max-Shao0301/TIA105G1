@@ -98,7 +98,7 @@ nav.navbar {
     text-align: center;
 }
 
-/* 膠囊樣式應用到 span 元素 */
+
 #scheduleTable th span {
     background-color: #5c6bc0 !important;
     border-radius: 100px;
@@ -108,7 +108,7 @@ nav.navbar {
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
     overflow: hidden;
     display: inline-block;
-    margin: 5px; /* 添加膠囊與表格之間的間距 */
+    margin: 5px;
 }
 
 hr {
