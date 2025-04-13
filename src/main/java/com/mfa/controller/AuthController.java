@@ -25,7 +25,7 @@ public class AuthController {
     public String generateSecret(HttpSession session, Model model, RedirectAttributes redirectAttributes) throws Exception {
         Integer memId = (Integer) session.getAttribute("memId"); //從session中取得會員ID
         MemberVO memberVO = memberService.getOneMember(memId);
-        //如果會員已經有密鑰，則不需要再產生新的密鑰，轉向回首頁
+        //如果會員已經有密鑰，則不需要再產生新的密鑰，轉向回會員頁面
         if (memberVO.getSecret() != null && !memberVO.getSecret().isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "二階段登入已設定完成，請勿重複設定");
             return "redirect:/member";

@@ -109,11 +109,11 @@
     <img th:src="${qrCode}" alt="QRCode" />
   </div>
 
-  <form th:action="@{/}" th:method="get">
-    <button type="submit">設定完成</button>
+  <form th:action="@{/logout}" th:method="get">
+    <button type="submit">設定完成，重新登入</button>
   </form>
   <form th:action="@{/mfa/cancel}" th:method="get">
-    <button type="submit" style="background-color: red">放棄設定</button>
+    <button type="submit" style="background-color: red">放棄設定，返回首頁</button>
   </form>
 </div>
 
