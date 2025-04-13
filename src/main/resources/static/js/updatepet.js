@@ -368,6 +368,3 @@ async function init (){
 	}
 }
 init();
-
-		
-	
