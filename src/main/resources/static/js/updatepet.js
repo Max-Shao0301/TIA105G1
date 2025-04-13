@@ -1,4 +1,46 @@
-let petInformation;
+let petInformation =`
+			<h1 class="title">修改毛小孩資料</h1>
+			<div class="q_div" id="q1">
+				<label for="savedPets" class="question_title">選擇已儲存的毛小孩</label>
+				<select id="savedPets" class="question_input">
+                <option id="noPet"value="noPet">未選擇</option>
+				</select>
+			</div>
+			<div class="q_div" id="q2">
+				<span class="question_title">毛小孩類別</span>
+				<div id="petType">
+				<label><input type="radio" id="typeCat" name="petType" value="cat"> 貓</label>
+				<label><input type="radio" id="typeDog" name="petType" value="dog"> 狗</label>
+				</div>
+			</div>
+	
+			<div class="q_div" id="q3">
+				<span class="question_title">毛小孩性別</span>
+				<div id="petGender">
+				<label><input type="radio" id="genderM" name="petGender" value="1"> 公</label>
+				<label><input type="radio" id="genderF" name="petGender" value="2"> 母</label>
+				</div>
+			</div>
+			<div class="q_div" id="q4">
+				<label for="petName" class="question_title">毛小孩大名</label>
+				<input type="text" id="petName" class="input-text" placeholder="請輸入毛小孩大名">
+			</div>
+
+			<div class="q_div" id="q5">
+				<label for="petWeight" class="question_title">毛小孩體重(kg)</label>
+				<input type="text" id="petWeight" class="input-text" placeholder="例如：4kg">
+			</div>
+			<div class="page_break_div">
+					<button disabled class="page_break  noChange" id="nextPage">儲存</button>
+				</div>
+				<div class="none" id="lightbox">
+					<article id="petInfo_Art">
+						<button class="close_card_btn">&times;</button>
+						<div>
+							<button  type="button" id="yes" class="petInfo_btn">確定</button>
+						</div>
+					</article>
+				</div>`;
 let savedPets_Op;
 let pets;
 let petType;
@@ -15,16 +57,15 @@ async function getMember_Pet() {
 	let getMember_Pet_URL = 'http://localhost:8080/member/getMemberPet';
 	try{
 		let res = await fetch(getMember_Pet_URL);
-		 data = await res.json();
+		let data = await res.json();
 		console.log(data);  
 		if(res.ok && data.length > 0){
 			// petData = data;
-			
+			console.log('111');  
 			data.forEach(function(pet){
 				let id = pet.petId;
 				let name = pet.petName;
 				savedPets_Op +=`<option id="petId${id}" value='${JSON.stringify(pet)}'>${name}</option>`
-				
 			})
 			petInformation =`
 			<h1 class="title">修改毛小孩資料</h1>
@@ -65,11 +106,30 @@ async function getMember_Pet() {
 				<div class="none" id="lightbox">
 					<article id="petInfo_Art">
 						<button class="close_card_btn">&times;</button>
-						<div >
+						<div>
 							<button  type="button" id="yes" class="petInfo_btn">確定</button>
 						</div>
 					</article>
 				</div>`
+			return true;
+		}else if (data.length < 1){
+			$('.body_text').html(petInformation);
+			$('article').children('p').remove();
+			$('#petInfo_Art').prepend(`<p id="updatePet_P" >目前無毛小孩資料可修改<br>請先新增毛小孩</p>`);
+			$('#lightbox').removeClass('none');
+			$("#lightbox").off('click').on('click',function(){
+				window.location.href ="http://localhost:8080/member"
+			});
+			$('#lightbox > article').off('click').on('click',function(e){
+				e.stopPropagation();
+			})
+			$('.close_card_btn').off('click').on('click',function(){
+				window.location.href ="http://localhost:8080/member"
+			})
+			$('#yes').off('click').on('click',function(){
+				window.location.href ="http://localhost:8080/member/addpet"
+			})
+			return false;
 		}
 	} catch(error){
 		alert('網頁錯誤，請重新整理');
@@ -249,7 +309,7 @@ let  petMenu = function(){
         }
         petWeight.val(`${petInfo.weight}kg`);
         petName.val(petInfo.petName);
-
+		nextPage.addClass('noChange').prop("disabled", true);
         petType.off('change').on('change', function(){
             thisPetType = $('input[name="petType"]:checked').val()|| null;
             if(thisPetType != petInfo.type){
@@ -288,23 +348,24 @@ let  petMenu = function(){
     };
 }
 async function init (){
-	await getMember_Pet();
-    $('.body_text').html(petInformation);
-    pets = $('#savedPets');
-    petType = $('#petType');
-    petGender = $('#petGender');
-    petName = $('#petName');
-    petWeight =  $('#petWeight');
-    nextPage = $('#nextPage');
-    pets.off('change').on('change', petMenu);
-    $('#nextPage').off('click').on('click', async function(){
-        if(await checkPetInfoChange()){
-            petInfoLightBox(`<p id = "updatePet_P">變更完成</p>`)
-            $('#yes').off('cilck').on('click',function(){
-                window.location.href ="http://localhost:8080/member";
-            })
-        }
-    })
+	if(await getMember_Pet()){
+		$('.body_text').html(petInformation);
+		pets = $('#savedPets');
+		petType = $('#petType');
+		petGender = $('#petGender');
+		petName = $('#petName');
+		petWeight =  $('#petWeight');
+		nextPage = $('#nextPage');
+		pets.off('change').on('change', petMenu);
+		$('#nextPage').off('click').on('click', async function(){
+			if(await checkPetInfoChange()){
+				petInfoLightBox(`<p id = "updatePet_P">變更完成</p>`)
+				$('#yes').off('cilck').on('click',function(){
+					window.location.href ="http://localhost:8080/member";
+				})
+			}
+		})
+	}
 }
 init();
 
