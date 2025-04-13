@@ -194,7 +194,7 @@ public class StaffController {
     
     
     @GetMapping("/staff/login/forgotSetPassword")
-    public String forgotSetPasswordPage(@RequestParam("value") String randCode, Model model, HttpSession session) {
+    public String forgotSetPasswordPage(@RequestParam("value") String randCode, HttpSession session) {
 
     	Map<String, Object> codeInfo = resetPasswordData.get(randCode);
 
@@ -203,7 +203,7 @@ public class StaffController {
 	   		 return "redirect:/staff/login";
  		 
     	}
-    	
+
     	LocalDateTime resetEndTime = (LocalDateTime) codeInfo.get("resetEndTime");
         String staffEmail = (String) codeInfo.get("staffEmail");
         StaffVO staffVO = staffService.getOneStaffByEmail(staffEmail);
@@ -223,9 +223,10 @@ public class StaffController {
     //重設密碼
     @PostMapping("/staff/login/forgotSetPassword")
     public String forgotSetPassword(@RequestParam("checkNewPassword") String staffPassword,
-    		 						HttpSession session,RedirectAttributes redirectAttributes) {
+    		 						HttpSession session, RedirectAttributes redirectAttributes, Model model) {
     	
     	int staffId = (int) session.getAttribute("changestaffId");
+    	
     	StaffVO staffVO = staffService.getOneStaff(staffId);
     	
     	if(staffVO == null) {
@@ -233,6 +234,15 @@ public class StaffController {
     		redirectAttributes.addFlashAttribute("error", "請再確認信箱");
    		 	return "redirect:/staff/login";
    		 
+    	}
+    	
+
+    	if(!(staffPassword.trim().matches("^[a-zA-Z0-9!@#$%^&*]{6,20}$"))) {
+    		
+    		model.addAttribute("error", "密碼格式有誤，至少需設置六位大小寫英文數字");
+    		session.setAttribute("changestaffId", staffId);
+    		return "/back-end/staff/setpassword";
+    		
     	}
    	
     	staffVO.setStaffPassword(staffPassword);
@@ -413,10 +423,9 @@ public class StaffController {
         }
 
      // 密碼驗證
-        Matcher matcher = Pattern.compile("^[a-zA-Z0-9!@#$%^&*]{6,20}$").matcher(checkNewPassword);
-        if (newPassword == null || newPassword.isEmpty() ||!matcher.matches()) {
+        if (newPassword == null || newPassword.isEmpty() ||!(checkNewPassword.trim().matches("^[a-zA-Z0-9!@#$%^&*]{6,20}$"))) {
         	
-            model.addAttribute("error", "密碼格式有誤，至少需設置六位數");
+            model.addAttribute("error", "密碼格式有誤，至少需設置六位大小寫英文數字");
             model.addAttribute("StaffVO", staffVO);
             return "/back-end/staff/setting";
             
