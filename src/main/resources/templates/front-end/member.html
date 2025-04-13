@@ -231,7 +231,7 @@
 				        <tr th:each="pet : ${petDTOList}">
 				            <td th:text="${pet.petName}"></td>
 				            <td th:text="${pet.type == 'dog' ? '狗' : '貓'}"></td>
-				            <td th:text="${pet.petGender == '1' ? '公' : '母'}"></td>
+				            <td th:text="${pet.petGender == 1 ? '公' : '母'}"></td>
 				            <td th:text="${pet.weight} + ' kg'"></td>
 				            <td class = "deletePet-td">
 				                <form th:action="@{/member/disablePet}" method="post">
@@ -247,7 +247,7 @@
 				    </tbody>
 				</table>
 				<a th:href="@{/member/addpet}" class="button3">新增毛小孩</a> 
-				<a href="./member/updatepet.html" class="button3">修改寵物資料</a>
+				<a th:href="@{/member/updatepet}" class="button3">修改毛小孩資料</a>
 			</div>
 		</div>
 	</div>

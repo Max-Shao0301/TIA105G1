@@ -168,3 +168,6 @@ label{
 .redText label {
     color: red;
 } 
+.noChange, .noChange:hover {
+    background-color: gray;
+}
