@@ -11,9 +11,6 @@ public class PetDTO {
 	@Positive
 	private Integer petId;
 	
-	@Positive
-	private Integer memId;
-	
 	@NotNull(message = "name不得為空")
 	private String petName;  
 	
@@ -45,14 +42,6 @@ public class PetDTO {
 
 	public void setPetId(Integer petId) {
 		this.petId = petId;
-	}
-
-	public Integer getMemId() {
-		return memId;
-	}
-
-	public void setMemId(Integer memId) {
-		this.memId = memId;
 	}
 
 	public String getPetName() {

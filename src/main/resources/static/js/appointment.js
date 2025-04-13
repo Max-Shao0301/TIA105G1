@@ -536,7 +536,7 @@ async function getMember_Pet() {
 	try{
 		let res = await fetch(getMember_Pet_URL);
 		 data = await res.json();
-		// console.log(data);  
+		 console.log(data);  
 		if(res.ok && data.length > 0){
 			// petData = data;
 			
@@ -680,7 +680,6 @@ let updatePet_URL ='http://localhost:8080/appointment/putPet'
 				$(petInfoBtn_Yes).off('click').on('click',async function(){
 				let thisPetDate = {
 					petId : petInfo.petId,
-					memId : memberId,
 					petName : thisPetName,
 					type : thisPetType,
 					petGender : thisPetGender, 
@@ -1063,7 +1062,7 @@ function step2_js(){
 
 function step3_js(){
 	//寵物下拉選單
-	let pets = $(savedPets);
+	let pets = $('#savedPets');
 	pets.on('change', function(){
 		if(pets.val() == 'noPet'){
 			$('input[name="petType"]').prop('checked', false);  // 清除寵物類型的選擇

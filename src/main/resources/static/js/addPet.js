@@ -2,7 +2,6 @@ let petInfo;
 let petInfoBtn_No;
 let petInfoBtn_Yes;
 let addPet_URL ='http://localhost:8080/member/postPet';
-let updatePet_URL ='http://localhost:8080/appointment/putPet'
  function  checkPetInfoChange(){
 	return new Promise(async (resolve, reject) => {
 		thisPetGender = $('input[name="petGender"]:checked').val() || null;
