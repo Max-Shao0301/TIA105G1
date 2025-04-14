@@ -13,7 +13,6 @@
 <!-- Title -->
 <title>寵愛牠 PawCares</title>
 <link rel="icon" th:href="@{/images/logo.png}">
-<link rel="stylesheet" th:href="@{/css/addpet.css}">
 <!-- Google Fonts -->
 <link
 	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
@@ -27,6 +26,8 @@
 <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
 <!-- icofont CSS -->
 <link rel="stylesheet" th:href="@{/css/icofont.css}">
+<!-- Slicknav -->
+<link rel="stylesheet" th:href="@{/css/slicknav.min.css}">
 <!-- Owl Carousel CSS -->
 <link rel="stylesheet" th:href="@{/css/owl-carousel.css}">
 <!-- Datepicker CSS -->
@@ -41,13 +42,10 @@
 <link rel="stylesheet" th:href="@{/css/style.css}">
 <link rel="stylesheet" th:href="@{/css/responsive.css}">
 <link rel="stylesheet" th:href="@{/css/add.css}">
-<link rel="stylesheet" th:href="@{/css/orderlist.css}">
-
-<link rel="stylesheet" th:href="@{/css/updateMember.css}">
-
+<link rel="stylesheet" th:href="@{/css/questionAndAnswer.css}">
 </head>
 <body>
-	<input type="hidden" id="member-updated-flag" th:value="${memberUpdated}">
+
 	<!-- Preloader -->
 	<div class="preloader">
 		<div class="loader">
@@ -104,9 +102,14 @@
 					<div class="col-lg-6 col-md-7 col-12">
 						<!-- Top Contact -->
 						<ul class="top-contact">
-							<li><i class="icofont-paw"></i>Hi,<span
+							<li th:if="${!isLoggedIn}"><a th:href="@{/login}"><i
+									class="icofont-login"></i>會員登入</a></li>
+							<li th:if="${isLoggedIn}"><i class="icofont-paw"></i>Hi,<span
 								th:text="${session.memName}"></span>!</li>
-							<li><a th:href="@{/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
+							<li th:if="${!isLoggedIn}"><a th:href="@{/verifyEmail}"><i
+									class="icofont-ui-user"></i>會員註冊</a></li>
+							<li th:if="${isLoggedIn}"><a th:href="@{/member}"><i
+									class="icofont-ui-user"></i>會員資料</a></li>
 						</ul>
 						<!-- End Top Contact -->
 					</div>
@@ -122,7 +125,8 @@
 						<div class="col-lg-3 col-md-3 col-12">
 							<!-- Start Logo -->
 							<div class="logo">
-								<a th:href="@{/}"><img th:src="@{/images/title.png}" alt="#"></a>
+								<a th:href="@{/}"><img th:src="@{/images/title.png}"
+									alt="#"></a>
 							</div>
 							<!-- End Logo -->
 							<!-- Mobile Nav -->
@@ -135,9 +139,9 @@
 
 								<nav class="navigation">
 									<ul class="nav menu">
-										<li><a th:href="@{/}">關於我們</a></li>
+										<li><a th:href="@{/aboutUs}">關於我們</a></li>
 										<li><a th:href="@{/joinus}">加入我們 </a></li>
-										<li><a th:href="@{/questionAndAnswer}">常見問題 </a></li>
+										<li class="active"><a th:href="@{/questionAndAnswer}">常見問題 </a></li>
 										<li><a th:href="@{/orderList}">訂單檢視 </a></li>
 										<li><a th:href="@{/}">首頁</a>
 									</ul>
@@ -156,94 +160,110 @@
 		</div>
 		<!--/ End Header Inner -->
 	</header>
-	<div class="titlename">修改會員個人資料</div>
-	<div class="memcontainer">
-		<!-- 修改會員資料表單 -->
-		<!-- 修改會員資料表單 -->
-		<form th:action="@{/member/updateMember}" th:object="${updateMemberDTO}"
-			method="post">
-			<div class="row">
-				<!-- 姓名 -->
-				<div class="col-md-6">
-					<label class="form-label"> 姓名
-						<div th:if="${#fields.hasErrors('memName')}" class="wrong">
-							<i class="icofont-paw"></i> <span th:errors="*{memName}"></span>
-						</div>
-					</label> <input type="text" class="form-control" th:field="*{memName}"
-						placeholder="請輸入姓名">
-				</div>
-
-				<!-- 手機 -->
-				<div class="col-md-6 right">
-					<label class="form-label"> 手機
-						<div th:if="${#fields.hasErrors('memPhone')}" class="wrong">
-							<i class="icofont-paw"></i> <span th:errors="*{memPhone}"></span>
-						</div>
-						<div th:if="${wrongMessagePhone}" class="wrong">
-							<i class="icofont-paw"></i> <span th:text="${wrongMessagePhone}"></span>
-						</div>
-					</label> <input type="tel" class="form-control" th:field="*{memPhone}"
-						placeholder="請輸入手機號碼">
-				</div>
-			</div>
-
-			<!-- 地址標題與錯誤訊息 -->
-			<div class="row mt-3">
-				<div class="col-12 address">
-					<label class="form-label address-label">地址</label>
-					<div th:if="${#fields.hasErrors('city')}" class="wrong">
-						<i class="icofont-paw"></i> <span th:errors="*{city}"></span>
-					</div>
-					<div th:if="${#fields.hasErrors('district')}" class="wrong">
-						<i class="icofont-paw"></i> <span th:errors="*{district}"></span>
-					</div>
-
-				</div>
-			</div>
-
-			<!-- 縣市 + 區域（橫向排列） -->
-			<div class="form-group flex-container">
-				<div class="flex-group">
-					<label for="city">縣市</label> <select class="form-control" id="city"
-						name="city" onchange="updateDistricts()" th:field="*{city}">
-						<option value="">請選擇縣市</option>
-						<option value="Taipei">台北市</option>
-						<option value="NewTaipei">新北市</option>
-					</select>
-				</div>
-				<div class="flex-group">
-					<label for="district">區域</label> <select class="form-control"
-						id="district" name="district" data-selected="中山區" th:field="*{district}" th:attr="data-selected=*{district}">
-						<option value="">請選擇區域</option>
-					</select>
-				</div>
-			</div>
-
-			<!-- 詳細地址 -->
-			<div class="form-group">
-				<div class="address">
-					<label for="address">詳細地址</label>
-					<div th:if="${#fields.hasErrors('address')}" class="wrong">
-						<i class="icofont-paw"></i> <span th:errors="*{address}"></span>
+	<!-- End Header Area -->
+	<div class="breadcrumbs overlay">
+		<div class="container">
+			<div class="bread-inner">
+				<div class="row">
+					<div class="col-12">
+						<h2>常見問題</h2>
+						<ul class="bread-list">
+							<li><i class="icofont-simple-right"></i></li>
+							<li class="active">Question and Answer</li>
+						</ul>
 					</div>
 				</div>
-				<input type="text" class="form-control addressinput"
-					th:field="*{address}" placeholder="請輸入詳細地址">
 			</div>
-			<div class="button-group">
-				<button type="button" class="btn cancel">取消</button>
-				<button type="submit" class="btn btn-send">確定修改</button>
-			</div>
-		</form>
-	</div>
-	<div id="success-popup" style="display: none;">
-		<div id="success-popup-box">
-			<p>資料修改成功！</p>
-			<button id="success-popup-confirm">確定</button>
 		</div>
 	</div>
+<div class="container mt-5">
+  
+  <div class="accordion bkgc" id="petTaxiFAQ">
+	<h2 class="mb-4">寵物計程車常見問題</h2>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq1-heading">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
+          可以搭乘的寵物有哪些？可以搭乘幾隻寵物？
+        </button>
+      </h2>
+      <div id="faq1" class="accordion-collapse collapse show" aria-labelledby="faq1-heading" data-bs-parent="#petTaxiFAQ">
+        <div class="accordion-body">
+          目前一筆訂單只歡迎1隻犬或貓搭乘。
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq2-heading">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
+          接送範圍有哪些區域？
+        </button>
+      </h2>
+      <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faq2-heading" data-bs-parent="#petTaxiFAQ">
+        <div class="accordion-body">
+          提供台北市、新北市地區接送，偏遠區域請事先洽詢客服。
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq3-heading">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
+          人可以一起搭乘嗎？
+        </button>
+      </h2>
+      <div id="faq3" class="accordion-collapse collapse" aria-labelledby="faq3-heading" data-bs-parent="#petTaxiFAQ">
+        <div class="accordion-body">
+          可以！每趟可免費陪同一位飼主，如需多人同行請事先備註。
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq4-heading">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
+          如果寵物會嘔吐或便便怎麼辦？
+        </button>
+      </h2>
+      <div id="faq4" class="accordion-collapse collapse" aria-labelledby="faq4-heading" data-bs-parent="#petTaxiFAQ">
+        <div class="accordion-body">
+          建議出發前避免進食。若需清潔酌收 $500 清潔費，直接交給服務人員。
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq5-heading">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" aria-expanded="false" aria-controls="faq5">
+          可以臨時取消嗎？
+        </button>
+      </h2>
+      <div id="faq5" class="accordion-collapse collapse" aria-labelledby="faq5-heading" data-bs-parent="#petTaxiFAQ">
+        <div class="accordion-body">
+          可於出發 30 分鐘前免費取消，退款將變成您的點數，可於下次服務時使用。
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="faq6-heading">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6" aria-expanded="false" aria-controls="faq6">
+          可以刷卡嗎？
+        </button>
+      </h2>
+      <div id="faq6" class="accordion-collapse collapse" aria-labelledby="faq6-heading" data-bs-parent="#petTaxiFAQ">
+        <div class="accordion-body">
+          可使用信用卡付款或平台點數折抵，所有付款皆可線上完成。
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
 	<!-- Footer Area -->
-	<footer id="footer" class="footer ">
+		<footer id="footer" class="footer ">
 		<!-- Footer Top -->
 		<div class="footer-top">
 			<div class="container">
@@ -255,42 +275,18 @@
 								我們是緯育 Tibame JAVA養成班 <br>TIA105 第一組, 成員有:
 							</p>
 							<p>邵柏中 陳華宣 林珍妮 高逢廷</p>
-							<!-- Social -->
-							<ul class="social">
-								<li><a href="#"><i class="icofont-facebook"></i></a></li>
-								<li><a href="#"><i class="icofont-google-plus"></i></a></li>
-								<li><a href="#"><i class="icofont-twitter"></i></a></li>
-								<li><a href="#"><i class="icofont-vimeo"></i></a></li>
-								<li><a href="#"><i class="icofont-pinterest"></i></a></li>
-							</ul>
-							<!-- End Social -->
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer f-link">
 							<h2>Quick Links</h2>
-							<div class="row">
-								<div class="col-lg-6 col-md-6 col-12">
-									<ul>
-										<li><a href="./index.html"><i
-												class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-										<li><a href="./orderlist.html"><i
-												class="fa fa-caret-right" aria-hidden="true"></i>Orders</a></li>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>Question</a></li>
-									</ul>
-								</div>
-								<div class="col-lg-6 col-md-6 col-12">
-									<ul>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>Reserve</a></li>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>About Us</a></li>
-										<li><a href="#"><i class="fa fa-caret-right"
-												aria-hidden="true"></i>Join Us</a></li>
-									</ul>
-								</div>
-							</div>
+								<ul>
+									<li><a href="/staff/login"><i
+											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠服務人員工作系統</a></li>
+									<li><a href="/admin/login/page"><i
+											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠平台方管理系統</a></li>
+								</ul>
+
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
@@ -298,15 +294,18 @@
 							<h2>Open Hours</h2>
 							<p></p>
 							<ul class="time-sidual">
-								<li class="day">預約服務時間<span>8.00 - 21.00</span></li>
-								<li class="day">客服營業時間<span>7.00 - 22.00</span></li>
+								<li class="day">預約服務時間&nbsp;&nbsp;&nbsp;&nbsp;8.00 - 20.00</li>
+								<li class="day">客服營業時間&nbsp;&nbsp;&nbsp;&nbsp;7.00 - 22.00</li>
 							</ul>
 						</div>
 					</div>
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer">
 							<h2>Contact Us</h2>
-							<p>客服專線: 7061776361726573</p>
+							<p>客服信箱&nbsp;&nbsp;&nbsp;&nbsp;	a0912622502@gmail.com</p>
+							<p>客服專線&nbsp;&nbsp;&nbsp;&nbsp;(02) 5555-8858</p>
+							<p style="margin-left:70px">汪汪汪汪-幫幫我吧</p>
+							
 						</div>
 					</div>
 				</div>
@@ -330,8 +329,11 @@
 	<!--/ End Footer Area -->
 
 	<!-- jquery Min JS -->
-	<script src="/js/add.js"></script>
 	<script src="/js/jquery.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="/js/add.js"></script>
+
 	<!-- jquery Migrate JS -->
 	<script src="/js/jquery-migrate-3.0.0.js"></script>
 	<!-- jquery Ui JS -->
@@ -350,6 +352,8 @@
 	<script src="/js/slicknav.min.js"></script>
 	<!-- ScrollUp JS -->
 	<script src="/js/jquery.scrollUp.min.js"></script>
+	<!-- Niceselect JS -->
+	<script src="/js/niceselect.js"></script>
 	<!-- Tilt Jquery JS -->
 	<script src="/js/tilt.jquery.min.js"></script>
 	<!-- Owl Carousel JS -->
@@ -369,7 +373,5 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<!-- Main JS -->
 	<script src="/js/main.js"></script>
-	<script src="/js/order.js"></script>
-	<script src="/js/updateMember.js"></script>
 </body>
 </html>

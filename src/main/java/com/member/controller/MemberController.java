@@ -151,7 +151,7 @@ public class MemberController {
 			session.removeAttribute("memberUpdated");
 		}
 
-		return "/front-end/updateMember";
+		return "/front-end/member/updateMember";
 	}
 
 	// 更新會員資料
@@ -177,7 +177,7 @@ public class MemberController {
 		}
 
 		if (count != 0) {
-			return "/front-end/updateMember";
+			return "/front-end/member/updateMember";
 		}
 
 		memberService.updateMemberData(memId, updateMemberDTO);

@@ -34,7 +34,7 @@ public class IndexController_inSpringBoot {
 		session.setAttribute("isLoggedIn", isLoggedIn);
 		return "index"; // 回傳 Thymeleaf 頁面
 	}
-	
+
 	@GetMapping("/aboutUs")
 	public String aboutUs(Model model, HttpSession session) {
 		boolean isLoggedIn;
@@ -50,5 +50,19 @@ public class IndexController_inSpringBoot {
 		return "/front-end/aboutUs";
 	}
 
-	
+	@GetMapping("/questionAndAnswer")
+	public String questionAndAnswer(Model model, HttpSession session) {
+		boolean isLoggedIn;
+		if (session.getAttribute("isLoggedIn") != null) {
+			isLoggedIn = (boolean) session.getAttribute("isLoggedIn");
+			model.addAttribute("memName", session.getAttribute("memName"));
+		} else {
+			isLoggedIn = false;
+		}
+		model.addAttribute("isLoggedIn", isLoggedIn);
+		session.setAttribute("isLoggedIn", isLoggedIn);
+		System.out.println();
+		return "/front-end/questionAndAnswer";
+	}
+
 }
