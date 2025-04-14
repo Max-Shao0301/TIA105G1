@@ -7,6 +7,7 @@
     <title>服務人員系統</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
     <link rel="stylesheet" th:href="@{/css/staff/staffhome.css}">
 
@@ -95,25 +96,26 @@
                                     <td class="timeslotTd" th:text="${order.schedule.timeslot}"></td>
                                     <td>
                                         <span th:text="${order.onLocation}"></span>
+                                            <button type="button" class="btn btn-outline-info btn-sm onmap-button"
+	                                            data-bs-toggle="modal" data-bs-target="#mapInfoModal"
+	                                            th:data-onLocation="${order.onLocation}">
+	                                            地圖
+                                        	</button>
                                         <hr>
                                         <span th:text="${order.offLocation}"></span>
+                                            <button type="button" class="btn btn-outline-info btn-sm offmap-button"
+	                                            data-bs-toggle="modal" data-bs-target="#mapInfoModal"
+	                                            th:data-offLocation="${order.offLocation}">
+	                                            地圖
+                                        	</button>
                                     </td>
                                     <td th:text="${order.notes}"></td>
                                     <td>
                                         <button type="button" class="btn btn-outline-info btn-sm pet-button"
                                             data-bs-toggle="modal" data-bs-target="#petInfoModal"
                                             th:data-order-id="${order.orderId}">
-                                            查看
+                                            資料
                                         </button>
-                                        <div class="pet-info-data" style="display: none;">
-                                            <th:block th:each="orderPet : ${order.pet}">
-                                                <span class="pet-type" th:text="${orderPet.pet.type}"></span><br>
-                                                <span class="pet-name" th:text="${orderPet.pet.petName}"></span><br>
-                                                <span class="pet-gender"
-                                                    th:text="${orderPet.pet.petGender == 1 ? '公' : (orderPet.pet.petGender == 2 ? '母' : '')}"></span><br>
-                                                <span class="pet-weight" th:text="${orderPet.pet.weight}"></span><br>
-                                            </th:block>
-                                        </div>
                                     </td>
                                     <td th:text="${order.member.memPhone}"></td>
                                     <td class="payment-cell" th:data-status="${order.status}"
@@ -126,6 +128,14 @@
                                     <td class="rating-cell" th:data-status="${order.status}" th:data-rating="${order.rating}">
                                         <span th:text="${order.rating}"></span>
                                     </td>
+                                    <td style="display:none;">
+									    <div class="pet-info-data" th:each="orderPet : ${order.pet}">
+									        <span class="pet-type" th:text="${orderPet.pet.type}"></span>
+									        <span class="pet-name" th:text="${orderPet.pet.petName}"></span>
+									        <span class="pet-gender" th:text="${orderPet.pet.petGender == 1 ? '公' : (orderPet.pet.petGender == 2 ? '母' : '')}"></span>
+									        <span class="pet-weight" th:text="${orderPet.pet.weight}"></span>
+									    </div>
+									</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -135,11 +145,12 @@
         </div>
     </div>
 
+	
     <div class="modal fade" id="petInfoModal" tabindex="-1" aria-labelledby="petInfoModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="petInfoModalLabel">寵物</h5>
+                    <h5 class="modal-title" id="petInfoModalLabel">寵物資訊</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="petInfoModalBody">
@@ -150,6 +161,23 @@
             </div>
         </div>
     </div>
+    
+    <div class="modal fade" id="mapInfoModal" tabindex="-1" aria-labelledby="mapInfoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mapInfoModalLabel">地圖</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="mapInfoModalBody">
+                	
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+                </div>
+            </div>
+        </div>
+    </div>    
 
     <div class="modal fade" id="uploadModal" tabindex="-1" aria-labelledby="uploadModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -176,7 +204,8 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-
+	<script th:src="'https://maps.googleapis.com/maps/api/js?key=' + ${mapApiKey}" async defer></script>
+	
     <script>
         $(document).ready(function () {
 
@@ -272,14 +301,10 @@
             });
 
             //寵物資訊
-            $("#data-table").on("click", ".upload-button", function () {
-                let orderId = $(this).data("order-id");
-                $("#orderIdInput").val(orderId);
-            });
-
-            $(".pet-button").click(function () {
+            $("#data-table").on("click", ".pet-button", function () {
                 let orderId = $(this).data("order-id");
                 let petInfo = "";
+
                 $(".order-row").each(function () {
                     if ($(this).find(".status-cell").data("order-id") == orderId) {
                         $(this).find(".pet-info-data").each(function () {
@@ -287,17 +312,72 @@
                             let name = $(this).find(".pet-name").text();
                             let gender = $(this).find(".pet-gender").text();
                             let weight = $(this).find(".pet-weight").text();
+
                             petInfo += "<div class='pet-info-item'>";
-                            petInfo += "<span class='pet-info-label'>類別:</span><span class='pet-info-value'>" + type + "</span>";
-                            petInfo += "<span class='pet-info-label'>大名:</span><span class='pet-info-value'>" + name + "</span>";
-                            if (gender) petInfo += "<span class='pet-info-label'>性別:</span><span class='pet-info-value'>" + gender + "</span>";
-                            if (weight) petInfo += "<span class='pet-info-label'>體重:</span><span class='pet-info-value'>" + weight + "</span>";
+                            petInfo += "<span class='pet-info-label'>類別:</span><span class='pet-info-value'>" + type + "</span><br>";
+                            petInfo += "<span class='pet-info-label'>大名:</span><span class='pet-info-value'>" + name + "</span><br>";
+                            if (gender) petInfo += "<span class='pet-info-label'>性別:</span><span class='pet-info-value'>" + gender + "</span><br>";
+                            if (weight) petInfo += "<span class='pet-info-label'>體重:</span><span class='pet-info-value'>" + weight + "</span><br>";
                             petInfo += "</div>";
                         });
                     }
                 });
                 $("#petInfoModalBody").html("<h5 class='pet-info-modal-title'>寵物資訊</h5>" + petInfo);
             });
+            
+			//地圖按鈕
+			let currentAddress = "";
+			
+			$("#data-table").on("click", ".onmap-button", function () {
+			    currentAddress = $(this).data("onlocation");
+			    $("#mapInfoModalBody").html(`
+			        <h5 class='map-info-modal-title'>上車地點資訊</h5>
+			        <p>${currentAddress}</p>
+			        <div id="map" style="height: 300px; width: 100%;"></div>
+			    `);
+			    $('#mapInfoModal').modal('show');
+			});
+			
+			$("#data-table").on("click", ".offmap-button", function () {
+			    currentAddress = $(this).data("offlocation");
+			    $("#mapInfoModalBody").html(`
+			        <h5 class='map-info-modal-title'>下車地點資訊</h5>
+			        <p>${currentAddress}</p>
+			        <div id="map" style="height: 300px; width: 100%;"></div>
+			    `);
+			    $('#mapInfoModal').modal('show');
+			});
+			
+			$('#mapInfoModal').on('shown.bs.modal', function () {
+			    setTimeout(function () {
+			        showAddressOnMap(currentAddress, 'map');
+			    }, 200);
+			});
+
+			
+			function showAddressOnMap(address, mapElementId) {
+			    const geocoder = new google.maps.Geocoder();
+			    const mapElement = document.getElementById(mapElementId);
+			
+			    geocoder.geocode({ address: address }, function (results, status) {
+			        if (status === "OK") {
+			            const location = results[0].geometry.location;
+			            const map = new google.maps.Map(mapElement, {
+			                center: location,
+			                zoom: 15,
+			            });
+			            new google.maps.Marker({
+			                position: location,
+			                map: map,
+			            });
+			        } else {
+			            mapElement.innerHTML = "無法找到該地址。";
+			        }
+			    });
+			}
+
+
+
         });
     </script>
 

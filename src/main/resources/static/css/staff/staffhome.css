@@ -251,3 +251,8 @@ hr {
     background-color: #3f51b5;
     border-color: #3f51b5;
 }
+
+
+.pet-info-label, .pet-info-value {
+  display: inline;
+}
