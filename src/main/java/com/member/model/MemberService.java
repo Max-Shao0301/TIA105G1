@@ -166,7 +166,9 @@ public class MemberService {
 	// 更新密碼
 	public void updatePassword(String memEmail, String memPassword) {
 		MemberVO member = memberRepository.findByMemEmail(memEmail);
+//		System.out.println(member.getMemEmail());
 		member.setMemPassword(passwordEncoder.encode(memPassword));// 雜湊密碼加密
+//		System.out.println(passwordEncoder.encode(memPassword));
 //		member.setMemPassword(memPassword);//明碼保存
 		updateMember(member);
 	}
