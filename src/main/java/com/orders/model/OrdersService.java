@@ -22,12 +22,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ecpay.payment.integration.AllInOne;
 import com.ecpay.payment.integration.domain.AioCheckOutOneTime;
-import com.ecpay.payment.integration.domain.QueryTradeInfoObj;
 import com.member.model.MemberRepository;
 import com.member.model.MemberVO;
 import com.orderpet.model.OrderPetRepository;
@@ -105,14 +105,20 @@ public class OrdersService {
 	
 	private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(10);//設定任務的執行池數量
     private final ConcurrentHashMap<Integer, ScheduledFuture<?>> tradeNoMap = new ConcurrentHashMap<>(); //儲存任務用
-	//計時十分鐘，如果超過十分鐘未付款則視為訂單取消
+	
+    //變更資料庫的方法而外拆開來加Transactional，確保執行安全
+    @Transactional
+    public void noPaymentOrder(Integer orderId) {
+    	Integer schId = ordersRepository.findById(orderId).orElse(null).getSchedule().getSchId();
+		scheduleRepository.updateUnbooked(schId);
+		ordersRepository.updateOrderStatus(0, orderId);
+		tradeNoMap.remove(orderId);//執行完後把orderId對應的任務從map中移除
+    }
+  //計時十分鐘，如果超過十分鐘未付款則視為訂單取消
     public void paymentCountdown(Integer orderId) {
 		Runnable nonPayment = () -> {  //超過十分鐘時所要執行的任務
 	    	System.out.println(orderId + "未付款");
-			Integer schId = ordersRepository.findById(orderId).orElse(null).getSchedule().getSchId();
-			scheduleRepository.updateUnbooked(schId);
-			ordersRepository.updateOrderStatus(0, orderId);
-			tradeNoMap.remove(orderId);//執行完後把orderId對應的任務從map中移除
+	    	noPaymentOrder(orderId);
 	    };
 	  //使用ScheduledFuture設定十分鐘後執行任務
 	    ScheduledFuture<?> take = scheduler.schedule(nonPayment, 10, TimeUnit.MINUTES); 
@@ -226,7 +232,7 @@ public class OrdersService {
 		aco.setTradeDesc(des); // 交易描述
 		aco.setItemName("Pet Taxi"); // 商品名稱
 		aco.setNeedExtraPaidInfo("Y"); // 額外資訊
-		aco.setReturnURL("https://5d81-124-218-108-244.ngrok-free.app/ecpayReturn"); // 付款結果通知 應為商家的controller
+		aco.setReturnURL("https://64a6-124-218-108-244.ngrok-free.app/ecpayReturn"); // 付款結果通知 應為商家的controller
 		// aco.setOrderResultURL(""); //付款完成後的結果參數 傳至前端用的
 		aco.setClientBackURL("http://localhost:8080/appointment/paymentResults"); // 付完錢後的返回商店按鈕會到的網址
 		//使用ECPay建立付款頁面的方法 兩個參數分別是訂單物件跟發票物件 不開發票第二個就傳null
@@ -239,6 +245,7 @@ public class OrdersService {
 	}
 
 	// 檢查 ECPay回傳的付款結果資訊
+	@Transactional
 	public void checkECPayReq(String reqBody) {
 		String[] strArr = reqBody.split("&");
 		Hashtable<String, String> ECPayReq = new Hashtable<>();
@@ -251,7 +258,6 @@ public class OrdersService {
 		}
 		Integer orderId = Integer.valueOf(ECPayReq.get("MerchantTradeNo").substring(1, 3));
 		System.out.println("訂單編號" + orderId);
-		String email = ordersRepository.findById(orderId).orElseGet(null).getMember().getMemEmail();
 		AllInOne aio = new AllInOne("");
 		// 檢查是否為ECPay回傳的資料
 		if (aio.compareCheckMacValue(ECPayReq)) {
@@ -260,8 +266,37 @@ public class OrdersService {
 				System.out.println("已付款");
 				ordersRepository.updateOrderStatus(1, orderId);
 				stopPaymentCountdown(orderId);
-			    String subject = "寵愛牠註冊會員";
-			    String content = "訂單預約完成，請再多加留意預約時間";
+			   //調訂單資料出來 組回傳用的信件
+			    OrdersVO ordersVO = ordersRepository.findById(orderId).orElseGet(null);
+			    String email = ordersVO.getMember().getMemEmail();
+			    String timeslot = ordersVO.getSchedule().getTimeslot();
+				Integer apptTime = 0;
+				//用迴圈索引的方式找第一個不是0的數，藉此來辨別這個班表的起始預約時間是幾點
+				for (int i = 0; i < timeslot.length(); i++) {
+					if (timeslot.charAt(i) != '0') {
+						apptTime = i;
+						break; // 找到後就跳出迴圈
+					}
+				}
+				PetVO petVO = ordersVO.getPet().get(0).getPet();
+				
+				String subject = "寵愛牠-預約成功通知";
+				String content = 
+					    "預約項目：寵物接送\n" +
+					    "預約時間："+ ordersVO.getSchedule().getDate()+" "+ apptTime+ ":00\n" +
+					    "上車地址：" + ordersVO.getOnLocation()+"\n" +
+					    "目的地地址："+ ordersVO.getOffLocation()+"\n" +
+					    "預約服務人員："+ ordersVO.getStaff().getStaffName() +"\n" +
+					    "服務人員聯絡電話："+ ordersVO.getStaff().getStaffPhone() +"\n" +
+					    "會員姓名："+ ordersVO.getMember().getMemName()+"\n" +
+					    "會員電話："+ ordersVO.getMember().getMemPhone()+"\n" +
+					    "毛小孩類別："+ (petVO.getType().equals("cat")? "貓" : "狗")+"\n" +
+					    "毛小孩性別："+ (petVO.getPetGender().equals(1)? "公": "母")+"\n" +
+					    "毛小孩大名："+ petVO.getPetName()+"\n" +
+					    "毛小孩體重："+ petVO.getWeight()+"kg\n" +
+					    "其他注意事項："+ ordersVO.getNotes()+"\n\n" +
+					    "請留意預約時間";
+				System.out.println(content);
 			    mailService.sendPlainText(Collections.singleton(email), subject, content);
 			} else {
 				// 收到的不是付款成功通知時 更改訂單狀態、修改該員工班表
@@ -347,7 +382,7 @@ public class OrdersService {
 		// 發送請求用的類別 spring提供的
 		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<Map> res = restTemplate.postForEntity(ROUTES_API_URL, entity, Map.class);
-
+ 
 		// 拆解得到的回應
 		Map<String, Object> body = res.getBody();
 		List<Map<String, Object>> routes = (List<Map<String, Object>>) body.get("routes");
@@ -355,10 +390,10 @@ public class OrdersService {
 		if (!routes.isEmpty()) {
 			Integer distanceInt = (Integer) routes.get(0).get("distanceMeters");
 			Double distance = Math.round((distanceInt / 1000.0) * 10) / 10.0;
-			amoute = (int) Math.round(distance * PRICEPERKM + STARTPRICE);
+			amoute = (distance > 1 ? (int) Math.round(distance * PRICEPERKM + STARTPRICE) : STARTPRICE);
 			System.out.println("距離" + distance);
 		}
-		System.out.println("金額" + amoute.getClass());
+		System.out.println("金額" + amoute);
 		session.setAttribute("amoute", amoute);
 		return amoute.toString();
 	}

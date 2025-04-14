@@ -10,202 +10,204 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		
 		<!-- Title -->
-		<title>寵愛牠 PawCares</title>
-		<link rel="icon" href="img/logo.png">
-		<link rel="stylesheet" href="./css/addpet.css">
+        <title>Pawcares</title>
+		
+		<!-- Favicon -->
+        <link rel="icon" href="/images/logo.png">
+		
 		<!-- Google Fonts -->
 		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-      
+
 		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" href="css/bootstrap.min.css">
+		<link rel="stylesheet" href="/css/bootstrap.min.css">
 		<!-- Nice Select CSS -->
-		<link rel="stylesheet" href="css/nice-select.css">
+		<link rel="stylesheet" href="/css/nice-select.css">
 		<!-- Font Awesome CSS -->
-        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
 		<!-- icofont CSS -->
-        <link rel="stylesheet" href="css/icofont.css">
+        <link rel="stylesheet" href="/css/icofont.css">
 		<!-- Slicknav -->
-		<link rel="stylesheet" href="css/slicknav.min.css">
+		<link rel="stylesheet" href="/css/slicknav.min.css">
 		<!-- Owl Carousel CSS -->
-        <link rel="stylesheet" href="css/owl-carousel.css">
+        <link rel="stylesheet" href="/css/owl-carousel.css">
 		<!-- Datepicker CSS -->
-		<link rel="stylesheet" href="css/datepicker.css">
+		<link rel="stylesheet" href="/css/datepicker.css">
 		<!-- Animate CSS -->
-        <link rel="stylesheet" href="css/animate.min.css">
+        <link rel="stylesheet" href="/css/animate.min.css">
 		<!-- Magnific Popup CSS -->
-        <link rel="stylesheet" href="css/magnific-popup.css">
+        <link rel="stylesheet" href="/css/magnific-popup.css">
 		
 		<!-- Medipro CSS -->
-        <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/style.css">
-        <link rel="stylesheet" href="css/responsive.css">
+		<link rel="stylesheet" href="/css/normalize.css">
+        <link rel="stylesheet" href="/css/style.css">
+        <link rel="stylesheet" href="/css/responsive.css">
 		<link rel="stylesheet" href="/css/add.css">
-		<link rel="stylesheet" href="/css/orderlist.css">
-    <link rel="stylesheet" href="./css/addpet.css">
+		<!-- JS css -->
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.14.1/themes/base/jquery-ui.css">
+        <link id="page_css" rel="stylesheet" href="/css/pet_information.css">
+		<style>
+			
+		</style>
     </head>
     <body>
 	
-		<!-- Preloader -->
-		<div class="preloader">
-            <div class="loader">
-                <div class="indicator">
-                    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
-                        <!-- 背景圓形 -->
-                        <circle cx="25" cy="25" r="24" fill="#889D75" stroke="white" stroke-width="2"/>
-                        <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
-                        <!-- 更扁平的愛心形狀 -->
-                        <path d="M25,17.5 C32.5,5 42.5,20 25,30 C7.5,20 17.5,5 25,17.5 Z"
-                              fill="none" stroke="white" stroke-width="2"
-                              stroke-linecap="round" stroke-linejoin="round"
-                              stroke-dasharray="100" stroke-dashoffset="100">
-                          <animate attributeName="stroke-dashoffset" from="100" to="0" dur="0.5s" repeatCount="indefinite"/>
-                        </path>
-                    
-                        <!-- 腳趾小圓 --> 
-                        <circle cx="15" cy="35" r="3.5" fill="none" stroke="white" stroke-width="2">
-                          <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="25" cy="37.5" r="3.5" fill="none" stroke="white" stroke-width="2">
-                          <animate attributeName="opacity" values="1;0;1" dur="0.5s" repeatCount="indefinite"/>
-                        </circle>
-                        <circle cx="35" cy="35" r="3.5" fill="none" stroke="white" stroke-width="2">
-                          <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
-                        </circle>
-                    </svg>
-                </div>
-            </div>
-        </div>
-        <!-- End Preloader -->
-		
-		<!-- Get Pro Button -->
-		
+	<!-- Preloader -->
+	<div class="preloader">
+		<div class="loader">
+			<div class="indicator">
+				<svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+					<!-- 背景圓形 -->
+					<circle cx="25" cy="25" r="24" fill="#889D75" stroke="white" stroke-width="2"/>
+					<animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
+					<!-- 更扁平的愛心形狀 -->
+					<path d="M25,17.5 C32.5,5 42.5,20 25,30 C7.5,20 17.5,5 25,17.5 Z"
+						  fill="none" stroke="white" stroke-width="2"
+						  stroke-linecap="round" stroke-linejoin="round"
+						  stroke-dasharray="100" stroke-dashoffset="100">
+					  <animate attributeName="stroke-dashoffset" from="100" to="0" dur="0.5s" repeatCount="indefinite"/>
+					</path>
+				
+					<!-- 腳趾小圓 --> 
+					<circle cx="15" cy="35" r="3.5" fill="none" stroke="white" stroke-width="2">
+					  <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
+					</circle>
+					<circle cx="25" cy="37.5" r="3.5" fill="none" stroke="white" stroke-width="2">
+					  <animate attributeName="opacity" values="1;0;1" dur="0.5s" repeatCount="indefinite"/>
+					</circle>
+					<circle cx="35" cy="35" r="3.5" fill="none" stroke="white" stroke-width="2">
+					  <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
+					</circle>
+				</svg>
+			</div>
+		</div>
+	</div>
+	<!-- End Preloader -->
 	
-		<!-- Header Area -->
-		<header class="header" >
-			<!-- Topbar -->
-			<div class="topbar">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-6 col-md-5 col-12">
-						</div>
-						<div class="col-lg-6 col-md-7 col-12">
-							<!-- Top Contact -->
-				<ul class="top-contact">
+	<!-- Header Area -->
+	<header class="header" >
+		<!-- Topbar -->
+		<div class="topbar">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-md-5 col-12">
+					</div>
+					<div class="col-lg-6 col-md-7 col-12">
+						<!-- Top Contact -->
+<ul class="top-contact">
 							<li><i class="icofont-paw"></i>Hi,<span
 								th:text="${session.memName}"></span>!</li>
 							<li><a th:href="@{/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
 						</ul>
-							<!-- End Top Contact -->
-						</div>
+						<!-- End Top Contact -->
 					</div>
 				</div>
 			</div>
-			<!-- End Topbar -->
-			<!-- Header Inner -->
-			<div class="header-inner">
-				<div class="container">
-					<div class="inner">
-						<div class="row">
-							<div class="col-lg-3 col-md-3 col-12">
-								<!-- Start Logo -->
-								<div class="logo">
-									<img src="img/title.png" alt="#"></a>
-								</div>
-								<!-- End Logo -->
-								<!-- Mobile Nav -->
-								<div class="mobile-nav"></div>
-								<!-- End Mobile Nav -->
-							</div>
-							<div class="col-lg-7 col-md-9 col-12" >
-								<!-- Main Menu -->
-								<div class="main-menu">
-									
-									<nav class="navigation">
-										<ul class="nav menu">											
-											<li><a href="">關於我們</a></li>
-											<li><a href="./joinus.html">加入我們 </a></li>
-											<li><a href="#">常見問題 </a></li>
-											<li><a href="./orderlist.html">訂單檢視 </a></li>
-											<li><a href="./index.html">首頁</a>	
-										</ul>
-									</nav>
-								</div>
-								<!--/ End Main Menu -->
-							</div>
-							<div class="col-lg-2 col-12">
-								<div class="get-quote">
-									<a href="appointment.html" class="btn">預約服務</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--/ End Header Inner -->
-		</header>
-	
-
-		<!-- Start Feautes -->
-		<div class="titlename">毛小孩資料填寫</div>
-		
-		<div class="petcontainer1">
-			<!-- 毛小孩類別 -->
-      <div class="form-group form-group1">
-        <label>毛小孩類別</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="pet-type" value="cat"> 貓
-          </label>
-          <label>
-            <input type="radio" name="pet-type" value="dog"> 狗
-          </label>
-        </div>
-      </div>
-      <!--毛小孩性別-->
-      <div class="form-group form-group1">
-        <label>毛小孩性別</label>
-        <div class="radio-group">
-          <label>
-            <input type="radio" name="pet-gender" value="cat"> 公
-          </label>
-          <label>
-            <input type="radio" name="pet-gender" value="dog"> 母
-          </label>
-        </div>
-      </div>
-  
-      <!-- 毛小孩大名 -->
-      <div class="form-group">
-        <label for="pet-name">毛小孩大名</label>
-        <input type="text" id="pet-name" placeholder="請輸入毛小孩大名">
-      </div>
-  
-      <!-- 毛小孩年齡 -->
-      <div class="form-group">
-        <label for="pet-age">毛小孩年齡</label>
-        <input type="text" id="pet-age" placeholder="例：8個月、2歲">
-      </div>
-  
-      <!-- 毛小孩體重 -->
-      <div class="form-group">
-        <label for="pet-weight">毛小孩體重</label>
-        <input type="text" id="pet-weight" placeholder="例：4kg">
-      </div>
-  
-      <!-- 其他注意事項 -->
-      <div class="form-group">
-        <label for="pet-notes">其他毛小孩需要我們注意的事項（選填）：</label>
-        <textarea id="pet-notes" placeholder="例：疾病、具攻擊性、容易受驚嚇等"></textarea>
-      </div>
-  
-      <!-- 新增毛小孩按鈕 -->
-      <a href="./member.html" class="button">新增毛小孩</a>
 		</div>
+		<!-- End Topbar -->
+		<!-- Header Inner -->
+		<div class="header-inner">
+			<div class="container">
+				<div class="inner">
+					<div class="row">
+						<div class="col-lg-3 col-md-3 col-12">
+							<!-- Start Logo -->
+							<div class="logo">
+								<a th:href="@{/}"><img src="/images/title.png" alt="#"></a>
+							</div>
+							<!-- End Logo -->
+							<!-- Mobile Nav -->
+							<div class="mobile-nav"></div>
+							<!-- End Mobile Nav -->
+						</div>
+						<div class="col-lg-7 col-md-9 col-12" >
+							<!-- Main Menu -->
+							<div class="main-menu">
+								
+								<nav class="navigation">
+									<ul class="nav menu">											
+										<li><a href="/aboutUs">關於我們</a></li>
+										<li><a href="/joinus">加入我們 </a></li>
+										<li><a href="#">常見問題 </a></li>
+										<li><a href="/orderList">訂單檢視 </a></li>
+										<li class="active"><a href="/">首頁</a>	
+									</ul>
+								</nav>
+							</div>
+							<!--/ End Main Menu -->
+						</div>
+						<div class="col-lg-2 col-12">
+							<div class="get-quote">
+								<a href="/appointment" class="btn">預約服務</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--/ End Header Inner -->
+	</header>
+		<!-- End Header Area -->
+	
+		<!-- Breadcrumbs -->
+		<div class="breadcrumbs overlay">
+			<div class="container">
+				<div class="bread-inner">
+					<div class="row">
+						<div class="col-12">
+							<h2>寵物資料</h2>
+							<ul class="bread-list">
+								<li><i class="icofont-simple-right"></i></li>
+								<li class="active">Member AddPet</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- End Breadcrumbs -->
+	
+		<!-- Start Portfolio Details Area -->
+		<section class="pf-details section" id="body">
+			<div class="body_text">
+			<h1 class="title">毛小孩資料填寫</h1>
+			<div class="q_div" id="q2">
+				<span class="question_title">毛小孩類別</span>
+				<div id="petType">
+				<label><input type="radio" id="typeCat" name="petType" value="cat"> 貓</label>
+				<label><input type="radio" id="typeDog" name="petType" value="dog"> 狗</label>
+				</div>
+			</div>
+	
+			<div class="q_div" id="q3">
+				<span class="question_title">毛小孩性別</span>
+				<div id="petGender">
+				<label><input type="radio" id="genderM" name="petGender" value="1"> 公</label>
+				<label><input type="radio" id="genderF" name="petGender" value="2"> 母</label>
+				</div>
+			</div>
+			<div class="q_div" id="q4">
+				<label for="petName" class="question_title">毛小孩大名</label>
+				<input type="text" id="petName" class="input-text" placeholder="請輸入毛小孩大名">
+			</div>
 
-		
-		
-
-
+			<div class="q_div" id="q5">
+				<label for="petWeight" class="question_title">毛小孩體重(kg)</label>
+				<input type="text" id="petWeight" class="input-text" placeholder="例如：4kg">
+			</div>
+			<div class="page_break_div">
+				<button class="page_break" id="nextPage">新增</button>
+			</div>
+			<div class="none" id="lightbox">
+				<article id="petInfo_Art">
+					<button class="close_card_btn">&times;</button>
+					<div >
+						<button type="button" id="yes" class="petInfo_btn">確定</button>
+					</div>
+				</article>
+			</div>
+			</div>
+		</section>
+		<!-- End Portfolio Details Area -->
 		
 		<!-- Footer Area -->
 	<footer id="footer" class="footer ">
@@ -272,48 +274,56 @@
 		<!--/ End Copyright -->
 	</footer>
 		<!--/ End Footer Area -->
-		
+		<script src="/vendors/jquery/jquery-3.7.1.min.js"></script>
 		<!-- jquery Min JS -->
-		 <script src="js/add.js"></script>
-        <script src="js/jquery.min.js"></script>
+        <script src="/js/jquery.min.js"></script>
 		<!-- jquery Migrate JS -->
-		<script src="js/jquery-migrate-3.0.0.js"></script>
+		<script src="/js/jquery-migrate-3.0.0.js"></script>
 		<!-- jquery Ui JS -->
-		<script src="js/jquery-ui.min.js"></script>
+		<script src="/js/jquery-ui.min.js"></script>
 		<!-- Easing JS -->
-        <script src="js/easing.js"></script>
+        <script src="/js/easing.js"></script>
 		<!-- Color JS -->
-		<script src="js/colors.js"></script>
+		<script src="/js/colors.js"></script>
 		<!-- Popper JS -->
-		<script src="js/popper.min.js"></script>
+		<script src="/js/popper.min.js"></script>
 		<!-- Bootstrap Datepicker JS -->
-		<script src="js/bootstrap-datepicker.js"></script>
+		<script src="/js/bootstrap-datepicker.js"></script>
 		<!-- Jquery Nav JS -->
-        <script src="js/jquery.nav.js"></script>
+        <script src="/js/jquery.nav.js"></script>
 		<!-- Slicknav JS -->
-		<script src="js/slicknav.min.js"></script>
+		<script src="/js/slicknav.min.js"></script>
 		<!-- ScrollUp JS -->
-        <script src="js/jquery.scrollUp.min.js"></script>
+        <script src="/js/jquery.scrollUp.min.js"></script>
 		<!-- Niceselect JS -->
-		<script src="js/niceselect.js"></script>
+		<script src="/js/niceselect.js"></script>
 		<!-- Tilt Jquery JS -->
-		<script src="js/tilt.jquery.min.js"></script>
+		<script src="/js/tilt.jquery.min.js"></script>
 		<!-- Owl Carousel JS -->
-        <script src="js/owl-carousel.js"></script>
+        <script src="/js/owl-carousel.js"></script>
 		<!-- counterup JS -->
-		<script src="js/jquery.counterup.min.js"></script>
+		<script src="/js/jquery.counterup.min.js"></script>
 		<!-- Steller JS -->
-		<script src="js/steller.js"></script>
+		<script src="/js/steller.js"></script>
 		<!-- Wow JS -->
-		<script src="js/wow.min.js"></script>
+		<script src="/js/wow.min.js"></script>
 		<!-- Magnific Popup JS -->
-		<script src="js/jquery.magnific-popup.min.js"></script>
+		<script src="/js/jquery.magnific-popup.min.js"></script>
 		<!-- Counter Up CDN JS -->
 		<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
 		<!-- Bootstrap JS -->
-		<script src="js/bootstrap.min.js"></script>
+		<script src="/js/bootstrap.min.js"></script>
 		<!-- Main JS -->
-		<script src="js/main.js"></script>
-		<script src="js/order.js"></script>
-    </body>
+		<script src="/js/main.js"></script>
+
+
+		<!-- <script src="vendors/jquery-ui.js""></script> -->
+		<script src="/vendors/jquery/jquery-ui.min.js"></script>
+		<!-- 日期選擇器中文 --> 
+		<script src="/vendors/jquery/datepicker-zh-TW.js"></script>
+
+		<script src="/js/add.js"></script>
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJ4YeUWLDhM530z0_jUFfzYvSsQx_GVaU&libraries=places&region=TW&language=zh-Tw"></script>
+		<script src="/js/addpet.js"></script>
+    </body>  
 </html>

@@ -231,15 +231,29 @@
 							<th class="petclass2"><strong>類別</strong></th>
 							<th class="petclass2"><strong>性別</strong></th>
 							<th class="petclass2"><strong>體重</strong></th>
-							<th><strong>注意事項</strong></th>
 						</tr>
 					</thead>
 					<tbody>
-						<!-- 訂單明細將動態填充這裡 -->
-					</tbody>
+				        <tr th:each="pet : ${petDTOList}">
+				            <td th:text="${pet.petName}"></td>
+				            <td th:text="${pet.type == 'dog' ? '狗' : '貓'}"></td>
+				            <td th:text="${pet.petGender == 1 ? '公' : '母'}"></td>
+				            <td th:text="${pet.weight} + ' kg'"></td>
+				            <td class = "deletePet-td">
+				                <form th:action="@{/member/disablePet}" method="post">
+				                    <input type="hidden" name="petId" th:value="${pet.petId}" />
+				                    <input type="hidden" name="petName" th:value="${pet.petName}" />
+				                    <input type="hidden" name="type" th:value="${pet.type}" />
+				                    <input type="hidden" name="petGender" th:value="${pet.petGender}" />
+				                    <input type="hidden" name="weight" th:value="${pet.weight}" />
+				                    <button type="submit" class="deletePet">刪除</button>
+				                </form>
+				            </td>
+				        </tr>
+				    </tbody>
 				</table>
-				<a href="./addpet.html" class="button3">新增毛小孩</a> <a
-					href="./updatepet.html" class="button3">修改寵物資料</a>
+				<a th:href="@{/member/addpet}" class="button3">新增毛小孩</a> 
+				<a th:href="@{/member/updatepet}" class="button3">修改毛小孩資料</a>
 			</div>
 		</div>
 	</div>
@@ -364,7 +378,9 @@
 	<script src="/js/main.js"></script>
 	<script src="/js/member.js"></script>
 	<script th:if="${message}" th:inline="javascript">
-		alert('[[${message}]]');
+
+		<!--alert([[${message}]]); -->
+
 		const btn = document.getElementById('mfaButton');
 		if (btn) {
 			btn.innerText = "2FA已啟用";

@@ -97,6 +97,12 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/admin/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // 使 Session 失效
+        return "redirect:/admin/login/page"; // 登出後重定向到登入頁面
+    }
+
     @GetMapping("/BlobReader")
     public void dbGifReader(@RequestParam("applyId") Integer applyId, HttpServletResponse res) {
         res.setContentType("image/gif");

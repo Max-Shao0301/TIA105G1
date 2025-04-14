@@ -124,14 +124,18 @@ let petInformation =`
 			</div>
 			<div class="q_div" id="q2">
 				<span class="question_title">毛小孩類別</span>
+				<div id="petType">
 				<label><input type="radio" id="typeCat" name="petType" value="cat"> 貓</label>
 				<label><input type="radio" id="typeDog" name="petType" value="dog"> 狗</label>
+				</div>
 			</div>
 	
 			<div class="q_div" id="q3">
 				<span class="question_title">毛小孩性別</span>
+				<div id="petGender">
 				<label><input type="radio" id="genderM" name="petGender" value="1"> 公</label>
 				<label><input type="radio" id="genderF" name="petGender" value="2"> 母</label>
+				</div>
 			</div>
 			<div class="q_div" id="q4">
 				<label for="petName" class="question_title">毛小孩大名</label>
@@ -151,10 +155,11 @@ let petInformation =`
 				<button class="page_break" id="nextPage">下一步</button>
 			</div>
 			<div class="none" id="lightbox">
-				<article id="lightboxMes">
+				<article id="petInfo_Art">
 					<button class="close_card_btn">&times;</button>
 					<div >
-						<button type="button" id="Yes" class="check_btn">確認</button>
+						<button type="button" id="no" class="petInfo_btn">否</button>
+						<button type="button" id="yes" class="petInfo_btn">是</button>
 					</div>
 				</article>
 			</div>`
@@ -260,8 +265,8 @@ async function getMemInfo(){
 		});
 		let data =await res.json();
 		memberId = data.memId;
-		// console.log(data);
-		// console.log(data.memName);
+		console.log(data);
+		console.log(memberId);
 		
 		order.memName = data.memName;
 		order.memPhone = data.memPhone 
@@ -355,12 +360,13 @@ function calculateRoute() {
 	directionsService.route(req, (res, status) => {
 		if (status === google.maps.DirectionsStatus.OK) {
 			directionsRenderer.setDirections(res);
-			const driveDistance = res.routes[0].legs[0].distance.text;
+			const driveDistance = res.routes[0].legs[0].distance.value;
 			const driveTime = res.routes[0].legs[0].duration.text;
-			const amoute =  Math.round(parseFloat(driveDistance)*50 +100);
-
+			const roundedDistance = parseFloat((driveDistance / 1000).toFixed(1));
+			const amoute = (roundedDistance > 1 ? roundedDistance*50 +100 : 100);
+			
 			$('#amouteInfo').removeClass('none');
-			$('#driveDistance').text(`${driveDistance}`)
+			$('#driveDistance').text(`${roundedDistance}公里`)
 			$('#driveTime').text(`${driveTime}`)
 			$('#amoute').text(`${amoute} 元`)
 		}
@@ -524,12 +530,13 @@ let savedPets_Op ="";
 async function getMember_Pet() {
 	
 	let getMember_Pet_URL = 'http://localhost:8080/appointment/getMemberPet';
+	console.log(memberId);
 	getMember_Pet_URL +=`?memId=${memberId}` 
-	// console.log(getMember_Pet_URL)
+	console.log(getMember_Pet_URL)
 	try{
 		let res = await fetch(getMember_Pet_URL);
 		 data = await res.json();
-		// console.log(data);  
+		 console.log(data);  
 		if(res.ok && data.length > 0){
 			// petData = data;
 			
@@ -599,7 +606,6 @@ async function getMember_Pet() {
 let petInfo;
 let petInfoBtn_No;
 let petInfoBtn_Yes;
-// let petServlet_URL = 'http://localhost:8081/TIA105G1/petServlet';
 let addPet_URL ='http://localhost:8080/appointment/postPet';
 let updatePet_URL ='http://localhost:8080/appointment/putPet'
   function checkPetInfoChange(){
@@ -642,6 +648,9 @@ let updatePet_URL ='http://localhost:8080/appointment/putPet'
 					let data = await res.json();
 					if(data.result == "成功新增" ){
 						order.petId = data.petId;
+						console.log(data);
+						console.log(order);
+						console.log(order.petId);
 						resolve(true);
 						return;
 					} else{
@@ -671,7 +680,6 @@ let updatePet_URL ='http://localhost:8080/appointment/putPet'
 				$(petInfoBtn_Yes).off('click').on('click',async function(){
 				let thisPetDate = {
 					petId : petInfo.petId,
-					memId : memberId,
 					petName : thisPetName,
 					type : thisPetType,
 					petGender : thisPetGender, 
@@ -927,28 +935,29 @@ function changeCss(cssFile){
 // 按下按鈕跳頁
 function changePage (){
 	$("#nextPage").on('click', async function(){
-
 		switch (currenStep){
-			case 0:
-				getMemberId();
-				getMemInfo();
-				currenStep ++;
-					runStep();
-				break;
 			case 1:
 				if( checkVal_s1()){
 					if(await getAmoute()&& await getCan_Work_Staff() ){
 						currenStep ++;
 						runStep();
-						petInformation
 					}else{
-						petInformation="";
+						$('#date_picker').datepicker('destroy');
+						$('#date_picker').datepicker({
+							showAnim: 'slideDown',
+							minDate: 0
+						});
 					}
+				}else{
+					$('#date_picker').datepicker('destroy');
+					$('#date_picker').datepicker({
+						showAnim: 'slideDown',
+						minDate: 0
+					});
 				}
 				break;
 			case 2: 
 				savedPets_Op=""
-				await getMember_Pet();
 				currenStep ++;
 				runStep();
 				break;
@@ -999,14 +1008,16 @@ function changePage (){
 }
 
 // 個別頁面的js註冊事件
-function step1_js(){
-	getMemInfo();
+async function step1_js(){
+	await getMemInfo();
+	await getMember_Pet();
 	time_menu();
-	$(function() {
-		$("#date_picker" ).datepicker();
-		$('#date_picker').datepicker('option','showAnim','slideDown');
-		$('#date_picker').datepicker('option', 'minDate', 0);
-	});
+	if (!$('#date_picker').hasClass('hasDatepicker')) {
+		$('#date_picker').datepicker({
+			showAnim: 'slideDown',
+			minDate: 0
+		});
+	}
 	initMap();
 }
 function step2_js(){
@@ -1051,7 +1062,7 @@ function step2_js(){
 
 function step3_js(){
 	//寵物下拉選單
-	let pets = $(savedPets);
+	let pets = $('#savedPets');
 	pets.on('change', function(){
 		if(pets.val() == 'noPet'){
 			$('input[name="petType"]').prop('checked', false);  // 清除寵物類型的選擇
@@ -1117,9 +1128,6 @@ let body_text = $('.body_text');
 function runStep () {
 	body_text.fadeOut(100,function(){
 		switch(currenStep){
-			case 0:
-				body_text.html(setMember);
-				break;
 			case 1:
 				body_text.html(appointment);
 				changeCss("/css/appointment.css");
