@@ -9,6 +9,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -41,8 +42,13 @@ public class StaffController {
     @Autowired
     private JavaMailSender mailSender;
     
+    //排程
     private Map<String, Map<String, Object>> resetPasswordData = new HashMap<>();
     private final ScheduledExecutorService scheduleDeleteMap = Executors.newScheduledThreadPool(1);
+    
+    //google map api
+    @Value("${google.maps.api.key}")
+    private String mapApiKey;
     
     @PostMapping("/updateStaffStatus")
     public String updateStaffStatus(@RequestParam("staff_id") Integer staffId){
@@ -51,7 +57,7 @@ public class StaffController {
         return "redirect:/admin/home/page";
         
     }
-
+    
     @GetMapping("/staff/login")
     public String staffLoginPage() {
     	
@@ -442,6 +448,7 @@ public class StaffController {
 
         }
         
+        model.addAttribute("mapApiKey", mapApiKey);
         model.addAttribute("OrderVO", new OrdersVO());
         model.addAttribute("orders", ordersService.getstaffOrder(staffId));
         return "/back-end/staff/staffhome";
