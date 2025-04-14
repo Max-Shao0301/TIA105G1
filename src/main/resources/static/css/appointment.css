@@ -180,3 +180,12 @@ p#price{
 #map{
     width: 60%;
 }
+
+.breadcrumbs {
+	background-image: url('/images/sleepdog.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	position: relative;
+	padding: 120px 0px;
+}

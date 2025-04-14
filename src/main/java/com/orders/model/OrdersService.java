@@ -549,4 +549,17 @@ public class OrdersService {
 	    return new ArrayList<>(ordersMap.values());
 	    
 	}
+	
+	//取消訂單新增點數
+	public void addPoints(Integer orderId) {
+		OrdersVO orderVO = ordersRepository.findByOrderId(orderId);
+		MemberVO memberVO = orderVO.getMember();
+		Integer memPoint = memberVO.getPoint();
+		Integer addPoint = orderVO.getPayment();
+		Integer totalPoint = memPoint + addPoint;
+		System.out.println(memPoint + "+" +addPoint + "=" + totalPoint);
+		memberVO.setPoint(totalPoint);
+		memberRepository.save(memberVO);
+
+	}
 }

@@ -1,104 +1,100 @@
-
-
-
 .pet-icon {
-  font-size: 24px;
-  color: #335288;
-  margin-right: 10px;
+	font-size: 24px;
+	color: #335288;
+	margin-right: 10px;
 }
 
 h2 {
-  font-size: 24px;
-  color: #333333;
-  margin-top: 30px;
-  margin-bottom: 15px;
+	font-size: 24px;
+	color: #333333;
+	margin-top: 30px;
+	margin-bottom: 15px;
 }
 
 .section {
-  margin-bottom: 30px;
+	margin-bottom: 30px;
 }
 
 .section h3 {
-  font-size: 20px;
-  color: #555555;
-  margin-bottom: 10px;
+	font-size: 20px;
+	color: #555555;
+	margin-bottom: 10px;
 }
 
 .section ul {
-  list-style-type: none;
-  padding: 0;
+	list-style-type: none;
+	padding: 0;
 }
 
 .section ul li {
-  font-size: 16px;
-  color: #666666;
-  margin-bottom: 10px;
+	font-size: 16px;
+	color: #666666;
+	margin-bottom: 10px;
 }
 
 .section ul li strong {
-  color: #333333;
+	color: #333333;
 }
 
 .button1 {
-  background-color:#6e6864;
-  color: #ffffff;
-  border: none;
-  padding: 5px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  height: 36px;
-  margin-left:1px;
+	background-color: #6e6864;
+	color: #ffffff;
+	border: none;
+	padding: 5px 20px;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	height: 36px;
+	margin-left: 1px;
 }
 
 .button2 {
-  background-color:#df6840;
-  color: #ffffff;
-  border: none;
-  padding: 5px 20px;
-  border-radius: 5px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  margin: 10px;
-  height: 36px;
-  margin-left: 417px;
+	background-color: #df6840;
+	color: #ffffff;
+	border: none;
+	padding: 5px 20px;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	margin: 10px;
+	height: 36px;
+	margin-left: 417px;
 }
 
 .button:hover {
-  background-color: #335288;
+	background-color: #335288;
 }
 
-.button2:hover{
-  background-color: #c35d3a;
+.button2:hover {
+	background-color: #c35d3a;
 }
 
-.section{
-    padding: 0;
+.section {
+	padding: 0;
 }
-
 
 body {
-  position: relative;
-  margin: 0;
-  height: 100vh;
+	position: relative;
+	margin: 0;
+	height: 100vh;
 }
 
-.file{
-  display: flex;
-  align-items: flex-start; /* 讓元素從頂部對齊 */
-  margin-top: 50px;
+.file {
+	display: flex;
+	align-items: flex-start; /* 讓元素從頂部對齊 */
+	margin-top: 50px;
 }
 
-.container1{
-  margin: 50px;
-  border-radius: 10px;
-  background-color: #eae8df;
-  padding: 20px 2% 20px 20px;
-  text-align: left;
-  justify-content: center;
-  opacity: 0.9;
+.container1 {
+	margin: 50px;
+	border-radius: 10px;
+	background-color: #eae8df;
+	padding: 20px 2% 20px 20px;
+	text-align: left;
+	justify-content: center;
+	opacity: 0.9;
 }
 
 .breadcrumbs {
@@ -110,438 +106,464 @@ body {
 	padding: 120px 0px;
 }
 
-
 .titlename {
-  text-align: left;
-  padding: 20px;;
-  font-size: 25px;
-  width: 50px;
-  margin: 20px 0 0 10px ;
-  border-radius: 10px 0 0 10px;
-  background-color:#839974;
-  color: white;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* 添加陰影 */
+	text-align: left;
+	padding: 20px;;
+	font-size: 25px;
+	width: 50px;
+	margin: 20px 0 0 10px;
+	border-radius: 10px 0 0 10px;
+	background-color: #839974;
+	color: white;
+	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* 添加陰影 */
 }
 
-
-
-thead{
-  background-color:#ac9a8e;
-  color: white;
+thead {
+	background-color: #ac9a8e;
+	color: white;
 }
+
 th, td {
-  padding: 10px;
-  text-align: center;
-  border: 1px solid #ddd;
+	padding: 10px;
+	text-align: center;
+	border: 1px solid #ddd;
 }
 
 th {
-  cursor: pointer;
+	cursor: pointer;
 }
 
 .pagination {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 10px;
 }
 
 .pagination button {
-  padding: 8px 16px;
-  background-color: #335288;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+	padding: 8px 16px;
+	background-color: #335288;
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
 }
 
 .pagination button:disabled {
-  background-color: #ccc;
+	background-color: #ccc;
 }
 
-
-
 .pageSize {
-
-  text-align: center;
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  gap: 10px;
+	text-align: center;
+	display: flex;
+	justify-content: left;
+	align-items: center;
+	gap: 10px;
 }
 
 .pageSize label {
-  margin: 0;
-  font-size: 16px;
+	margin: 0;
+	font-size: 16px;
 }
 
 .pageSize select {
-  padding: 5px;
-  font-size: 16px;
+	padding: 5px;
+	font-size: 16px;
 }
+
 .nice-select {
-  margin: 0 0 0 0px;
-}
-.nice-select{
-  height: 30px;
+	margin: 0 0 0 0px;
 }
 
-
-
+.nice-select {
+	height: 30px;
+}
 
 .box {
-  width: 45%; /* 設定每個 div 的寬度 */
-  padding: 10px;
-
-  text-align: center;
+	width: 45%; /* 設定每個 div 的寬度 */
+	padding: 10px;
+	text-align: center;
 }
 
 label {
-  display: inline-block;
-  margin-bottom: 0; 
+	display: inline-block;
+	margin-bottom: 0;
 }
-.search{
-  text-align:right;
+
+.search {
+	text-align: right;
 }
 
 .details-btn {
-  background-color: #335288;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s;
+	background-color: #335288;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background 0.3s;
 }
 
 .details-btn:hover {
-  background-color: #335288;
+	background-color: #335288;
 }
 
-.clo{
-  background-color: #ad9a8e;
-  color: white;
-  width: 200px;
+.clo {
+	background-color: #ad9a8e;
+	color: white;
+	width: 200px;
 }
 
-table{
-  border: 1 ;
-  border-collapse: collapse;
-  width: 100%;
-  border-radius: 5px;
-  border-radius: 10px;
-  overflow: hidden; /* 重要：確保內容不會超出圓角範圍 */
-  border-collapse: separate; /* 重要：需要改為 separate 才能實現圓角 */
-  border-spacing: 0; /* 消除 cell 之間的間距 */
-  opacity: 1;
+table {
+	border: 1;
+	border-collapse: collapse;
+	width: 100%;
+	border-radius: 5px;
+	border-radius: 10px;
+	overflow: hidden; /* 重要：確保內容不會超出圓角範圍 */
+	border-collapse: separate; /* 重要：需要改為 separate 才能實現圓角 */
+	border-spacing: 0; /* 消除 cell 之間的間距 */
+	opacity: 1;
 }
 
-.gobackbtn{
-  background-color: #335288;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background 0.3s;
+.gobackbtn {
+	background-color: #335288;
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	border-radius: 5px;
+	transition: background 0.3s;
 }
 
 .review-container {
-  opacity: 1;
-  max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #eae8df;
+	opacity: 1;
+	max-width: 600px;
+	margin: 20px auto;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	background-color: #eae8df;
 }
 
 .review-input {
-  width: 100%;
-  min-height: 100px;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  resize: vertical;
-  font-family: inherit;
+	width: 100%;
+	min-height: 100px;
+	padding: 10px;
+	margin-bottom: 15px;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	resize: vertical;
+	font-family: inherit;
 }
 
 .char-count {
-  font-size: 12px;
-  color: #666;
-  margin-bottom: 10px;
-  text-align: right;
+	font-size: 12px;
+	color: #666;
+	margin-bottom: 10px;
+	text-align: right;
 }
 
 .submit-btn {
-  background-color: #839974;
-  color: white;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
+	background-color: #839974;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
 }
 
 .submit-btn:hover {
-  background-color: #839974;
+	background-color: #839974;
 }
 
 .submit-btn:disabled {
-  background-color: #cccccc;
-  cursor: not-allowed;
+	background-color: #cccccc;
+	cursor: not-allowed;
 }
 
-.table{
-  font-size: large;
+.table {
+	font-size: large;
 }
 
-.container2{
-  align-items: center;
-  display: block   ;
-  background-color: #C1B9AD;
-  margin:0 ;
-  border-radius: 10px;
-  width: 92%;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* 添加陰影 */
-  border-radius: 8px; /* 圓角讓陰影更柔和 */
-
-
-}
-.infront1{
-  /* border: 1px solid black; */
-  background-color:#406384;
-  color: #ffffff;
-  margin: 3px;
-  border-radius: 50px;
-  height: 40px;
-  line-height: 40px; 
-  text-align: center;
-  align-items: bottom;
-  display: inline-block;
-  width: 10%;
+.container2 {
+	align-items: center;
+	display: block;
+	background-color: #C1B9AD;
+	margin: 0;
+	border-radius: 10px;
+	width: 92%;
+	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3); /* 添加陰影 */
+	border-radius: 8px; /* 圓角讓陰影更柔和 */
 }
 
-.value1{
-  background-color:#ffffff;
-  margin: 5px;
-  border-radius: 50px;
-  height: 40px;
-  line-height: 40px; 
-  text-align: center;
-  align-items: bottom;
-  display: inline-block;
-  width: 30.2%;
+.infront1 {
+	/* border: 1px solid black; */
+	background-color: #406384;
+	color: #ffffff;
+	margin: 3px;
+	border-radius: 50px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	align-items: bottom;
+	display: inline-block;
+	width: 10%;
 }
 
-.value2{
-  background-color:#ffffff;
-  margin: 5px;
-  border-radius: 50px;
-  height: 40px;
-  line-height: 40px; 
-  text-align: left;
-  align-items: bottom;
-  display: inline-block;
-  width: 72%;
-  padding-left: 50px;
+.value1 {
+	background-color: #ffffff;
+	margin: 5px;
+	border-radius: 50px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	align-items: bottom;
+	display: inline-block;
+	width: 34%;
+}
+.value3 {
+	background-color: #ffffff;
+	margin: 5px;
+	border-radius: 50px;
+	height: 40px;
+	line-height: 40px;
+	text-align: center;
+	align-items: bottom;
+	display: inline-block;
+	width: 38%;
 }
 
-table{
-  border-spacing: 5px;
-  font-size: 16PX;
-}
-th{
-  border-radius: 50px;
-  margin: 10px;
-}
-.petclass1{
-  width: 200px;
-}
-.petclass2{
-  width: 100px;
+.value2 {
+	background-color: #ffffff;
+	margin: 5px;
+	border-radius: 50px;
+	height: 40px;
+	line-height: 40px;
+	text-align: left;
+	align-items: bottom;
+	display: inline-block;
+	width: 87.5%;
+	padding-left: 50px;
 }
 
-td{
-  border-radius: 50px;
-  background-color: white;
-  margin: 50px;
+table {
+	border-spacing: 5px;
+	font-size: 16PX;
 }
+
+th {
+	border-radius: 50px;
+	margin: 10px;
+}
+
+.petclass1 {
+	width: 200px;
+}
+
+.petclass2 {
+	width: 100px;
+}
+
+td {
+	border-radius: 50px;
+	background-color: white;
+	margin: 50px;
+}
+
 .button3 {
-  padding: 8px 16px;
-  background-color: #335288;
-  color: white;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+	padding: 8px 16px;
+	background-color: #335288;
+	color: white;
+	border: none;
+	cursor: pointer;
+	border-radius: 5px;
 }
 
 body::before {
-  content: "";
-  position: fixed; /* 讓背景不隨滾動 */
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('/images/cutecat.jpg'); 
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0.1; /* 設定透明度 */
-  z-index: -1; /* 讓背景圖片不影響內容 */
+	content: "";
+	position: fixed; /* 讓背景不隨滾動 */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url('/images/cutecat.jpg');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	opacity: 0.1; /* 設定透明度 */
+	z-index: -1; /* 讓背景圖片不影響內容 */
 }
+
 .table {
-  width: 100%;
-  border-collapse: collapse;
-  margin:20px 0 20px 0;
+	width: 100%;
+	border-collapse: collapse;
+	margin: 20px 0 20px 0;
 }
 
 #logout-confirm-popup {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	background: rgba(0, 0, 0, 0.4);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 9999;
 }
 
 #logout-confirm-box {
-  background: #fff;
-  padding: 30px 40px;
-  border-radius: 16px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-  text-align: center;
+	background: #fff;
+	padding: 30px 40px;
+	border-radius: 16px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	text-align: center;
 }
 
 .logout-btn-group {
-  margin-top: 20px;
+	margin-top: 20px;
 }
 
 .logout-btn-group .btn {
-  padding: 8px 20px;
-  margin: 0 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
+	padding: 8px 20px;
+	margin: 0 10px;
+	border: none;
+	border-radius: 8px;
+	cursor: pointer;
 }
 
 .logout-btn-group .btn-yes {
-  background-color: #df6840;
-  color: white;
-    padding: 10px 25px;
-  border-radius: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  border: none;
-  font-size: 16px;
+	background-color: #df6840;
+	color: white;
+	padding: 10px 25px;
+	border-radius: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	border: none;
+	font-size: 16px;
 }
 
 .logout-btn-group .btn-no {
-  background-color: #c1c2c3;
-  color: white;
-    padding: 10px 25px;
-  border-radius: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  border: none;
-  font-size: 16px;
+	background-color: #c1c2c3;
+	color: white;
+	padding: 10px 25px;
+	border-radius: 12px;
+	font-weight: bold;
+	cursor: pointer;
+	border: none;
+	font-size: 16px;
 }
 
 .btn-no:hover {
-  background-color: #626364 !important;
+	background-color: #626364 !important;
 }
 
 .btn-yes:hover {
-  background-color: #cd421c !important;
-}.member-info {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    grid-template-columns: 80px 200px 80px 200px auto;
-    row-gap: 12px;
-    column-gap: 10px;
-    align-items: center;
+	background-color: #cd421c !important;
+}
+
+.member-info {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: grid;
+	grid-template-columns: 80px 200px 80px 200px auto;
+	row-gap: 12px;
+	column-gap: 10px;
+	align-items: center;
 }
 
 /* 標籤欄 */
 .label {
-    background-color: #4a6e73;
-    color: white;
-    text-align: center;
-    border-radius: 25px;
-    padding: 8px 12px;
-    font-weight: bold;
+	background-color: #4a6e73;
+	color: white;
+	text-align: center;
+	border-radius: 25px;
+	padding: 8px 12px;
+	font-weight: bold;
 }
 
 /* 輸入欄位（一般） */
 .value {
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    padding: 8px 16px;
-    color: #333;
+	background: white;
+	border: 1px solid #ccc;
+	border-radius: 25px;
+	padding: 8px 16px;
+	color: #333;
 }
 
 /* 信箱與地址用長欄位（佔兩格） */
 .value-long {
-    grid-column: span 2;
-    background: white;
-    border: 1px solid #ccc;
-    border-radius: 25px;
-    padding: 8px 16px;
-    color: #333;
+	grid-column: span 2;
+	background: white;
+	border: 1px solid #ccc;
+	border-radius: 25px;
+	padding: 8px 16px;
+	color: #333;
 }
 
 /* 按鈕 */
 .button {
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: none;
-    background-color: #6a6a6a;
-    color: white;
-    white-space: nowrap;
+	padding: 8px 14px;
+	border-radius: 8px;
+	border: none;
+	background-color: #6a6a6a;
+	color: white;
+	white-space: nowrap;
 }
+
 .button:hover {
-    background-color: #555;
+	background-color: #555;
 }
 
 /* 空格欄 */
 .spacer {
-    /* 留空不顯示東西 */
+	/* 留空不顯示東西 */
+	
 }
 
 .button2 {
-    margin-left: 10px;
-    background-color: #f16745;
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: none;
-    color: white;
-}
-ul.table li {
-    display: inline-block;
-    vertical-align: middle;
-}
-.button1, .logout-btn {
-    padding: 8px 14px;
-    border-radius: 8px;
-    border: none;
-    background-color: #6a6a6a;
-    color: white;
-    margin-left: 10px;
-    margin-top: 5px;
-    vertical-align: middle;
+	margin-left: 10px;
+	background-color: #f16745;
+	padding: 8px 14px;
+	border-radius: 8px;
+	border: none;
+	color: white;
 }
 
-.logout-btn {
-    background-color: #f16745; /* 登出按鈕特別色 */
-    margin-left:435px;
+ul.table li {
+	display: inline-block;
+	vertical-align: middle;
 }
+
+.button1 {
+	padding: 8px 14px;
+	border-radius: 8px;
+	border: none;
+	background-color: #6a6a6a;
+	color: white;
+	margin-top: 5px;
+	vertical-align: middle;
+	margin-left:10px;
+}
+
+.pp {
+	margin-right: 20px;
+}
+
+
+
+
+.out {
+	background-color: #f16745; /* 登出按鈕特別色 */
+}
+
+.downbtn {
+	display: flex;
+
 .deletePet{
   padding: 8px 16px;
    background-color: #f16745;
@@ -555,4 +577,5 @@ td.deletePet-td {
  	background-color: #eae8df;
  	border: none;
  	width: 0;
+
 }

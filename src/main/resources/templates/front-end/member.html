@@ -133,7 +133,7 @@
 									<ul class="nav menu">
 										<li><a th:href="@{/joinus}">關於我們</a></li>
 										<li><a th:href="@{/joinus}">加入我們 </a></li>
-										<li><a th:href="@{/joinus}">常見問題 </a></li>
+										<li><a th:href="@{/questionAndAnswer}">常見問題 </a></li>
 										<li><a th:href="@{/orderList}">訂單檢視 </a></li>
 										<li><a th:href="@{/}">首頁</a>
 									</ul>
@@ -175,38 +175,44 @@
 				<!-- 會員資料 -->
 				<ul class="table">
 					<li class="infront1"><strong>姓名</strong></li>
-					<li class="value1" th:text="${memberVO.memName}"></li>
+					<li class="value3" th:text="${memberVO.memName}"></li>
 
 					<li class="infront1"><strong>手機</strong></li>
-					<li class="value1" th:text="${memberVO.memPhone}"></li>
-					<a th:href="@{/member/updateMember}" class="button1">修改會員資料</a>
+					<li class="value3" th:text="${memberVO.memPhone}"></li>
 					<br>
 
 					<li class="infront1"><strong>信箱</strong></li>
 					<li class="value2" th:text="${memberVO.memEmail}"></li>
-					<a th:href="@{/member/passwordUpdate}" class="button1">修改密碼</a>
 					<br>
 
 					<li class="infront1"><strong>地址</strong></li>
 					<li class="value2" th:text="${memberVO.address}"></li>
+
+					<br>
+
+					<!-- 點數 -->
+					<div class="downbtn"><li class="infront1"><strong>點數</strong></li>
+					<li class="value1 pp" th:text="${memberVO.point} + ' 點'"></li>
+					
+					<a th:href="@{/member/updateMember}" class="button1">修改會員資料</a> <a
+						th:href="@{/member/passwordUpdate}" class="button1">修改密碼</a>
 					<form th:action="@{/QRGenerate}" th:method="get">
 						<input type="hidden" name="user" value="PawCares">
 						<button class="button1" id="mfaButton" type="submit">啟用MFA登入二階段驗證</button>
 					</form>
-					<br>
-
-					<!-- 點數 -->
-					<li class="infront1"><strong>點數</strong></li>
-					<li class="value1" th:text="${memberVO.point} + ' 點'"></li>
-
-					<!-- 登出按鈕（獨立 form） -->
-					<li>
-						<form th:action="@{/logout}" method="get" style="display: inline;">
-							<button class="button1 logout-btn">登出</button>
-							<!-- 和其他一樣用 .button1 -->
-						</form>
-					</li>
+						<form th:action="@{/logout}" method="get">
+							<button class="button1 out">登出</button>
+					</div>
 				</ul>
+				
+			
+
+
+
+				</div>
+
+
+
 
 			</div>
 		</div>
@@ -269,12 +275,12 @@
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer f-link">
 							<h2>Quick Links</h2>
-								<ul>
-									<li><a href="/staff/login"><i
-											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠服務人員工作系統</a></li>
-									<li><a href="/admin/login/page"><i
-											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠平台方管理系統</a></li>
-								</ul>
+							<ul>
+								<li><a href="/staff/login"><i class="fa fa-caret-right"
+										aria-hidden="true"></i>寵愛牠服務人員工作系統</a></li>
+								<li><a href="/admin/login/page"><i
+										class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠平台方管理系統</a></li>
+							</ul>
 
 						</div>
 					</div>
@@ -291,10 +297,10 @@
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer">
 							<h2>Contact Us</h2>
-							<p>客服信箱&nbsp;&nbsp;&nbsp;&nbsp;	a0912622502@gmail.com</p>
+							<p>客服信箱&nbsp;&nbsp;&nbsp;&nbsp; a0912622502@gmail.com</p>
 							<p>客服專線&nbsp;&nbsp;&nbsp;&nbsp;(02) 5555-8858</p>
-							<p style="margin-left:70px">汪汪汪汪-幫幫我吧</p>
-							
+							<p style="margin-left: 70px">汪汪汪汪-幫幫我吧</p>
+
 						</div>
 					</div>
 				</div>
@@ -372,7 +378,9 @@
 	<script src="/js/main.js"></script>
 	<script src="/js/member.js"></script>
 	<script th:if="${message}" th:inline="javascript">
+
 		<!--alert([[${message}]]); -->
+
 		const btn = document.getElementById('mfaButton');
 		if (btn) {
 			btn.innerText = "2FA已啟用";

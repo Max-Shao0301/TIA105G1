@@ -156,7 +156,7 @@ public class OrdersController {
 
 	// 取消訂單
 	@GetMapping("/order/cancelOrder")
-	public String cancelOrder(@RequestParam("orderId") Integer orderId) {
+	public String cancelOrder(@RequestParam("orderId") Integer orderId, Model model) {
 		OrdersVO order = ordersService.getOneOrder(orderId);
 		if (order.getStatus() == 0 || order.getStatus() == 2) {
 			return "redirect:/orderList";
@@ -167,6 +167,8 @@ public class OrdersController {
 			return "redirect:/orderList";
 		}
 		ordersService.updateStatus(orderId);
+		ordersService.addPoints(orderId);
+
 		return "redirect:/orderList";
 	}
 

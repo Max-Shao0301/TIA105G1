@@ -16,16 +16,16 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('/images/fourdog.jpg'); 
+    background-image: url('/images/dirvingdog.png'); 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    opacity: 0.2; /* 設定透明度 */
+    opacity: 0.1; /* 設定透明度 */
     z-index: -1; /* 讓背景圖片不影響內容 */
 }
 
 .breadcrumbs {
-	background-image: url('/images/fourdog.jpg');
+	background-image: url('/images/dirvingdog.png');
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;
@@ -116,4 +116,60 @@
 
 .small{
 	 font-size: 14px;
+}
+/* 常見問題整體區塊背景與間距 */
+#petTaxiFAQ {
+  background: #C1B9AD;
+  border-radius: 16px;
+  padding: 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* 單個問答卡片 */
+.accordion-item {
+  border: none;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* 問題區（header按鈕） */
+.accordion-button {
+  background-color: #fff;
+  color: #333;
+  font-weight: 600;
+  font-size: 18px;
+  padding: 16px 20px;
+  border-radius: 0;
+  transition: background-color 0.3s ease;
+}
+
+/* 問題 hover 效果 */
+.accordion-button:hover {
+  background-color: #f0f0f0;
+}
+
+/* 展開時的問題背景色 */
+.accordion-button:not(.collapsed) {
+  background-color: #fff8f3;
+  color: #d35400;
+  box-shadow: none;
+}
+
+/* 答案區域 */
+.accordion-body {
+  background-color: #fff;
+  font-size: 16px;
+  color: #666;
+  padding: 20px;
+  border-top: 1px solid #f0f0f0;
+}
+
+/* 按鈕圓角與 transition 效果 */
+.accordion-button {
+  border: none;
+  outline: none;
+  box-shadow: none;
 }
