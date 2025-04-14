@@ -98,9 +98,13 @@
 .card-role {
   font-weight: 600;
   font-size: 1.1rem;
-  color: #999;
-  margin-top: 5px;
+  color: #fff;
   margin-left: 20px;
+  background-color:#839577;
+  width:auto;
+  padding:6px;
+  text-align: center;
+  border-radius: 34px;
 }
 
 .team-list {
@@ -116,4 +120,19 @@
 
 .small{
 	 font-size: 14px;
+}
+.fs-4{
+	background-color:#df6840;
+	color:#fff;
+	font-size:30px;
+	width:200px;
+	height:50px;
+	border-radius: 40px;
+	line-height: 50px; /* 與 height 一樣 */
+}
+.text-muted{
+	line-height: 50px; /* 與 height 一樣 */
+	font-size:20px;
+	margin-left:20px;
+	color:#6c737a!important;
 }

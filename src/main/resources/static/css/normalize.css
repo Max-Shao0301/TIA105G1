@@ -504,7 +504,7 @@ Preloader Area CSS
 }
 /* Bread Crumbs */
 .breadcrumbs {
-	background-image: url('../img/sleepdog.jpg');
+	background-image: url('/images/sleepdog.jpg');
 	background-size: cover;
 	background-position: center;
 	background-repeat: no-repeat;

@@ -33,7 +33,7 @@ public interface OrdersRepository extends JpaRepository<OrdersVO, Integer> {
 	@Query(value = "SELECT COUNT(*) FROM orders WHERE mem_id = ?1", nativeQuery = true)
 	Integer getOrderAmount(Integer memId);
 	
-	@Query(value = "SELECT * FROM orders WHERE mem_id = :memId ORDER BY order_id DESC LIMIT :limit OFFSET :offset", nativeQuery = true)
+	@Query(value = "SELECT * FROM orders WHERE mem_id = :memId AND status != 3 ORDER BY order_id DESC LIMIT :limit OFFSET :offset", nativeQuery = true)
 	List<OrdersVO> findOrdersByMemIdWithPagination(@Param("memId") Integer memId,
 	                                               @Param("offset") int offset,
 	                                               @Param("limit") int limit);

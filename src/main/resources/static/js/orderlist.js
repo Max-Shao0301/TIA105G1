@@ -190,6 +190,7 @@ function convertStatus(code) {
     case 0: return '已取消';
     case 1: return '未完成';
     case 2: return '已完成';
+	case 3: return '未付款';
     default: return '未知';
   }
 }
@@ -255,4 +256,49 @@ function searchOrders() {
         }
       });
   }, 300);
+}
+
+let currentSortField = null;
+let currentSortAsc = true;
+
+function sortOrders(field) {
+  const table = document.getElementById("orderTable").getElementsByTagName("tbody")[0];
+  const rows = Array.from(table.rows);
+
+  // 決定升冪還是降冪
+  if (currentSortField === field) {
+    currentSortAsc = !currentSortAsc;
+  } else {
+    currentSortField = field;
+    currentSortAsc = true;
+  }
+
+  rows.sort((a, b) => {
+    let valA, valB;
+
+    switch (field) {
+      case "orderId":
+        valA = parseInt(a.cells[0].innerText.trim());
+        valB = parseInt(b.cells[0].innerText.trim());
+        break;
+      case "orderDate":
+        valA = new Date(a.cells[1].innerText.trim());
+        valB = new Date(b.cells[1].innerText.trim());
+        break;
+      case "status":
+        valA = a.cells[4].innerText.trim();
+        valB = b.cells[4].innerText.trim();
+        break;
+      default:
+        return 0;
+    }
+
+    if (valA < valB) return currentSortAsc ? -1 : 1;
+    if (valA > valB) return currentSortAsc ? 1 : -1;
+    return 0;
+  });
+
+  // 清空並重新插入排序後的列
+  table.innerHTML = "";
+  rows.forEach(row => table.appendChild(row));
 }
