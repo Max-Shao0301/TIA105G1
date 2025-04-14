@@ -89,7 +89,7 @@ public class LoginController{
                  response.addCookie(cookie);
              }
 			 session.setAttribute("isLoggedIn", true);
-
+			 model.addAttribute("isLoggedIn", true);
 			//如果有設定二階段登入驗證，則轉向到二階段登入頁面
 			Integer memId = (Integer) session.getAttribute("memId");
 			MemberVO memberVO = memberService.getOneMember(memId);

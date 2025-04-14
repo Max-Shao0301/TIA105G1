@@ -105,7 +105,7 @@ public class ResetPasswordController {
 		}
 		memberService.updatePassword(memId, password);
 		session.setAttribute("passwordUpdated", true);
-		return "redirect:/passwordUpdate";
+		return "redirect:/member/passwordUpdate";
 	}
 	// 會員資料的重設密碼頁面
 	@GetMapping("/member/passwordUpdate")
