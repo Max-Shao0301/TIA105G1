@@ -138,7 +138,6 @@ public class OrdersService {
 		Map<String, Object> result = new HashMap<>();
 		Integer memId = (Integer) session.getAttribute("memId"); 
 		Integer checkoutAamount = (Integer) session.getAttribute("amoute"); //取得事先存好的訂單金額
-		
 		//拿出結帳訂單中的班表跟寵物物件
 		ScheduleVO scheuleVO = scheduleRepository.findById(checkoutOrderDTO.getSchId()).orElse(null);
 		PetVO petVO = petRepository.findById(checkoutOrderDTO.getPetId()).orElse(null);
@@ -179,6 +178,7 @@ public class OrdersService {
 				orderPoint = checkoutAamount;
 				payMethood = 0;
 				System.out.println("點數單");
+				
 				// 驗證前端提交過來的點數是否與資料庫儲存的會員點數一致、但點數不夠支付整筆訂單金額、而且user點數不是0
 			} else if (memberPoint.equals(orderPoint) && memberPoint < checkoutAamount && !(memberPoint.equals(0))) {
 				checkoutAamount -= memberPoint;
@@ -200,7 +200,7 @@ public class OrdersService {
 		ordersVO.setPayment(checkoutOrderDTO.getPayment());
 		ordersVO.setPayMethod(payMethood);
 		ordersVO.setNotes(checkoutOrderDTO.getNotes());
-		ordersVO.setStatus(3);
+		ordersVO.setStatus( payMethood.equals(0) ? 1 : 3);
 		ordersVO = ordersRepository.save(ordersVO); //儲存訂單物件
 
 		result.put("orderId", ordersVO.getOrderId());
@@ -211,6 +211,35 @@ public class OrdersService {
 		orderpetRepository.save(orderPetVO); //儲存寵物訂單物件
 		scheduleRepository.updateBooked(scheuleVO.getSchId()); //訂單建立後直接將班表改成已預約，防止二次預約
 		if (payMethood.equals(0)) { //確定支付方式為全點數付款則直接返回，不必串接綠界金流
+//			String email = ordersVO.getMember().getMemEmail();
+//		    String timeslot = ordersVO.getSchedule().getTimeslot();
+//			//用迴圈索引的方式找第一個不是0的數，藉此來辨別這個班表的起始預約時間是幾點
+//			for (int i = 0; i < timeslot.length(); i++) {
+//				if (timeslot.charAt(i) != '0') {
+//					apptTime = i;
+//					break; // 找到後就跳出迴圈
+//				}
+//			}
+//			
+//			String subject = "寵愛牠-預約成功通知";
+//			String content = 
+//				    "預約項目：寵物接送\n" +
+//				    "預約時間："+ ordersVO.getSchedule().getDate()+" "+ apptTime+ ":00\n" +
+//				    "上車地址：" + ordersVO.getOnLocation()+"\n" +
+//				    "目的地地址："+ ordersVO.getOffLocation()+"\n" +
+//				    "預約服務人員："+ ordersVO.getStaff().getStaffName() +"\n" +
+//				    "服務人員聯絡電話："+ ordersVO.getStaff().getStaffPhone() +"\n" +
+//				    "會員姓名："+ ordersVO.getMember().getMemName()+"\n" +
+//				    "會員電話："+ ordersVO.getMember().getMemPhone()+"\n" +
+//				    "毛小孩類別："+ (petVO.getType().equals("cat")? "貓" : "狗")+"\n" +
+//				    "毛小孩性別："+ (petVO.getPetGender().equals(1)? "公": "母")+"\n" +
+//				    "毛小孩大名："+ petVO.getPetName()+"\n" +
+//				    "毛小孩體重："+ petVO.getWeight()+"kg\n" +
+//				    "其他注意事項："+ ordersVO.getNotes()+"\n\n" +
+//				    "請留意預約時間";
+//			System.out.println(content);
+//		    mailService.sendPlainText(Collections.singleton(email), subject, content);
+		    session.setAttribute("orderId", ordersVO.getOrderId()); 
 			return result;
 		}
 		//準備處理綠界金流串接 建立金流用的訂單物件
@@ -266,8 +295,8 @@ public class OrdersService {
 				System.out.println("已付款");
 				ordersRepository.updateOrderStatus(1, orderId);
 				stopPaymentCountdown(orderId);
-			   //調訂單資料出來 組回傳用的信件
-			    OrdersVO ordersVO = ordersRepository.findById(orderId).orElseGet(null);
+				OrdersVO ordersVO = ordersRepository.findById(orderId).orElseGet(null);
+				//調訂單資料出來 組回傳用的信件
 			    String email = ordersVO.getMember().getMemEmail();
 			    String timeslot = ordersVO.getSchedule().getTimeslot();
 				Integer apptTime = 0;
@@ -309,7 +338,6 @@ public class OrdersService {
 			System.out.println("比對沒過");
 		}
 	}
-
 	
 	//前端的驗證付款結果用的方法
 	public Map<String, Object> checkPayment(HttpSession session) {
@@ -324,12 +352,16 @@ public class OrdersService {
 		//如果用點數+現金代表他點數一定不夠支付整筆訂單費用，所以不可能剩點數
 		if (ordersVO.getStatus().equals(1)) {
 			result.put("pay", "1");
+			System.out.println("已成立"+ordersVO.getStatus());
 			if (ordersVO.getPayMethod().equals(2)) {
+				System.out.println("扣點數中");
 				memberRepository.updatePoint(0, ordersVO.getMember().getMemId());
 			}
 		} else {
 			result.put("pay", "0");
+			System.out.println("未成立"+ordersVO.getStatus());
 		}
+		
 		String timeslot = ordersVO.getSchedule().getTimeslot();
 		Integer apptTime = 0;
 		//用迴圈索引的方式找第一個不是0的數，藉此來辨別這個班表的起始預約時間是幾點

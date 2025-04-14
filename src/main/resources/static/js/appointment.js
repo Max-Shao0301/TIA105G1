@@ -363,7 +363,7 @@ function calculateRoute() {
 			const driveDistance = res.routes[0].legs[0].distance.value;
 			const driveTime = res.routes[0].legs[0].duration.text;
 			const roundedDistance = parseFloat((driveDistance / 1000).toFixed(1));
-			const amoute = (roundedDistance > 1 ? roundedDistance*50 +100 : 100);
+			const amoute = (roundedDistance > 1 ? Math.round(roundedDistance*50 +100) : 100);
 			
 			$('#amouteInfo').removeClass('none');
 			$('#driveDistance').text(`${roundedDistance}公里`)
@@ -903,7 +903,7 @@ async function OrderToDb(){
 			document.getElementById('allPayAPIForm').submit();
 		}
 	}catch(error){
-		alert('網頁錯誤，請重新整理');
+		//alert('網頁錯誤，請重新整理');
 		console.log(error);
 	}
 }
