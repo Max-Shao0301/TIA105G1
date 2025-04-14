@@ -8,8 +8,6 @@ import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -67,18 +65,6 @@ public class StaffController {
                              RedirectAttributes redirectAttributes, HttpSession session, HttpServletRequest request) {
     	
         StaffVO staffVO = staffService.getOneStaff(staffEmail,staffPassword);
-		
-		
-        //比對雜湊登入
-//        StaffVO staffVO = staffService.getOneStaff(staffEmail);
-//        if (staffVO != null && passwordEncoder.matches(staffPassword, staffVO.getStaffPassword())) {
-//            session.setAttribute("staffName", staffVO.getStaffName());
-//            session.setAttribute("staffId", staffVO.getStaffId());
-//            return "redirect:/staff/home";
-//        } else {
-//            return "/back-end/staff/login";
-//        }
-
 
         if (staffVO != null && staffVO.getStaffPassword().equals(staffPassword)) {
         	
