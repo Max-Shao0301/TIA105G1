@@ -1,27 +1,25 @@
+.petcontainer1 {
+	background-color: #ffffff;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	max-width: 600px;
+	margin: 0 auto;
+}
 
-
-  .petcontainer1 {
-    background-color: #ffffff;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 0 auto;
-  }
-
-  body::before {
-    content: "";
-    position: fixed; /* 讓背景不隨滾動 */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('/images/dirvingdog.png'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    opacity: 0.1; /* 設定透明度 */
-    z-index: -1; /* 讓背景圖片不影響內容 */
+body::before {
+	content: "";
+	position: fixed; /* 讓背景不隨滾動 */
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-image: url('/images/dirvingdog.png');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	opacity: 0.1; /* 設定透明度 */
+	z-index: -1; /* 讓背景圖片不影響內容 */
 }
 
 .breadcrumbs {
@@ -33,143 +31,171 @@
 	padding: 120px 0px;
 }
 
-
-  .header h1 {
-    font-size: 28px;
-    color: #333333;
-    margin: 0;
-  }
-
-  .pet-icon {
-    font-size: 24px;
-    color: #335288;
-    margin-right: 10px;
-  }
-
-  h2 {
-    font-size: 24px;
-    color: #333333;
-    margin-top: 20px;
-    margin-bottom: 15px;
-  }
-
- .team-section .card {
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.2s ease-in-out;
-  border: none;
-  background-color: #f6f5f0;
-  border-radius: 50px;
+.header h1 {
+	font-size: 28px;
+	color: #333333;
+	margin: 0;
 }
-.team-section .card:hover {
-  transform: translateY(-5px);
-    background-color: #fff;
 
+.pet-icon {
+	font-size: 24px;
+	color: #335288;
+	margin-right: 10px;
+}
+
+h2 {
+	font-size: 24px;
+	color: #333333;
+	margin-top: 20px;
+	margin-bottom: 15px;
+}
+
+.team-section .card {
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	transition: transform 0.2s ease-in-out;
+	border: none;
+	background-color: #f6f5f0;
+	border-radius: 50px;
+}
+
+.team-section .card:hover {
+	transform: translateY(-5px);
+	background-color: #fff;
 }
 
 .team-img {
-  width: 200px;
-  height: 300px;
-  object-fit: cover;
-  margin:25px 20px;
+	width: 200px;
+	height: 300px;
+	object-fit: cover;
+	margin: 25px 20px;
 }
 
 .team-card {
-  padding: 1.5rem;
-  border-radius: 20px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-  background-color: #ffffff;
-  width:540px;
-  
-  margin-bottom:30px;
-  
-  height:400px;
+	padding: 1.5rem;
+	border-radius: 20px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+	background-color: #ffffff;
+	width: 540px;
+	margin-bottom: 30px;
+	height: 400px;
 }
 
 .card-title {
-  font-weight: bold;
-  font-size: 1.4rem;
-  color: #2d2d2d;
-  padding: 20px 20px 5px 20px;
-  display:flex;
-  margin-bottom:5px;
-  margin-top:20px;
+	font-weight: bold;
+	font-size: 1.4rem;
+	color: #2d2d2d;
+	padding: 20px 20px 5px 20px;
+	display: flex;
+	margin-bottom: 5px;
+	margin-top: 20px;
 }
 
 .card-role {
-  font-weight: 600;
-  font-size: 1.1rem;
-  color: #999;
-  margin-top: 5px;
-  margin-left: 20px;
+	font-weight: 600;
+	font-size: 1.1rem;
+	color: #999;
+	margin-top: 5px;
+	margin-left: 20px;
 }
 
 .team-list {
-  font-size: 1rem;
-  color: #444;
-  padding-left: 1.2rem;
-  list-style-type: disc;
+	font-size: 1rem;
+	color: #444;
+	padding-left: 1.2rem;
+	list-style-type: disc;
 }
 
 .team-list li::marker {
-  color: #444;
+	color: #444;
 }
 
-.small{
-	 font-size: 14px;
+.small {
+	font-size: 14px;
 }
 /* 常見問題整體區塊背景與間距 */
 #petTaxiFAQ {
-  background: #C1B9AD;
-  border-radius: 16px;
-  padding: 30px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+	background: #C1B9AD;
+	border-radius: 16px;
+	padding: 30px;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 /* 單個問答卡片 */
 .accordion-item {
-  border: none;
-  border-radius: 12px;
-  margin-bottom: 16px;
-  overflow: hidden;
-  background-color: white;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+	border: none;
+	border-radius: 12px;
+	margin-bottom: 16px;
+	overflow: hidden;
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 /* 問題區（header按鈕） */
 .accordion-button {
-  background-color: #fff;
-  color: #333;
-  font-weight: 600;
-  font-size: 18px;
-  padding: 16px 20px;
-  border-radius: 0;
-  transition: background-color 0.3s ease;
+	background-color: #fff;
+	width: 100%;
+	text-align: left; color : #333;
+	font-weight: 600;
+	font-size: 18px;
+	padding: 16px 20px;
+	border-radius: 0;
+	transition: background-color 0.3s ease;
+	color: #333;
 }
 
 /* 問題 hover 效果 */
 .accordion-button:hover {
-  background-color: #f0f0f0;
+	background-color: #f0f0f0;
 }
 
 /* 展開時的問題背景色 */
 .accordion-button:not(.collapsed) {
-  background-color: #fff8f3;
-  color: #d35400;
-  box-shadow: none;
+	background-color: #fff8f3;
+	color: #d35400;
+	box-shadow: none;
+	width: 100%;
+	text-align: left;
 }
 
 /* 答案區域 */
 .accordion-body {
-  background-color: #fff;
-  font-size: 16px;
-  color: #666;
-  padding: 20px;
-  border-top: 1px solid #f0f0f0;
+	background-color: #fff;
+	font-size: 16px;
+	color: #666;
+	padding: 20px;
+	border-top: 1px solid #f0f0f0;
 }
 
 /* 按鈕圓角與 transition 效果 */
 .accordion-button {
-  border: none;
-  outline: none;
-  box-shadow: none;
+	border: none;
+	outline: none;
+	box-shadow: none;
+}
+
+button:focus {
+	outline: none !important;
+}
+
+.fs-4 {
+	background-color: #df6840;
+	color: #fff;
+	font-size: 30px;
+	width: 250px;
+	height: 50px;
+	border-radius: 40px;
+	line-height: 50px; /* 與 height 一樣 */
+	text-align: center;
+}
+
+.text-muted {
+	line-height:90px; /* 與 height 一樣 */
+	font-size: 20px;
+	margin-left: 20px;
+	color: #6c737a !important;
+	display: flex;
+}
+
+.display {
+	display: flex;
 }

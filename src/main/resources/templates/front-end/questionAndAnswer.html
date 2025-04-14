@@ -179,14 +179,16 @@
 <div class="container mt-5">
   
   <div class="accordion bkgc" id="petTaxiFAQ">
-	<h2 class="mb-4">寵物計程車常見問題</h2>
+  <div class="display"><h2 class="mb-4 fs-4">寵愛牠常見問題</h2>	<div class="text-muted">請點開想知道的問題，如有其他問題歡迎來電諮詢</div>
+   </div>
+	
     <div class="accordion-item">
       <h2 class="accordion-header" id="faq1-heading">
-        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true" aria-controls="faq1">
-          可以搭乘的寵物有哪些？可以搭乘幾隻寵物？
+        <button id="myInput" class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="false" aria-controls="faq1">
+           <i class="icofont-caret-right faq-icon me-2"></i>可以搭乘的寵物有哪些？可以搭乘幾隻寵物？
         </button>
       </h2>
-      <div id="faq1" class="accordion-collapse collapse show" aria-labelledby="faq1-heading" data-bs-parent="#petTaxiFAQ">
+      <div id="faq1" class="accordion-collapse collapse" aria-labelledby="faq1-heading" data-bs-parent="#petTaxiFAQ">
         <div class="accordion-body">
           目前一筆訂單只歡迎1隻犬或貓搭乘。 
         </div>
@@ -196,7 +198,7 @@
     <div class="accordion-item">
       <h2 class="accordion-header" id="faq2-heading">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false" aria-controls="faq2">
-          接送範圍有哪些區域？
+         <i class="icofont-caret-right faq-icon me-2"></i>接送範圍有哪些區域？
         </button>
       </h2>
       <div id="faq2" class="accordion-collapse collapse" aria-labelledby="faq2-heading" data-bs-parent="#petTaxiFAQ">
@@ -209,7 +211,7 @@
     <div class="accordion-item">
       <h2 class="accordion-header" id="faq3-heading">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false" aria-controls="faq3">
-          人可以一起搭乘嗎？
+           <i class="icofont-caret-right faq-icon me-2"></i>人可以一起搭乘嗎？
         </button>
       </h2>
       <div id="faq3" class="accordion-collapse collapse" aria-labelledby="faq3-heading" data-bs-parent="#petTaxiFAQ">
@@ -222,12 +224,12 @@
     <div class="accordion-item">
       <h2 class="accordion-header" id="faq4-heading">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false" aria-controls="faq4">
-          如果寵物會嘔吐或便便怎麼辦？
+          <i class="icofont-caret-right faq-icon me-2"></i>如果寵物會嘔吐或便便怎麼辦？
         </button>
       </h2>
       <div id="faq4" class="accordion-collapse collapse" aria-labelledby="faq4-heading" data-bs-parent="#petTaxiFAQ">
         <div class="accordion-body">
-          建議出發前避免進食。若需清潔酌收 $500 清潔費，直接交給服務人員。
+          建議出發前避免進食。若需清潔酌收 $500 清潔費，請直接支付給服務人員。
         </div>
       </div>
     </div>
@@ -235,7 +237,7 @@
     <div class="accordion-item">
       <h2 class="accordion-header" id="faq5-heading">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" aria-expanded="false" aria-controls="faq5">
-          可以臨時取消嗎？
+           <i class="icofont-caret-right faq-icon me-2"></i>可以臨時取消嗎？
         </button>
       </h2>
       <div id="faq5" class="accordion-collapse collapse" aria-labelledby="faq5-heading" data-bs-parent="#petTaxiFAQ">
@@ -248,7 +250,7 @@
     <div class="accordion-item">
       <h2 class="accordion-header" id="faq6-heading">
         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6" aria-expanded="false" aria-controls="faq6">
-          可以刷卡嗎？
+          <i class="icofont-caret-right faq-icon me-2"></i>可以刷卡嗎？
         </button>
       </h2>
       <div id="faq6" class="accordion-collapse collapse" aria-labelledby="faq6-heading" data-bs-parent="#petTaxiFAQ">
@@ -373,5 +375,8 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<!-- Main JS -->
 	<script src="/js/main.js"></script>
+	<script src="/js/questionAndAnswer.js"></script>
+
+</div>
 </body>
 </html>

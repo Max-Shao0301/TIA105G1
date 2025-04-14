@@ -467,7 +467,13 @@ public class OrdersService {
 	}
 	public List<OrdersVO> getOrdersByPage(Integer memId, Integer page, Integer pageSize) {
 	    int offset = (page - 1) * pageSize; //從第幾筆開始查
-	    return ordersRepository.findOrdersByMemIdWithPagination(memId, offset, pageSize);
+	    List<OrdersVO> orderVO = ordersRepository.findOrdersByMemIdWithPagination(memId, offset, pageSize);
+	    for (OrdersVO order : orderVO) {
+	    	LocalDateTime time = getOrderLocalDateTime(order);
+	    	String ordertime = format(time);
+	    	order.setNotes(ordertime);
+	    }
+	    return orderVO;
 	}
 	
 	public List<OrdersVO> searchOrdersByKeyword(Integer memId, String keyword) {

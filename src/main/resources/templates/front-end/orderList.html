@@ -211,7 +211,7 @@
 				</tr>
 				<tr th:each="order : ${orderList}">
 					<td th:text="${order.orderId}"></td>
-					<td><span th:text="${order.schedule.date}"></span></td>
+					<td style="width:140px;"><span th:text="${order.notes}"></span></td>
 					<td><span th:text="${order.onLocation}"></span><br> <i
 						class="icofont-arrow-right"></i><span
 						th:text="${order.offLocation}"></span></td>
@@ -342,9 +342,6 @@
 			</div>
 		</div>
 	</div>
-	<div>
-  測試抓值：addPoint = <span th:text="${addPoint}">無</span>，totalPoint = <span th:text="${totalPoint}">無</span>
-</div>
 	<!-- ✨ 訂單取消自訂彈窗 Overlay HTML -->
 	<div id="customCancelOverlay" class="cancel-overlay"
 		style="display: none;">

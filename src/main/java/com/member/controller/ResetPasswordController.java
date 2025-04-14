@@ -67,6 +67,8 @@ public class ResetPasswordController {
 		session.removeAttribute("verifyCheck");
 		session.removeAttribute("verifyCode");
 		session.removeAttribute("verifyEmail");
+		session.removeAttribute("loginError");
+		
 		return "redirect:/login";
 
 	}
