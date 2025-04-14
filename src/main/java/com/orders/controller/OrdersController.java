@@ -142,6 +142,7 @@ public class OrdersController {
 		model.addAttribute("pageSize", pageSize);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("totalPages", totalPages);
+		System.out.println(totalPages);
 		return "/front-end/orderList";
 	}
 

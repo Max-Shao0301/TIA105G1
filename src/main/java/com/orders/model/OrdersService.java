@@ -462,6 +462,7 @@ public class OrdersService {
 	
 	public Integer getPageTotal(Integer memId, Integer pageSize) {
 		 Integer total = ordersRepository.getOrderAmount(memId);
+		 System.out.println(total + "ahah");
 		 Integer pageQty = (int)(total % pageSize == 0 ? (total / pageSize) : (total / pageSize + 1));
 		 return pageQty;
 	}

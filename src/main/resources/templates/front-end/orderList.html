@@ -206,8 +206,7 @@
 			</thead>
 			<tbody th:fragment="orderTableBody">
 				<tr th:if="${#lists.isEmpty(orderList)}">
-					<td colspan="6" class="text-center text-muted">🐾
-						目前尚無任何訂單紀錄，快來預約你的寵物旅程吧! 🐾</td>
+					<td colspan="6" class="text-center text-muted">🐾 目前尚無任何訂單紀錄，快來預約你的寵物旅程吧! 🐾</td>
 				</tr>
 				<tr th:each="order : ${orderList}">
 					<td th:text="${order.orderId}"></td>

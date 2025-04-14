@@ -30,7 +30,7 @@ public interface OrdersRepository extends JpaRepository<OrdersVO, Integer> {
 	List<OrdersVO> findByMemId(@Param("memId") Integer memId);
 	
 	
-	@Query(value = "SELECT COUNT(*) FROM orders WHERE mem_id = ?1", nativeQuery = true)
+	@Query(value = "SELECT COUNT(*) FROM orders WHERE mem_id = ?1 AND status != 3 ", nativeQuery = true)
 	Integer getOrderAmount(Integer memId);
 	
 	@Query(value = "SELECT * FROM orders WHERE mem_id = :memId AND status != 3 ORDER BY order_id DESC LIMIT :limit OFFSET :offset", nativeQuery = true)
