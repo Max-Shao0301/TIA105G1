@@ -118,8 +118,10 @@ $('#yes').on('click',function(){
 })
 
 $('#nextPage').off('click').on('click', async function(){
-    console.log('UUUU')
     if(await checkPetInfoChange()){
         petInfoLightBox(`<p id = "updatePet_P">新增完成</p>`)
     }
+})
+$('#backPage').on('click', function(){
+	window.location.href ="http://localhost:8080/member";
 })

@@ -232,7 +232,7 @@ public class OrdersService {
 		aco.setTradeDesc(des); // 交易描述
 		aco.setItemName("Pet Taxi"); // 商品名稱
 		aco.setNeedExtraPaidInfo("Y"); // 額外資訊
-		aco.setReturnURL("https://d28d-1-164-225-29.ngrok-free.app/ecpayReturn"); // 付款結果通知 應為商家的controller
+		aco.setReturnURL("https://67af-118-168-96-165.ngrok-free.app/ecpayReturn"); // 付款結果通知 應為商家的controller
 		// aco.setOrderResultURL(""); //付款完成後的結果參數 傳至前端用的
 		aco.setClientBackURL("http://localhost:8080/appointment/paymentResults"); // 付完錢後的返回商店按鈕會到的網址
 		//使用ECPay建立付款頁面的方法 兩個參數分別是訂單物件跟發票物件 不開發票第二個就傳null

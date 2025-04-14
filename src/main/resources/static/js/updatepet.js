@@ -31,16 +31,17 @@ let petInformation =`
 				<input type="text" id="petWeight" class="input-text" placeholder="例如：4kg">
 			</div>
 			<div class="page_break_div">
-					<button disabled class="page_break  noChange" id="nextPage">儲存</button>
-				</div>
-				<div class="none" id="lightbox">
-					<article id="petInfo_Art">
-						<button class="close_card_btn">&times;</button>
-						<div>
-							<button  type="button" id="yes" class="petInfo_btn">確定</button>
-						</div>
-					</article>
-				</div>`;
+				<button class="page_break" id="backPage">取消</button>
+				<button disabled class="page_break  noChange" id="nextPage">儲存</button>
+			</div>
+			<div class="none" id="lightbox">
+				<article id="petInfo_Art">
+					<button class="close_card_btn">&times;</button>
+					<div>
+						<button  type="button" id="yes" class="petInfo_btn">確定</button>
+					</div>
+				</article>
+			</div>`;
 let savedPets_Op;
 let pets;
 let petType;
@@ -101,16 +102,17 @@ async function getMember_Pet() {
 				<input type="text" id="petWeight" class="input-text" placeholder="例如：4kg">
 			</div>
 			<div class="page_break_div">
-					<button disabled class="page_break  noChange" id="nextPage">儲存</button>
-				</div>
-				<div class="none" id="lightbox">
-					<article id="petInfo_Art">
-						<button class="close_card_btn">&times;</button>
-						<div>
-							<button  type="button" id="yes" class="petInfo_btn">確定</button>
-						</div>
-					</article>
-				</div>`
+				<button class="page_break" id="backPage">取消</button>
+				<button disabled class="page_break  noChange" id="nextPage">儲存</button>
+			</div>
+			<div class="none" id="lightbox">
+				<article id="petInfo_Art">
+					<button class="close_card_btn">&times;</button>
+					<div>
+						<button  type="button" id="yes" class="petInfo_btn">確定</button>
+					</div>
+				</article>
+			</div>`
 			return true;
 		}else if (data.length < 1){
 			$('.body_text').html(petInformation);
@@ -347,6 +349,7 @@ let  petMenu = function(){
         });
     };
 }
+
 async function init (){
 	if(await getMember_Pet()){
 		$('.body_text').html(petInformation);
@@ -357,6 +360,9 @@ async function init (){
 		petWeight =  $('#petWeight');
 		nextPage = $('#nextPage');
 		pets.off('change').on('change', petMenu);
+		$('#backPage').on('click', function(){
+			window.location.href ="http://localhost:8080/member";
+		})
 		$('#nextPage').off('click').on('click', async function(){
 			if(await checkPetInfoChange()){
 				petInfoLightBox(`<p id = "updatePet_P">變更完成</p>`)
