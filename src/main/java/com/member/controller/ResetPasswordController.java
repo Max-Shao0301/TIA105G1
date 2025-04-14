@@ -45,6 +45,7 @@ public class ResetPasswordController {
 		if (!model.containsAttribute("resetPasswordDTO")) {
 			model.addAttribute("resetPasswordDTO", new ResetPasswordDTO());
 		}
+		
 
 		return "/front-end/resetPassword";
 	}
