@@ -1,34 +1,33 @@
 package com.member.controller;
 
-import java.util.List;
+import com.member.model.MemberService;
+import com.member.model.MemberVO;
+import com.member.model.dto.MemberDTO;
+import com.member.model.dto.ResetPasswordDTO;
+import com.member.model.dto.UpdateMemberDTO;
+import com.springbootmail.MailService;
+
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.member.model.MemberService;
-import com.member.model.MemberVO;
-import com.member.model.dto.MemberDTO;
-import com.member.model.dto.UpdateMemberDTO;
-import com.pet.model.PetService;
-import com.pet.model.dto.PetDTO;
-
-import jakarta.servlet.http.HttpSession;
-import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MemberController {
 
 	@Autowired
 	private MemberService memberService;
-	
-	@Autowired
-	private PetService petService;
 
 	@PostMapping("/updateMemberStatus")
 	public String updateMemberStatus(@RequestParam("member_id") Integer memId) {
@@ -43,10 +42,6 @@ public class MemberController {
 //		System.out.println(memId);
 		MemberVO memberVO = memberService.getOneMember(memId);
 		model.addAttribute("memberVO", memberVO);
-		
-	    // 取得會員的寵物資料
-	    List<PetDTO> petDTOList = petService.findByMemId(memId);
-	    model.addAttribute("petDTOList", petDTOList);
 		return "/front-end/member";
 	}
 
@@ -156,7 +151,7 @@ public class MemberController {
 			session.removeAttribute("memberUpdated");
 		}
 
-		return "/front-end/member/updateMember";
+		return "/front-end/updateMember";
 	}
 
 	// 更新會員資料
@@ -182,7 +177,7 @@ public class MemberController {
 		}
 
 		if (count != 0) {
-			return "/front-end/member/updateMember";
+			return "/front-end/updateMember";
 		}
 
 		memberService.updateMemberData(memId, updateMemberDTO);
