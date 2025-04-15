@@ -282,23 +282,43 @@
             });
 			
             //圖片上傳
-            $("#imageUpload").change(function () {
-                let file = this.files[0];
-                if (file) {
-                    let reader = new FileReader();
-                    reader.onload = function (event) {
-                        $("#imagePreview").attr("src", event.target.result).show();
-                    }
-                    reader.readAsDataURL(file);
-                } else {
-                    $("#imagePreview").attr("src", "#").hide();
-                }
-            });
+			$("#imageUpload").change(function () {
+			    let file = this.files[0];
+			
+			    if (file) {
 
-            $("#uploadModal").on("hidden.bs.modal", function (e) {
-                $("#imageUpload").val("");
-                $("#imagePreview").attr("src", "#").hide();
-            });
+			        let reader = new FileReader();
+			        reader.onload = function (event) {
+			            $("#imagePreview").attr("src", event.target.result).show();
+			        }
+			        reader.readAsDataURL(file);
+			        
+			        let lastOrderId = $("#uploadModal").data("current-order-id"); 
+			        if (lastOrderId) {
+			            $("#orderIdInput").val(lastOrderId);
+			        }
+			
+			    } else {
+			        $("#imagePreview").attr("src", "#").hide();
+			    }
+			});
+
+
+			$("#uploadModal").on("show.bs.modal", function (event) {
+			    let button = $(event.relatedTarget);
+			    let orderId = button.data("order-id");
+			    $(this).data("current-order-id", orderId);
+			    $("#orderIdInput").val(orderId);
+			});
+			
+			$("#uploadModal").on("hidden.bs.modal", function (e) {
+			    $("#imageUpload").val("");
+			    $("#imagePreview").attr("src", "#").hide();
+			    $(this).removeData("current-order-id");
+			    $("#orderIdInput").val("");
+			});
+
+
 
             //寵物資訊
             $("#data-table").on("click", ".pet-button", function () {
