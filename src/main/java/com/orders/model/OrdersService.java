@@ -82,8 +82,10 @@ public class OrdersService {
 	}
 
 	// 更新訂單狀態
-	public void updateStatus(Integer memId) {
-		ordersRepository.updateStatus(memId);
+	public void updateStatus(Integer orderId) {
+		ordersRepository.updateStatus(orderId);
+		Integer schId = getOneOrder(orderId).getSchedule().getSchId();
+		scheduleRepository.updateUnbooked(schId);
 	}
 
 	// 用訂單標號查詢訂單
@@ -482,7 +484,13 @@ public class OrdersService {
 	}
 	
 	public List<OrdersVO> searchOrdersByKeyword(Integer memId, String keyword) {
-	    return ordersRepository.findByMemberAndKeyword(memId, keyword);
+		List<OrdersVO> list = ordersRepository.findByMemberAndKeyword(memId, keyword);
+		 for (OrdersVO order : list) {
+		    	LocalDateTime time = getOrderLocalDateTime(order);
+		    	String ordertime = format(time);
+		    	order.setNotes(ordertime);
+		    }
+	    return list;
 	}
 	
 	//只查該服務人員的訂單

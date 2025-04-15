@@ -22,7 +22,7 @@ $(document).ready(function () {
         $('#carNumber').text(order.carNumber);
         $('#staffName').text(order.staffName);
         $('#petName').text(order.pet);
-        $('#payment').text(order.payment + " 元");
+        $('#payment').text(order.orderStatus == 0 ? order.payment + " 元已轉換成點數":order.payment + " 元");
         $('#payMethod').text(convertPayMethod(order.payMethod));
         $('#point').text(order.point != null ? order.point + " 點" : "無");
         $('#notes').text(order.notes || "無");
