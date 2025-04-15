@@ -14,12 +14,17 @@ import com.ecpay.payment.integration.errorMsg.ErrorMessage;
 import com.ecpay.payment.integration.exception.EcpayException;
 
 public class PaymentVerifyBase{
-	protected String confPath = "/com/ecpay/payment/integration/config/EcpayPayment.xml";
+//	protected String confPath = "/com/ecpay/payment/integration/config/EcpayPayment.xml";
+	
 	protected Document doc;
 	public PaymentVerifyBase(){
-		URL fileURL = this.getClass().getResource(confPath);
+//		URL fileURL = this.getClass().getResource(confPath);
+//		doc = EcpayFunction.xmlParser(fileURL.toString());
+//		doc.getDocumentElement().normalize();
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		URL fileURL = classLoader.getResource("EcpayPayment.xml");
 		doc = EcpayFunction.xmlParser(fileURL.toString());
-		doc.getDocumentElement().normalize();
+
 	}
 	
 	protected void requireCheck(String FieldName, String objValue, String require){
