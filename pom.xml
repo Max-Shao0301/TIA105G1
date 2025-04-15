@@ -138,12 +138,12 @@
         </dependency>
 
         <!-- websocket -->                           <!-- spring-boot 已內建依賴，但預設未下載 -->
-        <dependency>
-            <groupId>jakarta.websocket</groupId>
-            <artifactId>jakarta.websocket-api</artifactId>
-            <!-- <version>2.1.1</version> -->
-            <scope>provided</scope>                  <!-- ※provided只提供編譯，jar檔不匯出 -->
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>jakarta.websocket</groupId>-->
+<!--            <artifactId>jakarta.websocket-api</artifactId>-->
+<!--            &lt;!&ndash; <version>2.1.1</version> &ndash;&gt;-->
+<!--            <scope>provided</scope>                  &lt;!&ndash; ※provided只提供編譯，jar檔不匯出 &ndash;&gt;-->
+<!--        </dependency>-->
 
         <!-- javax.json -->                          <!-- spring-boot 未內建依賴 -->
         <dependency>
@@ -290,15 +290,6 @@
             <artifactId>totp</artifactId>
             <version>1.7.1</version>
         </dependency>
-        <!-- Spring WebSocket -->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-websocket</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-messaging</artifactId>-->
-<!--        </dependency>-->
 
 
 

@@ -1,5 +1,7 @@
 package com;
 
+import com.weather.WeatherResponse;
+import com.weather.WeatherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,9 @@ public class IndexController_inSpringBoot {
 	@Autowired
 	private MemberService memberService;
 
+	@Autowired
+	private WeatherService weatherService;
+
 	@GetMapping("/")
 	public String index(Model model, HttpSession session) {
 		boolean isLoggedIn;
@@ -30,6 +35,9 @@ public class IndexController_inSpringBoot {
 		} else {
 			isLoggedIn = false;
 		}
+		//取得天氣資訊
+		WeatherResponse taipeiWeather = weatherService.getWeather("Taipei");
+		model.addAttribute("weather", taipeiWeather);
 		model.addAttribute("isLoggedIn", isLoggedIn);
 		session.setAttribute("isLoggedIn", isLoggedIn);
 		return "index"; // 回傳 Thymeleaf 頁面
