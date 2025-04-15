@@ -211,34 +211,6 @@ public class OrdersService {
 		orderpetRepository.save(orderPetVO); //儲存寵物訂單物件
 		scheduleRepository.updateBooked(scheuleVO.getSchId()); //訂單建立後直接將班表改成已預約，防止二次預約
 		if (payMethood.equals(0)) { //確定支付方式為全點數付款則直接返回，不必串接綠界金流
-//			String email = ordersVO.getMember().getMemEmail();
-//		    String timeslot = ordersVO.getSchedule().getTimeslot();
-//			//用迴圈索引的方式找第一個不是0的數，藉此來辨別這個班表的起始預約時間是幾點
-//			for (int i = 0; i < timeslot.length(); i++) {
-//				if (timeslot.charAt(i) != '0') {
-//					apptTime = i;
-//					break; // 找到後就跳出迴圈
-//				}
-//			}
-//			
-//			String subject = "寵愛牠-預約成功通知";
-//			String content = 
-//				    "預約項目：寵物接送\n" +
-//				    "預約時間："+ ordersVO.getSchedule().getDate()+" "+ apptTime+ ":00\n" +
-//				    "上車地址：" + ordersVO.getOnLocation()+"\n" +
-//				    "目的地地址："+ ordersVO.getOffLocation()+"\n" +
-//				    "預約服務人員："+ ordersVO.getStaff().getStaffName() +"\n" +
-//				    "服務人員聯絡電話："+ ordersVO.getStaff().getStaffPhone() +"\n" +
-//				    "會員姓名："+ ordersVO.getMember().getMemName()+"\n" +
-//				    "會員電話："+ ordersVO.getMember().getMemPhone()+"\n" +
-//				    "毛小孩類別："+ (petVO.getType().equals("cat")? "貓" : "狗")+"\n" +
-//				    "毛小孩性別："+ (petVO.getPetGender().equals(1)? "公": "母")+"\n" +
-//				    "毛小孩大名："+ petVO.getPetName()+"\n" +
-//				    "毛小孩體重："+ petVO.getWeight()+"kg\n" +
-//				    "其他注意事項："+ ordersVO.getNotes()+"\n\n" +
-//				    "請留意預約時間";
-//			System.out.println(content);
-//		    mailService.sendPlainText(Collections.singleton(email), subject, content);
 		    session.setAttribute("orderId", ordersVO.getOrderId()); 
 			return result;
 		}
