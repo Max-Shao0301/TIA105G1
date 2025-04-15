@@ -74,16 +74,25 @@
                 <td th:text="${ordersVO.payment}"></td>
                 <td th:text="${ordersVO.notes}"></td>
                 <td th:switch="${ordersVO.status}">
-                  <span th:case="0" style="color: red">未成立</span>
+                  <span th:case="0" style="color: red">已取消</span>
                   <span th:case="1" style="color: #0b0b0b">未完成</span>
                   <span th:case="2" style="color: green">已完成</span>
+                  <span th:case="3" style="color: orange">未付款</span>
                 </td>
                 <td th:text="${ordersVO.rating}"></td>
                 <td>
                 <!-- ordersVO.star 的值，產生對應數量的 HTML 元素  -->
                 <!-- #numbers.sequence(起始值, 結束值) 是 Thymeleaf 數列產生器-->
-                  <span th:each="i : ${#numbers.sequence(1, ordersVO.star)}">
+                  <!-- 顯示星星 -->
+                  <span th:if="${ordersVO.star != null and ordersVO.star > 0}">
+                   <span th:each="i : ${#numbers.sequence(1, ordersVO.star)}">
                     <i class="fa-solid fa-star" style="color: #FFD43B;"></i>
+                   </span>
+                  </span>
+
+                  <!-- 當 star 為 0 或 null 時顯示尚無評價 -->
+                  <span th:if="${ordersVO.star == 0 or ordersVO.star == null}">
+                   <span>尚無評價</span>
                   </span>
                 </td>
               </tr>
@@ -294,7 +303,7 @@
         <script
                 th:src="@{/vendors/datatables/dataTables.min.js}"></script>
         <script
-                th:src="@{/js/adminHomepage.js }"></script>
+                th:src="@{/js/adminHomepage.js}"></script>
 
 
         <script>
