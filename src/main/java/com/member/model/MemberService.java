@@ -35,17 +35,17 @@ public class MemberService {
 
 	@Autowired
 	private MailService mailService;
-	
-	@Value("${recaptcha.secret}")
-	private  String  recaptchaSecret;
 
-    @Value("${recaptcha.sitekey}")
-    private String siteKey;
-    
-    public String getSiteKey() {
-        return siteKey;
-    }
-	
+	@Value("${recaptcha.secret}")
+	private String recaptchaSecret;
+
+	@Value("${recaptcha.sitekey}")
+	private String siteKey;
+
+	public String getSiteKey() {
+		return siteKey;
+	}
+
 	// 新增會員
 	@Transactional
 	public MemberVO saveMember(MemberDTO memberDTO, HttpSession session) {
@@ -114,15 +114,15 @@ public class MemberService {
 	// 登入會員
 	public Integer checkMember(String memEmail, String memPassword, HttpSession session) {
 		MemberVO member = memberRepository.findByMemEmail(memEmail);
-		
+
 		if (member == null) {
 			return 2;
 		}
-		
-		if ((Integer) member.getStatus() == 0){
+
+		if ((Integer) member.getStatus() == 0) {
 			return 4;
 		}
-		
+
 		// 雜湊密碼加密比對
 		if (passwordEncoder.matches(memPassword, member.getMemPassword())) {
 			session.setAttribute("memId", member.getMemId());
@@ -155,21 +155,21 @@ public class MemberService {
 		return memberDTO;
 	}
 
-	public OrderMemberInfoDTO getOrderMemberInfoDTO (HttpSession session) {
+	public OrderMemberInfoDTO getOrderMemberInfoDTO(HttpSession session) {
 		Integer memId = (Integer) session.getAttribute("memId");
 		MemberVO memberVO = memberRepository.findById(memId).orElse(null);
 		OrderMemberInfoDTO orderMemberInfoDTO = new OrderMemberInfoDTO();
-		
+
 		orderMemberInfoDTO.setMemId(memId);
 		orderMemberInfoDTO.setAddress(memberVO.getAddress());
 		orderMemberInfoDTO.setMemEmail(memberVO.getMemEmail());
 		orderMemberInfoDTO.setMemName(memberVO.getMemName());
 		orderMemberInfoDTO.setMemPhone(memberVO.getMemPhone());
 		orderMemberInfoDTO.setPoint(memberVO.getPoint());
-		
+
 		return orderMemberInfoDTO;
 	}
-	
+
 	// 查詢某手機號碼是否已註冊過
 	public Integer findMemberByPhone(String memPhone) {
 		MemberVO member = memberRepository.findByMemPhone(memPhone);
@@ -234,7 +234,7 @@ public class MemberService {
 	public MemberVO saveOAuth2Member(String memEmail, String memName, HttpSession session) {
 		MemberVO existingMember = memberRepository.findByMemEmail(memEmail);
 		// 如果會員已存在並且啟用狀態為啟用，則不需要註冊，用現有資料登入
-		if (existingMember != null && existingMember.getStatus() ==1) {
+		if (existingMember != null && existingMember.getStatus() == 1) {
 			session.setAttribute("memId", existingMember.getMemId());
 			session.setAttribute("memName", existingMember.getMemName());
 			session.setAttribute("isLoggedIn", true);// 首頁登入判斷
@@ -283,15 +283,16 @@ public class MemberService {
 		String secret = recaptchaSecret;
 		String verifyUrl = "https://www.google.com/recaptcha/api/siteverify";
 
-		RestTemplate restTemplate = new RestTemplate();  // RestTemplate送 application/x-www-form-urlencoded 格式(Google 要求的參數格式)
-		MultiValueMap<String, String> params = new LinkedMultiValueMap<>(); //會自動轉成表單格式
+		RestTemplate restTemplate = new RestTemplate(); // RestTemplate送 application/x-www-form-urlencoded 格式(Google
+														// 要求的參數格式)
+		MultiValueMap<String, String> params = new LinkedMultiValueMap<>(); // 會自動轉成表單格式
 		params.add("secret", secret);
 		params.add("response", responseToken);
 
 		ResponseEntity<Map> response = restTemplate.postForEntity(verifyUrl, params, Map.class);
 		Map body = response.getBody();
 
-		return (Boolean) body.get("success"); 
+		return (Boolean) body.get("success");
 //		API Response
 //		{
 //		  "success": true|false,
@@ -301,4 +302,8 @@ public class MemberService {
 //		}
 	}
 
+	public boolean infoIsComplete(MemberVO memberVO) {
+		return memberVO.getMemPhone() != null && memberVO.getAddress() != null && memberVO.getMemEmail() != null
+				&& memberVO.getMemName() != null;
+	}
 }

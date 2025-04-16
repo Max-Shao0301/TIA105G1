@@ -165,5 +165,4 @@ public class MemberVO implements java.io.Serializable {
 	public void setOrders(List<OrdersVO> orders) {
 		this.orders = orders;
 	}
-
 }

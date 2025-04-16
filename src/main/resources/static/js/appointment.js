@@ -833,8 +833,8 @@ function setConfirmation(){
 				<p><span class="label">目的地地址：</span><span id="offLocation">${order.offLocation}</span></p>
 				<p><span class="label">預約服務人員：</span><span id="staffName">${order.staffName}</span></p>
 				<p><span class="label">服務人員聯絡電話：</span><span id="staffPhone">${order.staffPhone}</span></p>
-				<p><span class="label">會員姓名：</span><span id="memName">${order.memName}</span></p>
-				<p><span class="label">會員電話：</span><span id="memPhone">${order.memPhone}</span></p>
+				<p><span class="label">會員姓名：</span><span id="memName">${order.memName|| ''}</span></p>
+				<p><span class="label">會員電話：</span><span id="memPhone">${order.memPhone || ''}</span></p>
 				<p><span class="label">毛小孩類別：</span><span id="petType">${order.petType == "cat"? "貓":"狗"}</span></p>
 				<p><span class="label">毛小孩性別：</span><span id="petGender">${order.petGender == 1 ? "公": "母"}</span></p>
 				<p><span class="label">毛小孩大名：</span><span id="petName">${order.petName}</span></p>
@@ -907,6 +907,8 @@ async function OrderToDb(){
 		if(!res.ok){
 			if(data.error == "schError"){
 				refreshLightBox(`<p>此服務人員已被預約<br>請選擇其他服務人員或時段後再次下單</p>`)
+			}else if(data.error == "memberInfoError"){
+				refreshLightBox(`<p>會員資料不齊全<br>請先補齊資料後再下單</p>`)
 			}else{
 				refreshLightBox(`<p>預約資料有誤<br>請重新整理後再次下單</p>`)
 			}
