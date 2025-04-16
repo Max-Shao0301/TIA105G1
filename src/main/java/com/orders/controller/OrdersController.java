@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ecpay.payment.integration.AllInOne;
 import com.member.model.MemberService;
 import com.member.model.dto.MemberDTO;
+import com.member.model.dto.OrderMemberInfoDTO;
 import com.orders.model.OrdersService;
 import com.orders.model.OrdersVO;
 import com.orders.model.dto.AppointmentTimeDTO;
@@ -62,10 +63,11 @@ public class OrdersController {
 	}
 
 	@PostMapping("/appointment/getMemInfo")
-	public ResponseEntity<MemberDTO> getMemInfo(HttpSession session) {
-		MemberDTO memberDTO = memberService.getMemberDTO(session);
-
-		return ResponseEntity.ok(memberDTO);
+	public ResponseEntity<OrderMemberInfoDTO> getMemInfo(HttpSession session) {
+//		MemberDTO memberDTO = memberService.getMemberDTO(session);
+		OrderMemberInfoDTO orderMemberInfoDTO = memberService.getOrderMemberInfoDTO(session);
+		
+		return ResponseEntity.ok(orderMemberInfoDTO);
 	}
 
 	@GetMapping("/appointment/paymentResults")

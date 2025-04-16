@@ -17,6 +17,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.member.model.dto.MemberDTO;
+import com.member.model.dto.OrderMemberInfoDTO;
 import com.member.model.dto.UpdateMemberDTO;
 import com.orders.model.OrdersVO;
 import com.springbootmail.MailService;
@@ -154,6 +155,21 @@ public class MemberService {
 		return memberDTO;
 	}
 
+	public OrderMemberInfoDTO getOrderMemberInfoDTO (HttpSession session) {
+		Integer memId = (Integer) session.getAttribute("memId");
+		MemberVO memberVO = memberRepository.findById(memId).orElse(null);
+		OrderMemberInfoDTO orderMemberInfoDTO = new OrderMemberInfoDTO();
+		
+		orderMemberInfoDTO.setMemId(memId);
+		orderMemberInfoDTO.setAddress(memberVO.getAddress());
+		orderMemberInfoDTO.setMemEmail(memberVO.getMemEmail());
+		orderMemberInfoDTO.setMemName(memberVO.getMemName());
+		orderMemberInfoDTO.setMemPhone(memberVO.getMemPhone());
+		orderMemberInfoDTO.setPoint(memberVO.getPoint());
+		
+		return orderMemberInfoDTO;
+	}
+	
 	// 查詢某手機號碼是否已註冊過
 	public Integer findMemberByPhone(String memPhone) {
 		MemberVO member = memberRepository.findByMemPhone(memPhone);
