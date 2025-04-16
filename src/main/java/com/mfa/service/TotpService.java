@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class TotpService {
-    private final DefaultSecretGenerator secretGenerator = new DefaultSecretGenerator();//TOTP 金鑰生成器
+    private final DefaultSecretGenerator secretGenerator = new DefaultSecretGenerator();//TOTP 金鑰產生器
     private final DefaultCodeVerifier verifier = new DefaultCodeVerifier(new DefaultCodeGenerator(), new SystemTimeProvider());//TOTP 驗證器(產生TOTP密碼, 獲得當下時間)
 
     // 產生金鑰

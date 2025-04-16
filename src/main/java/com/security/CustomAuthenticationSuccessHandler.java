@@ -44,9 +44,10 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                     // 否則導向更新會員資料頁面
                     response.sendRedirect("/member/updateMember");
                 }
+            } else {
+                 // 若會員資料不存在，導向首頁 LINE使用
+                   response.sendRedirect("/");
             }
         }
-
-
     }
 }
