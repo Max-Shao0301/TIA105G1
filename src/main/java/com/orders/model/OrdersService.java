@@ -148,7 +148,6 @@ public class OrdersService {
 		PetVO petVO = petRepository.findById(checkoutOrderDTO.getPetId()).orElse(null);
 
 		MemberVO memberVO = petVO.getMember();
-		System.out.println(memberVO);
 		if(!memberService.infoIsComplete(memberVO)) {
 			result.put("error", "memberInfoError");
 			System.out.println("資料不齊全");

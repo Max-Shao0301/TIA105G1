@@ -165,13 +165,4 @@ public class MemberVO implements java.io.Serializable {
 	public void setOrders(List<OrdersVO> orders) {
 		this.orders = orders;
 	}
-
-	@Override
-	public String toString() {
-		return "MemberVO [memId=" + memId + ", memEmail=" + memEmail + ", memPassword=" + memPassword + ", memName="
-				+ memName + ", memPhone=" + memPhone + ", address=" + address + ", secret=" + secret + ", point="
-				+ point + ", status=" + status + ", createTime=" + createTime + ", updateTime=" + updateTime
-				+ ", orders=" + orders + ", pet=" + pet + "]";
-	}
-
 }
