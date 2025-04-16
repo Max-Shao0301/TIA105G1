@@ -22,13 +22,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import com.ecpay.payment.integration.AllInOne;
 import com.ecpay.payment.integration.domain.AioCheckOutOneTime;
 import com.member.model.MemberRepository;
+import com.member.model.MemberService;
 import com.member.model.MemberVO;
 import com.orderpet.model.OrderPetRepository;
 import com.orderpet.model.OrderPetVO;
@@ -66,6 +66,9 @@ public class OrdersService {
 
 	@Autowired
 	PetRepository petRepository;
+	
+	@Autowired
+	MemberService memberService;
 	
 	@Autowired
 	MailService mailService;
@@ -145,6 +148,12 @@ public class OrdersService {
 		PetVO petVO = petRepository.findById(checkoutOrderDTO.getPetId()).orElse(null);
 
 		MemberVO memberVO = petVO.getMember();
+		System.out.println(memberVO);
+		if(!memberService.infoIsComplete(memberVO)) {
+			result.put("error", "memberInfoError");
+			System.out.println("資料不齊全");
+			return result;
+		}
 		Integer apptTime = checkoutOrderDTO.getApptTime();
 
 		// 比對前端送過來的預約時段是否真的能預約 
@@ -179,7 +188,6 @@ public class OrdersService {
 				memberRepository.updatePoint(memberPoint - checkoutAamount, memId);
 				orderPoint = checkoutAamount;
 				payMethood = 0;
-				System.out.println("點數單");
 				
 				// 驗證前端提交過來的點數是否與資料庫儲存的會員點數一致、但點數不夠支付整筆訂單金額、而且user點數不是0
 			} else if (memberPoint.equals(orderPoint) && memberPoint < checkoutAamount && !(memberPoint.equals(0))) {
@@ -188,7 +196,6 @@ public class OrdersService {
 				System.out.println("點數+現金");
 			} else if (!(memberPoint.equals(orderPoint))) {
 				result.put("error", "pointError");
-				System.out.println("錯錯錯");
 			}
 		}
 		//建立訂單物件
@@ -240,7 +247,6 @@ public class OrdersService {
 		aco.setClientBackURL("http://localhost:8080/appointment/paymentResults"); // 付完錢後的返回商店按鈕會到的網址
 		//使用ECPay建立付款頁面的方法 兩個參數分別是訂單物件跟發票物件 不開發票第二個就傳null
 		String form = all.aioCheckOut(aco, null); 
-//		System.out.println(form);
 		result.put("form", form);
 		session.setAttribute("orderId", orderId); 
 		paymentCountdown(orderId); //呼叫結帳倒數計時
@@ -328,7 +334,6 @@ public class OrdersService {
 			result.put("pay", "1");
 			System.out.println("已成立"+ordersVO.getStatus());
 			if (ordersVO.getPayMethod().equals(2)) {
-				System.out.println("扣點數中");
 				memberRepository.updatePoint(0, ordersVO.getMember().getMemId());
 			}
 		} else {
