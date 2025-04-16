@@ -1,22 +1,20 @@
 package com;
 
-import com.weather.WeatherResponse;
-import com.weather.WeatherService;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.member.model.MemberService;
-import com.member.model.MemberVO;
-import com.member.model.dto.MemberDTO;
+import com.weather.WeatherResponse;
+import com.weather.WeatherService;
 
 import jakarta.servlet.http.HttpSession;
-import jakarta.validation.constraints.Email;
 
 @Controller
 public class IndexController_inSpringBoot {
@@ -72,5 +70,7 @@ public class IndexController_inSpringBoot {
 		System.out.println();
 		return "/front-end/questionAndAnswer";
 	}
+	
+  
 
 }

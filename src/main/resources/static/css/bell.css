@@ -1,0 +1,55 @@
+.bell-wrapper {
+    position: relative;
+  }
+  .reminder-dropdown {
+    display: none;
+    position: absolute;
+    top: 30px;
+    right: 0;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    z-index: 1000;
+    width: 370px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  .reminder-dropdown.show {
+    display: block;
+  }
+  .reminder-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .reminder-list li {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    color: #333;
+  }
+  .reminder-list li:last-child {
+    border-bottom: none;
+  }
+  .bell-badge {
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 12px;
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    display: none;
+  }
+#reminderDropdown {
+  z-index: 9999 !important;
+}
+#bellWrapper {
+  z-index: 9999;
+  position: relative;
+}
+.bellmargin{
+	margin-right:0 !important;
+	padding:10px  !important;
+}

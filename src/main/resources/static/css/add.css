@@ -76,4 +76,23 @@
     align-items: center; /* 垂直置中 */
     font-size: 50px;
 }
+.col-lg-6 .col-md-7 .col-12{
+	padding-right: 0;
+}
 
+.apiimg{width:60px !important;
+height:60px !important;
+  vertical-align: middle;}
+    .weather-info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap; /* 如果空間不足才換行 */
+    gap: 10px;
+    font-size: 18px;
+    margin-top: 10px;
+  }
+
+  .weather-item {
+    white-space: nowrap; /* 防止自動換行 */
+  }
