@@ -285,25 +285,32 @@
 			$("#imageUpload").change(function () {
 			    let file = this.files[0];
 			
+			    const MAX_SIZE_MB = 10;
+			    const MAX_SIZE_BYTES = MAX_SIZE_MB * 1024 * 1024;
+			
 			    if (file) {
-
+			        if (file.size > MAX_SIZE_BYTES) {
+			            alert("檔案過大，請選擇小於 10MB 的圖片！");
+			            $(this).val("");
+			            $("#imagePreview").attr("src", "#").hide();
+			            return;
+			        }
+			
 			        let reader = new FileReader();
 			        reader.onload = function (event) {
 			            $("#imagePreview").attr("src", event.target.result).show();
 			        }
 			        reader.readAsDataURL(file);
-			        
+			
 			        let lastOrderId = $("#uploadModal").data("current-order-id"); 
 			        if (lastOrderId) {
 			            $("#orderIdInput").val(lastOrderId);
 			        }
-			
 			    } else {
 			        $("#imagePreview").attr("src", "#").hide();
 			    }
 			});
-
-
+			
 			$("#uploadModal").on("show.bs.modal", function (event) {
 			    let button = $(event.relatedTarget);
 			    let orderId = button.data("order-id");
@@ -317,6 +324,7 @@
 			    $(this).removeData("current-order-id");
 			    $("#orderIdInput").val("");
 			});
+
 
 
 
