@@ -27,7 +27,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
-
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -262,7 +264,6 @@ public class OrdersService {
 
 		//使用ECPay建立付款頁面的方法 兩個參數分別是訂單物件跟發票物件 不開發票第二個就傳null
 		String form = all.aioCheckOut(aco, null); 
-
 		result.put("form", form);
 		session.setAttribute("orderId", orderId);
 		paymentCountdown(orderId); // 呼叫結帳倒數計時
