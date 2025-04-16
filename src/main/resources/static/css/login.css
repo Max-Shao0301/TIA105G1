@@ -108,6 +108,16 @@ img{
     border-color:#df6840;
 }
 
+.btn-outline-line{
+    color: #63E6BE;
+    border-color:#63E6BE;
+}
+
+.btn-outline-line:hover{
+    background: #63E6BE;
+    border-color:#63E6BE;
+}
+
 .btn-outline-danger:hover{
     background: #df6840;
     border-color:#df6840;

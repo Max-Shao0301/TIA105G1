@@ -14,6 +14,8 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Service("customOAuth2UserService")
 public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
 
+    private static final String TEST_MAIL ="max.shao@icloud.com";
+
     @Autowired
     private MemberService memberService;
 
@@ -27,6 +29,11 @@ public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
         //從attributes中取得email和name
         String email = (String) attributes.get("email");
         String name = (String) attributes.get("name");
+
+        if (email == null || name == null) {
+            email = TEST_MAIL;
+            name = (String) attributes.get("displayName");
+        }
 
 
         //登入流程結束後，取得的基本資訊只會存在於OAuth2User中，配合保存到會員資料表中需要儲存一些session資訊，傳給service，由service操作session存放或讀取登入使用者資料
