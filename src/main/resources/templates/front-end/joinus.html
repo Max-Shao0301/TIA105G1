@@ -1,3 +1,4 @@
+
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx" >
     <head>
@@ -87,9 +88,17 @@
 						</div>
 						<div class="col-lg-6 col-md-7 col-12">
 							<!-- Top Contact -->
+
+						
 							<ul class="top-contact">
-								<li><a th:href="@{/login}"><i class="icofont-login"></i>會員登入</a></i></li>
-								<li></i><a th:href="@{/member}"><i class="icofont-ui-user"></i>會員資料</a></li>
+							<li th:if="${!session.isLoggedIn}"><a th:href="@{/login}"><i
+									class="icofont-login"></i>會員登入</a></li>
+							<li th:if="${session.isLoggedIn}"><i class="icofont-paw"></i>Hi,<span
+								th:text="${session.memName}"></span>!</li>
+							<li th:if="${!session.isLoggedIn}"><a
+								th:href="@{/verifyEmail}"><i class="icofont-ui-user"></i>會員註冊</a></li>
+							<li th:if="${session.isLoggedIn}"><a th:href="@{/member}"><i
+									class="icofont-ui-user"></i>會員資料</a></li>
 							</ul>
 							<!-- End Top Contact -->
 						</div>

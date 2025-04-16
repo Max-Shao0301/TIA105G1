@@ -85,6 +85,9 @@ public class OrdersVO implements java.io.Serializable {
 	@OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<OrderPetVO> pet;
 
+	private Boolean reminded = false;
+
+	
 	public OrdersVO() {
 
 	}
@@ -223,5 +226,13 @@ public class OrdersVO implements java.io.Serializable {
 
 	public void setStaff(StaffVO staff) {
 		this.staff = staff;
+	}
+
+	public Boolean getReminded() {
+		return reminded;
+	}
+
+	public void setReminded(Boolean reminded) {
+		this.reminded = reminded;
 	}
 }

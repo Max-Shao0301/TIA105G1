@@ -43,6 +43,7 @@
 <link rel="stylesheet" th:href="@{css/style.css}">
 <link rel="stylesheet" th:href="@{css/responsive.css}">
 <link rel="stylesheet" th:href="@{css/add.css}">
+<link rel="stylesheet" th:href="@{css/bell.css}">
 </head>
 <body>
 
@@ -96,17 +97,28 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-lg-6 col-md-5 col-12"></div>
-					<div class="col-lg-6 col-md-7 col-12">
+					<div class="col-lg-6 col-md-7 col-12" style="padding-right: 0;">
 						<!-- Top Contact -->
 						<ul class="top-contact">
+
 							<li th:if="${!session.isLoggedIn}"><a th:href="@{/login}"><i
 									class="icofont-login"></i>會員登入</a></li>
 							<li th:if="${session.isLoggedIn}"><i class="icofont-paw"></i>Hi,<span
 								th:text="${session.memName}"></span>!</li>
-							<li th:if="${!session.isLoggedIn}"><a th:href="@{/verifyEmail}"><i
-									class="icofont-ui-user"></i>會員註冊</a></li>
+							<li th:if="${!session.isLoggedIn}"><a
+								th:href="@{/verifyEmail}"><i class="icofont-ui-user"></i>會員註冊</a></li>
 							<li th:if="${session.isLoggedIn}"><a th:href="@{/member}"><i
 									class="icofont-ui-user"></i>會員資料</a></li>
+							<li th:if="${session.isLoggedIn}" id="bellWrapper"
+								class="bell-wrapper"
+								style="position: relative; margin-right: 0;"><i
+								id="bellIcon" class="fa fa-bell bell-icon"></i> <span
+								id="bellBadge" class="bell-badge">0</span>
+								<div id="reminderDropdown" class="reminder-dropdown ">
+									<ul id="reminderList" class="reminder-list">
+										<li>❤️請提前至約定地點等候司機接送!</li>
+									</ul>
+								</div></li>
 						</ul>
 						<!-- End Top Contact -->
 					</div>
@@ -141,17 +153,6 @@
 										<li><a th:href="@{/questionAndAnswer}">常見問題 </a></li>
 										<li><a th:href="@{/orderList}">訂單檢視 </a></li>
 										<li class="active"><a th:href="@{/}">首頁</a>
-										<li>
-											<!--天氣API資料 -->
-											<span>地區：台北 / </span>
-											<span> 溫度：<span th:text="${#numbers.formatDecimal(weather.main.temp, 0, 0)}">--</span>°C</span>
-											<span> / 濕度：<span th:text="${weather.main.humidity}">--</span>%</span>
-											<span th:each="w : ${weather.weather}">
-												<span>/ 天氣：<span th:text="${w.description}">--</span></span>
-												<img th:src="@{'https://openweathermap.org/img/wn/' + ${w.icon} + '@2x.png'}" alt="icon"/>
-											</span>
-											<!--天氣API資料 -->
-										</li>
 									</ul>
 								</nav>
 
@@ -297,7 +298,19 @@
 		</div>
 	</section>
 	<!--/End Start schedule Area -->
-
+	<section style="text-align: center;">
+		<!--天氣API資料 -->
+		<span>地區：台北 / </span> <span> 溫度：<span
+			th:text="${#numbers.formatDecimal(weather.main.temp, 0, 0)}">--</span>°C
+		</span> <span> / 濕度：<span th:text="${weather.main.humidity}">--</span>%
+		</span> <span th:each="w : ${weather.weather}"> <span>/ 天氣：<span
+				th:text="${w.description}">--</span>
+		</span> <img
+			th:src="@{'https://openweathermap.org/img/wn/' + ${w.icon} + '@2x.png'}"
+			alt="icon" />
+		</span>
+		<!--天氣API資料 -->
+	</section>
 	<!-- Start Feautes -->
 	<section class="Feautes section">
 		<div class="container">
@@ -307,9 +320,8 @@
 						<h2>
 							We Are Always Ready to Serve <br> You & Your pets
 						</h2>
-						<p>
-							寵愛牠，專為您的毛孩提供安全、舒適的接送服務。無論是看醫生、美容還是其他行程， <br>我們隨時待命，讓每一次旅程安心又便利！
-						</p>
+						<p>無懼風雨，艷陽高照也不缺席，寵愛牠 — 專為您的毛孩提供安全、舒適的接送服務。 <br>無論是看醫生、美容，或是其他行程，
+							我們隨時待命，讓每一次旅程都安心又便利！</p>
 					</div>
 				</div>
 			</div>
@@ -349,6 +361,8 @@
 				</div>
 			</div>
 		</div>
+
+
 	</section>
 	<!--/ End Feautes -->
 
@@ -370,12 +384,12 @@
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer f-link">
 							<h2>Quick Links</h2>
-								<ul>
-									<li><a href="/staff/login"><i
-											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠服務人員工作系統</a></li>
-									<li><a href="/admin/login/page"><i
-											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠平台方管理系統</a></li>
-								</ul>
+							<ul>
+								<li><a href="/staff/login"><i class="fa fa-caret-right"
+										aria-hidden="true"></i>寵愛牠服務人員工作系統</a></li>
+								<li><a href="/admin/login/page"><i
+										class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠平台方管理系統</a></li>
+							</ul>
 
 						</div>
 					</div>
@@ -392,10 +406,10 @@
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer">
 							<h2>Contact Us</h2>
-							<p>客服信箱&nbsp;&nbsp;&nbsp;&nbsp;	a0912622502@gmail.com</p>
+							<p>客服信箱&nbsp;&nbsp;&nbsp;&nbsp; a0912622502@gmail.com</p>
 							<p>客服專線&nbsp;&nbsp;&nbsp;&nbsp;(02) 5555-8858</p>
-							<p style="margin-left:70px">汪汪汪汪-幫幫我吧</p>
-							
+							<p style="margin-left: 70px">汪汪汪汪-幫幫我吧</p>
+
 						</div>
 					</div>
 				</div>
@@ -417,7 +431,12 @@
 		<!--/ End Copyright -->
 	</footer>
 	<!--/ End Footer Area -->
+	<!-- 在 body 結尾處（before 所有 js） -->
+	<script th:inline="javascript">
+  window.memId = [[${session.memId ?: 0}]];
+</script>
 
+	<script src="/js/bell.js"></script>
 	<!-- jquery Min JS -->
 	<script src="js/add.js"></script>
 	<script src="js/jquery.min.js"></script>
@@ -460,5 +479,10 @@
 	<script src="js/bootstrap.min.js"></script>
 	<!-- Main JS -->
 	<script src="js/main.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+
 </body>
 </html>
