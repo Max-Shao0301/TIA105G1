@@ -23,6 +23,10 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
+
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -201,8 +205,6 @@ public class OrdersService {
 				orderPoint = checkoutAamount;
 				payMethood = 0;
 
-				System.out.println("點數單");
-
 				// 驗證前端提交過來的點數是否與資料庫儲存的會員點數一致、但點數不夠支付整筆訂單金額、而且user點數不是0
 			} else if (memberPoint.equals(orderPoint) && memberPoint < checkoutAamount && !(memberPoint.equals(0))) {
 				checkoutAamount -= memberPoint;
@@ -262,9 +264,6 @@ public class OrdersService {
 
 		//使用ECPay建立付款頁面的方法 兩個參數分別是訂單物件跟發票物件 不開發票第二個就傳null
 		String form = all.aioCheckOut(aco, null); 
-
-//		System.out.println(form);
-
 		result.put("form", form);
 		session.setAttribute("orderId", orderId);
 		paymentCountdown(orderId); // 呼叫結帳倒數計時
