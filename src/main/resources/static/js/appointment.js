@@ -267,7 +267,23 @@ async function getMemInfo(){
 		memberId = data.memId;
 		console.log(data);
 		console.log(memberId);
-		
+		if(data.address == null||data.memEmail == null || data.memPhone == null || data.memName == null){
+			$('article').children('p').remove();
+			$('#lightboxMes').prepend(`<p>請先補齊會員資料後再做預約</p>`);
+			$('#lightbox').removeClass('none');
+			$("#lightbox").off('click').on('click',function(){
+				window.location.href ="http://localhost:8080/member/updateMember"
+			});
+			$('#lightbox > article').off('click').on('click',function(e){
+				e.stopPropagation();
+			})
+			$('.close_card_btn').off('click').on('click',function(){
+				window.location.href ="http://localhost:8080/member/updateMember"
+			})
+			$('.check_btn').off('click').on('click',function(){
+				window.location.href ="http://localhost:8080/member/updateMember"
+			})
+		}
 		order.memName = data.memName;
 		order.memPhone = data.memPhone 
 		order.memPoints = data.point
@@ -1131,7 +1147,7 @@ function runStep () {
 			case 1:
 				body_text.html(appointment);
 				changeCss("/css/appointment.css");
-				$('#body').append(`<div id="map"></div>`);
+				$('#body').prepend(`<div id="map"></div>`);
 				step1_js();
 				break;
 			case 2:
