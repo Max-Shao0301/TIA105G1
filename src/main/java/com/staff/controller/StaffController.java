@@ -357,7 +357,7 @@ public class StaffController {
     
     @PostMapping("/staff/updateEmail")
     public String updateStaffEmail(@RequestParam("staffEmail") String staffEmail,
-    								RedirectAttributes redirectAttributes, HttpSession session) {
+    								RedirectAttributes redirectAttributes, HttpSession session, Model model) {
 
         Integer staffId = (Integer) session.getAttribute("staffId");
         StaffVO staffVO = staffService.getOneStaff(staffId);
@@ -370,8 +370,8 @@ public class StaffController {
         
         if (staffEmail == null || staffEmail.isEmpty() ||!(staffEmail.trim().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$"))) {
         	
-        	redirectAttributes.addFlashAttribute("error", "設定信箱格式錯誤"); 
-        	redirectAttributes.addFlashAttribute("StaffVO", staffVO);
+        	model.addAttribute("error", "設定信箱格式錯誤"); 
+        	model.addAttribute("StaffVO", staffVO);
             return "/back-end/staff/setting";
             
         }
@@ -381,7 +381,7 @@ public class StaffController {
             staffVO.setStaffEmail(staffEmail);
             staffService.updateStaff(staffVO);
             redirectAttributes.addFlashAttribute("ok", "信箱重設成功，請重新登入"); 
-            return "/back-end/staff/login";
+            return "redirect:/staff/login";
         	
         }else {
         	
@@ -403,7 +403,7 @@ public class StaffController {
     @PostMapping("/staff/updatePassword")
     public String updateStaffPassword(@RequestParam("newPassword") String newPassword,
                                       @RequestParam("checkNewPassword") String checkNewPassword,
-                                      Model model, HttpSession session) {
+                                      Model model, HttpSession session, RedirectAttributes redirectAttributes) {
 
         Integer staffId = (Integer) session.getAttribute("staffId");
         StaffVO staffVO = staffService.getOneStaff(staffId);
@@ -431,8 +431,8 @@ public class StaffController {
         	
         staffVO.setStaffPassword(newPassword);
         staffService.updateStaff(staffVO);
-        model.addAttribute("error", "密碼重設成功，請重新登入");
-        return "/back-end/staff/login";
+		redirectAttributes.addFlashAttribute("ok", "密碼重設成功，請重新登入");
+        return "redirect:/staff/login";
         
     }
     
