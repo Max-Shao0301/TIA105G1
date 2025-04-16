@@ -23,12 +23,11 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
-<<<<<<< Upstream, based on branch 'master' of https://github.com/Max-Shao0301/TIA105G1.git
-=======
+
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
->>>>>>> 04a7546 小鈴鐺+css
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -203,12 +202,7 @@ public class OrdersService {
 				memberRepository.updatePoint(memberPoint - checkoutAamount, memId);
 				orderPoint = checkoutAamount;
 				payMethood = 0;
-<<<<<<< Upstream, based on branch 'master' of https://github.com/Max-Shao0301/TIA105G1.git
-				
-=======
-				System.out.println("點數單");
 
->>>>>>> 04a7546 小鈴鐺+css
 				// 驗證前端提交過來的點數是否與資料庫儲存的會員點數一致、但點數不夠支付整筆訂單金額、而且user點數不是0
 			} else if (memberPoint.equals(orderPoint) && memberPoint < checkoutAamount && !(memberPoint.equals(0))) {
 				checkoutAamount -= memberPoint;
@@ -265,14 +259,10 @@ public class OrdersService {
 		aco.setReturnURL("https://c1c5-1-164-241-28.ngrok-free.app/ecpayReturn"); // 付款結果通知 應為商家的controller
 		// aco.setOrderResultURL(""); //付款完成後的結果參數 傳至前端用的
 		aco.setClientBackURL("http://localhost:8080/appointment/paymentResults"); // 付完錢後的返回商店按鈕會到的網址
-<<<<<<< Upstream, based on branch 'master' of https://github.com/Max-Shao0301/TIA105G1.git
+
 		//使用ECPay建立付款頁面的方法 兩個參數分別是訂單物件跟發票物件 不開發票第二個就傳null
 		String form = all.aioCheckOut(aco, null); 
-=======
-		// 使用ECPay建立付款頁面的方法 兩個參數分別是訂單物件跟發票物件 不開發票第二個就傳null
-		String form = all.aioCheckOut(aco, null);
-//		System.out.println(form);
->>>>>>> 04a7546 小鈴鐺+css
+
 		result.put("form", form);
 		session.setAttribute("orderId", orderId);
 		paymentCountdown(orderId); // 呼叫結帳倒數計時
