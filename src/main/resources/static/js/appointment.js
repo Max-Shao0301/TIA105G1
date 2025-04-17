@@ -170,11 +170,10 @@ let agreement =`
 					<h4>一、服務內容</h4>
 					<ol>
 						<li>本公司提供寵物接送服務，負責將寵物從指定地點安全送達至目的地。</li>
-						<li>服務時間將依據雙方約定時間進行，如需更改，請提前 24 小時通知。</li>
+						<li>服務時間將依據雙方約定時間進行，如需更改，請提前取消訂單後重新下單。</li>
 					</ol>
 					<h4>二、寵物健康與安全</h4>
 					<ol>
-						<li>寵物主人需提供寵物健康狀況及年齡，無病痛或疾病才可使用服務。</li>
 						<li>如有特殊情況，請提前告知，以確保服務順利進行。</li>
 						<li>若寵物於運輸途中出現異常反應或攻擊行為，可能會中止服務，費用恕不退還。</li>
 					</ol>
@@ -186,8 +185,8 @@ let agreement =`
 					</ol>
 					<h4>四、費用與取消政策</h4>
 					<ol>
-						<li>服務費用需於接送前支付，並開立發票。</li>
-						<li>取消需提前通知，否則可能不予退款。</li>
+						<li>服務費用需於接送前支付。</li>
+						<li>訂單取消將退還點數，可於下次服務預約時1:1進行折抵。</li>
 					</ol>
 					<h4>五、其他</h4>
 					<ol>
@@ -265,8 +264,8 @@ async function getMemInfo(){
 		});
 		let data =await res.json();
 		memberId = data.memId;
-		console.log(data);
-		console.log(memberId);
+		//console.log(data);
+		//console.log(memberId);
 		if(data.address == null||data.memEmail == null || data.memPhone == null || data.memName == null){
 			$('article').children('p').remove();
 			$('#lightboxMes').prepend(`<p>請先補齊會員資料後再做預約</p>`);
@@ -287,7 +286,7 @@ async function getMemInfo(){
 		order.memName = data.memName;
 		order.memPhone = data.memPhone 
 		order.memPoints = data.point
-		console.log(order);
+		//console.log(order);
 
 	} catch(error){
 		console.log(error);
@@ -546,13 +545,13 @@ let savedPets_Op ="";
 async function getMember_Pet() {
 	
 	let getMember_Pet_URL = 'http://localhost:8080/appointment/getMemberPet';
-	console.log(memberId);
+	//console.log(memberId);
 	getMember_Pet_URL +=`?memId=${memberId}` 
-	console.log(getMember_Pet_URL)
+	//console.log(getMember_Pet_URL)
 	try{
 		let res = await fetch(getMember_Pet_URL);
 		 data = await res.json();
-		 console.log(data);  
+		 //console.log(data);  
 		if(res.ok && data.length > 0){
 			// petData = data;
 			
@@ -664,9 +663,9 @@ let updatePet_URL ='http://localhost:8080/appointment/putPet'
 					let data = await res.json();
 					if(data.result == "成功新增" ){
 						order.petId = data.petId;
-						console.log(data);
-						console.log(order);
-						console.log(order.petId);
+						//console.log(data);
+						//console.log(order);
+						//console.log(order.petId);
 						resolve(true);
 						return;
 					} else{
@@ -903,7 +902,7 @@ async function OrderToDb(){
 		// console.log(res);
 		
 		let data = await res.json();
-		console.log(data);
+		//console.log(data);
 		if(!res.ok){
 			if(data.error == "schError"){
 				refreshLightBox(`<p>此服務人員已被預約<br>請選擇其他服務人員或時段後再次下單</p>`)

@@ -113,12 +113,12 @@ function petInfoLightBox(text){
 		$(this).removeClass('check_btn');
 	})
 }
-$('#yes').on('click',function(){
-    window.location.href ="http://localhost:8080/member";
-})
 
 $('#nextPage').off('click').on('click', async function(){
     if(await checkPetInfoChange()){
+		$('#yes').off('click').on('click',function(){
+		    window.location.href ="http://localhost:8080/member";
+		})
         petInfoLightBox(`<p id = "updatePet_P">新增完成</p>`)
     }
 })

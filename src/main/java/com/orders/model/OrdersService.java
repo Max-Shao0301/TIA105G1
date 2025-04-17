@@ -258,7 +258,7 @@ public class OrdersService {
 		aco.setTradeDesc(des); // 交易描述
 		aco.setItemName("Pet Taxi"); // 商品名稱
 		aco.setNeedExtraPaidInfo("Y"); // 額外資訊
-		aco.setReturnURL("https://c1c5-1-164-241-28.ngrok-free.app/ecpayReturn"); // 付款結果通知 應為商家的controller
+		aco.setReturnURL("https://e4bd-124-218-108-244.ngrok-free.app/ecpayReturn"); // 付款結果通知 應為商家的controller
 		// aco.setOrderResultURL(""); //付款完成後的結果參數 傳至前端用的
 		aco.setClientBackURL("http://localhost:8080/appointment/paymentResults"); // 付完錢後的返回商店按鈕會到的網址
 
@@ -307,7 +307,7 @@ public class OrdersService {
 				PetVO petVO = ordersVO.getPet().get(0).getPet();
 
 				String subject = "寵愛牠-預約成功通知";
-				String content = "預約項目：寵物接送\n" + "預約時間：" + ordersVO.getSchedule().getDate() + " " + apptTime + ":00\n"
+				String content = "預約成功通知\n\n預約項目：寵物接送\n" + "預約時間：" + ordersVO.getSchedule().getDate() + " " + apptTime + ":00\n"
 						+ "上車地址：" + ordersVO.getOnLocation() + "\n" + "目的地地址：" + ordersVO.getOffLocation() + "\n"
 						+ "預約服務人員：" + ordersVO.getStaff().getStaffName() + "\n" + "服務人員聯絡電話："
 						+ ordersVO.getStaff().getStaffPhone() + "\n" + "會員姓名：" + ordersVO.getMember().getMemName()

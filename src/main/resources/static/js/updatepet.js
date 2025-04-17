@@ -59,10 +59,9 @@ async function getMember_Pet() {
 	try{
 		let res = await fetch(getMember_Pet_URL);
 		let data = await res.json();
-		console.log(data);  
+		//console.log(data);  
 		if(res.ok && data.length > 0){
 			// petData = data;
-			console.log('111');  
 			data.forEach(function(pet){
 				let id = pet.petId;
 				let name = pet.petName;
