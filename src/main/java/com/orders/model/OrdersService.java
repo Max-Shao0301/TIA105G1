@@ -606,7 +606,7 @@ public class OrdersService {
 			if (appointmentTime.isAfter(now)) {
 				// 推播提醒給該會員
 				String key = "reminder:" + memId;
-				String message = "🔔 您的預約訂單編號 " + order.getOrderId() + " 將於 " + format(appointmentTime) + " 開始，\n  請做好出發的準備！";
+				String message = "🔔 您的預約訂單編號 " + order.getOrderId() + " 將於 " + format(appointmentTime) + " 開\n  始，請做好出發的準備！";
 				
 				redisTemplate.opsForList().rightPush(key, message);
 				System.out.println("存在redis" + memId);
