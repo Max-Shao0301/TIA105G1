@@ -597,7 +597,7 @@ public class OrdersService {
 	@Scheduled(fixedRate = 600 * 1000) // 600s
 	public void checkAndSendReminders() {
 		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime sixtyMinLater = now.plusMinutes(240);
+		LocalDateTime sixtyMinLater = now.plusMinutes(300);
 
 		
 		List<OrdersVO> orders = ordersRepository.findOrdersTodayAndTomorrow();

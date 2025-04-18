@@ -131,3 +131,40 @@ document.getElementById('applybtn').addEventListener('click', function(event) {
 
     }
 });
+
+function showModal() {
+    document.getElementById('modal').style.display = 'block';
+  }
+
+  function closeModal() {
+    document.getElementById('modal').style.display = 'none';
+  }
+  
+  function showApplyForm() {
+    document.getElementById('applyFormModal').style.display = 'block';
+  }
+  function closeApplyForm() {
+    document.getElementById('applyFormModal').style.display = 'none';
+  }
+  function showNotice() {
+    document.getElementById('noticeModal').style.display = 'block';
+  }
+
+  function closeNotice() {
+    document.getElementById('noticeModal').style.display = 'none';
+  }
+
+  function toggleConfirmBtn() {
+    const checkbox = document.getElementById('agreeCheckbox');
+    const confirmBtn = document.getElementById('confirmNoticeBtn');
+    confirmBtn.disabled = !checkbox.checked;
+  }
+
+  function confirmNotice() {
+    const joinBtn = document.getElementById('joinBtn');
+    joinBtn.disabled = false;
+    joinBtn.classList.remove("disabled-btn");
+
+    // ✅ 關閉加入須知彈窗（正確 ID 是 modal）
+    document.getElementById('modal').style.display = 'none';
+  }

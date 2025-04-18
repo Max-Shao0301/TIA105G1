@@ -40,14 +40,7 @@ color:#888;
   color: white;
 }
 
-article.info{
-    background-color: white;
-    width: 800px;
-    margin: 50px auto;
-    padding: 40px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
+
   article.info div.content_block div.left_block{
     padding: 5px 10px 10px 5px;
 
@@ -179,3 +172,254 @@ article.info{
   input[type="text"]{
     width: 300px;
   }
+  .modal-content {
+  background: #fff;
+  width: 90%;
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 40px;
+  border-radius: 10px;
+  position: relative;
+  line-height: 1.6;
+  font-size: 16px;
+  color: #333;
+}
+
+.modal-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.modal-item {
+  margin-bottom: 15px;
+}
+
+.modal-footer {
+
+  font-weight: bold;
+  color: #444;
+}
+
+.modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #888;
+}
+  .joinus-header {
+  padding: 20px 25px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+
+}
+
+.joinus-header .title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+
+
+
+.joinus-header .subtitle {
+  font-size: 18px;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.joinus-header p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #444;
+}
+
+.joinus-header ul {
+  padding-left: 20px;
+  margin-top: 0;
+}
+
+.joinus-header ul li {
+  margin-bottom: 8px;
+}
+.joinusbox{
+	 background: #C1B9AD;
+	padding:50px;
+	margin: 50px 150px;
+	border-radius: 10px;}
+	
+	.title {
+	background-color: #839974;
+    color: #fff;
+    font-size: 30px;
+    width: 350px;
+    height: 50px;
+    border-radius: 40px;
+    line-height: 50px;
+    text-align: center;
+        font-weight: 500;
+        margin-bottom:30px;
+}
+ .notice-button {
+      background-color: #df6840;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin:20px auto;
+
+
+    }
+    .joinus-header {
+  text-align: center;
+}
+.joinus-header ul {
+  display: inline-block;
+  text-align: left;
+}
+.offer-requirement-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.offer-box2 {
+  flex: 1 1 300px;
+  max-width: 400px;
+  margin-right:60px;
+}
+
+.offer-box1 {
+  flex: 1 1 300px;
+  max-width: 400px;
+  margin-left:85px;
+  padding-left:75px;
+
+}
+
+.offer-title {
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 10px;
+
+}
+
+.offer-box ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.offer-box ul li {
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #444;
+}
+.modal-overlay {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  overflow-y: auto;
+}
+
+.modal-content.big-form {
+  background: #fff;
+  width: 90%;
+  max-width: 800px;
+  margin: 60px auto;
+  padding: 30px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.close-modal {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 22px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.apply-open-button {
+  background-color: #335288;
+  color: white;
+  font-size: 16px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  margin-top: 20px;
+  margin-left:30px;
+  cursor: pointer;
+}
+.joinus-buttons {
+  text-align: center;
+  margin-top: 30px;
+}
+
+.notice-button,
+.apply-open-button {
+  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+}
+
+.notice-button {
+  background-color: #df6840;
+  color: white;
+}
+
+.apply-open-button {
+  background-color: #274f87;
+  color: white;
+}
+
+.apply-open-button:disabled,
+.disabled-btn {
+  background-color: #aaa !important;
+  cursor: not-allowed;
+}
+#confirmNoticeBtn {
+  background-color: #274f87;
+  color: white;
+  padding: 10px 20px;
+  font-size: 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+#confirmNoticeBtn:disabled {
+  background-color: #aaa;
+  cursor: not-allowed;
+}
+.la{
+	width:auto;
+	margin-left:300px;
+}

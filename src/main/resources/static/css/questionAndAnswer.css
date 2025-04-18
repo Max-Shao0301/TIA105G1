@@ -134,13 +134,13 @@ h2 {
 .accordion-button {
 	background-color: #fff;
 	width: 100%;
-	text-align: left; color : #333;
+	text-align: left; color : #666;
 	font-weight: 600;
 	font-size: 18px;
 	padding: 16px 20px;
 	border-radius: 0;
 	transition: background-color 0.3s ease;
-	color: #333;
+	color: #666;
 }
 
 /* 問題 hover 效果 */

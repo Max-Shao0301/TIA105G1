@@ -32,14 +32,18 @@
     border-bottom: none;
   }
   .bell-badge {
-    background-color: red;
-    color: white;
-    border-radius: 50%;
-    padding: 2px 6px;
-    font-size: 12px;
-    position: absolute;
-    top: -6px;
-    right: -6px;
+    background-color: #f16745;
+	color: white;
+	border-radius: 50%;
+	font-size: 12px;
+	position: absolute;
+	top: -3px;
+	right: -3px;
+	width: 15px;
+	height: 15px;
+  line-height: 15px;     /* 跟高度一樣 */
+  text-align: center;     /* 水平置中 */
+ 
     display: none;
   }
 #reminderDropdown {
