@@ -97,11 +97,11 @@
 
 .card-role {
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 13px;
   color: #fff;
   margin-left: 20px;
   background-color:#839577;
-  width:auto;
+  width:60px;
   padding:6px;
   text-align: center;
   border-radius: 34px;

@@ -1,96 +1,109 @@
 
 <!doctype html>
-<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx" >
-    <head>
-        <!-- Meta Tags -->
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="keywords" content="Site keywords here">
-		<meta name="description" content="">
-		<meta name='copyright' content=''>
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		
-		<!-- Title -->
-		<title>寵愛牠 PawCares</title>
-		<link rel="icon" th:href="@{/images/logo.png}">
-		<!-- Google Fonts -->
-		<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
-		<!-- Bootstrap CSS -->
-		<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
-		<!-- Nice Select CSS -->
-		<link rel="stylesheet" th:href="@{/css/nice-select.css}">
-		<!-- Font Awesome CSS -->
-        <link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
-		<!-- icofont CSS -->
-        <link rel="stylesheet" th:href="@{/css/icofont.css}">
-		<!-- Slicknav -->
-		<link rel="stylesheet" th:href="@{/css/slicknav.min.css}">
-		<!-- Owl Carousel CSS -->
-        <link rel="stylesheet" th:href="@{/css/owl-carousel.css}">
-		<!-- Datepicker CSS -->
-		<link rel="stylesheet" th:href="@{/css/datepicker.css}">
-		<!-- Animate CSS -->
-        <link rel="stylesheet" th:href="@{/css/animate.min.css}">
-		<!-- Magnific Popup CSS -->
-        <link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
-		
-		<!-- Medipro CSS -->
-        <link rel="stylesheet" th:href="@{/css/normalize.css}">
-        <link rel="stylesheet" th:href="@{/css/style.css}">
-        <link rel="stylesheet" th:href="@{/css/responsive.css}">
-		<link rel="stylesheet" th:href="@{/css/add.css}">
-        <link rel="stylesheet" th:href="@{/css/joinus.css}">
-		
-    </head>
-    <body>
-	
-		<!-- Preloader -->
-		<div class="preloader">
-            <div class="loader">
-                <div class="indicator">
-                    <svg width="50" height="50" viewBox="0 0 50 50" xmlns="http://www.w3.org/2000/svg">
+<html xmlns:th="http://www.thymeleaf.org" class="no-js" lang="zxx">
+<head>
+<!-- Meta Tags -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="keywords" content="Site keywords here">
+<meta name="description" content="">
+<meta name='copyright' content=''>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<!-- Title -->
+<title>寵愛牠 PawCares</title>
+<link rel="icon" th:href="@{/images/logo.png}">
+<!-- Google Fonts -->
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+	rel="stylesheet">
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+<!-- Nice Select CSS -->
+<link rel="stylesheet" th:href="@{/css/nice-select.css}">
+<!-- Font Awesome CSS -->
+<link rel="stylesheet" th:href="@{/css/font-awesome.min.css}">
+<!-- icofont CSS -->
+<link rel="stylesheet" th:href="@{/css/icofont.css}">
+<!-- Slicknav -->
+<link rel="stylesheet" th:href="@{/css/slicknav.min.css}">
+<!-- Owl Carousel CSS -->
+<link rel="stylesheet" th:href="@{/css/owl-carousel.css}">
+<!-- Datepicker CSS -->
+<link rel="stylesheet" th:href="@{/css/datepicker.css}">
+<!-- Animate CSS -->
+<link rel="stylesheet" th:href="@{/css/animate.min.css}">
+<!-- Magnific Popup CSS -->
+<link rel="stylesheet" th:href="@{/css/magnific-popup.css}">
+
+<!-- Medipro CSS -->
+<link rel="stylesheet" th:href="@{/css/normalize.css}">
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/responsive.css}">
+<link rel="stylesheet" th:href="@{/css/add.css}">
+<link rel="stylesheet" th:href="@{/css/joinus.css}">
+
+</head>
+<body>
+
+	<!-- Preloader -->
+	<div class="preloader">
+		<div class="loader">
+			<div class="indicator">
+				<svg width="50" height="50" viewBox="0 0 50 50"
+					xmlns="http://www.w3.org/2000/svg">
                         <!-- 背景圓形 -->
-                        <circle cx="25" cy="25" r="24" fill="#889D75" stroke="white" stroke-width="2"/>
-                        <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
+                        <circle cx="25" cy="25" r="24" fill="#889D75"
+						stroke="white" stroke-width="2" />
+                        <animate attributeName="opacity" values="0;1;0"
+						dur="0.5s" repeatCount="indefinite" />
                         <!-- 更扁平的愛心形狀 -->
-                        <path d="M25,17.5 C32.5,5 42.5,20 25,30 C7.5,20 17.5,5 25,17.5 Z"
-                              fill="none" stroke="white" stroke-width="2"
-                              stroke-linecap="round" stroke-linejoin="round"
-                              stroke-dasharray="100" stroke-dashoffset="100">
-                          <animate attributeName="stroke-dashoffset" from="100" to="0" dur="0.5s" repeatCount="indefinite"/>
+                        <path
+						d="M25,17.5 C32.5,5 42.5,20 25,30 C7.5,20 17.5,5 25,17.5 Z"
+						fill="none" stroke="white" stroke-width="2" stroke-linecap="round"
+						stroke-linejoin="round" stroke-dasharray="100"
+						stroke-dashoffset="100">
+                          <animate attributeName="stroke-dashoffset"
+						from="100" to="0" dur="0.5s" repeatCount="indefinite" />
                         </path>
                     
                         <!-- 腳趾小圓 --> 
-                        <circle cx="15" cy="35" r="3.5" fill="none" stroke="white" stroke-width="2">
-                          <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
+                        <circle cx="15" cy="35" r="3.5" fill="none"
+						stroke="white" stroke-width="2">
+                          <animate attributeName="opacity"
+						values="0;1;0" dur="0.5s" repeatCount="indefinite" />
                         </circle>
-                        <circle cx="25" cy="37.5" r="3.5" fill="none" stroke="white" stroke-width="2">
-                          <animate attributeName="opacity" values="1;0;1" dur="0.5s" repeatCount="indefinite"/>
+                        <circle cx="25" cy="37.5" r="3.5" fill="none"
+						stroke="white" stroke-width="2">
+                          <animate attributeName="opacity"
+						values="1;0;1" dur="0.5s" repeatCount="indefinite" />
                         </circle>
-                        <circle cx="35" cy="35" r="3.5" fill="none" stroke="white" stroke-width="2">
-                          <animate attributeName="opacity" values="0;1;0" dur="0.5s" repeatCount="indefinite"/>
+                        <circle cx="35" cy="35" r="3.5" fill="none"
+						stroke="white" stroke-width="2">
+                          <animate attributeName="opacity"
+						values="0;1;0" dur="0.5s" repeatCount="indefinite" />
                         </circle>
                     </svg>
-                </div>
-            </div>
-        </div>
-        <!-- End Preloader -->
-		
-		<!-- Get Pro Button -->
-		
-	
-		<!-- Header Area -->
-		<header class="header" >
-			<!-- Topbar -->
-			<div class="topbar">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-6 col-md-5 col-12">
-						</div>
-						<div class="col-lg-6 col-md-7 col-12">
-							<!-- Top Contact -->
+			</div>
+		</div>
+	</div>
+	<!-- End Preloader -->
 
-						
-							<ul class="top-contact">
+	<!-- Get Pro Button -->
+
+
+	<!-- Header Area -->
+	<header class="header">
+		<!-- Topbar -->
+		<div class="topbar">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-6 col-md-5 col-12"></div>
+					<div class="col-lg-6 col-md-7 col-12">
+						<!-- Top Contact -->
+
+
+						<ul class="top-contact">
 							<li th:if="${!session.isLoggedIn}"><a th:href="@{/login}"><i
 									class="icofont-login"></i>會員登入</a></li>
 							<li th:if="${session.isLoggedIn}"><i class="icofont-paw"></i>Hi,<span
@@ -99,123 +112,210 @@
 								th:href="@{/verifyEmail}"><i class="icofont-ui-user"></i>會員註冊</a></li>
 							<li th:if="${session.isLoggedIn}"><a th:href="@{/member}"><i
 									class="icofont-ui-user"></i>會員資料</a></li>
-							</ul>
-							<!-- End Top Contact -->
-						</div>
+						</ul>
+						<!-- End Top Contact -->
 					</div>
 				</div>
 			</div>
-			<!-- End Topbar -->
-			<!-- Header Inner -->
-			<div class="header-inner">
-				<div class="container">
-					<div class="inner">
-						<div class="row">
-							<div class="col-lg-3 col-md-3 col-12">
-								<!-- Start Logo -->
-								<div class="logo">
-									<a th:href="@{/}"><img th:src="@{/images/title.png}" alt="#"></a>
-								</div>
-								<!-- End Logo -->
-								<!-- Mobile Nav -->
-								<div class="mobile-nav"></div>
-								<!-- End Mobile Nav -->
-							</div>
-							<div class="col-lg-7 col-md-9 col-12" >
-								<!-- Main Menu -->
-								<div class="main-menu">
-									
-									<nav class="navigation">
-										<ul class="nav menu">											
-											<li><a th:href="@{/aboutUs}">關於我們</a></li>
-											<li class="active"><a th:href="@{/joinus}" >加入我們 </a></li>
-											<li><a th:href="@{/questionAndAnswer}">常見問題 </a></li>
-											<li><a th:href="@{/orderList}">訂單檢視 </a></li>
-											<li><a th:href="@{/}">首頁</a>
-										</ul>
-									</nav>
-								</div>
-								<!--/ End Main Menu -->
-							</div>
-							<div class="col-lg-2 col-12">
-								<div class="get-quote">
-									<a th:href="@{/appointment}" class="btn">預約服務</a>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!--/ End Header Inner -->
-		</header>
-		<!-- End Header Area -->
-		<div class="breadcrumbs overlay">
+		</div>
+		<!-- End Topbar -->
+		<!-- Header Inner -->
+		<div class="header-inner">
 			<div class="container">
-				<div class="bread-inner">
+				<div class="inner">
 					<div class="row">
-						<div class="col-12">
-							<h2>加入我們</h2>
-							<ul class="bread-list">
-								<li><i class="icofont-simple-right"></i></li>
-								<li class="active">Join Us</li>
-							</ul>
+						<div class="col-lg-3 col-md-3 col-12">
+							<!-- Start Logo -->
+							<div class="logo">
+								<a th:href="@{/}"><img th:src="@{/images/title.png}" alt="#"></a>
+							</div>
+							<!-- End Logo -->
+							<!-- Mobile Nav -->
+							<div class="mobile-nav"></div>
+							<!-- End Mobile Nav -->
+						</div>
+						<div class="col-lg-7 col-md-9 col-12">
+							<!-- Main Menu -->
+							<div class="main-menu">
+
+								<nav class="navigation">
+									<ul class="nav menu">
+										<li><a th:href="@{/aboutUs}">關於我們</a></li>
+										<li class="active"><a th:href="@{/joinus}">加入我們 </a></li>
+										<li><a th:href="@{/questionAndAnswer}">常見問題 </a></li>
+										<li><a th:href="@{/orderList}">訂單檢視 </a></li>
+										<li><a th:href="@{/}">首頁</a>
+									</ul>
+								</nav>
+							</div>
+							<!--/ End Main Menu -->
+						</div>
+						<div class="col-lg-2 col-12">
+							<div class="get-quote">
+								<a th:href="@{/appointment}" class="btn">預約服務</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-        <article class="info">
-            <form id="the_form"  enctype="multipart/form-data" th:action="@{/insert/apply}" th:method="post" th:object="${ApplyVO}" >
-              <div class="content_block">
-          
-               
-                
-                <div class="right_block">
-          
-                  <div class="block">
-                    <label>姓名</label>
-					<input type="text" name="name" th:field="*{applyName}">
-                  </div>
-                  <div class="block">
-                    <label>車牌號碼</label>
-					<input type="text" id="plate_number" th:field="*{carNumber}">
-                  </div>
-                  <label class="nametype">性別</label>
-                  <label><input type="radio" name="gender" value="1" th:field="*{applyGender}"> 男</label>
-                  <label><input type="radio" name="gender" value="2" th:field="*{applyGender}"> 女</label>
-                  <div class="form-group">
-                    <label>聯絡電話</label>
-                    <input type="tel" name="phone" th:field="*{applyPhone}">
-                </div>
-                <div class="form-group">
-                    <label>電子信箱</label>
-                    <input type="email" th:field="*{applyEmail}" >
-                </div>
-           
+		<!--/ End Header Inner -->
+	</header>
+	<!-- End Header Area -->
+	<div class="breadcrumbs overlay">
+		<div class="container">
+			<div class="bread-inner">
+				<div class="row">
+					<div class="col-12">
+						<h2>加入我們</h2>
+						<ul class="bread-list">
+							<li><i class="icofont-simple-right"></i></li>
+							<li class="active">Join Us</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="joinusbox">
+		<div class="title">加入-寵愛牠 PawCares</div>
+		<div class="joinus-header">
 
-                </div>
-                <div class="left_block">
-                    <input type="file" name="license" id="licence_photo" th:field="*{license}">
-                    <div id="preview" class="drop_zone">
-						<span class="text">請上傳駕照<i class="icofont-upload-alt"></i></span>
-                    </div>
-                </div>
-              </div>
-          
-              <footer class="footer">
-                <div class="form-group">
-                    <label>自我介紹</label>
-                    <textarea rows="4" th:field="*{introduction}"></textarea>
-                </div>
-              </footer>
-             
+			<div class="subtitle">一起成為毛孩旅程中的守護者！</div>
+			<p>
+				你喜歡動物，願意陪伴牠們完成每一次重要的旅程嗎？<br> 成為【寵愛牠】的夥伴，開啟一段有愛、有意義的接送任務！
+			</p>
 
-            </form> 
-			<button type="submit" id="applybtn">送出履歷</button>
-          </article>
-    
-        
-		<!-- Footer Area -->
+			<hr>
+
+			<div class="offer-requirement-container">
+				<div class="offer-box1 ">
+					<div class="offer-title">- 我們提供：</div>
+					<ul>
+						<li>✔ 穩定的接送需求</li>
+						<li>✔ 自由彈性接案，不綁時段</li>
+						<li>✔ 與一群同樣愛毛孩的夥伴同行</li>
+					</ul>
+				</div>
+				<div class="offer-box2">
+					<div class="offer-title">- 你只需要：</div>
+					<ul>
+						<li>✔ 熱愛毛孩、具備愛心與責任感</li>
+						<li>✔ 有自用車輛及駕照</li>
+						<li>✔ 願意配合平台流程與接送安排</li>
+					</ul>
+				</div>
+			</div>
+
+			<hr>
+
+			<p>
+				🌟 不只是載送，更是讓家長安心、讓毛孩放心的旅程<br> 現在就加入我們，一起走在寵愛毛孩的路上！
+			</p>
+
+			<button class="notice-button" onclick="showModal()">查看加入須知</button>
+			<button class="apply-open-button" id="joinBtn" onclick="showApplyForm()" disabled>我要加入</button>
+		</div>
+	</div>
+
+	<div class="modal-overlay" id="modal">
+		<div class="modal-content">
+			<span class="close-modal" onclick="closeModal()">&times;</span>
+
+			<div class="modal-title">加入須知</div>
+
+			<div class="modal-item">
+				<strong>🕒 班表與出勤</strong><br> 每三小時為一時段，可自由更新班表。<br>若有預約請準時抵達，無故缺席兩次將停權。
+			</div>
+
+			<div class="modal-item">
+				<strong>🌐 服務範圍</strong><br> 僅限雙北地區。
+			</div>
+
+			<div class="modal-item">
+				<strong>⭐ 顧客評價</strong><br> 評價長期偏低將限制接單或停權。
+			</div>
+
+			<div class="modal-item">
+				<strong>💰 收入與抽成</strong><br> 平台酌收 2% 服務費（例：500 元 → 實得 490 元）。
+			</div>
+
+			<div class="modal-item">
+				<strong>🏦 匯款方式</strong>
+				<br>每月底結算，次月 5 號前匯款。<br>加入當月月底將有專人聯絡您並請您提供帳號。
+			</div>
+
+			<div class="modal-item">
+				<label class="la"><input type="checkbox" id="agreeCheckbox"
+					onchange="toggleConfirmBtn()"> 我已閱讀並同意上述條款</label>
+			</div>
+			<div class="modal-footer">
+				<button id="confirmNoticeBtn" onclick="confirmNotice()" disabled>確認</button>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal-overlay" id="applyFormModal">
+		<div class="modal-content big-form">
+			<span class="close-modal" onclick="closeApplyForm()">&times;</span>
+
+			<article class="info">
+				<form id="the_form" enctype="multipart/form-data"
+					th:action="@{/insert/apply}" th:method="post"
+					th:object="${ApplyVO}">
+					<div class="content_block">
+
+
+
+						<div class="right_block">
+
+							<div class="block">
+								<label>姓名</label> <input type="text" name="name"
+									th:field="*{applyName}">
+							</div>
+							<div class="block">
+								<label>車牌號碼</label> <input type="text" id="plate_number"
+									th:field="*{carNumber}">
+							</div>
+							<label class="nametype">性別</label> <label><input
+								type="radio" name="gender" value="1" th:field="*{applyGender}">
+								男</label> <label><input type="radio" name="gender" value="2"
+								th:field="*{applyGender}"> 女</label>
+							<div class="form-group">
+								<label>聯絡電話</label> <input type="tel" name="phone"
+									th:field="*{applyPhone}">
+							</div>
+							<div class="form-group">
+								<label>電子信箱</label> <input type="email" th:field="*{applyEmail}">
+							</div>
+
+
+						</div>
+						<div class="left_block">
+							<input type="file" name="license" id="licence_photo"
+								th:field="*{license}">
+							<div id="preview" class="drop_zone">
+								<span class="text">請上傳駕照<i class="icofont-upload-alt"></i></span>
+							</div>
+						</div>
+					</div>
+
+					<footer class="footer">
+						<div class="form-group">
+							<label>自我介紹</label>
+							<textarea rows="4" th:field="*{introduction}"></textarea>
+						</div>
+					</footer>
+
+
+				</form>
+				<button type="submit" id="applybtn">送出履歷</button>
+			</article>
+
+		</div>
+	</div>
+	<!-- Footer Area -->
 	<footer id="footer" class="footer ">
 		<!-- Footer Top -->
 		<div class="footer-top">
@@ -233,12 +333,12 @@
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer f-link">
 							<h2>Quick Links</h2>
-								<ul>
-									<li><a href="/staff/login"><i
-											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠服務人員工作系統</a></li>
-									<li><a href="/admin/login/page"><i
-											class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠平台方管理系統</a></li>
-								</ul>
+							<ul>
+								<li><a href="/staff/login"><i class="fa fa-caret-right"
+										aria-hidden="true"></i>寵愛牠服務人員工作系統</a></li>
+								<li><a href="/admin/login/page"><i
+										class="fa fa-caret-right" aria-hidden="true"></i>寵愛牠平台方管理系統</a></li>
+							</ul>
 
 						</div>
 					</div>
@@ -255,10 +355,10 @@
 					<div class="col-lg-3 col-md-6 col-12">
 						<div class="single-footer">
 							<h2>Contact Us</h2>
-							<p>客服信箱&nbsp;&nbsp;&nbsp;&nbsp;	a0912622502@gmail.com</p>
+							<p>客服信箱&nbsp;&nbsp;&nbsp;&nbsp; a0912622502@gmail.com</p>
 							<p>客服專線&nbsp;&nbsp;&nbsp;&nbsp;(02) 5555-8858</p>
-							<p style="margin-left:70px">汪汪汪汪-幫幫我吧</p>
-							
+							<p style="margin-left: 70px">汪汪汪汪-幫幫我吧</p>
+
 						</div>
 					</div>
 				</div>
@@ -279,49 +379,50 @@
 		</div>
 		<!--/ End Copyright -->
 	</footer>
-		<!--/ End Footer Area -->
-		
-		<!-- jquery Min JS -->
-		<script th:src="@{/js/add.js}"></script>
-        <script th:src="@{/js/jquery.min.js}"></script>
-		<!-- jquery Migrate JS -->
-		<script th:src="@{/js/jquery-migrate-3.0.0.js}"></script>
-		<!-- jquery Ui JS -->
-		<script th:src="@{/js/jquery-ui.min.js}"></script>
-		<!-- Easing JS -->
-        <script th:src="@{/js/easing.js}"></script>
-		<!-- Color JS -->
-		<script th:src="@{/js/colors.js}"></script>
-		<!-- Popper JS -->
-		<script th:src="@{/js/popper.min.js}"></script>
-		<!-- Bootstrap Datepicker JS -->
-		<script th:src="@{/js/bootstrap-datepicker.js}"></script>
-		<!-- Jquery Nav JS -->
-        <script th:src="@{/js/jquery.nav.js}"></script>
-		<!-- Slicknav JS -->
-		<script th:src="@{/js/slicknav.min.js}"></script>
-		<!-- ScrollUp JS -->
-        <script th:src="@{/js/jquery.scrollUp.min.js}"></script>
-		<!-- Niceselect JS -->
-		<script th:src="@{/js/niceselect.js}"></script>
-		<!-- Tilt Jquery JS -->
-		<script th:src="@{/js/tilt.jquery.min.js}"></script>
-		<!-- Owl Carousel JS -->
-        <script th:src="@{/js/owl-carousel.js}"></script>
-		<!-- counterup JS -->
-		<script th:src="@{/js/jquery.counterup.min.js}"></script>
-		<!-- Steller JS -->
-		<script th:src="@{/js/steller.js}"></script>
-		<!-- Wow JS -->
-		<script th:src="@{/js/wow.min.js}"></script>
-		<!-- Magnific Popup JS -->
-		<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
-		<!-- Counter Up CDN JS -->
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
-		<!-- Bootstrap JS -->
-		<script th:src="@{/js/bootstrap.min.js}"></script>
-		<!-- Main JS -->
-		<script th:src="@{/js/main.js}"></script>
-		<script th:src="@{/js/joinus.js}"></script>
-    </body>
+	<!--/ End Footer Area -->
+
+	<!-- jquery Min JS -->
+	<script th:src="@{/js/add.js}"></script>
+	<script th:src="@{/js/jquery.min.js}"></script>
+	<!-- jquery Migrate JS -->
+	<script th:src="@{/js/jquery-migrate-3.0.0.js}"></script>
+	<!-- jquery Ui JS -->
+	<script th:src="@{/js/jquery-ui.min.js}"></script>
+	<!-- Easing JS -->
+	<script th:src="@{/js/easing.js}"></script>
+	<!-- Color JS -->
+	<script th:src="@{/js/colors.js}"></script>
+	<!-- Popper JS -->
+	<script th:src="@{/js/popper.min.js}"></script>
+	<!-- Bootstrap Datepicker JS -->
+	<script th:src="@{/js/bootstrap-datepicker.js}"></script>
+	<!-- Jquery Nav JS -->
+	<script th:src="@{/js/jquery.nav.js}"></script>
+	<!-- Slicknav JS -->
+	<script th:src="@{/js/slicknav.min.js}"></script>
+	<!-- ScrollUp JS -->
+	<script th:src="@{/js/jquery.scrollUp.min.js}"></script>
+	<!-- Niceselect JS -->
+	<script th:src="@{/js/niceselect.js}"></script>
+	<!-- Tilt Jquery JS -->
+	<script th:src="@{/js/tilt.jquery.min.js}"></script>
+	<!-- Owl Carousel JS -->
+	<script th:src="@{/js/owl-carousel.js}"></script>
+	<!-- counterup JS -->
+	<script th:src="@{/js/jquery.counterup.min.js}"></script>
+	<!-- Steller JS -->
+	<script th:src="@{/js/steller.js}"></script>
+	<!-- Wow JS -->
+	<script th:src="@{/js/wow.min.js}"></script>
+	<!-- Magnific Popup JS -->
+	<script th:src="@{/js/jquery.magnific-popup.min.js}"></script>
+	<!-- Counter Up CDN JS -->
+	<script
+		src="http://cdnjs.cloudflare.com/ajax/libs/waypoints/2.0.3/waypoints.min.js"></script>
+	<!-- Bootstrap JS -->
+	<script th:src="@{/js/bootstrap.min.js}"></script>
+	<!-- Main JS -->
+	<script th:src="@{/js/main.js}"></script>
+	<script th:src="@{/js/joinus.js}"></script>
+</body>
 </html>
