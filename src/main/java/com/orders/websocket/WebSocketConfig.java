@@ -22,6 +22,5 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
         registry.enableSimpleBroker("/topic"); // 回傳訊息給前端用的 prefix
-        registry.setApplicationDestinationPrefixes("/app"); // 前端傳給後端的 prefix（目前我們用不到）
     }
 }

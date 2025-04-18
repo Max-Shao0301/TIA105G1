@@ -594,20 +594,19 @@ public class OrdersService {
 
 	}
 
-	@Scheduled(fixedRate = 600 * 1000) // 600s
+	@Scheduled(fixedRate = 60 * 1000) // 60s
 	public void checkAndSendReminders() {
-		LocalDateTime now = LocalDateTime.now();
-		LocalDateTime sixtyMinLater = now.plusMinutes(300);
+		LocalDateTime now = LocalDateTime.now();	
 
 		
 		List<OrdersVO> orders = ordersRepository.findOrdersTodayAndTomorrow();
 		for (OrdersVO order : orders) {
 			LocalDateTime appointmentTime = getOrderLocalDateTime(order);
 			Integer memId =  order.getMember().getMemId();
-			if (appointmentTime.isAfter(now) && appointmentTime.isBefore(sixtyMinLater)) {
+			if (appointmentTime.isAfter(now)) {
 				// 推播提醒給該會員
 				String key = "reminder:" + memId;
-				String message = "🔔 您的預約訂單 " + memId + " 將於 " + format(appointmentTime) + " 開始，\n  請做好出發的準備！";
+				String message = "🔔 您的預約訂單編號 " + order.getOrderId() + " 將於 " + format(appointmentTime) + " 開始，\n  請做好出發的準備！";
 				
 				redisTemplate.opsForList().rightPush(key, message);
 				System.out.println("存在redis" + memId);

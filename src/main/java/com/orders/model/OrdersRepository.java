@@ -54,7 +54,7 @@ public interface OrdersRepository extends JpaRepository<OrdersVO, Integer> {
 	List<Object[]> findByStaff(Integer staffId);
 
 	@Query(value = "SELECT o.* FROM orders o " + "JOIN schedule s ON o.sch_id = s.sch_id "
-			+ "WHERE s.date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 1 DAY) "
+			+ "WHERE s.date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 2 DAY) "
 			+ "AND o.reminded = false", nativeQuery = true)
 	List<OrdersVO> findOrdersTodayAndTomorrow();
 
