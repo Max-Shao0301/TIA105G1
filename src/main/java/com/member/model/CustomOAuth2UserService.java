@@ -14,8 +14,6 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 @Service("customOAuth2UserService")
 public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
 
-    private static final String TEST_MAIL ="max.shao@icloud.com";
-
     @Autowired
     private MemberService memberService;
 
@@ -31,7 +29,7 @@ public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
         String name = (String) attributes.get("name");
 
         if (email == null || name == null) {
-            email = TEST_MAIL;
+            email = randomEmail();
             name = (String) attributes.get("displayName");
         }
 
@@ -45,5 +43,12 @@ public class CustomOAuth2UserService  extends DefaultOAuth2UserService {
 
         memberService.saveOAuth2Member(email, name, session);
         return oAuth2User;
+    }
+
+    //隨機產生email
+    public  String randomEmail() {
+        String testMail ="@example.com";
+        String randomEmail = System.currentTimeMillis() + testMail; // 取得當前時間戳記 + testMail 組合隨機mail
+        return randomEmail;
     }
 }

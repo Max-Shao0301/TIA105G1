@@ -103,9 +103,9 @@ document.getElementById('applybtn').addEventListener('click', function(event) {
         alert('請輸入有效的電子郵件地址!');
         return;
     }
-    // 自我介紹驗證（至少 50 個字）
-    if (selfIntro.length < 50) {
-        alert('自我介紹需至少 50 個字!');
+    // 自我介紹驗證（至少 5 個字）
+    if (selfIntro.length < 5) {
+        alert('自我介紹需至少 5 個字!');
         return;
     }
 
