@@ -46,7 +46,7 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                 }
             } else {
                  // 若會員資料不存在，導向首頁 LINE使用
-                   response.sendRedirect("/");
+                   response.sendRedirect("/member/updateMember");
             }
         }
     }

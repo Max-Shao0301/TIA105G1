@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const logoutBtn = document.querySelector("form[action='/logout'] .button2"); // 登出按鈕
+  const logoutBtn = document.querySelector("form[action='/logout'] .button1"); // 登出按鈕
   const logoutForm = document.querySelector("form[action='/logout']");
 
   const popup = document.getElementById("logout-confirm-popup");
