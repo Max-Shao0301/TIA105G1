@@ -19,7 +19,7 @@
 - Line第三方登入API串接
 - OpenWeather即時天氣資訊API串接
 
-# 技術架構
+# 技術架構:
 - Java17
 - Spring Boot
 - Spring Data JPA
@@ -28,3 +28,6 @@
 - HTML/CSS/JavaScript
 - JQuery
 - Maven套件管理
+
+# 專題影片:
+- https://youtu.be/fbyFJ5nzd-E?si=kSfDkaCiz7SeHzkX
